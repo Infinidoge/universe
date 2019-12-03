@@ -1,0 +1,10 @@
+result
+.direnv
+doc/index.html
+
+# Result of flk commands
+vm
+iso
+doi
+
+pkgs/_sources/.shake*
