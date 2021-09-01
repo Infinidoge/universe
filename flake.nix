@@ -138,6 +138,10 @@
             nixos = { suites, ... }: { imports = suites.base; };
           }; # digga.lib.importers.rakeLeaves ./users/hm;
         };
+        users = {
+          infinidoge = { suites, ... }: { imports = suites.base; };
+        }; # digga.lib.importers.rakeLeaves ./users/hm;
+      };
 
         devshell = ./shell;
 
