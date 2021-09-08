@@ -1,5 +1,5 @@
 { suites, profiles, pkgs, ... }: {
-  imports = suites.graphical
+  imports = suites.graphic
     ++ [ ./hardware-configuration.nix ]
     ++ (with profiles; [
     networking.wireless
