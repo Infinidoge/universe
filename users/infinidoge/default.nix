@@ -1,5 +1,7 @@
-{ hmUsers, ... }: {
-  home-manager.users = { inherit (hmUsers) infinidoge; };
+{ config, self, lib, pkgs, ... }: {
+  home-manager.users.infinidoge = { suites, ... }: {
+    imports = suites.base;
+  };
 
   users.users.infinidoge = {
     uid = 1000;

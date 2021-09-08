@@ -51,91 +51,104 @@
     # end ANTI CORRUPTION LAYER
   };
 
-  outputs = { self, digga, bud, nixos, home, nixos-hardware, nur, agenix
-    , nvfetcher, deploy, ... }@inputs:
-    digga.lib.mkFlake {
-      inherit self inputs;
+  outputs =
+    { self
+    , digga
+    , bud
+    , nixos
+    , home
+    , nixos-hardware
+    , nur
+    , agenix
+    , nvfetcher
+    , deploy
+    , ...
+    }@inputs:
+    digga.lib.mkFlake
+      {
+        inherit self inputs;
 
-      channelsConfig = { allowUnfree = true; };
+        channelsConfig = { allowUnfree = true; };
 
-      channels = {
+        channels = {
+          nixos = {
+            imports = [ (digga.lib.importOverlays ./overlays) ];
+            overlays = [
+              digga.overlays.patchedNix
+              nur.overlay
+              agenix.overlay
+              nvfetcher.overlay
+              deploy.overlay
+              ./pkgs/default.nix
+            ];
+          };
+          latest = { };
+        };
+
+        lib = import ./lib { lib = digga.lib // nixos.lib; };
+
+        sharedOverlays = [
+          (final: prev: {
+            __dontExport = true;
+            lib = prev.lib.extend (lfinal: lprev: { our = self.lib; });
+          })
+        ];
+
         nixos = {
-          imports = [ (digga.lib.importOverlays ./overlays) ];
-          overlays = [
-            digga.overlays.patchedNix
-            nur.overlay
-            agenix.overlay
-            nvfetcher.overlay
-            deploy.overlay
-            ./pkgs/default.nix
-          ];
-        };
-        latest = { };
-      };
-
-      lib = import ./lib { lib = digga.lib // nixos.lib; };
-
-      sharedOverlays = [
-        (final: prev: {
-          __dontExport = true;
-          lib = prev.lib.extend (lfinal: lprev: { our = self.lib; });
-        })
-      ];
-
-      nixos = {
-        hostDefaults = {
-          system = "x86_64-linux";
-          channelName = "latest";
-          imports = [ (digga.lib.importModules ./modules) ];
-          externalModules = [
-            { lib.our = self.lib; }
-            digga.nixosModules.bootstrapIso
-            digga.nixosModules.nixConfig
-            home.nixosModules.home-manager
-            agenix.nixosModules.age
-            bud.nixosModules.bud
-          ];
-        };
-
-        imports = [ (digga.lib.importHosts ./hosts) ];
-        hosts = {
-          # set host specific properties here
-          NixOS = { };
-        };
-        importables = rec {
-          profiles = digga.lib.rakeLeaves ./profiles // {
-            users = digga.lib.rakeLeaves ./users;
+          hostDefaults = {
+            system = "x86_64-linux";
+            channelName = "latest";
+            imports = [ (digga.lib.importModules ./modules) ];
+            externalModules = [
+              { lib.our = self.lib; }
+              digga.nixosModules.bootstrapIso
+              digga.nixosModules.nixConfig
+              home.nixosModules.home-manager
+              agenix.nixosModules.age
+              bud.nixosModules.bud
+            ];
           };
-          suites = with profiles; rec {
-            base = [ core users.nixos users.root ];
+
+          imports = [ (digga.lib.importHosts ./hosts) ];
+          hosts = {
+            # set host specific properties here
+            Infini-DESKTOP = { };
+          };
+          importables = rec {
+            profiles = digga.lib.rakeLeaves ./profiles // {
+              users = digga.lib.rakeLeaves ./users;
+            };
+            suites = with profiles; rec {
+              base = [ core users.root users.infinidoge develop.common ];
+              graphical = base ++ [ graphical.qtile ];
+            };
           };
         };
-      };
 
-      home = {
-        imports = [ (digga.lib.importModules ./users/modules) ];
-        externalModules = [ ];
-        importables = rec {
-          profiles = digga.lib.rakeLeaves ./users/profiles;
-          suites = with profiles; rec { base = [ direnv git ]; };
+        home = {
+          imports = [ (digga.lib.importModules ./users/modules) ];
+          externalModules = [ ];
+          importables = rec {
+            profiles = digga.lib.rakeLeaves ./users/profiles;
+            suites = with profiles; rec { base = [ direnv git ]; };
+          };
+          users = {
+            infinidoge = { };
+          }; # digga.lib.importers.rakeLeaves ./users/hm;
         };
-        users = {
-          infinidoge = { suites, ... }: { imports = suites.base; };
-        }; # digga.lib.importers.rakeLeaves ./users/hm;
-      };
 
-      devshell = ./shell;
+        devshell = ./shell;
 
-      homeConfigurations =
-        digga.lib.mkHomeConfigurations self.nixosConfigurations;
+        homeConfigurations =
+          digga.lib.mkHomeConfigurations self.nixosConfigurations;
 
-      deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
+        deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
 
-      defaultTemplate = self.templates.bud;
-      templates.bud.path = ./.;
-      templates.bud.description = "bud template";
+        defaultTemplate = self.templates.bud;
+        templates.bud.path = ./.;
+        templates.bud.description = "bud template";
 
-    } // {
+      } // {
       budModules = { devos = import ./bud; };
     };
 }

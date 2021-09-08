@@ -1,5 +1,12 @@
-{ suites, ... }: {
-  imports = suites.base ++ [ ./hardware-configuration.nix ];
+{ suites, profiles, pkgs, ... }: {
+  imports = suites.graphical
+    ++ [ ./hardware-configuration.nix ]
+    ++ (with profiles; [
+    networking.wireless
+    hardware.sound
+    graphical.nvidia
+    peripherals.printing
+  ]);
 
   system.stateVersion = "21.05";
 
@@ -17,24 +24,13 @@
   time.timeZone = "America/New_York";
 
   networking = {
-    useDHCP = false; # Explicitly disable broad DHCP
     interfaces = {
       # Enable DHCP per interface
       eth0.useDHCP = true;
       wlp41s0.useDHCP = true;
     };
 
-    wireless = {
-      enable = true; # Enable wireless
-      interfaces = [ "wlp41s0" ];
-
-      networks = {
-        Mashtun = {
-          pskRaw =
-            "1ccf3e0cc08700f2484e4a0e202836898cc8c084b7e05d6798bf0a7ba9bbc306";
-        };
-      };
-    };
+    wireless.interfaces = [ "wlp41s0" ];
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -67,36 +63,4 @@
 
   services.gvfs.enable = true; # MTP support
 
-  services.xserver = {
-    # Enable X11 Windowing and Qtile Window Manager
-    enable = true;
-    windowManager.qtile.enable = true;
-
-    # Configure X11 keymap
-    layout = "us";
-
-    videoDrivers = [ "nvidia" ];
-  };
-
-  hardware.nvidia.modesetting.enable = true;
-  hardware.opengl.driSupport32Bit = true;
-
-  # Enable CUPS to print documents.
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [
-      cnijfilter2
-      gutenprintBin
-      cupsBjnp
-      cups-bjnp
-      canon-cups-ufr2
-      carps-cups
-      cnijfilter_2_80
-      cnijfilter_4_00
-    ];
-  };
-
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
 }
