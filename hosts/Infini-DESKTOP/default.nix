@@ -2,10 +2,10 @@
   imports = suites.graphic
     ++ [ ./hardware-configuration.nix ]
     ++ (with profiles; [
-    networking.wireless
+    # networking.wireless
     hardware.sound
     graphical.nvidia
-    peripherals.printing
+    # peripherals.printing
   ]);
 
   system.stateVersion = "21.05";
@@ -27,10 +27,10 @@
     interfaces = {
       # Enable DHCP per interface
       eth0.useDHCP = true;
-      wlp41s0.useDHCP = true;
+      # wlp41s0.useDHCP = true;
     };
 
-    wireless.interfaces = [ "wlp41s0" ];
+    # wireless.interfaces = [ "wlp41s0" ];
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
