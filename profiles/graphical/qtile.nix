@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ./xserver ];
+  imports = [ ./xserver.nix ];
 
   services.xserver.windowManager.qtile.enable = true;
 
