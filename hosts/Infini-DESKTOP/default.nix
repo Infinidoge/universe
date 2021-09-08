@@ -61,6 +61,5 @@
   };
   services.kmscon.enable = true;
 
-  services.gvfs.enable = true; # MTP support
 
 }
