@@ -120,7 +120,7 @@
             };
             suites = with profiles; rec {
               base = [ core users.root users.infinidoge develop.common ];
-              graphical = base ++ [ graphical.qtile ];
+              graphic = base ++ [ graphical.qtile ];
             };
           };
         };
