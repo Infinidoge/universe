@@ -131,7 +131,9 @@
           externalModules = [ ];
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
-            suites = with profiles; rec { base = [ direnv git ]; };
+            suites = with profiles; rec {
+              base = [ direnv git kitty starship zsh ];
+            };
           };
           users = {
             infinidoge = { };
