@@ -113,6 +113,7 @@
           hosts = {
             # set host specific properties here
             Infini-DESKTOP = { };
+            testing = { };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
