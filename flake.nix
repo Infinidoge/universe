@@ -120,7 +120,7 @@
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core users.root users.infinidoge develop.common ];
+              base = [ core users.root users.infinidoge ];
               graphic = base ++ [ graphical.qtile ];
             };
           };
