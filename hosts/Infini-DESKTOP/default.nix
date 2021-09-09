@@ -18,7 +18,7 @@
     };
 
     efi.canTouchEfiVariables = true;
-    timeout = 5;
+    timeout = 3;
   };
 
   time.timeZone = "America/New_York";
@@ -39,25 +39,6 @@
     keyMap = "us";
     earlySetup = true;
     packages = [ ];
-    colors = [
-      # Solarized Dark Theme
-      "002b36"
-      "dc322f"
-      "859900"
-      "b58900"
-      "268bd2"
-      "6c71c4"
-      "2aa198"
-      "93a1a1"
-      "657b83"
-      "dc322f"
-      "859900"
-      "b58900"
-      "268bd2"
-      "6c71c4"
-      "2aa198"
-      "93a1a1"
-    ];
   };
   services.kmscon.enable = true;
 
