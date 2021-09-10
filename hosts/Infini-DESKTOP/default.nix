@@ -2,7 +2,10 @@
   imports = suites.graphic
     ++ [ ./hardware-configuration.nix ]
     ++ (with profiles; [
+    boot.systemd-boot
+
     networking.wireless
+
     hardware.sound
     hardware.nvidia
     # peripherals.printing
@@ -10,18 +13,6 @@
 
   system.stateVersion = "21.05";
 
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      editor = false;
-      consoleMode = "2";
-    };
-
-    efi.canTouchEfiVariables = true;
-    timeout = 3;
-  };
-
-  time.timeZone = "America/New_York";
 
   networking = {
     interfaces = {
