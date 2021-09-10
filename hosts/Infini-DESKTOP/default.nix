@@ -13,7 +13,6 @@
 
   system.stateVersion = "21.05";
 
-
   networking = {
     interfaces = {
       # Enable DHCP per interface
@@ -23,7 +22,4 @@
 
     wireless.interfaces = [ "wlp41s0" ];
   };
-
-
-
 }
