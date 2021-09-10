@@ -4,7 +4,7 @@
     ++ (with profiles; [
     networking.wireless
     hardware.sound
-    graphical.nvidia
+    hardware.nvidia
     # peripherals.printing
   ]);
 
