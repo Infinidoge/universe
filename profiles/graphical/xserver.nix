@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   services.xserver = {
     enable = true;
-    layout = "us";
   };
 
   environment.systemPackages = with pkgs; [

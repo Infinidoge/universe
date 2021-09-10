@@ -33,14 +33,6 @@
     wireless.interfaces = [ "wlp41s0" ];
   };
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-    earlySetup = true;
-    packages = [ ];
-  };
-  services.kmscon.enable = true;
 
 
 }
