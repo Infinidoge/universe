@@ -1,15 +1,15 @@
 { suites, profiles, pkgs, ... }: {
   imports = suites.graphic
     ++ [ ./hardware-configuration.nix ]
-    ++ (with profiles; [
-    boot.systemd-boot
+    ++ (with profiles;
+    [
+      boot.systemd-boot
 
-    networking.wireless
-
-    hardware.sound
-    hardware.nvidia
-    # peripherals.printing
-  ]);
+      networking.wireless
+      hardware.sound
+      hardware.nvidia
+      # peripherals.printing
+    ]);
 
   system.stateVersion = "21.05";
 
