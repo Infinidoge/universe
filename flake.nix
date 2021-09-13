@@ -23,9 +23,6 @@
     home.url = "github:nix-community/home-manager/release-21.05";
     home.inputs.nixpkgs.follows = "nixos";
 
-    darwin.url = "github:LnL7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "latest";
-
     deploy.follows = "digga/deploy";
 
     agenix.url = "github:ryantm/agenix";
