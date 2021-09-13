@@ -4,32 +4,35 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/c40e2655-8f7e-4dd3-95ab-f2d48639cc59";
+    {
+      device = "/dev/disk/by-uuid/c40e2655-8f7e-4dd3-95ab-f2d48639cc59";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/21E6-6801";
+    {
+      device = "/dev/disk/by-uuid/21E6-6801";
       fsType = "vfat";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/26438642-0683-4ce3-af6b-b555cb8e388d";
+    {
+      device = "/dev/disk/by-uuid/26438642-0683-4ce3-af6b-b555cb8e388d";
       fsType = "ext4";
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/dfbe858e-5732-48d7-8777-37ed19138d7e"; }
-    ];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/dfbe858e-5732-48d7-8777-37ed19138d7e";
+    }
+  ];
 
 }
