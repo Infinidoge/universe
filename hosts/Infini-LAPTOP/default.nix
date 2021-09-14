@@ -14,10 +14,6 @@
 
   system.stateVersion = "21.11";
 
-  networking = {
-    useDHCP = false;
-
-    interfaces.wlan0.useDHCP = true;
-  };
+  networking.interfaces.wlan0.useDHCP = true;
 
 }

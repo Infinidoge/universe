@@ -15,13 +15,8 @@
 
   bud.localFlakeClone = "/home/infinidoge/Projects/DevOS";
 
-  networking = {
-    interfaces = {
-      # Enable DHCP per interface
-      eth0.useDHCP = true;
-      wlp41s0.useDHCP = true;
-    };
-
-    wireless.interfaces = [ "wlp41s0" ];
+  networking.interfaces = {
+    eth0.useDHCP = true;
+    wlp41s0.useDHCP = true;
   };
 }
