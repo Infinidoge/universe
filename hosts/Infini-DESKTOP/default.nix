@@ -13,7 +13,6 @@
 
   system.stateVersion = "21.05";
 
-  bud.enable = true;
   bud.localFlakeClone = "/home/infinidoge/Projects/DevOS";
 
   networking = {
