@@ -129,7 +129,20 @@
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
-              base = [ direnv git kitty starship zsh ];
+              base = [
+                # Base Configuration
+                xdg
+
+                # Programs
+                direnv
+                git
+                pass
+
+                # Terminal
+                kitty
+                starship
+                shells.zsh
+              ];
             };
           };
           users = {
