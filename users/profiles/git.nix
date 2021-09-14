@@ -1,9 +1,10 @@
-{
+{ pkgs, ... }: {
   programs.git = {
     enable = true;
 
     extraConfig = {
       pull.rebase = false;
+      credential.helper = "${pkgs.gitAndTools.pass-git-helper}/bin/pass-git-helper";
     };
 
     aliases = {
