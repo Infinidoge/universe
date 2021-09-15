@@ -36,13 +36,13 @@ in
 
   commands = with pkgs; [
     (devos nixUnstable)
-    # (devos agenix)
-    # {
-    #   category = "devos";
-    #   name = pkgs.nvfetcher-bin.pname;
-    #   help = pkgs.nvfetcher-bin.meta.description;
-    #   command = "cd $DEVSHELL_ROOT/pkgs; ${pkgs.nvfetcher-bin}/bin/nvfetcher -c ./sources.toml --no-output $@";
-    # }
+    (devos agenix)
+    {
+      category = "devos";
+      name = pkgs.nvfetcher-bin.pname;
+      help = pkgs.nvfetcher-bin.meta.description;
+      command = "cd $DEVSHELL_ROOT/pkgs; ${pkgs.nvfetcher-bin}/bin/nvfetcher -c ./sources.toml --no-output $@";
+    }
     (linter nixpkgs-fmt)
     (linter editorconfig-checker)
     # (docs python3Packages.grip) too many deps
