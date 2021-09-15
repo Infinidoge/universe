@@ -94,7 +94,7 @@
         nixos = {
           hostDefaults = {
             system = "x86_64-linux";
-            channelName = "latest";
+            channelName = "nixos";
             imports = [ (digga.lib.importModules ./modules) ];
             externalModules = [
               { lib.our = self.lib; }
