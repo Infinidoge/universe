@@ -14,6 +14,8 @@
 
   system.stateVersion = "21.11";
 
+  bud.localFlakeClone = "/etc/nixos";
+
   networking.interfaces.wlan0.useDHCP = true;
 
 }
