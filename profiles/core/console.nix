@@ -1,9 +1,14 @@
-{ ... }: {
+{ pkgs, ... }: {
   console = {
-    font = "Lat2-Terminus16";
+    font = "DejaVuSansMono";
     earlySetup = true;
-    packages = [ ];
+    packages = with pkgs; [ (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; }) ];
   };
 
-  services.kmscon.enable = true;
+  services.kmscon = {
+    enable = true;
+    extraConfig = [
+      "font-size=14"
+    ];
+  };
 }
