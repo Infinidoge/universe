@@ -3,7 +3,7 @@
     ++ [ ./hardware-configuration.nix ]
     ++ (with profiles;
     [
-      boot.systemd-boot
+      boot.grub
 
       networking.wireless
       hardware.sound
