@@ -142,6 +142,7 @@
                 kitty
                 starship
                 shells.zsh
+                shells.fish
               ];
             };
           };
