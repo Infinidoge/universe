@@ -1,7 +1,7 @@
-{ ... }: {
+{ lib, ... }: {
   boot.loader = {
     systemd-boot = {
-      enable = true;
+      enable = lib.mkDefault true;
       editor = false;
       consoleMode = "2";
     };
