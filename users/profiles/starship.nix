@@ -11,7 +11,7 @@
         add_newline = true;
 
         format = ''
-          (╢$status$cmd_duration)
+          ([╳](bold grey) $status$cmd_duration)
           [┌───(┨$shlvl┠)──(┨$shell┠)────────┨$username@$hostname┃](${line_style})
           [┝┫$directory(┣━┫$git_branch$git_status(@$git_commit)( $git_metrics)( $git_state))┃](${line_style})
           [└─┨](${line_style})$character
