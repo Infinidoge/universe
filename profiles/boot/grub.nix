@@ -1,7 +1,8 @@
-{ ... }: {
+{ lib, ... }: {
   boot.loader = {
     grub = {
-      enable = true;
+      enable = lib.mkDefault true;
+      device = "/dev/disk/by-uuid/6836-6848";
       efiSupport = true;
       useOSProber = true;
       extraEntries = ''
@@ -56,16 +57,16 @@
                 }
         }
 
-      menuentry 'Windows Boot Manager' --class windows --class os $menuentry_id_option '    osprober-efi-6836-6848' {
-              insmod part_gpt
-              insmod fat
-              if [ x$feature_platform_search_hint = xy ]; then
-                search --no-floppy --fs-uuid --set=root  6836-6848
-              else
-                search --no-floppy --fs-uuid --set=root 6836-6848
-              fi
-              chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-      }
+        menuentry 'Windows Boot Manager' --class windows --class os $menuentry_id_option '    osprober-efi-6836-6848' {
+                insmod part_gpt
+                insmod fat
+                if [ x$feature_platform_search_hint = xy ]; then
+                  search --no-floppy --fs-uuid --set=root  6836-6848
+                else
+                  search --no-floppy --fs-uuid --set=root 6836-6848
+                fi
+                chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+        }
       '';
     };
     efi = {
