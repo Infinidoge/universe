@@ -16,12 +16,14 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
-  fileSystems."/" = { device = "/dev/disk/by-label/4a964f22-e270-42df-ae54-00f91d89edd9";
-                      fsType = "ext4";
-                    };
-  fileSystems."/boot" = { device = "/dev/disk/by-uuid/6836-6848";
-                          fsType = "vfat";
-                        };
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/4a964f22-e270-42df-ae54-00f91d89edd9";
+    fsType = "ext4";
+  };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/6836-6848";
+    fsType = "vfat";
+  };
 
   swapDevices = [
     {
