@@ -7,6 +7,18 @@
       # enableSyntaxHighlighting = true;
       enableVteIntegration = true;
 
+      autosuggestions.enable = true;
+
+      syntaxHighlighting = {
+        enable = true;
+        highlighters = [ "main" "brackets" "pattern" "cursor" ];
+        patterns = {
+          "rm -rf *" = "fg=white,bold,bg=red";
+        };
+      };
+
+      zsh-autoenv.enable = true;
+
       dotDir = ".config/zsh";
 
       history.path = "$ZDOTDIR/.zsh_history";
