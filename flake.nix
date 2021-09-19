@@ -46,6 +46,11 @@
     flake-utils-plus.follows = "digga/flake-utils-plus";
     flake-utils.follows = "digga/flake-utils";
     # end ANTI CORRUPTION LAYER
+
+    # --- Application-Specific Flake Inputs
+    # # --- Powercord
+    powercord-overlay.url = "github:LavaDesu/powercord-overlay";
+    powercord-overlay.inputs.nixpkgs.follows = "latest";
   };
 
   outputs =
