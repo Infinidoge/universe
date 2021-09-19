@@ -12,6 +12,8 @@
 
   boot.loader.systemd-boot.enable = true;
 
+  bud.localFlakeClone = "/etc/nixos";
+
   # will be overridden by the bootstrapIso instrumentation
   fileSystems."/" = { device = "/dev/disk/by-label/nixos"; };
 }
