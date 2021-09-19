@@ -7,6 +7,7 @@
 
   services.kmscon = {
     enable = true;
+    hwRender = true;
     extraConfig = ''
       font-size=14
       font-name=DejaVuSansMono
