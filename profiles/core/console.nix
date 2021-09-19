@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   console = {
-    # font = "DejaVuSansMono";
+    font = "Lat2-Terminus16";
     earlySetup = true;
     packages = with pkgs; [ (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; }) ];
   };
