@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
   programs = {
     fish = {
       enable = true;
@@ -8,4 +8,6 @@
 
     starship.enableFishIntegration = lib.mkIf config.programs.starship.enable true;
   };
+
+  environment.shells = [ pkgs.fish ];
 }
