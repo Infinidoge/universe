@@ -4,7 +4,6 @@
       enable = true;
 
       enableCompletion = true;
-      # enableSyntaxHighlighting = true;
       enableVteIntegration = true;
 
       autosuggestions.enable = true;
