@@ -7,6 +7,6 @@
     };
 
     efi.canTouchEfiVariables = true;
-    timeout = 3;
+    timeout = lib.mkDefault 3;
   };
 }
