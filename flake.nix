@@ -129,7 +129,7 @@
 
         home = {
           imports = [ (digga.lib.importModules ./users/modules) ];
-          externalModules = [ ];
+          externalModules = [ inputs.nix-doom-emacs.hmModule ];
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
