@@ -30,6 +30,8 @@
     gnome3.adwaita-icon-theme
     adwaita-qt
     lxappearance
+
+    pinentry-curses
   ];
 
   environment.shellAliases.ssh = "kitty +kitten ssh";

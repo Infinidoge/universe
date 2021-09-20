@@ -16,6 +16,4 @@
   '';
 
   services.password-store-sync.enable = true;
-
-  environment.systemPackages = with pkgs; [ pinentry-curses ];
 }
