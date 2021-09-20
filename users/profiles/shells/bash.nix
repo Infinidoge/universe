@@ -7,6 +7,4 @@
 
     starship.enableBashIntegration = true;
   };
-
-  config.environment.shells = with pkgs; [ bashInteractive ];
 }
