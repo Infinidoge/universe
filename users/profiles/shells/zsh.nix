@@ -5,6 +5,8 @@
 
       enableCompletion = true;
       enableVteIntegration = true;
+      enableAutosuggestions = true;
+      enableSyntaxHighlighting = true;
 
       initExtra = ''
         kitty + complete setup zsh | source /dev/stdin
