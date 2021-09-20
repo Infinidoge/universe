@@ -14,7 +14,7 @@
           ([╳](bold grey) $status$cmd_duration)
           [┌───(┨$shlvl┠)──(┨$shell┠)────────┨$username@$hostname┃](${line_style})
           [┝┫$directory(┣━┫$git_branch$git_status(@$git_commit)( $git_metrics)( $git_state))┃](${line_style})
-          [└─┨](${line_style})$character
+          [└─(┨$nix_shell┠)┨](${line_style})$character
         '';
         # format = ''
         #   (╢$status $cmd_duration\n)[┌───┨$shlvl┠──┨$shell┠────────>](bold green) $username@$hostname
@@ -80,7 +80,7 @@
         };
 
         nix_shell = {
-          format = "[$symbol$state]($style)";
+          format = "[$symbol$state $name]($style)";
           pure_msg = "λ";
           impure_msg = "⎔";
           symbol = " ";
