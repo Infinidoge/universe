@@ -6,6 +6,7 @@ channels: final: prev: {
     cachix
     dhall
     discord
+    discord-canary
     element-desktop
     rage
     nixpkgs-fmt
