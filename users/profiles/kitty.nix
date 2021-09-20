@@ -4,7 +4,7 @@
     font = {
       package = (pkgs.nerdfonts.override { fonts = [ "DejaVuSansMono" ]; });
       name = "DejaVuSansMono";
-      size = 10;
+      size = 12;
     };
   };
 }
