@@ -33,6 +33,8 @@
   ];
 
   programs = {
+    vim.defaultEditor = true;
+
     dconf.enable = true;
     qt5ct.enable = true;
   };
