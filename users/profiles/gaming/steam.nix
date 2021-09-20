@@ -4,6 +4,4 @@
       extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ];
     })
   ];
-
-  programs.steam.enable = true;
 }

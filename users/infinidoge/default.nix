@@ -41,6 +41,8 @@
 
     dconf.enable = true;
     qt5ct.enable = true;
+
+    steam.enable = true;
   };
 
   fonts = {
