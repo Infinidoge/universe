@@ -20,7 +20,7 @@
 
       dotDir = ".config/zsh";
 
-      history.path = "$ZDOTDIR/.zsh_history";
+      history.path = "${dotDir}/.zsh_history";
 
       oh-my-zsh = {
         enable = true;
