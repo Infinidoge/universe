@@ -156,8 +156,7 @@
                 # Terminal
                 kitty
                 starship
-                shells.zsh
-                shells.fish
+                shells.common
               ];
             };
           };
