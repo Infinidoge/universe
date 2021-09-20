@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }: {
   programs = {
-    zsh = {
+    zsh = rec {
       enable = true;
 
       enableCompletion = true;
