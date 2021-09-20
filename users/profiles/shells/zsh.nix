@@ -8,6 +8,8 @@
       enableAutosuggestions = true;
       enableSyntaxHighlighting = true;
 
+      defaultKeymap = "emacs";
+
       initExtra = ''
         kitty + complete setup zsh | source /dev/stdin
       '';
