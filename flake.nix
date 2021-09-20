@@ -150,6 +150,8 @@
                 direnv
                 git
                 pass
+                emacs
+                gaming
 
                 # Terminal
                 kitty
