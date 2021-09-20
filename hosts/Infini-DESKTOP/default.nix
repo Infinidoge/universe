@@ -13,7 +13,7 @@
 
   system.stateVersion = "21.05";
 
-  bud.localFlakeClone = "/home/infinidoge/Projects/DevOS";
+  bud.localFlakeClone = "/etc/nixos";
 
   networking.interfaces = {
     eth0.useDHCP = true;
