@@ -60,7 +60,7 @@
     starship.enableZshIntegration = lib.mkIf config.programs.starship.enable true;
   };
 
-  environment = {
+  config.environment = {
     pathsToLink = [ "/share/zsh" ];
     shells = [ pkgs.zsh ];
   };
