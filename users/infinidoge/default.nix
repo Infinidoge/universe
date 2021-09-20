@@ -4,6 +4,12 @@
       (with suites; lib.lists.flatten [ base ])
       ++ (with profiles; [ ])
       ++ [ ];
+
+    home.packages = with pkgs; [
+      discord-plugged
+
+      hydrus
+    ];
   };
 
   users.users.infinidoge = {
