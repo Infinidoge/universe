@@ -32,6 +32,8 @@
     lxappearance
   ];
 
+  environment.shellAliases.ssh = "kitty +kitten ssh";
+
   programs = {
     vim.defaultEditor = true;
 
