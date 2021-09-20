@@ -1,6 +1,8 @@
 { config, pkgs, self, lib, ... }: {
 
   nix = {
+    package = pkgs.nixUnstable;
+
     systemFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 
     autoOptimiseStore = true;
