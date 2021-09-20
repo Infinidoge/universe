@@ -9,23 +9,7 @@
   #   package = config.programs.emacs.package;
   # };
 
-  environment.systemPackages = with pkgs; [
-    emacs
-    ripgrep
-    coreutils
-    cmake
-    fd
-    fzf
-    clang
-    mu
-    isync
-    tetex
-    jq
-    gnumake
-    shellcheck
-    nodejs
-    nodePackages.prettier
-
-    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+  home.sessionPath = [
+    "${config.xdg.configHome}/emacs/bin"
   ];
 }
