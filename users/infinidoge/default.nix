@@ -32,6 +32,24 @@
     lxappearance
 
     pinentry-curses
+
+    emacs
+    ripgrep
+    coreutils
+    cmake
+    fd
+    fzf
+    clang
+    mu
+    isync
+    tetex
+    jq
+    gnumake
+    shellcheck
+    nodejs
+    nodePackages.prettier
+
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
   ];
 
   environment.shellAliases.ssh = "kitty +kitten ssh";
@@ -48,6 +66,7 @@
   fonts = {
     fonts = with pkgs; [
       dejavu_fonts
+      emacs-all-the-icons-fonts
       (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
     ];
 
