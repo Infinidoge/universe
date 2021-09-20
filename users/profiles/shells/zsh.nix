@@ -6,17 +6,17 @@
       enableCompletion = true;
       enableVteIntegration = true;
 
-      autosuggestions.enable = true;
+      # autosuggestions.enable = true;
 
-      syntaxHighlighting = {
-        enable = true;
-        highlighters = [ "main" "brackets" "pattern" "cursor" ];
-        patterns = {
-          "rm -rf *" = "fg=white,bold,bg=red";
-        };
-      };
+      # syntaxHighlighting = {
+      #   enable = true;
+      #   highlighters = [ "main" "brackets" "pattern" "cursor" ];
+      #   patterns = {
+      #     "rm -rf *" = "fg=white,bold,bg=red";
+      #   };
+      # };
 
-      zsh-autoenv.enable = true;
+      # zsh-autoenv.enable = true;
 
       dotDir = ".config/zsh";
 
