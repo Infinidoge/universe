@@ -1,6 +1,4 @@
-{ pkgs, ... }: {
-  environment.shells = with pkgs; [ bashInteractive ];
-
+{ config, pkgs, ... }: {
   programs = {
     bash = {
       enable = true;
@@ -9,4 +7,6 @@
 
     starship.enableBashIntegration = true;
   };
+
+  config.environment.shells = with pkgs; [ bashInteractive ];
 }
