@@ -6,15 +6,18 @@
     settings =
       let
         line_style = "bold green";
+        section = {
+          user_host = "underline";
+        };
       in
       {
         add_newline = true;
 
         format = ''
           ([╳](bold grey) $status$cmd_duration)
-          [┌───(┨$shlvl┠)──(┨$shell┠)────────┨$username@$hostname┃](${line_style})
+          [┌┨[$username@$hostname](${section.user_host})┠(┨$shell $shlvl┠)──(┨$nix_shell┠)───────────┨](${line_style})
           [┝┫$directory(┣━┫$git_branch$git_status(@$git_commit)( $git_metrics)( $git_state))┃](${line_style})
-          [└─(┨$nix_shell┠)┨](${line_style})$character
+          [└┨](${line_style})$character
         '';
         # format = ''
         #   (╢$status $cmd_duration\n)[┌───┨$shlvl┠──┨$shell┠────────>](bold green) $username@$hostname
@@ -87,13 +90,13 @@
         };
 
         username = {
-          format = "[$user]($style)";
+          format = "[$user]($style ${section.user_host})";
           show_always = true;
         };
 
         hostname = {
           ssh_only = false;
-          format = "[$hostname]($style)";
+          format = "[$hostname]($style ${section.user_host})";
           trim_at = "";
         };
 
