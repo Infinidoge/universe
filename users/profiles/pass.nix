@@ -10,5 +10,10 @@
     };
   };
 
+  home.file."${config.xdg.configHome}/pass-git-helper/git-pass-mapping.ini".text = ''
+    [gitlab.com*]
+    target=dev/gitlab.com/infinidoge_api
+  '';
+
   services.password-store-sync.enable = true;
 }
