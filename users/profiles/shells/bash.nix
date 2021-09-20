@@ -2,7 +2,7 @@
   programs = {
     bash = {
       enable = true;
-      enableVteIntetration = true;
+      enableVteIntegration = true;
     };
 
     starship.enableBashIntegration = true;
