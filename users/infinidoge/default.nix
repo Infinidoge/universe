@@ -12,6 +12,10 @@
     ];
   };
 
+  environment.systemPackages = with pkgs; [
+    ffmpeg
+  ];
+
   users.users.infinidoge = {
     uid = 1000;
     hashedPassword =
