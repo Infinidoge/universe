@@ -9,12 +9,45 @@
       discord-plugged
 
       hydrus
+
+      firefox
+
+      neofetch
     ];
   };
 
   environment.systemPackages = with pkgs; [
+    wget
+    vim
+    htop
+
     ffmpeg
+    ntfs3g
+    unzip
+
+
+    libsForQt5.dolphin
+    gnome3.adwaita-icon-theme
+    adwaita-qt
+    lxappearance
   ];
+
+  programs = {
+    dconf.enable = true;
+    qt5ct.enable = true;
+  };
+
+  fonts = {
+    fonts = with pkgs; [
+      dejavu_fonts
+      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+    ];
+
+    fontconfig.defaultFonts = {
+      monospace = [ "DejaVuSansMono" ];
+      sansSerif = [ "DejaVu Sans" ];
+    };
+  };
 
   users.users.infinidoge = {
     uid = 1000;
