@@ -11,6 +11,8 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  hardware.enableRedistributableFirmware = lib.mkDefault true;
+
   fileSystems."/" =
     {
       device = "/dev/disk/by-uuid/c40e2655-8f7e-4dd3-95ab-f2d48639cc59";
