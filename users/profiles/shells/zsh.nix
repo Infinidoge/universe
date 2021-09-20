@@ -6,6 +6,9 @@
       enableCompletion = true;
       enableVteIntegration = true;
 
+      initExtra = ''
+        kitty + complete setup zsh | source /dev/stdin
+      '';
       # autosuggestions.enable = true;
 
       # syntaxHighlighting = {
