@@ -8,6 +8,4 @@
 
     starship.enableFishIntegration = lib.mkIf config.programs.starship.enable true;
   };
-
-  config.environment.shells = [ pkgs.fish ];
 }
