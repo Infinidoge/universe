@@ -32,8 +32,6 @@
     adwaita-qt
     lxappearance
 
-    pinentry-curses
-
     emacs
     ripgrep
     coreutils
