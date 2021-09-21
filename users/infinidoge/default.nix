@@ -1,9 +1,10 @@
 { config, self, lib, pkgs, ... }: {
   home-manager.users.infinidoge = { suites, profiles, ... }: {
-    imports =
-      (with suites; lib.lists.flatten [ base ])
-      ++ (with profiles; [ ])
-      ++ [ ];
+    imports = lib.flattenListSet {
+      suites = with suites; [ base ];
+      profiles = with profiles; [ ];
+      imports = [ ];
+    };
 
     home.packages = with pkgs; [
       discord-plugged
