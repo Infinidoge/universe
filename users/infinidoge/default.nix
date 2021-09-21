@@ -24,7 +24,6 @@
     ntfs3g
     unzip
 
-    pinentry-curses
     gnupg
 
     libsForQt5.dolphin
