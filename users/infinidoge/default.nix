@@ -71,9 +71,12 @@
       (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
     ];
 
-    fontconfig.defaultFonts = {
-      monospace = [ "DejaVuSansMono" ];
-      sansSerif = [ "DejaVu Sans" ];
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        monospace = [ "DejaVuSansMono" ];
+        sansSerif = [ "DejaVu Sans" ];
+      };
     };
   };
 
