@@ -24,6 +24,8 @@
     ntfs3g
     unzip
 
+    pinentry-curses
+    gnupg
 
     libsForQt5.dolphin
     gnome3.adwaita-icon-theme
