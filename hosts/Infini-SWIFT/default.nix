@@ -12,6 +12,8 @@
     ]
   );
 
+  info.monitors = 1;
+
   services.xserver.libinput = {
     enable = true;
     touchpad.naturalScrolling = true;
