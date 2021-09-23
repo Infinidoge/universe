@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   services.xserver.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -9,4 +9,6 @@
 
     blugon
   ];
+
+  info.monitors = lib.mkDefault 1;
 }
