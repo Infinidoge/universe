@@ -14,6 +14,8 @@
 
   system.stateVersion = "21.05";
 
+  info.monitors = 3;
+
   networking.interfaces = {
     eth0.useDHCP = true;
     wlp41s0.useDHCP = true;
