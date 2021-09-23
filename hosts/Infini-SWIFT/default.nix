@@ -1,16 +1,17 @@
-{ suites, profiles, pkgs, ... }: {
-  imports = suites.graphic
-    ++ [ ./hardware-configuration.nix ]
-    ++ (with profiles;
-    [
-      boot.grub
+{ suites, profiles, pkgs, lib, ... }: {
+  imports = lib.flattenListSet {
+    suites = suites.graphic;
+    imports = [ ./hardware-configuration.nix ];
+    profiles = with profiles;
+      [
+        boot.grub
 
-      networking.wireless
-      hardware.sound
-      hardware.amdgpu
-      # peripherals.printing
-    ]
-  );
+        networking.wireless
+        hardware.sound
+        hardware.amdgpu
+        # peripherals.printing
+      ];
+  };
 
   info.monitors = 1;
 
