@@ -133,6 +133,7 @@
               base = [ core users.root users.infinidoge ];
               graphic = base ++ [ graphical.qtile ];
             };
+            test = self.lib;
           };
         };
 
