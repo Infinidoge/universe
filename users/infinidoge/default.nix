@@ -1,6 +1,6 @@
-{ config, self, lib, pkgs, ... }: {
+{ config, self, lib, pkgs, test, ... }: {
   home-manager.users.infinidoge = { suites, profiles, ... }: {
-    imports = lib.our.flattenListSet {
+    imports = test.flattenListSet {
       suites = with suites; [ base ];
     };
 
