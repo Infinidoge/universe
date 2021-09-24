@@ -75,7 +75,7 @@
     ];
 
     fontconfig = {
-      enable = true;
+      enable = lib.mkDefault true;
       defaultFonts = {
         monospace = [ "DejaVuSansMono" ];
         sansSerif = [ "DejaVu Sans" ];
