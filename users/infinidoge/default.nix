@@ -8,6 +8,11 @@
       suites = with suites; [ base ];
     };
 
+    programs.git = {
+      userEmail = "infinidoge@doge-inc.net";
+      userName = "Infinidoge";
+    };
+
     home.packages = with pkgs; [
       discord-plugged
 
