@@ -52,9 +52,6 @@
     # # --- Powercord
     powercord-overlay.url = "github:LavaDesu/powercord-overlay";
     powercord-overlay.inputs.nixpkgs.follows = "latest";
-    # # --- Doom Emacs
-    nix-doom-emacs.url = "github:vlaci/nix-doom-emacs";
-    nix-doom-emacs.inputs.nixpkgs.follows = "nixos";
   };
 
   outputs =
