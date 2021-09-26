@@ -48,24 +48,6 @@
     gnome3.adwaita-icon-theme
     adwaita-qt
     lxappearance
-
-    emacs
-    ripgrep
-    coreutils
-    cmake
-    fd
-    fzf
-    clang
-    mu
-    isync
-    tetex
-    jq
-    gnumake
-    shellcheck
-    nodejs
-    nodePackages.prettier
-
-    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
   ];
 
   environment.shellAliases.ssh = "kitty +kitten ssh";
