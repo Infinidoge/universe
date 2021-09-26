@@ -1,6 +1,6 @@
 { suites, profiles, pkgs, lib, ... }: {
-  imports = lib.flattenListSet {
-    suites = suites.graphical;
+  imports = lib.our.flattenListSet {
+    suites = suites.graphic;
     imports = [ ];
     profiles = with profiles; [
       boot.grub
