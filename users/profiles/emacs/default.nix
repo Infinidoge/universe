@@ -1,15 +1,15 @@
 { config, pkgs, ... }: {
-  # programs.doom-emacs = {
-  #   enable = true;
-  #   doomPrivateDir = ./doom;
-  # };
+  programs.doom-emacs = {
+    enable = true;
+    doomPrivateDir = ./doom;
+  };
 
-  # services.emacs = {
-  #   enable = true;
-  #   package = config.programs.emacs.package;
-  # };
+  services.emacs = {
+    enable = true;
+    package = config.programs.emacs.package;
+  };
 
-  home.sessionPath = [
-    "${config.xdg.configHome}/emacs/bin"
-  ];
+  # home.sessionPath = [
+  #   "${config.xdg.configHome}/emacs/bin"
+  # ];
 }
