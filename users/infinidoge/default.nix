@@ -31,7 +31,6 @@
         neofetch
       ];
     };
-
   };
 
   environment.systemPackages = with pkgs; [
