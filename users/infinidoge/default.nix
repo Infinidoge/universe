@@ -3,7 +3,7 @@
     suites = with suites; [ develop ];
   };
 
-  home-manager.users.infinidoge = { suites, profiles, ... }: {
+  home-manager.users.infinidoge = { config, suites, profiles, ... }: {
     imports = test.flattenListSet {
       suites = with suites; [ base ];
     };
@@ -13,15 +13,25 @@
       userName = "Infinidoge";
     };
 
-    home.packages = with pkgs; [
-      discord-plugged
+    home = {
+      file = {
+        qtile_config = {
+          source = ./config/qtile.py;
+          target = "${config.xdg.configHome}/qtile/config.py";
+        };
+      };
 
-      hydrus
+      packages = with pkgs; [
+        discord-plugged
 
-      firefox
+        hydrus
 
-      neofetch
-    ];
+        firefox
+
+        neofetch
+      ];
+    };
+
   };
 
   environment.systemPackages = with pkgs; [
