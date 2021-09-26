@@ -132,6 +132,10 @@
             suites = with profiles; rec {
               base = [ core users.root users.infinidoge ];
               graphic = base ++ [ graphical.qtile ];
+
+              develop = nixos.lib.lists.flatten [
+                (with profiles.develop.programming; [ python racket ])
+              ];
             };
             test = self.lib;
           };
