@@ -1,9 +1,13 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
+{ pkgs, lib, ... }: {
+  environment.systemPackages = with pkgs; lib.lists.flatten [
     python3
-    python310
-    python39Packages.pip
-    python39Packages.black
+    (with python39Packages; [
+      pip
+      black
+      mypy
+    ])
     python-language-server
+
+    python310
   ];
 }
