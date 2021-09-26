@@ -6,7 +6,6 @@
 
   services.emacs = {
     enable = true;
-    package = config.programs.emacs.package;
   };
 
   # home.sessionPath = [
