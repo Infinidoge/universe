@@ -14,7 +14,7 @@
 
   system.stateVersion = "21.05";
 
-  virtualization.libvirtd.qemuVerbatimConfig = [
+  virtualisation.libvirtd.qemuVerbatimConfig = [
     "-m 8G"
   ];
 
