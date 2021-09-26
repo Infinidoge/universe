@@ -14,6 +14,10 @@
 
   system.stateVersion = "21.05";
 
+  virtualization.libvirtd.qemuVerbatimConfig = [
+    "-m 8G"
+  ];
+
   networking.interfaces = {
     eth0.useDHCP = true;
     wlp41s0.useDHCP = true;
