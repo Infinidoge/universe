@@ -101,11 +101,11 @@
  )
 
 (map! :map evil-window-map
-  "<left>" #'evil-window-left
-  "<right>" #'evil-window-right
-  "<up>" #'evil-window-up
-  "<down>" #'evil-window-down
-  )
+      "<left>" #'evil-window-left
+      "<right>" #'evil-window-right
+      "<up>" #'evil-window-up
+      "<down>" #'evil-window-down
+      )
 
 (use-package! evil-goggles
   :config
@@ -141,6 +141,6 @@
 
 
 (setq
-  org-latex-listings 'minted
-  org-latex-packages-alist '(("" "minted"))
-  )
+ org-latex-listings 'minted
+ org-latex-packages-alist '(("" "minted"))
+ )
