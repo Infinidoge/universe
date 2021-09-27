@@ -144,3 +144,7 @@
  org-latex-listings 'minted
  org-latex-packages-alist '(("" "minted"))
  )
+
+(use-package! lsp-python-ms
+  :init
+  (setq lsp-python-ms-executable (executable-find "python-language-server")))

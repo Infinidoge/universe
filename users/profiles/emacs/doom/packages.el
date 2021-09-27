@@ -50,3 +50,5 @@
 ;(unpin! t)
 
 ;; (package! org-auto-tangle)
+
+(package! lsp-python-ms)
