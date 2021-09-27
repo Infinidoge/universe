@@ -513,6 +513,17 @@ def init_widget_list(main=True):
                                 padding=5,
                             ),
                         ],
+                        *(
+                            [
+                                widget.Battery(
+                                    format="{char} {percent:2.1%} {hour:d}h:{min:02d}m",
+                                    update_interval=30,
+                                    padding=5,
+                                ),
+                            ]
+                            if laptop
+                            else []
+                        ),
                     ]
                     if main
                     else []
@@ -548,7 +559,11 @@ def init_widget_list(main=True):
 
 screens = [
     Screen(
-        bottom=bar.Bar(init_widget_list(main=(i == 0)), size=20, opacity=1.0),  # width
+        bottom=bar.Bar(
+            init_widget_list(main=(i == 0), laptop=os.getenv("LAPTOP", False)),
+            size=20,
+            opacity=1.0,
+        ),
         wallpaper="~/Pictures/BotanBackground.jpg",
         wallpaper_mode="fill",
     )
