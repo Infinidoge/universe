@@ -13,17 +13,6 @@
       initExtra = ''
         kitty + complete setup zsh | source /dev/stdin
       '';
-      # autosuggestions.enable = true;
-
-      # syntaxHighlighting = {
-      #   enable = true;
-      #   highlighters = [ "main" "brackets" "pattern" "cursor" ];
-      #   patterns = {
-      #     "rm -rf *" = "fg=white,bold,bg=red";
-      #   };
-      # };
-
-      # zsh-autoenv.enable = true;
 
       dotDir = ".config/zsh";
 
