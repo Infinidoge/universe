@@ -3,8 +3,8 @@
     suites = with suites; [ develop ];
   };
 
-  home-manager.users.infinidoge = { hconfig, suites, profiles, ... }: {
-    imports = test.flattenListSet {
+  home-manager.users.infinidoge = { config, suites, profiles, ... }: {
+    imports = lib.our.flattenListSet {
       suites = with suites; [ base ];
     };
 
@@ -17,7 +17,7 @@
       file = {
         qtile_config = {
           source = ./config/qtile.py;
-          target = "${hconfig.xdg.configHome}/qtile/config.py";
+          target = "${config.xdg.configHome}/qtile/config.py";
         };
       };
 
