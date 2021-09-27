@@ -480,19 +480,28 @@ def init_widget_list(main=True, laptop=False):
                 *(
                     [
                         [
-                            widget.TextBox(text="Wireless (wlp41s0):", padding=2),
-                            widget.Net(
-                                interface="wlp41s0",
-                                format="{down} ↓↑ {up}",
-                                padding=5,
-                            ),
-                            widget.Sep(linewidth=2, padding=3),
-                            widget.TextBox(text="Ethernet (eth0):", padding=2),
-                            widget.Net(
-                                interface="eth0",
-                                format="{down} ↓↑ {up}",
-                                padding=5,
-                            ),
+                            *sum(
+                                [
+                                    *(
+                                        [widget.Sep(linewidth=2, padding=3)]
+                                        if i != 0
+                                        else []
+                                    ),
+                                    widget.TextBox(text=f"{interface}:", padding=2),
+                                    widget.Net(
+                                        interface=interface,
+                                        format="{down} ↓↑ {up}",
+                                        padding=5,
+                                    ),
+                                ]
+                                for i, interface in enumerate(
+                                    os.popen(
+                                        "ifconfig -s | grep -wv -e Iface -e lo | awk {'print $1'} | tac"
+                                    )
+                                )
+                                .read()
+                                .splitlines()
+                            )
                         ],
                         [
                             widget.TextBox(
