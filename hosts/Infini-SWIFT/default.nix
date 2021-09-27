@@ -7,15 +7,14 @@
         boot.grub
 
         networking.wireless
-        hardware.sound
-        hardware.amdgpu
+
+        (with hardware; [
+          sound
+          amdgpu
+          laptop
+        ])
         # peripherals.printing
       ];
-  };
-
-  services.xserver.libinput = {
-    enable = true;
-    touchpad.naturalScrolling = true;
   };
 
   system.stateVersion = "21.11";
