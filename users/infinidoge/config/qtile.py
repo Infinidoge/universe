@@ -421,7 +421,7 @@ def create_powerline(
     return output
 
 
-def init_widget_list(main=True):
+def init_widget_list(main=True, laptop=False):
     """
     Returns a list of widgets suitable for a qtile bar
     """
