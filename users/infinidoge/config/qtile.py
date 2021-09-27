@@ -498,9 +498,9 @@ def init_widget_list(main=True, laptop=False):
                                     os.popen(
                                         "ifconfig -s | grep -wv -e Iface -e lo | awk {'print $1'} | tac"
                                     )
+                                    .read()
+                                    .splitlines()
                                 )
-                                .read()
-                                .splitlines()
                             )
                         ],
                         [
