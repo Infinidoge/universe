@@ -548,20 +548,17 @@ def init_widget_list(main=True):
 
 screens = [
     Screen(
-        bottom=bar.Bar(init_widget_list(main=True), size=20, opacity=1.0),  # width
+        bottom=bar.Bar(init_widget_list(main=(i == 0)), size=20, opacity=1.0),  # width
         wallpaper="~/Pictures/BotanBackground.jpg",
         wallpaper_mode="fill",
-    ),
-    Screen(
-        bottom=bar.Bar(init_widget_list(main=False), size=20, opacity=1.0),  # width
-        wallpaper="~/Pictures/BotanBackground.jpg",
-        wallpaper_mode="fill",
-    ),
-    Screen(
-        bottom=bar.Bar(init_widget_list(main=False), size=20, opacity=1.0),  # width
-        wallpaper="~/Pictures/BotanBackground.jpg",
-        wallpaper_mode="fill",
-    ),
+    )
+    for i in range(
+        int(
+            os.popen(
+                "xrandr --listmonitors | grep 'Monitors:' | awk {'print $2'}"
+            ).read()
+        )
+    )
 ]
 
 # Drag floating layouts.
