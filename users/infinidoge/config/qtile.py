@@ -502,7 +502,8 @@ def init_widget_list(main=True, laptop=False):
                                         .read()
                                         .splitlines()
                                     )
-                                ]
+                                ],
+                                [],
                             )
                         ],
                         [
