@@ -70,8 +70,8 @@
         git_status = {
           format = "([「$all_status$ahead_behind」]($style))";
           conflicted = "⚠️";
-          ahead = "⟫$${count} ";
-          behind = "⟪$${count}";
+          ahead = "⟫\${count} ";
+          behind = "⟪\${count}";
           diverged = "🔀 ";
           untracked = "📁 ";
           stashed = "↪ ";
