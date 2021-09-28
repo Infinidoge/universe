@@ -1,10 +1,7 @@
 { pkgs, lib, ... }: {
   services.xserver = {
     enable = true;
-    displayManager = {
-      lightdm.enable = true;
-      importedVariables = [ "DOOMDIR" ];
-    };
+    displayManager.lightdm.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

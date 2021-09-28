@@ -22,8 +22,13 @@
     home = {
       file = {
         qtile_config = {
-          source = ./config/qtile.py;
-          target = "${config.xdg.configHome}/qtile/config.py";
+          source = ./config/qtile;
+          target = "${config.xdg.configHome}/qtile";
+        };
+
+        doom_config = {
+          source = ./config/doom;
+          target = "${config.xdg.configHome}/doom";
         };
       };
 
@@ -56,8 +61,6 @@
     ];
 
     shellAliases.ssh = "kitty +kitten ssh";
-
-    variables.DOOMDOR = "/etc/nixos/users/infinidoge/config/doom/";
   };
 
   programs = {

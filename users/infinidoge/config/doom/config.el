@@ -148,3 +148,6 @@
 (use-package! lsp-python-ms
   :init
   (setq lsp-python-ms-executable (executable-find "python-language-server")))
+
+;; Disable excessive warnings in configuration directory
+(add-to-list '+emacs-lisp-disable-flycheck-in-dirs "/etc/nixos")
