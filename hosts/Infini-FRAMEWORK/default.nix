@@ -9,6 +9,7 @@
       (with hardware; [
         sound
         laptop
+        gpu.intel
       ])
     ];
   };
