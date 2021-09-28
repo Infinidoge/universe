@@ -10,7 +10,7 @@
 
         (with hardware; [
           sound
-          amdgpu
+          gpu.amdgpu
           laptop
         ])
         # peripherals.printing

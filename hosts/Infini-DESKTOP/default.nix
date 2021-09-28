@@ -7,7 +7,7 @@
 
       networking.wireless
       hardware.sound
-      hardware.nvidia
+      hardware.gpu.nvidia
       # peripherals.printing
     ];
   };
