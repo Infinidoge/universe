@@ -5,4 +5,6 @@
   };
 
   environment.variables.LAPTOP = "True";
+
+  services.logind.lidSwitch = "ignore";
 }
