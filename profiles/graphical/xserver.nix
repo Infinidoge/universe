@@ -1,6 +1,11 @@
 { pkgs, lib, ... }: {
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver = {
+    enable = true;
+    displayManager = {
+      lightdm.enable = true;
+      importedVariables = [ "DOOMDIR" ];
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     xclip
