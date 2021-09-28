@@ -37,24 +37,28 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    wget
-    vim
-    htop
+  environment = {
+    systemPackages = with pkgs; [
+      wget
+      vim
+      htop
 
-    ffmpeg
-    ntfs3g
-    unzip
+      ffmpeg
+      ntfs3g
+      unzip
 
-    gnupg
+      gnupg
 
-    libsForQt5.dolphin
-    gnome3.adwaita-icon-theme
-    adwaita-qt
-    lxappearance
-  ];
+      libsForQt5.dolphin
+      gnome3.adwaita-icon-theme
+      adwaita-qt
+      lxappearance
+    ];
 
-  environment.shellAliases.ssh = "kitty +kitten ssh";
+    shellAliases.ssh = "kitty +kitten ssh";
+
+    variables.DOOMDOR = "/etc/nixos/users/infinidoge/config/doom/";
+  };
 
   programs = {
     vim.defaultEditor = true;
