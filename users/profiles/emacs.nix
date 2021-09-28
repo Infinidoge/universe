@@ -6,10 +6,6 @@
       "${config.xdg.configHome}/emacs/bin"
     ];
 
-    sessionVariables = {
-      DOOMDIR = "/etc/nixos/users/profiles/emacs/doom/";
-    };
-
     packages = with pkgs; [
       emacs
       ripgrep
