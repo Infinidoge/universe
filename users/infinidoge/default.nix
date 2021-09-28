@@ -13,6 +13,12 @@
       userName = "Infinidoge";
     };
 
+    programs = {
+      firefox = {
+        enable = true;
+      };
+    };
+
     home = {
       file = {
         qtile_config = {
@@ -25,8 +31,6 @@
         discord-plugged
 
         hydrus
-
-        firefox
 
         neofetch
       ];
