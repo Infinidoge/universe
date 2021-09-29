@@ -60,7 +60,10 @@
       lxappearance
     ];
 
-    shellAliases.ssh = "kitty +kitten ssh";
+    shellAliases = {
+      ssh = "kitty +kitten ssh";
+      lsdisk = "lsblk -o name,size,mountpoints,fstype,label,uuid,fsavail,fsuse%";
+    };
   };
 
   programs = {
