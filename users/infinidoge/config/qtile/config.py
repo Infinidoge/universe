@@ -326,7 +326,7 @@ keys = [
     ),
     Key(
         [Keys.SUPER, Keys.ALT], "d",
-        lazy.spawn("discord-canary"),
+        lazy.spawn("discordcanary"),
         desc="Launch Discord",
     ),
 ]
