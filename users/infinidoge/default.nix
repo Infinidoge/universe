@@ -40,6 +40,8 @@
         neofetch
 
         speedcrunch
+
+        teams
       ];
     };
   };
