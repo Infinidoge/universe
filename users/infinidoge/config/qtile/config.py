@@ -329,6 +329,11 @@ keys = [
         lazy.spawn("discordcanary"),
         desc="Launch Discord",
     ),
+    Key(
+        [Keys.SUPER, Keys.ALT], "c",
+        lazy.spawn("speedcrunch"),
+        desc="Launch Speedcrunch",
+    ),
 ]
 # fmt: on
 

@@ -38,6 +38,8 @@
         hydrus
 
         neofetch
+
+        speedcrunch
       ];
     };
   };
