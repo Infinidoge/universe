@@ -19,14 +19,6 @@
           [┝┫$directory(┣━┫$git_branch$git_status(@$git_commit)( $git_metrics)( $git_state))┃](${line_style})
           [└┨](${line_style})$character
         '';
-        # format = ''
-        #   (╢$status $cmd_duration\n)[┌───┨$shlvl┠──┨$shell┠────────>](bold green) $username@$hostname
-        #   [│](bold green) $directory$git_branch$git_commit$git_state$git_metrics$git_status$vcsh$hg_branch
-        #   (\n[|](bold green) $crystal$dart$deno$dotnet$elixir$elm$erlang$golang$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$perl$php$purescript$python$red$ruby$rust$scaly$swift$terraform$vlang$vagrant$zig)
-        #   (\n[|](bold green) $nix_shell$conda$docker_context$package$cmake$kubernetes$env_var)
-        #   (\n[|](bold green)$aws$gcloud$openstack)
-        #   [└─](bold green) $character
-        # '';
 
         character = rec {
           success_symbol = "[❯](bold purple)";
