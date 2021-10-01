@@ -42,6 +42,11 @@
         speedcrunch
 
         teams
+
+        libsForQt5.dolphin
+        gnome3.adwaita-icon-theme
+        adwaita-qt
+        lxappearance
       ];
     };
   };
@@ -57,11 +62,6 @@
       unzip
 
       gnupg
-
-      libsForQt5.dolphin
-      gnome3.adwaita-icon-theme
-      adwaita-qt
-      lxappearance
     ];
 
     shellAliases = {
