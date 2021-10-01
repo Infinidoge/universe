@@ -17,6 +17,7 @@
       firefox = {
         enable = true;
       };
+      command-not-found.enable = true;
     };
 
     home = {
