@@ -1,7 +1,3 @@
 { ... }: {
-  imports = [
-    ./bash.nix
-    ./fish.nix
-    ./zsh.nix
-  ];
+  programs.command-not-found.enable = true;
 }

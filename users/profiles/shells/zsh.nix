@@ -1,4 +1,6 @@
 { config, lib, pkgs, ... }: {
+  imports = [ ./common.nix ];
+
   programs = {
     zsh = rec {
       enable = true;

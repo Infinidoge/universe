@@ -158,7 +158,7 @@
                 # Terminal
                 kitty
                 starship
-                shells.common
+                shells.all
               ];
             };
           };
