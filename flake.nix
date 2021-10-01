@@ -142,24 +142,25 @@
           modules = [ ];
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
-            suites = with profiles; rec {
-              base = [
-                # Base Configuration
-                xdg
+            suites = with profiles; self.lib.flattenSetList
+              rec {
+                base = [
+                  # Base Configuration
+                  xdg
 
-                # Programs
-                direnv
-                git
-                pass
-                emacs
-                gaming
+                  # Programs
+                  direnv
+                  git
+                  pass
+                  emacs
+                  gaming
 
-                # Terminal
-                kitty
-                starship
-                shells.all
-              ];
-            };
+                  # Terminal
+                  kitty
+                  starship
+                  shells.all
+                ];
+              };
           };
           users = {
             infinidoge = { };
