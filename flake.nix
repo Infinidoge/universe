@@ -134,7 +134,6 @@
                 (with profiles.develop.programming; [ python racket ])
               ];
             };
-            test = self.lib;
           };
         };
 
