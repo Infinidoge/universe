@@ -133,7 +133,11 @@
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core users.root users.infinidoge ];
+              base = [
+                core
+                users.root
+                users.infinidoge
+              ];
               graphic = base ++ [ graphical.qtile ];
 
               develop = nixos.lib.lists.flatten [
