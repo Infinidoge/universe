@@ -118,9 +118,15 @@
 
           imports = [ (digga.lib.importHosts ./hosts) ];
           hosts = {
-            # set host specific properties here
+            # Desktops
             Infini-DESKTOP = { };
+
+            # Laptops
             Infini-SWIFT = { };
+            Infini-FRAMEWORK = { };
+
+            # Servers
+            Infini-SERVER = { };
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
