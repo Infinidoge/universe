@@ -1,6 +1,6 @@
 { suites, profiles, pkgs, lib, ... }: {
   imports = lib.our.flattenListSet {
-    suites = suites.graphic;
+    suites = with suites; [ graphic develop ];
     imports = [ ./hardware-configuration.nix ];
     profiles = with profiles;
       [
