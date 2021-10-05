@@ -132,18 +132,18 @@
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
-            suites = with profiles; rec {
-              base = [
-                core
-                users.root
-                users.infinidoge
-              ];
-              graphic = base ++ [ graphical.qtile ];
+            suites = with profiles; self.lib.flattenSetList
+              rec {
+                base = [
+                  core
+                  (with users; [ root infinidoge ])
+                ];
+                graphic = base ++ [ graphical.qtile ];
 
-              develop = nixos.lib.lists.flatten [
-                (with profiles.develop.programming; [ python racket ])
-              ];
-            };
+                develop = [
+                  (with profiles.develop.programming; [ python racket ])
+                ];
+              };
           };
         };
 
