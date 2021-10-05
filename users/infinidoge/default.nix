@@ -37,8 +37,6 @@
 
         hydrus
 
-        neofetch
-
         speedcrunch
 
         teams
