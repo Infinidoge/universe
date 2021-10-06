@@ -8,5 +8,8 @@
     rofi
   ];
 
-  fonts.fonts = with pkgs; [ powerline-fonts ubuntu_font_family ];
+  fonts.fonts = with pkgs; [
+    powerline-fonts
+    ubuntu_font_family
+  ];
 }
