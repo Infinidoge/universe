@@ -145,10 +145,31 @@ And jumps to your `doom!' block."
  )
 
 (map! :map evil-window-map
+      ;; Unbind Vim HJKL keys
+      "h" nil
+      "H" nil
+
+      "j" nil
+      "J" nil
+
+      "k" nil
+      "K" nil
+
+      "l" nil
+      "L" nil
+
+      ;; Rebind to arrow keys
       "<left>" #'evil-window-left
+      "S-<left>" #'+evil/window-move-left
+
       "<right>" #'evil-window-right
+      "S-<right>" #'+evil/window-move-right
+
       "<up>" #'evil-window-up
+      "S-<up>" #'+evil/window-move-up
+
       "<down>" #'evil-window-down
+      "S-<down>" #'+evil/window-move-down
       )
 
 (use-package! evil-goggles
