@@ -221,13 +221,6 @@ And jumps to your `doom!' block."
     (format-all-buffer)))
 
 (add-hook 'before-save-hook #'infinidoge/nixpkgs-fmt-fix)
-;; (use-package! org-auto-tangle
-;;   :defer t
-;;   :hook (org-mode . org-auto-tangle-mode)
-;;   :config
-;;   (setq org-auto-tangle-default t)
-;;   )
-
 
 (setq
  org-latex-listings 'minted
