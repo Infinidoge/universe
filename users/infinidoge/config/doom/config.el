@@ -161,15 +161,19 @@ And jumps to your `doom!' block."
       ;; Rebind to arrow keys
       "<left>" #'evil-window-left
       "S-<left>" #'+evil/window-move-left
+      "C-S-<left>" #'evil-window-move-far-left
 
       "<right>" #'evil-window-right
       "S-<right>" #'+evil/window-move-right
+      "C-S-<right>" #'evil-window-move-far-right
 
       "<up>" #'evil-window-up
       "S-<up>" #'+evil/window-move-up
+      "C-S-<up>" #'evil-window-move-very-top
 
       "<down>" #'evil-window-down
       "S-<down>" #'+evil/window-move-down
+      "C-S-<down>" #'evil-window-move-very-bottom
       )
 
 (use-package! evil-goggles
