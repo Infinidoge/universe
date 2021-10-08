@@ -188,6 +188,14 @@ And jumps to your `doom!' block."
       "C-S-<down>" #'evil-window-move-very-bottom
       )
 
+(map! :map which-key-C-h-map
+      "j" nil
+      "<right>" #'which-key-show-next-page-cycle
+
+      "k"
+      "<left>" #'which-key-show-previous-page-cycle
+      )
+
 (use-package! evil-goggles
   :config
   ;; (evil-goggles-use-diff-faces)
