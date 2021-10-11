@@ -535,7 +535,7 @@ def init_widget_list(main=True, laptop=False):
                                 [
                                     widget.Battery(
                                         format="{char} {percent:2.1%} {hour:d}h:{min:02d}m",
-                                        update_interval=30,
+                                        update_interval=10,
                                         padding=5,
                                     ),
                                 ],
