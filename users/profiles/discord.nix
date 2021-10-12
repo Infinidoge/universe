@@ -49,7 +49,6 @@
         discord-quick-Status
         discord-quick-delete-pc
         discord-quick-reply
-        discord-quickstar
         discord-reddit-parser
         discord-relationship-notifier
         discord-remove-invite-from-user-context-menu
