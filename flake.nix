@@ -218,6 +218,7 @@
           imports = [ (digga.lib.importExportableModules ./users/modules) ];
           modules = [ ];
           importables = rec {
+            inherit inputs;
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; self.lib.flattenSetList
               rec {
