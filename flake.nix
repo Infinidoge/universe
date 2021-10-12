@@ -231,6 +231,7 @@
                   pass
                   emacs
                   gaming
+                  discord
 
                   # Terminal
                   kitty
