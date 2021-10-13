@@ -237,6 +237,7 @@
                   kitty
                   starship
                   shells.all
+                  tmux
                 ];
               };
           };
