@@ -103,7 +103,7 @@
       "PASSWORD SET IN THE FUTURE";
     description = "Infinidoge";
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "minecraft" ];
     shell = pkgs.zsh;
   };
 }
