@@ -192,7 +192,7 @@ And jumps to your `doom!' block."
       "j" nil
       "<right>" #'which-key-show-next-page-cycle
 
-      "k"
+      "k" nil
       "<left>" #'which-key-show-previous-page-cycle
       )
 
