@@ -4,7 +4,7 @@
     ghc
 
     stack
-    stack2nix
+    # stack2nix
     cabal2nix
   ];
 }
