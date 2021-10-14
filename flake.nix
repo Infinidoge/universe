@@ -207,7 +207,11 @@
                 graphic = base ++ [ graphical.qtile ];
 
                 develop = [
-                  (with profiles.develop.programming; [ python racket ])
+                  (with profiles.develop.programming; [
+                    python
+                    racket
+                    haskell
+                  ])
                 ];
               };
           };
