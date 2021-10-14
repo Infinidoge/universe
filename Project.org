@@ -1,0 +1,38 @@
+#+TITLE: Infinidoge's DevOS Configuration
+
+* PROJ Server Configuration
+
+** TODO Minecraft Servers module
+
+- [ ]
+
+*** TODO Repackage ~minecraft-server~ for all versions
+
+*** TODO Package fabric server
+
+- Should compose with ~minecraft-server~ to allow for different version combinations
+- Possible declarative mod setup
+  + Would require packaging mods, Modrinth packaging helper script?
+
+** TODO GitLab setup
+
+** TODO Nginx setup
+
+- Static website?
+
+** TODO Reverse proxy for everything
+
+- [ ] GitLab
+- [ ] Website
+- [ ] Minecraft servers
+
+* PROJ Raspberry Pi Configuration
+
+** TODO Create packaging template for Discord bots
+
+- Flake
+- Produces an enable-able module, composes with others of the same template
+
+* PROJ My computer configurations
+
+** TODO Readd Stretchly
