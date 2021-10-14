@@ -4,9 +4,9 @@
 
 ** TODO Minecraft Servers module
 
-- [ ]
-
 *** TODO Repackage ~minecraft-server~ for all versions
+
+- Updating script
 
 *** TODO Package fabric server
 
@@ -36,3 +36,15 @@
 * PROJ My computer configurations
 
 ** TODO Readd Stretchly
+
+** TODO Add Rofi
+
+*** TODO Desktop apps menu
+
+*** TODO Commands menu
+
+- [ ] Modifier key for opening in shell
+
+*** TODO Add theming
+
+- Possibly abstract out color theme to a Nix file to share
