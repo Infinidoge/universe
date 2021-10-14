@@ -6,6 +6,7 @@
       boot.grub
 
       networking.wireless
+
       (with hardware; [
         sound
         laptop
