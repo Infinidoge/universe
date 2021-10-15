@@ -4,7 +4,6 @@
       plugins = with inputs; [
         discord-Better-Friends-List
         discord-Custom-Volume-Range
-        discord-Do-Not-Slowmode-Me
         discord-In-app-notifs
         discord-NSFW-tags
         discord-Password-System

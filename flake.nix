@@ -55,7 +55,6 @@
 
     discord-Better-Friends-List = { url = "github:E-boi/Better-Friends-List"; flake = false; };
     discord-Custom-Volume-Range = { url = "github:PandaDriver156/Custom-Volume-Range"; flake = false; };
-    discord-Do-Not-Slowmode-Me = { url = "github:SammCheese/Do-Not-slowmode-Me"; flake = false; };
     discord-In-app-notifs = { url = "github:BenSegal855/In-app-notifs"; flake = false; };
     discord-NSFW-tags = { url = "github:E-boi/NSFW-tags"; flake = false; };
     discord-Password-System = { url = "github:TheShadowGamer/Password-System"; flake = false; };
