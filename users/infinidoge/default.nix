@@ -30,6 +30,11 @@
           source = ./config/doom;
           target = "${config.xdg.configHome}/doom";
         };
+
+        stretchly_config = {
+          source = ./config/stretchly.json;
+          target = "${config.xdg.configHome}/Stretchly/config.json";
+        };
       };
 
       packages = with pkgs; [
