@@ -6,6 +6,11 @@
   home-manager.users.infinidoge = { config, suites, profiles, ... }: {
     imports = lib.our.flattenListSet {
       suites = with suites; [ base ];
+      profiles = with profiles; [
+        pass
+        discord
+        gaming
+      ];
     };
 
     programs.git = {
