@@ -19,6 +19,10 @@
     wlp41s0.useDHCP = true;
   };
 
+  home-manager.users.infinidoge = { profiles, ... }: {
+    imports = with profiles; [ stretchly ];
+  };
+
   # services.minecraft-servers = {
   #   enable = true;
   #   openFirewall = true;
