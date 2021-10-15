@@ -4,7 +4,6 @@
 
     extraConfig = {
       pull.rebase = true;
-      credential.helper = "${pkgs.gitAndTools.pass-git-helper}/bin/pass-git-helper";
     };
 
     aliases = {
