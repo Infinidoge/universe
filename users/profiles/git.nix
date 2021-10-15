@@ -3,7 +3,7 @@
     enable = true;
 
     extraConfig = {
-      pull.rebase = false;
+      pull.rebase = true;
       credential.helper = "${pkgs.gitAndTools.pass-git-helper}/bin/pass-git-helper";
     };
 
