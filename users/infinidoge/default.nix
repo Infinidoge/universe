@@ -1,4 +1,4 @@
-{ config, self, lib, pkgs, suites, profiles, inputs, ... }@main: {
+{ config, self, lib, pkgs, suites, profiles, inputs, ... }: {
   imports = lib.our.flattenListSet {
     suites = with suites; [ develop ];
   };
