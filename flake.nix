@@ -231,13 +231,10 @@
                   # Programs
                   direnv
                   git
-                  pass
                   emacs
-                  gaming
-                  discord
+                  kitty
 
                   # Terminal
-                  kitty
                   starship
                   shells.all
                   tmux
