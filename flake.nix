@@ -103,7 +103,6 @@
     discord-relationship-notifier = { url = "github:Twizzer/relationship-notifier"; flake = false; };
     discord-remove-invite-from-user-context-menu = { url = "github:SebbyLaw/remove-invite-from-user-context-menu"; flake = false; };
     discord-report-messages = { url = "github:12944qwerty/report-messages"; flake = false; };
-    discord-rich-quotes = { url = "github:AAGaming00/rich-quotes"; flake = false; };
     discord-rolecolor-everywhere = { url = "github:powercord-community/rolecolor-everywhere"; flake = false; };
     discord-scrollable-autocomplete = { url = "github:GriefMoDz/scrollable-autocomplete"; flake = false; };
     discord-send-timestamps = { url = "github:12944qwerty/send-timestamps"; flake = false; };

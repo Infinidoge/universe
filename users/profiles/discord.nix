@@ -52,7 +52,6 @@
         discord-relationship-notifier
         discord-remove-invite-from-user-context-menu
         discord-report-messages
-        discord-rich-quotes
         discord-rolecolor-everywhere
         discord-scrollable-autocomplete
         discord-send-timestamps
