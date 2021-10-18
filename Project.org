@@ -35,7 +35,7 @@
 
 * PROJ My computer configurations
 
-** TODO Readd Stretchly
+** DONE Readd Stretchly
 
 ** TODO Add Rofi
 
