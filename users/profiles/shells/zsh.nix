@@ -29,7 +29,6 @@
 
           # zsh modifications
           "zsh-interactive-cd"
-          "zsh_reload"
           "command-not-found"
 
           # Aliases
