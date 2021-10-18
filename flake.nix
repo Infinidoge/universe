@@ -10,6 +10,7 @@
   inputs = {
     # --- DevOS Flake Inputs
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixos.url = "github:nixos/nixpkgs";
     latest.url = "github:nixos/nixpkgs";
 
     digga.url = "github:divnix/digga";
