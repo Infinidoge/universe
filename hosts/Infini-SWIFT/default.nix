@@ -14,6 +14,8 @@
           laptop
         ])
         # peripherals.printing
+
+        services.privoxy
       ];
   };
 
