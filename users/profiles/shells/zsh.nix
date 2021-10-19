@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, main, ... }: {
   imports = [ ./common.nix ];
 
   programs = {
@@ -19,6 +19,8 @@
       dotDir = ".config/zsh";
 
       history.path = "${dotDir}/.zsh_history";
+
+      shellAliases = main.environment.shellAliases;
 
       oh-my-zsh = {
         enable = true;
