@@ -10,7 +10,7 @@
       enableAutosuggestions = true;
       enableSyntaxHighlighting = true;
 
-      defaultKeymap = "emacs";
+      # defaultKeymap = "emacs";
 
       initExtra = ''
         kitty + complete setup zsh | source /dev/stdin
