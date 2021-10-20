@@ -5,6 +5,7 @@
       pip
       black
       mypy
+      jupyter
     ])
     python-language-server
 
