@@ -16,7 +16,7 @@
       clang
       mu
       isync
-      tetex
+      texlive.combined.scheme-full
       jq
       gnumake
       shellcheck
