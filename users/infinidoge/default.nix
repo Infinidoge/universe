@@ -35,6 +35,11 @@
           source = ./config/doom;
           target = "${config.xdg.configHome}/doom";
         };
+
+        blugon_config = {
+          source = ./config/blugon;
+          target = "${config.xdg.configHome}/blugon";
+        };
       };
 
       packages = with pkgs; [
