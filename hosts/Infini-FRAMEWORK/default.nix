@@ -17,5 +17,7 @@
 
   system.stateVersion = "21.11";
 
+  networking.interfaces.wlp170s0.useDHCP = true;
+
   services.fprintd.enable = true;
 }
