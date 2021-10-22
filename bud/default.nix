@@ -13,5 +13,12 @@
       help = "Shortcut for nixos-rebuild using the current hostname";
       script = ./buildthis.bash;
     };
+
+    install-doom = {
+      writer = budUtils.writeBashWithPaths [ git coreutils emacs ];
+      synopsis = "install-doom [ARGS]";
+      help = "Installs Doom Emacs from https://github.com/hlissner/doom-emacs";
+      script = ./install-doom.bash;
+    };
   };
 }
