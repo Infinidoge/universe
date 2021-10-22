@@ -15,5 +15,7 @@
     ];
   };
 
+  system.stateVersion = "21.11";
+
   services.fprintd.enable = true;
 }
