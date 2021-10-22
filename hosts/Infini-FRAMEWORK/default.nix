@@ -1,8 +1,8 @@
 { suites, profiles, pkgs, lib, ... }: {
-  imports = lib.flattenListSet {
-    suites = suites.graphic;
-    imports = [ ];
-    profiles = with profiles; [
+  imports = lib.lists.flatten [
+    (with suites; [ graphic ])
+
+    (with profiles; [
       boot.grub
 
       networking.wireless
@@ -12,8 +12,8 @@
         laptop
         gpu.intel
       ])
-    ];
-  };
+    ])
+  ];
 
   system.stateVersion = "21.11";
 
