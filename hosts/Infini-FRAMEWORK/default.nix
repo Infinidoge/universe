@@ -12,6 +12,8 @@
         laptop
         gpu.intel
       ])
+
+      ./hardware-configuration.nix
     ])
   ];
 
