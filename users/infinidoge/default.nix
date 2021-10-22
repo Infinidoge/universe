@@ -63,7 +63,6 @@
     systemPackages = with pkgs; [
       wget
       vim
-      htop
 
       ffmpeg
       ntfs3g
