@@ -48,6 +48,8 @@
         gnome3.adwaita-icon-theme
         adwaita-qt
         lxappearance
+
+        sxiv
       ];
     };
   };
