@@ -52,8 +52,3 @@
 ;; (package! org-auto-tangle)
 
 (package! lsp-python-ms)
-
-(package! gitconfig-mode :disable t)
-(package! gitignore-mode :disable t)
-(package! git-modes :pin "433e1c57a63c88855fc41a942e29d7bc8c9c16c7")
-
