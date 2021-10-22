@@ -1,5 +1,5 @@
 { suites, profiles, pkgs, lib, ... }: {
-  imports = lib.our.flattenListSet {
+  imports = lib.flattenListSet {
     suites = suites.graphic;
     imports = [ ];
     profiles = with profiles; [
