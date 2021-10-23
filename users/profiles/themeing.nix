@@ -6,17 +6,17 @@
     font = {
       package = pkgs.dejavu_fonts;
       name = "DejaVu Sans";
-      size = 12;
+      size = 10;
     };
 
     iconTheme = {
       package = pkgs.gnome.adwaita-icon-theme;
-      name = "Adwaita-Dark";
+      name = "Adwaita-dark";
     };
 
     theme = {
       package = pkgs.gnome.gnome-themes-extra;
-      name = "Adwaita-Dark";
+      name = "Adwaita-dark";
     };
   };
 
