@@ -10,6 +10,8 @@
         pass
         discord
         gaming
+
+        themeing
       ])
     ];
 
@@ -50,9 +52,6 @@
         teams
 
         libsForQt5.dolphin
-        gnome3.adwaita-icon-theme
-        adwaita-qt
-        lxappearance
 
         sxiv
       ];
@@ -81,7 +80,6 @@
     vim.defaultEditor = true;
 
     dconf.enable = true;
-    qt5ct.enable = true;
 
     steam.enable = true;
 
