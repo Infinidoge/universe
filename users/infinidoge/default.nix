@@ -52,6 +52,7 @@
         teams
 
         libsForQt5.dolphin
+        gnome.gnome-screenshot
 
         sxiv
       ];
