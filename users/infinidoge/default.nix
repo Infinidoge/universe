@@ -1,6 +1,8 @@
 { config, self, lib, pkgs, suites, profiles, inputs, ... }: {
   imports = lib.lists.flatten [
     (with suites; [ develop ])
+
+    (with profiles; [ virtualization ])
   ];
 
   home-manager.users.infinidoge = { config, suites, profiles, ... }: {
