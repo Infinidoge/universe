@@ -224,15 +224,25 @@ keys = [
         desc="Kill focused window",
     ),
     Key(
-        [Keys.SUPER, Keys.CONTROL], "r",
-        lazy.restart(),
-        desc="Restart Qtile",
+        [Keys.SUPER, Keys.CONTROL, Keys.SHIFT], "f",
+        lazy.window.toggle_floating(),
+        desc="Toggle window's floating mode"
     ),
     Key(
-        [Keys.SUPER, Keys.CONTROL], "q",
-        lazy.shutdown(),
-        desc="Shutdown Qtile",
+        [Keys.SUPER, Keys.CONTROL], "r",
+        lazy.reload_config(),
+        desc="Reload Qtile Configuration",
     ),
+    # Key(
+    #     [Keys.SUPER, Keys.CONTROL], "r",
+    #     lazy.restart(),
+    #     desc="Restart Qtile",
+    # ),
+    # Key(
+    #     [Keys.SUPER, Keys.CONTROL], "q",
+    #     lazy.shutdown(),
+    #     desc="Shutdown Qtile",
+    # ),
     Key(
         [Keys.SUPER, Keys.CONTROL], "l",
         lazy.spawn("xsecurelock"),
