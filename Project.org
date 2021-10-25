@@ -48,3 +48,27 @@
 *** TODO Add theming
 
 - Possibly abstract out color theme to a Nix file to share
+
+** PROJ Miscellaneous Configurations
+
+*** TODO dconf
+
+*** TODO emacs
+
+- Automatically install Doom Emacs
+
+*** TODO fontconfig
+
+*** TODO htop
+
+*** TODO libreoffice
+
+*** TODO neofetch
+
+*** TODO nixpkgs
+
+*** TODO powercord
+
+*** TODO SpeedCrunch
+
+*** TODO systemd
