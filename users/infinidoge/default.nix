@@ -61,8 +61,6 @@
       ffmpeg
       ntfs3g
       unzip
-
-      gnupg
     ];
 
     shellAliases = {
@@ -77,12 +75,6 @@
     dconf.enable = true;
 
     steam.enable = true;
-
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      pinentryFlavor = "gnome3"; # "emacs" potential
-    };
   };
 
   fonts = {
