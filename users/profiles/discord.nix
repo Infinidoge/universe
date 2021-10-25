@@ -6,7 +6,6 @@
         discord-Custom-Volume-Range
         discord-In-app-notifs
         discord-NSFW-tags
-        discord-Password-System
         discord-PowerAliases
         discord-PowercordTwemojiEverywhere
         discord-Quick-Bot-Invite
