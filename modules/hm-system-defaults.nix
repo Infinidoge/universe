@@ -12,6 +12,9 @@
         xdg.configFile."nix/registry.json".text =
           config.environment.etc."nix/registry.json".text;
       }
+      {
+        xdg.enable = true;
+      }
     ];
   };
 }

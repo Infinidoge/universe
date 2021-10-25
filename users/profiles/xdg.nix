@@ -1,9 +1,6 @@
 {
-  xdg = {
+  xdg.userDirs = {
     enable = true;
-    userDirs = {
-      enable = true;
-      createDirectories = true;
-    };
+    createDirectories = true;
   };
 }
