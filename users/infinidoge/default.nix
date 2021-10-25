@@ -28,37 +28,29 @@
       };
     };
 
-    home = {
-      file = {
-        qtile_config = {
-          source = ./config/qtile;
-          target = "${config.xdg.configHome}/qtile";
-        };
-
-        doom_config = {
-          source = ./config/doom;
-          target = "${config.xdg.configHome}/doom";
-        };
-
-        blugon_config = {
-          source = ./config/blugon;
-          target = "${config.xdg.configHome}/blugon";
-        };
+    xdg.configFile = {
+      "qtile".source = ./config/qtile;
+      "doom" = {
+        source = ./config/doom;
+        onChange = ''
+          ${config.xdg.configHome}/emacs/bin/doom sync -p
+        '';
       };
-
-      packages = with pkgs; [
-        hydrus
-
-        speedcrunch
-
-        teams
-
-        libsForQt5.dolphin
-        gnome.gnome-screenshot
-
-        sxiv
-      ];
+      "blugon".source = ./config/blugon;
     };
+
+    home.packages = with pkgs; [
+      hydrus
+
+      speedcrunch
+
+      teams
+
+      libsForQt5.dolphin
+      gnome.gnome-screenshot
+
+      sxiv
+    ];
   };
 
   environment = {
