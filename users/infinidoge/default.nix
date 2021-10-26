@@ -14,6 +14,8 @@
         gaming
 
         themeing
+
+        rofi
       ])
     ];
 

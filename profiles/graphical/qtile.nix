@@ -5,7 +5,6 @@
 
   environment.systemPackages = with pkgs; [
     xsecurelock
-    rofi
   ];
 
   fonts.fonts = with pkgs; [
