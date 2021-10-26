@@ -65,7 +65,7 @@
 
 *** TODO neofetch
 
-*** TODO nixpkgs
+*** DONE nixpkgs
 
 *** TODO powercord
 
