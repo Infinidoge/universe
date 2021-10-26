@@ -53,7 +53,7 @@
 
 *** TODO dconf
 
-*** TODO emacs
+*** HOLD emacs
 
 - Automatically install Doom Emacs
 
