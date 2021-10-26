@@ -26,4 +26,10 @@ channels: final: prev: {
             haskell-language-server;
         });
     });
+
+  qtile = prev.qtile.overrideAttrs (attrs: {
+    patches = [
+      ./qtile.patch
+    ];
+  });
 }

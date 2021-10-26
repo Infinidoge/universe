@@ -1,0 +1,165 @@
+From 987c0f550ca48dfaafb6dc0164bfe0cd45e51728 Mon Sep 17 00:00:00 2001
+From: elParaguayo <elparaguayocode@gmail.com>
+Date: Sat, 28 Aug 2021 10:56:20 +0100
+Subject: [PATCH] Allow KeyChord mode names without staying in mode
+
+This PR allows all KeyChords to be named (via `mode`)
+but gives the user the option to switch off the mode
+persistence then the key sequence is complete.
+
+The benefit of this is that the mode name can be displayed in
+the Chord widget for all KeyChords, not just those with
+persistent modes.
+
+Closes #2647
+---
+ docs/manual/config/keys.rst |  5 +++
+ libqtile/config.py          | 15 +++++---
+ libqtile/core/manager.py    |  2 +-
+ test/widgets/test_chord.py  | 68 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 85 insertions(+), 5 deletions(-)
+
+diff --git a/docs/manual/config/keys.rst b/docs/manual/config/keys.rst
+index 417460bf1c..b53207f3bc 100644
+--- a/docs/manual/config/keys.rst
++++ b/docs/manual/config/keys.rst
+@@ -121,6 +121,11 @@ shrink it etc. as many times as needed. To exit the mode, press <escape>.
+     (:class:`libqtile.widget.chord.Chord`) as this will display the name of the
+     currently active mode on the bar.
+ 
++An additional benefit of setting the ``mode`` is that it allows for the name to
++be displayed in the ``Chord`` widget. Users wishing to name all KeyChords but
++not remain in the KeyChord mode after the chord is complete should set the
++``name`` argument to the desired display name.
++
+ Chains
+ ------
+ 
+diff --git a/libqtile/config.py b/libqtile/config.py
+index 26c82a2752..386393cbc0 100644
+--- a/libqtile/config.py
++++ b/libqtile/config.py
+@@ -83,18 +83,25 @@ class KeyChord:
+     submappings:
+         A list of Key or KeyChord declarations to bind in this chord.
+     mode:
+-        A string with vim like mode name. If it's set, the chord mode will
+-        not be left after a keystroke (except for Esc which always leaves the
+-        current chord/mode).
++        A string with vim like mode name. The name will be displayed in the
++        Chord widget when entered. By default, when the mode is set, the chord
++        mode will not be left after a keystroke (except for Esc which always
++        leaves the current chord/mode).
++    name:
++        A string to name the chord. The name will be displayed in the Chord
++        widget but, unlike "mode", the chord will be exited after the final
++        keystroke.
+     """
+     def __init__(self, modifiers: List[str], key: str,
+-                 submappings: List[Union[Key, KeyChord]], mode: str = ""):
++                 submappings: List[Union[Key, KeyChord]], mode: str = "",
++                 name: str = ""):
+         self.modifiers = modifiers
+         self.key = key
+ 
+         submappings.append(Key([], "Escape"))
+         self.submappings = submappings
+         self.mode = mode
++        self.name = name
+ 
+     def __repr__(self):
+         return "<KeyChord (%s, %s)>" % (self.modifiers, self.key)
+diff --git a/libqtile/core/manager.py b/libqtile/core/manager.py
+index 738b19d1cc..0b3de647d1 100644
+--- a/libqtile/core/manager.py
++++ b/libqtile/core/manager.py
+@@ -388,7 +388,7 @@ def ungrab_keys(self) -> None:
+     def grab_chord(self, chord: KeyChord) -> None:
+         self.chord_stack.append(chord)
+         if self.chord_stack:
+-            hook.fire("enter_chord", chord.mode)
++            hook.fire("enter_chord", chord.mode or chord.name)
+ 
+         self.ungrab_keys()
+         for key in chord.submappings:
+diff --git a/test/widgets/test_chord.py b/test/widgets/test_chord.py
+index 1a9e0d0a49..f9aae2f743 100644
+--- a/test/widgets/test_chord.py
++++ b/test/widgets/test_chord.py
+@@ -1,4 +1,7 @@
++import libqtile.confreader
+ from libqtile import hook
++from libqtile.config import Key, KeyChord
++from libqtile.lazy import lazy
+ from libqtile.widget import Chord, base
+ 
+ RED = "#FF0000"
+@@ -25,3 +28,68 @@ def test_chord_widget(fake_bar):
+     hook.fire("enter_chord", "testcolor")
+     assert chord.background == RED
+     assert chord.foreground == BLUE
++
++
++def test_chord_persistence(manager_nospawn):
++    def no_op():
++        pass
++
++    class ChordConf(libqtile.confreader.Config):
++        auto_fullscreen = False
++        keys = [
++            KeyChord([], "a", [
++                Key([], "b", lazy.function(no_op))
++                ],
++                mode="persistent_chord"
++            ),
++            KeyChord([], "z", [
++                Key([], "b", lazy.function(no_op)),
++                ],
++                name="temporary_name"
++            )
++        ]
++        mouse = []
++        groups = [libqtile.config.Group("a"), libqtile.config.Group("b")]
++        layouts = [libqtile.layout.stack.Stack(num_stacks=1)]
++        floating_layout = libqtile.resources.default_config.floating_layout
++        screens = [
++            libqtile.config.Screen(
++                top=libqtile.bar.Bar([Chord()], 10)
++            )
++        ]
++
++    manager_nospawn.start(ChordConf)
++
++    widget = manager_nospawn.c.widget["chord"]
++
++    assert widget.info()["text"] == ""
++
++    # Test 1: Test persistent chord mode name
++    # Enter the chord
++    manager_nospawn.c.simulate_keypress([], "a")
++    assert widget.info()["text"] == "persistent_chord"
++
++    # Chord has finished but mode should still be in place
++    manager_nospawn.c.simulate_keypress([], "b")
++    assert widget.info()["text"] == "persistent_chord"
++
++    # Escape to leave chord
++    manager_nospawn.c.simulate_keypress([], "Escape")
++    assert widget.info()["text"] == ""
++
++    # Test 2: Test temporary chord name
++    # Enter the chord
++    manager_nospawn.c.simulate_keypress([], "z")
++    assert widget.info()["text"] == "temporary_name"
++
++    # Chord has finished and should exit
++    manager_nospawn.c.simulate_keypress([], "b")
++    assert widget.info()["text"] == ""
++
++    # Enter the chord
++    manager_nospawn.c.simulate_keypress([], "z")
++    assert widget.info()["text"] == "temporary_name"
++
++    # Escape to cancel chord
++    manager_nospawn.c.simulate_keypress([], "Escape")
++    assert widget.info()["text"] == ""
