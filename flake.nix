@@ -232,6 +232,7 @@
                   git
                   emacs
                   kitty
+                  vim
 
                   # Terminal
                   starship
