@@ -51,4 +51,8 @@
         nixos-option = "nixos-option -I nixpkgs=${self}/lib/compat";
       };
   };
+
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 }
