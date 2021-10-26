@@ -1,5 +1,12 @@
 { config, pkgs, lib, ... }: {
-  services.emacs.enable = true;
+  programs.emacs = {
+    enable = true;
+  };
+
+  services.emacs = {
+    enable = true;
+    client.enable = true;
+  };
 
   home = {
     sessionPath = [
@@ -7,7 +14,6 @@
     ];
 
     packages = with pkgs; [
-      emacs
       ripgrep
       coreutils
       cmake
