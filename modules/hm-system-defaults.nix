@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   home-manager = {
     extraSpecialArgs = {
       main = config;
@@ -9,12 +9,14 @@
         home.sessionVariables = {
           inherit (config.environment.sessionVariables) NIX_PATH;
         };
-        xdg.configFile."nix/registry.json".text =
-          config.environment.etc."nix/registry.json".text;
+        xdg = {
+          configFile."nix/registry.json".text = config.environment.etc."nix/registry.json".text;
+          enable = true;
+        };
       }
-      {
-        xdg.enable = true;
-      }
+      (lib.mkIf config.services.xserver.enable {
+        xsession.enable = true;
+      })
     ];
   };
 }
