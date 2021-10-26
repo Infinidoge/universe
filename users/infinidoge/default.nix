@@ -69,9 +69,9 @@
     };
   };
 
-  programs = {
-    vim.defaultEditor = true;
+  services.emacs.defaultEditor = true;
 
+  programs = {
     dconf.enable = true;
 
     steam.enable = true;
