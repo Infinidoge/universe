@@ -233,6 +233,7 @@
                   emacs
                   kitty
                   vim
+                  gpg
 
                   # Terminal
                   starship
