@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   services = {
     privoxy = {
       enable = true;
@@ -16,5 +16,10 @@
       requiredBy = [ "privoxy.service" ];
       forwards.dynamic = [ 1337 ];
     };
+  };
+
+  environment.variables = {
+    HTTP_PROXY = config.services.privoxy.settings.listen-address;
+    HTTPS_PROXY = config.services.privoxy.settings.listen-address;
   };
 }
