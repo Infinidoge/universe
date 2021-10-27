@@ -22,7 +22,7 @@
       clang
       mu
       isync
-      texlive.combined.scheme-full
+      texlive.combined.scheme-medium
       jq
       gnumake
       shellcheck
