@@ -5,10 +5,10 @@
       device = "nodev";
       efiSupport = true;
       useOSProber = true;
-      efiInstallAsRemovable = true;
+      efiInstallAsRemovable = lib.mkDefault true;
     };
     efi = {
-      canTouchEfiVariables = true;
+      canTouchEfiVariables = lib.mkDefault false;
       efiSysMountPoint = "/boot/efi";
     };
   };
