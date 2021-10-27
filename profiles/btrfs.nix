@@ -1,10 +1,10 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   environment.systemPackages = with pkgs; [
     btrfs-progs
   ];
 
   services.btrfs.autoScrub = {
-    enable = true;
+    enable = lib.mkDefault true;
     interval = "monthly";
   };
 }
