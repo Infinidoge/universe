@@ -5,6 +5,7 @@
       device = "nodev";
       efiSupport = true;
       useOSProber = true;
+      efiInstallAsRemovable = true;
     };
     efi = {
       canTouchEfiVariables = true;
