@@ -3,7 +3,7 @@
     btrfs-progs
   ];
 
-  srvices.btrfs.autoScrub = {
+  services.btrfs.autoScrub = {
     enable = true;
     interval = "monthly";
   };
