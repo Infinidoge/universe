@@ -13,6 +13,8 @@
           gpu.amdgpu
           laptop
         ])
+
+        btrfs
         # peripherals.printing
 
         services.privoxy
