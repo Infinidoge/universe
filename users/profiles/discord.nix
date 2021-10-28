@@ -41,6 +41,7 @@
         discord-powercord-message-tooltips
         discord-powercord-mute-folder
         discord-powercord-ownertags
+        discord-powercord-pindms
         discord-powercord-ppl-moe
         discord-powercord-reverse-image-search
         discord-pronoundb-powercord
