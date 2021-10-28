@@ -4,7 +4,7 @@
   ];
 
   services.btrfs.autoScrub = {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false;
     interval = "monthly";
   };
 }
