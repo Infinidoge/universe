@@ -14,7 +14,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/sda1";
+    device = "/dev/disk/by-uuid/b2165920-9be1-435d-838b-82346311892f";
     fsType = "btrfs";
     options = [ "subvol=root" "compress=zstd" "autodefrag" "noatime" ];
   };
