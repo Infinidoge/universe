@@ -93,6 +93,7 @@
     discord-powercord-message-tooltips = { url = "github:lorencerri/powercord-message-tooltips"; flake = false; };
     discord-powercord-mute-folder = { url = "github:notsapinho/powercord-mute-folder"; flake = false; };
     discord-powercord-ownertags = { url = "github:Puyodead1/powercord-ownertag"; flake = false; };
+    discord-powercord-pindms = { url = "github:Bricklou/powercord-pindms"; flake = false; };
     discord-powercord-ppl-moe = { url = "github:Penguin-Spy/powercord-ppl-moe"; flake = false; };
     discord-powercord-reverse-image-search = { url = "github:lorencerri/powercord-reverse-image-search"; flake = false; };
     discord-pronoundb-powercord = { url = "github:cyyynthia/pronoundb-powercord"; flake = false; };
