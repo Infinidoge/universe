@@ -16,7 +16,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/b99971c6-bdd2-4c55-8992-72d17c19e4b1";
     fsType = "btrfs";
-    options = [ "subvol=/" "autodefrag" "noatime" ];
+    options = [ "subvol=/subvolumes/root" "autodefrag" "noatime" ];
   };
 
   fileSystems."/boot/efi" = {
