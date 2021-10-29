@@ -13,8 +13,9 @@
         gpu.intel
       ])
 
-      ./hardware-configuration.nix
+      services.privoxy
     ])
+    ./hardware-configuration.nix
   ];
 
   system.stateVersion = "21.11";
