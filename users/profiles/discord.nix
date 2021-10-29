@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     (discord-plugged.override {
       plugins = with inputs; [
-        discord-Better-Friends-List
         discord-Custom-Volume-Range
         discord-In-app-notifs
         discord-NSFW-tags
