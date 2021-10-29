@@ -12,7 +12,7 @@
 
     ssh-tunnel = {
       enable = true;
-      server = "infinidoge@server.doge-inc.net -p 245 -i /home/infinidoge/.ssh/id_ed25519";
+      server = "infinidoge@server.doge-inc.net -p 245 -i /home/infinidoge/.ssh/id_ed25519 -v";
       requiredBy = [ "privoxy.service" ];
       forwards.dynamic = [ 1337 ];
     };
