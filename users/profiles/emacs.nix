@@ -26,6 +26,7 @@
       jq
       gnumake
       shellcheck
+      editorconfig-checker
       nodejs
       nodePackages.prettier
       sqlite
