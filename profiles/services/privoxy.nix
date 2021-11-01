@@ -18,8 +18,5 @@
     };
   };
 
-  environment.variables = {
-    HTTP_PROXY = config.services.privoxy.settings.listen-address;
-    HTTPS_PROXY = config.services.privoxy.settings.listen-address;
-  };
+  networking.proxy.default = config.services.privoxy.settings.listen-address;
 }
