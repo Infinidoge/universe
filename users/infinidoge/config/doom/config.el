@@ -224,11 +224,18 @@ And jumps to your `doom!' block."
 
 (setq
  org-latex-listings 'minted
- org-latex-packages-alist '(("" "minted"))
+ org-latex-packages-alist '(("" "minted" "listingsutf8"))
  org-latex-pdf-process
- '("pdflatex -shell-escape -interaction nonstopmode -output-directory \"%o\" \"%f\""
-   "pdflatex -shell-escape -interaction nonstopmode -output-directory \"%o\" \"%f\"")
+ '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+ org-src-fontify-natively t
  )
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)
+   (latex . t)))
 
 (use-package! lsp-python-ms
   :init
