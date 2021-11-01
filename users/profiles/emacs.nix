@@ -22,7 +22,7 @@
       clang
       mu
       isync
-      texlive.combined.scheme-medium
+      (texlive.combine { inherit (texlive) scheme-medium wrapfig; })
       jq
       gnumake
       shellcheck
