@@ -15,6 +15,7 @@
 
       services.privoxy
     ])
+
     ./hardware-configuration.nix
   ];
 
