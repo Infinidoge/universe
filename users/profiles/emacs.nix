@@ -22,7 +22,11 @@
       clang
       mu
       isync
-      (texlive.combine { inherit (texlive) scheme-medium wrapfig; })
+      (texlive.combine {
+        inherit (texlive)
+          scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed;
+      })
+      python39Packages.pygments
       jq
       gnumake
       shellcheck
