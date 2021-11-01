@@ -261,7 +261,7 @@ keys = [
         desc="Spawn a command in a shell using a prompt widget",
     ),
     Key(
-        [Keys.SUPER, Keys.CONTROL], "r",
+        [Keys.SUPER, Keys.ALT], "r",
         lazy.spawn("rofi -show drun"),
         desc="Spawn a rofi menu to select a desktop application to open",
     ),
