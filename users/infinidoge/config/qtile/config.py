@@ -248,6 +248,8 @@ keys = [
         lazy.spawn("xsecurelock"),
         desc="Lock Screen",
     ),
+
+    # Keys for spawning commands or applications
     Key(
         [Keys.SUPER], "r",
         lazy.spawncmd(),
@@ -257,6 +259,16 @@ keys = [
         [Keys.SUPER, Keys.SHIFT], "r",
         lazy.spawncmd(prompt="shell", command=Apps.terminal_command("%s", args=("--hold",))),
         desc="Spawn a command in a shell using a prompt widget",
+    ),
+    Key(
+        [Keys.SUPER, Keys.CONTROL], "r",
+        lazy.spawn("rofi -show drun"),
+        desc="Spawn a rofi menu to select a desktop application to open",
+    ),
+    Key(
+        [Keys.SUPER, Keys.CONTROL, Keys.SHIFT], "r",
+        lazy.spawn("rofi -show run"),
+        desc="Spawn something in the path",
     ),
 
     # Power management
