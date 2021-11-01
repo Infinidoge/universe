@@ -512,7 +512,7 @@ def init_widget_list(main=True, laptop=False):
                                     ]
                                     for i, interface in enumerate(
                                         os.popen(
-                                            'ifconfig -s | grep -wv -e "Iface" -e "lo" -e "vir.+" | awk {\'print $1\'} | tac'
+                                            "ifconfig -s  | awk {'print $1'} | grep -Ev -e Iface -e lo -e vir.+ | tac"
                                         )
                                         .read()
                                         .splitlines()
