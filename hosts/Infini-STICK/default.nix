@@ -10,6 +10,7 @@
       (with hardware; [
         sound
         gpu.amdgpu
+        gpu.intel
         laptop
       ])
 
@@ -19,7 +20,7 @@
     ./hardware-configuration.nix
   ];
 
-  networking.interfaces.wlp1s0.useDHCP = true;
+  networking.interfaces.wlp170s0.useDHCP = true;
 
   system.stateVersion = "21.11";
 }
