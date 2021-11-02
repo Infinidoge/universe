@@ -1,16 +1,25 @@
 { suites, profiles, pkgs, lib, ... }: {
-  imports = lib.our.flattenListSet {
-    suites = with suites; [ graphic develop ];
-    imports = [ ./hardware-configuration.nix ];
-    profiles = with profiles; [
+  imports = lib.lists.flatten [
+    (with suites; [
+      graphic
+      develop
+    ])
+
+    (with profiles; [
       boot.systemd-boot
 
       networking.wireless
-      hardware.sound
-      hardware.gpu.nvidia
-      # peripherals.printing
-    ];
-  };
+
+      (with hardware; [
+        sound
+        gpu.nvidia
+      ])
+
+      btrfs
+    ])
+
+    ./hardware-configuration.nix
+  ];
 
   system.stateVersion = "21.05";
 
