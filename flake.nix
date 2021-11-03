@@ -231,7 +231,6 @@
                   direnv
                   git
                   emacs
-                  kitty
                   vim
                   gpg
 
@@ -239,6 +238,12 @@
                   starship
                   shells.all
                   tmux
+                ];
+
+                graphic = [
+                  kitty
+                  rofi
+                  themeing
                 ];
               };
           };

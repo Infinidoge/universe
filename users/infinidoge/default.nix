@@ -5,19 +5,18 @@
     (with profiles; [ virtualization ])
   ];
 
-  home-manager.users.infinidoge = { config, suites, profiles, ... }: {
-    imports = lib.lists.flatten [
-      (with suites; [ base ])
+  home-manager.users.infinidoge = { config, main, suites, profiles, ... }: {
+    imports = lib.lists.flatten ([
+      (with suites; [
+        base
+      ])
       (with profiles; [
         pass
-        discord
-        gaming
-
-        themeing
-
-        rofi
       ])
-    ];
+    ] ++ (if main.services.xserver.enable then [
+      (with suites; [ graphic ])
+      (with profiles; [ discord gaming ])
+    ] else [ ]));
 
     programs.git = {
       userEmail = "infinidoge@doge-inc.net";
@@ -41,7 +40,7 @@
       "blugon".source = ./config/blugon;
     };
 
-    home.packages = with pkgs; [
+    home.packages = lib.mkIf main.services.xserver.enable (with pkgs; [
       hydrus
 
       speedcrunch
@@ -52,7 +51,7 @@
       gnome.gnome-screenshot
 
       sxiv
-    ];
+    ]);
   };
 
   environment = {
