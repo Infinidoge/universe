@@ -14,28 +14,29 @@
     ];
 
     packages = with pkgs; [
-      ripgrep
-      coreutils
+      clang
       cmake
+      coreutils
+      editorconfig-checker
       fd
       fzf
-      clang
-      mu
+      gnumake
       isync
+      jq
+      libvterm
+      mu
+      nodePackages.prettier
+      nodejs
+      python39Packages.pygments
+      ripgrep
+      shellcheck
+      sqlite
+
+      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
       (texlive.combine {
         inherit (texlive)
           scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed;
       })
-      python39Packages.pygments
-      jq
-      gnumake
-      shellcheck
-      editorconfig-checker
-      nodejs
-      nodePackages.prettier
-      sqlite
-
-      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     ];
 
     # activation = { # Works in theory, but times out on rebuild
