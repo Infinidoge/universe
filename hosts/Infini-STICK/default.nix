@@ -1,6 +1,6 @@
 { lib, suites, profiles, ... }: {
   imports = lib.lists.flatten [
-    (with suites; [ graphic develop ])
+    (with suites; [ base develop ])
 
     (with profiles; [
       boot.grub
