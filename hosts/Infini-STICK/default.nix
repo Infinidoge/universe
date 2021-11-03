@@ -15,6 +15,8 @@
       ])
 
       btrfs
+
+      services.privoxy
     ])
 
     ./hardware-configuration.nix
