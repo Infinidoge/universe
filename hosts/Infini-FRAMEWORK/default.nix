@@ -34,6 +34,7 @@
       "/var/lib/fprint"
       "/var/lib/bluetooth"
       "/var/lib/systemd/coredump"
+      "/var/db/sudo/lectured"
     ];
 
     files = [
