@@ -26,8 +26,8 @@
       "/home"
       "/etc/nixos"
       "/var/log"
-      "/var/lib/bluetooth"
-      "/var/lib/systemd/coredump"
+      # "/var/lib/bluetooth"
+      # "/var/lib/systemd/coredump"
     ];
 
     files = [
