@@ -1,22 +1,27 @@
 { config, self, lib, pkgs, suites, profiles, inputs, ... }: {
-  imports = lib.lists.flatten [
+  imports = lib.flatten [
     (with suites; [ develop ])
 
     (with profiles; [ virtualization ])
   ];
 
   home-manager.users.infinidoge = { config, main, suites, profiles, ... }: {
-    imports = lib.lists.flatten ([
+    imports = lib.flatten [
       (with suites; [
         base
+
+        (lib.optional main.services.xserver.enable graphic)
       ])
       (with profiles; [
         pass
+
+        (lib.optionals main.services.xserver.enable [
+          discord
+          gaming
+        ])
       ])
-    ] ++ (if main.services.xserver.enable then [
-      (with suites; [ graphic ])
-      (with profiles; [ discord gaming ])
-    ] else [ ]));
+    ];
+
 
     programs.git = {
       userEmail = "infinidoge@doge-inc.net";
@@ -40,18 +45,22 @@
       "blugon".source = ./config/blugon;
     };
 
-    home.packages = lib.mkIf main.services.xserver.enable (with pkgs; [
-      hydrus
+    home.packages = with pkgs; lib.flatten [
+      btrfs-progs
 
-      speedcrunch
+      (lib.optionals main.services.xserver.enable [
+        hydrus
 
-      teams
+        speedcrunch
 
-      libsForQt5.dolphin
-      gnome.gnome-screenshot
+        teams
 
-      sxiv
-    ]);
+        libsForQt5.dolphin
+        gnome.gnome-screenshot
+
+        sxiv
+      ])
+    ];
   };
 
   environment = {
