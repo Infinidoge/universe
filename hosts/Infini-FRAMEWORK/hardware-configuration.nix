@@ -13,16 +13,44 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/b99971c6-bdd2-4c55-8992-72d17c19e4b1";
-    fsType = "btrfs";
-    options = [ "subvol=subvolumes/root" "autodefrag" "noatime" ];
-  };
+  fileSystems =
+    let
+      uuid = uuid: "/dev/disk/by-uuid/${uuid}";
+    in
+    {
+      "/" = {
+        device = "none";
+        fsType = "tmpfs";
+        options = [ "defaults" "size=4G" "mode=755" ];
+      };
 
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/3FC9-0182";
-    fsType = "vfat";
-  };
+      "/persist" = {
+        device = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
+        fsType = "btrfs";
+        options = [ "subvol=root" "autodefrag" "noatime" ];
+        neededForBoot = true;
+      };
+
+      "/nix" = {
+        device = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
+        fsType = "btrfs";
+        options = [ "subvol=nix" "autodefrag" "noatime" ];
+        neededForBoot = true;
+      };
+
+      "/boot" = {
+        device = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
+        fsType = "btrfs";
+        options = [ "subvol=boot" "autodefrag" "noatime" ];
+        neededForBoot = true;
+      };
+
+      "/boot/efi" = {
+        device = uuid "3FC9-0182";
+        fsType = "vfat";
+        neededForBoot = true;
+      };
+    };
 
   swapDevices = [{ device = "/dev/disk/by-uuid/28672ffb-9f1c-462b-b49d-8a14b3dd72b3"; }];
 
