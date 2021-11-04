@@ -80,6 +80,7 @@
     discord-copy-mentions = { url = "github:tealingg/copy-mentions"; flake = false; };
     discord-copy-raw-message = { url = "github:mic0ishere/copy-raw-message"; flake = false; };
     discord-copy-role-color = { url = "github:Antonio32A/copy-role-color"; flake = false; };
+    discord-css-toggler = { url = "github:12944qwerty/css-toggler"; flake = false; };
     discord-custom-timestamps = { url = "github:TaiAurori/custom-timestamps"; flake = false; };
     discord-cutecord = { url = "github:powercord-community/cutecord"; flake = false; };
     discord-discord-status = { url = "github:KableKo/discord-status"; flake = false; };
