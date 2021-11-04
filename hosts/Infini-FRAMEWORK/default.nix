@@ -21,6 +21,19 @@
 
   system.stateVersion = "21.11";
 
+  environment.persistence."/persist" = {
+    directories = [
+      "/home"
+      "/var/log"
+      "/var/lib/bluetooth"
+      "/var/lib/systemd/coredump"
+    ];
+
+    files = [
+      "/etc/machine-id"
+    ];
+  };
+
   networking.interfaces.wlp170s0.useDHCP = true;
 
   hardware.video.hidpi.enable = false;
