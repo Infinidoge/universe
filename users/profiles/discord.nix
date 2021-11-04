@@ -26,6 +26,7 @@
         discord-copy-mentions
         discord-copy-raw-message
         discord-copy-role-color
+        discord-css-toggler
         discord-custom-timestamps
         discord-cutecord
         discord-discord-status
