@@ -40,6 +40,8 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    impermanence.url = "github:nix-community/impermanence";
+
     # start ANTI CORRUPTION LAYER
     # remove after https://github.com/NixOS/nix/pull/4641
     nixpkgs.follows = "nixos";
@@ -177,6 +179,8 @@
               home.nixosModules.home-manager
               agenix.nixosModules.age
               bud.nixosModules.bud
+
+              inputs.impermanence.nixosModules.impermanence
             ];
           };
 
@@ -217,7 +221,7 @@
 
         home = {
           imports = [ (digga.lib.importExportableModules ./users/modules) ];
-          modules = [ ];
+          modules = [ "${inputs.impermanence}/home-manager.nix" ];
           importables = rec {
             inherit inputs;
             profiles = digga.lib.rakeLeaves ./users/profiles;
