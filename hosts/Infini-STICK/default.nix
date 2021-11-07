@@ -16,13 +16,14 @@
 
       btrfs
 
-      services.privoxy
+      # services.privoxy
     ])
 
     ./hardware-configuration.nix
   ];
 
-  networking.interfaces.wlp170s0.useDHCP = true;
+  # networking.interfaces.wlp170s0.useDHCP = true;
+  networking.interfaces.enp39s0.useDHCP = true;
 
   system.stateVersion = "21.11";
 }
