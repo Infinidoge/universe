@@ -75,7 +75,6 @@
     ];
 
     shellAliases = {
-      ssh = "kitty +kitten ssh";
       lsdisk = "lsblk -o name,size,mountpoint,fstype,label,uuid,fsavail,fsuse%";
     };
   };
