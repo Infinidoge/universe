@@ -7,4 +7,8 @@
       size = 12;
     };
   };
+
+  home.shellAliases = {
+    ssh = "kitty +kitten ssh";
+  };
 }
