@@ -12,6 +12,7 @@
           sound
           gpu.amdgpu
           laptop
+          wireless
         ])
 
         btrfs

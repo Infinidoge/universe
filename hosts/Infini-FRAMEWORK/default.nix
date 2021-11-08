@@ -11,6 +11,7 @@
         sound
         laptop
         gpu.intel
+        wireless
       ])
 
       # services.privoxy

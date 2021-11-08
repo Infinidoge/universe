@@ -5,7 +5,10 @@
     ])
 
     (with profiles; [
-      hardware.rpi
+      (with hardware; [
+        rpi
+        wireless
+      ])
 
       networking.wireless
     ])
