@@ -15,6 +15,7 @@
           nvidia
         ])
         laptop
+        wireless
       ])
 
       btrfs

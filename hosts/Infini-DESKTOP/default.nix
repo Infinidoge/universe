@@ -13,6 +13,7 @@
       (with hardware; [
         sound
         gpu.nvidia
+        wireless
       ])
 
       btrfs
