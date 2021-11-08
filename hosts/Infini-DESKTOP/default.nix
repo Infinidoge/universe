@@ -6,7 +6,7 @@
     ])
 
     (with profiles; [
-      boot.systemd-boot
+      boot.grub
 
       networking.wireless
 
