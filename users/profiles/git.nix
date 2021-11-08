@@ -40,6 +40,12 @@
 
       # delete merged branches
       bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d";
+
+      crypt = "!git-crypt";
     };
   };
+
+  home.packages = with pkgs; [
+    git-crypt
+  ];
 }
