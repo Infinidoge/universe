@@ -9,8 +9,11 @@
 
       (with hardware; [
         sound
-        gpu.amdgpu
-        gpu.intel
+        (with gpu; [
+          amdgpu
+          intel
+          nvidia
+        ])
         laptop
       ])
 
