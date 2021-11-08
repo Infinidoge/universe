@@ -20,7 +20,7 @@
 
       history.path = "${dotDir}/.zsh_history";
 
-      shellAliases = main.environment.shellAliases;
+      shellAliases = main.environment.shellAliases // config.home.shellAliases;
 
       oh-my-zsh = {
         enable = true;
