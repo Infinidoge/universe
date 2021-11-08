@@ -47,6 +47,7 @@
 
     home.packages = with pkgs; lib.flatten [
       btrfs-progs
+      ncdu
 
       (lib.optionals main.services.xserver.enable [
         hydrus
