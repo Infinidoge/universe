@@ -120,7 +120,7 @@
       "PASSWORD SET IN THE FUTURE";
     description = "Infinidoge";
     isNormalUser = true;
-    extraGroups = [ "wheel" "minecraft" "libvirtd" ];
+    extraGroups = [ "wheel" "minecraft" "libvirtd" "bluetooth" ];
     shell = pkgs.zsh;
   };
 }
