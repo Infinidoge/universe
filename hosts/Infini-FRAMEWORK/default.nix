@@ -28,6 +28,7 @@
       "/etc/nixos"
 
       "/root/.local/share/nix"
+      "/root/.ssh"
 
       # /etc directories
       "/etc/ssh"
