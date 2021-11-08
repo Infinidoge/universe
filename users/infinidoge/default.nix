@@ -66,12 +66,8 @@
 
   environment = {
     systemPackages = with pkgs; [
-      wget
-      vim
-
       ffmpeg
       ntfs3g
-      unzip
     ];
 
     shellAliases = {
