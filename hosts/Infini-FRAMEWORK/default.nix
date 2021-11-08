@@ -27,6 +27,8 @@
       "/home"
       "/etc/nixos"
 
+      "/root/.local/share/nix"
+
       # /etc directories
       "/etc/ssh"
 
