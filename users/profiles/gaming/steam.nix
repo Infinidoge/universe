@@ -7,5 +7,7 @@
         export VK_ICD_FILENAMES=${main.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${main.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json
       '';
     })
+
+    protonup
   ];
 }
