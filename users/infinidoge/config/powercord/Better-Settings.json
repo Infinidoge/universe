@@ -299,6 +299,11 @@
       "",
       100,
       "Hotspot Options"
+    ],
+    "pc-updater": [
+      "",
+      100,
+      "Updater"
     ]
   },
   "changelog": true,
