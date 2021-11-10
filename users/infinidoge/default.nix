@@ -25,6 +25,8 @@ in
           gaming
         ])
       ])
+
+      ./config
     ];
 
     programs = {
@@ -35,17 +37,6 @@ in
       firefox = {
         enable = true;
       };
-    };
-
-    xdg.configFile = {
-      "qtile".source = ./config/qtile;
-      "doom" = {
-        source = ./config/doom;
-        onChange = ''
-          ${config.xdg.configHome}/emacs/bin/doom sync -p
-        '';
-      };
-      "blugon".source = ./config/blugon;
     };
 
     home.packages = with pkgs; lib.flatten [
