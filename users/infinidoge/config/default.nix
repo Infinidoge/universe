@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, main, ... }: {
   xdg.configFile = {
     "qtile".source = ./qtile;
 
@@ -10,7 +10,14 @@
     };
 
     "blugon".source = ./blugon;
+  };
 
-    "powercord".source = ./powercord;
+  home.bindmounts."${main.bud.localFlakeClone}/users/infinidoge/config" = {
+    directories = [
+      {
+        source = "powercord";
+        target = ".config/powercord";
+      }
+    ];
   };
 }
