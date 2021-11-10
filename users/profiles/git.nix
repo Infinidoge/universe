@@ -4,6 +4,7 @@
 
     extraConfig = {
       pull.rebase = true;
+      merge.ignore.driver = "true";
     };
 
     aliases = {
