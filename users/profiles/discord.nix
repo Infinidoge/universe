@@ -34,7 +34,7 @@
         discord-guild-profile
         discord-inbox-unread-count
         discord-message-link-embed
-        discord-multitask
+        # discord-multitask
         discord-online-friends-count
         discord-permission-viewer
         discord-powercord-LinkChannels
