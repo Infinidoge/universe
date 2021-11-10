@@ -1,10 +1,9 @@
 {
-  "advancedSettings": true,
+  "advancedSettings": false,
   "experiments": true,
   "disabledPlugins": [
     "pc-lmgtfy",
     "pc-spotify",
-    "pc-heygirl",
-    "pc-updater"
+    "pc-heygirl"
   ]
 }
