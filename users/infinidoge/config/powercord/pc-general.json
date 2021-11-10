@@ -1,0 +1,9 @@
+{
+  "advancedSettings": true,
+  "experiments": true,
+  "disabledPlugins": [
+    "pc-lmgtfy",
+    "pc-spotify",
+    "pc-heygirl"
+  ]
+}

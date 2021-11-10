@@ -10,5 +10,7 @@
     };
 
     "blugon".source = ./blugon;
+
+    "powercord".source = ./powercord;
   };
 }
