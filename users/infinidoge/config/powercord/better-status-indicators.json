@@ -1,0 +1,7 @@
+{
+  "enabledModules": [
+    "status-everywhere"
+  ],
+  "se-mobileStatus": "self+others",
+  "se-reducedStatuses": true
+}

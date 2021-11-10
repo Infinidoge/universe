@@ -1,0 +1,5 @@
+{
+  "--mention-cache": false,
+  "mention": "never",
+  "ping": "always"
+}
