@@ -1,4 +1,9 @@
-{ config, self, lib, pkgs, suites, profiles, inputs, ... }: {
+{ config, self, lib, pkgs, suites, profiles, inputs, ... }:
+let
+  ifGraphical = lib.optionals config.services.xserver.enable;
+  ifGraphical' = lib.optional config.services.xserver.enable;
+in
+{
   imports = lib.flatten [
     (with suites; [ develop ])
 
@@ -10,12 +15,12 @@
       (with suites; [
         base
 
-        (lib.optional main.services.xserver.enable graphic)
+        (ifGraphical' graphic)
       ])
       (with profiles; [
         pass
 
-        (lib.optionals main.services.xserver.enable [
+        (ifGraphical [
           discord
           gaming
         ])
@@ -49,7 +54,7 @@
       btrfs-progs
       ncdu
 
-      (lib.optionals main.services.xserver.enable [
+      (ifGraphical [
         hydrus
 
         speedcrunch
