@@ -17,7 +17,6 @@
         PERCENT_CPU
         PERCENT_MEM
         TIME
-        CWD
         COMM
       ];
       highlight_base_name = 1;
