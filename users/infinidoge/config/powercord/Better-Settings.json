@@ -120,11 +120,6 @@
       100,
       "Themes"
     ],
-    "pc-updater": [
-      "",
-      100,
-      "Updater"
-    ],
     "morebadges": [
       "",
       100,
@@ -174,11 +169,6 @@
       "",
       100,
       "Message Tooltips"
-    ],
-    "multitask": [
-      "",
-      100,
-      "Multitask"
     ],
     "PowerAliases": [
       "",
@@ -255,16 +245,6 @@
       100,
       "Hastebin"
     ],
-    "pc-lmgtfy": [
-      "",
-      100,
-      "LMGTFY"
-    ],
-    "pc-spotify": [
-      "",
-      100,
-      "Spotify"
-    ],
     "ppl-moe": [
       "",
       100,
@@ -323,6 +303,7 @@
   },
   "changelog": true,
   "pluginsCategory": true,
-  "contexttargetname": "Better Status Indicators",
-  "contexttarget": "Better-Status-Indicators"
+  "contexttargetname": "Custom Timestamps",
+  "contexttarget": "Custom-Timestamps",
+  "baddies": ""
 }
