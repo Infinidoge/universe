@@ -1,5 +1,6 @@
 {
-  "closeAllFolders": true,
+  "closeAllFolders": false,
   "closeOthers": true,
-  "forceOpen": true
+  "forceOpen": true,
+  "closeAllHomeButton": false
 }
