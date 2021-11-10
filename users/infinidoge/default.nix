@@ -27,13 +27,11 @@ in
       ])
     ];
 
-
-    programs.git = {
-      userEmail = "infinidoge@doge-inc.net";
-      userName = "Infinidoge";
-    };
-
     programs = {
+      git = {
+        userEmail = "infinidoge@doge-inc.net";
+        userName = "Infinidoge";
+      };
       firefox = {
         enable = true;
       };
@@ -78,20 +76,20 @@ in
     shellAliases = {
       lsdisk = "lsblk -o name,size,mountpoint,fstype,label,uuid,fsavail,fsuse%";
     };
-  };
 
-  environment.variables.EDITOR =
-    let
-      editorScript = pkgs.writeScriptBin "emacseditor" ''
-        #!${pkgs.runtimeShell}
-        if [ -z "$1" ]; then
-          exec ${pkgs.emacs}/bin/emacsclient --create-frame --alternate-editor ${pkgs.emacs}/bin/emacs
-        else
-          exec ${pkgs.emacs}/bin/emacsclient --alternate-editor ${pkgs.emacs}/bin/emacs "$@"
-        fi
-      '';
-    in
-    (lib.mkOverride 900 "${editorScript}/bin/emacseditor");
+    variables.EDITOR =
+      let
+        editorScript = pkgs.writeScriptBin "emacseditor" ''
+          #!${pkgs.runtimeShell}
+          if [ -z "$1" ]; then
+            exec ${pkgs.emacs}/bin/emacsclient --create-frame --alternate-editor ${pkgs.emacs}/bin/emacs
+          else
+            exec ${pkgs.emacs}/bin/emacsclient --alternate-editor ${pkgs.emacs}/bin/emacs "$@"
+          fi
+        '';
+      in
+      (lib.mkOverride 900 "${editorScript}/bin/emacseditor");
+  };
 
   programs = {
     dconf.enable = true;
