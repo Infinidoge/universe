@@ -62,6 +62,8 @@
 
 (setq emms-volume-change-function 'emms-volume-pulse-change)
 
+(setq epg-pinentry-mode 'loopback)
+
 (defun infinidoge/format-org-src-blocks ()
   (org-babel-map-src-blocks nil
     (if (equal (alist-get :format (org-babel-parse-header-arguments header-args) "yes")
