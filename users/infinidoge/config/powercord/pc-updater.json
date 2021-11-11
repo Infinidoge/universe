@@ -4,10 +4,7 @@
   "checking": false,
   "updating": false,
   "awaiting_reload": false,
-  "checking_progress": [
-    1,
-    1
-  ],
+  "checking_progress": null,
   "last_changelog": "updates-26-04-20",
   "updates": [],
   "last_check": 1636564355304,
