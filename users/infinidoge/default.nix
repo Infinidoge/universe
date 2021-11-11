@@ -19,6 +19,7 @@ in
       ])
       (with profiles; [
         pass
+        htop
 
         (ifGraphical [
           discord
