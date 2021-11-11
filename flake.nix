@@ -241,6 +241,7 @@
                   emacs
                   vim
                   gpg
+                  ssh
 
                   # Terminal
                   starship
