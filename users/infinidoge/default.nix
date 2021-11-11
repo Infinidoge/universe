@@ -20,6 +20,7 @@ in
       (with profiles; [
         pass
         htop
+        nnn
 
         (ifGraphical [
           discord
