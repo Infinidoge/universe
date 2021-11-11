@@ -13,6 +13,7 @@
   };
 
   home.bindmounts."${main.bud.localFlakeClone}/users/infinidoge/config" = {
+    allowOther = true;
     directories = [
       {
         source = "powercord";
