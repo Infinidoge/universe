@@ -17,8 +17,7 @@
           ([╳](bold grey) $status$cmd_duration)
           [┌┨[$username@$hostname](${section.user_host})┠(┨$shell$shlvl┠)──(┨$nix_shell┠)───────────┨](${line_style})
           [┝┫$directory(┣━┫$git_branch$git_status(@$git_commit)( $git_metrics)( $git_state))┃](${line_style})
-          [└┨](${line_style})$character
-        '';
+          [└┨](${line_style})$character'';
 
         character = rec {
           success_symbol = "[❯](bold purple)";
