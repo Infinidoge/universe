@@ -1,7 +1,12 @@
-{ ... }: {
+{ pkgs, ... }: {
   services.foldingathome = {
     enable = true;
-    user = "infinidoge";
+    user = "Infinidoge";
     daemonNiceLevel = 10;
   };
+
+  environment.systemPackages = with pkgs; [
+    fahcontrol
+    fahviewer
+  ];
 }
