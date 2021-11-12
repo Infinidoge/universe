@@ -17,6 +17,7 @@
       ])
 
       btrfs
+      virtualization
 
       (with services; [
         foldingathome
