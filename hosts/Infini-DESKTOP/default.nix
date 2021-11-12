@@ -17,6 +17,10 @@
       ])
 
       btrfs
+
+      (with services; [
+        foldingathome
+      ])
     ])
 
     ./hardware-configuration.nix
