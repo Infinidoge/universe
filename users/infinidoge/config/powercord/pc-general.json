@@ -4,6 +4,7 @@
   "disabledPlugins": [
     "pc-lmgtfy",
     "pc-spotify",
-    "pc-heygirl"
+    "pc-heygirl",
+    "Better-Settings"
   ]
 }
