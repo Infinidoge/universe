@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, patches, ... }: {
   home.packages = with pkgs; [
     (discord-plugged.override {
       plugins = with inputs; [
@@ -26,7 +26,13 @@
         discord-copy-mentions
         discord-copy-raw-message
         discord-copy-role-color
-        discord-css-toggler
+        (pkgs.applyPatches {
+          src = inputs.discord-css-toggler;
+          patches = [
+            "${patches}/css-toggler.patch"
+          ];
+          name = "discord-css-toggler";
+        })
         discord-custom-timestamps
         discord-cutecord
         discord-discord-status

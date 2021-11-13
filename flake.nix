@@ -138,6 +138,8 @@
       {
         inherit self inputs;
 
+        patches = ./overlays/patches;
+
         channelsConfig = { allowUnfree = true; };
 
         channels = {
@@ -201,6 +203,8 @@
             Infini-SERVER = { };
           };
           importables = rec {
+            inherit (self) patches;
+
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
@@ -228,6 +232,8 @@
           modules = [ "${inputs.impermanence}/home-manager.nix" ];
           importables = rec {
             inherit inputs;
+            inherit (self) patches;
+
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; self.lib.flattenSetList
               rec {
