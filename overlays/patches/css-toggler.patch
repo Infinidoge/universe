@@ -1,0 +1,13 @@
+diff --git a/constants.js b/constants.js
+index 6bc4317..2ae4b55 100644
+--- a/constants.js
++++ b/constants.js
+@@ -11,7 +11,7 @@ module.exports = Object.freeze({
+     ERROR: 0xED4245,
+     SUCCESS: 0x3BA55C
+   },
+-  CACHE_FOLDER: join(__dirname, '.cache'),
++  CACHE_FOLDER: join("/home/infinidoge/.config", "powercord", 'css-toggler-cache'),
+   MAX_SNIPPET_TITLE_LENGTH: 32,
+   MAX_SNIPPET_DESCRIPTION_LENGTH: 120,
+   DEFAULT_SNIPPET_TITLE: 'Untitled Snippet'
