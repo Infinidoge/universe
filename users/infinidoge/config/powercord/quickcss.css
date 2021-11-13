@@ -1,0 +1,281 @@
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:16:30 AM
+ * Created by akisblack#6148 (845535118285602866)
+ * Snippet ID: 898512654849687592
+ */
+.sidebarRegion-VFTUkN {
+    flex: 0;
+}
+
+.contentColumnDefault-1VQkGM {
+    margin: 0 auto;
+}
+/** 898512654849687592 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:19:03 AM
+ * Created by ADudeCalledLeo#8665 (169456051920437248)
+ * Snippet ID: 885158901673230376
+ */
+/* the main bit! */
+.container-3baos1 {
+  position: fixed;
+  left: 4px;
+  top: calc(100% - 52px);
+  width: 292px;
+  background-color: var(--background-tertiary);
+}
+
+/* PATCH for scrollers above the user panel to make space */
+.guilds-1SWlCJ, /* servers */
+.sidebar-2K8pFh /* channels */ {
+  height: calc(100% - 52px);
+}
+/** 885158901673230376 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:20:29 AM
+ * Created by Davri#0015 (457579346282938368)
+ * Snippet ID: 875021875120582676
+ */
+.guildSection-1EoFKd > .flex-1xMQg5 > svg {
+    flex-shrink: 0;
+}
+/** 875021875120582676 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:22:53 AM
+ * Created by mr_miner#9699 (678541597654253600)
+ * Snippet ID: 870552834410680370
+ */
+#message-actions-pin, #message-pin, #message-unpin{
+    color: skyblue;
+}
+#message-actions-pin:hover, #message-pin:hover, #message-unpin:hover {
+    background-color: #67a7c0;
+    color: #fff;
+}
+#message-actions-reply, #message-reply {
+    color: khaki;
+}
+#message-actions-reply:hover, #message-reply:hover {
+    background-color: #c5bb5d;
+    color: #fff;
+}
+#message-actions-thread, #message-thread {
+    color: #69c069;
+}
+#message-actions-thread:hover, #message-thread:hover {
+    background-color: #5dbd5d;
+    color: #fff;
+}
+#message-actions-mark-unread, #message-mark-unread {
+    color: plum;
+}
+#message-actions-mark-unread:hover, #message-mark-unread:hover {
+    background-color: #c27ec2;
+    color: #fff;
+}
+#message-actions-copy-link, #message-copy-link {
+    color: lightseagreen;
+}
+#message-actions-copy-link:hover, #message-copy-link:hover {
+    background-color: #199c96;
+    color: #fff;
+}
+#message-actions-tts, #message-tts{
+    color: var(--brand-experiment);
+}
+#message-actions-tts:hover, #message-tts:hover{
+    background-color: var(--brand-experiment);
+    color: #fff;
+}
+#message-actions-copy-id, #message-devmode-copy-id {
+    color: lightsalmon;
+}
+#message-actions-copy-id:hover #message-devmode-copy-id:hover{
+    background-color: lightsalmon;
+    color: #fff;
+}
+#message-edit, #message-actions-edit{
+    color: steelblue;
+}
+#message-edit:hover,  #message-actions-edit:hover{
+    background-color: steelblue;
+    color: #fff;
+}
+#message-add-reaction{
+    color: goldenrod;
+}
+#message-add-reaction:hover{
+    background-color: goldenrod;
+    color: #fff;
+}
+/** 870552834410680370 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:23:11 AM
+ * Created by Hekky#6869 (346338830011596800)
+ * Snippet ID: 870054555025543219
+ */
+:root {
+    --sidebar-width: 240px; /* change if your theme resizes the sidebar */
+}
+.chat-3bRxxu.threadSidebarOpen-vdkwIh {
+    resize: horizontal;
+    min-width: 400px;
+    max-width: calc(100vw - var(--sidebar-width) - 72px - 400px);
+}
+.chat-3bRxxu:not(.threadSidebarOpen-vdkwIh) {
+    width: unset !important;
+    flex: 1 1 auto;
+}
+.threadSidebar-1o3BTy {
+    width: unset;
+    flex: 1 1 auto;
+}
+/** 870054555025543219 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:24:24 AM
+ * Created by Alexxx#2468 (717884197678874767)
+ * Snippet ID: 865809923878682634
+ */
+.emoji.jumboable {
+    width: 10rem;
+    height 10rem;
+    min-height: 10rem;
+}
+/** 865809923878682634 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:24:29 AM
+ * Created by Freeplay#5676 (158296466119458816)
+ * Snippet ID: 865701620201685012
+ */
+[class*="chat-"] > [class*="title-"] > [class*="children-"] > [class*="topic-"] {
+    white-space: normal;
+    max-height: 2.4em;
+    font-size: .9em;
+    line-height: 1.2em;
+    text-overflow: ellipsis;
+    position: relative;
+}
+[class*="chat-"] > [class*="title-"] > [class*="children-"]::after {
+    content; unset;
+}
+[class*="chat-"] > [class*="title-"] > [class*="children-"] > [class*="topic-"]::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 1em;
+    background: linear-gradient(to right, transparent, var(--background-primary), var(--background-primary)) !important;
+    display: flex;
+    width: 130px;
+}
+/** 865701620201685012 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:24:53 AM
+ * Created by mr_miner#9699 (678541597654253600)
+ * Snippet ID: 864076332505497641
+ */
+.container-3auIfb[style*="opacity: 1; background-color: hsl(218, calc(var(--saturation-factor, 1) * 4.6%), 46.9%);"]{
+  background-color: #c13a3a !important;
+ fill: #c13a3a !important;
+}
+.container-3auIfb[style*="opacity: 1; background-color: hsl(218, calc(var(--saturation-factor, 1) * 4.6%), 46.9%);"] path{
+  fill: #c13a3a !important;
+}
+/** 864076332505497641 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 11:24:59 AM
+ * Created by mackenzie#0173 (574870314928832533)
+ * Snippet ID: 863870341537071197
+ */
+.roleColor-rz2vM0::after {
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0.125;
+  background: currentColor;
+}
+.member-3-YXUe .badges {
+  z-index: 0;
+}
+.member-3-YXUe.selected-aXhQR6 .roleColor-rz2vM0::after {
+  border-radius: 4px;
+}
+.membersGroup-v9BXpm + .member-3-YXUe {
+  margin-top: 5px;
+}
+.membersGroup-v9BXpm + .member-3-YXUe .roleColor-rz2vM0::after {
+  border-radius: 5px 5px 0 0;
+}
+/** 863870341537071197 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 7:01:52 PM
+ * Created by CorellanStoma#1996 (288362986991648778)
+ * Snippet ID: 907442893608869888
+ */
+.icon-22AiRD [d="M6 1C3.243 1 1 3.244 1 6c0 2.758 2.243 5 5 5s5-2.242 5-5c0-2.756-2.243-5-5-5zm0 2.376a.625.625 0 110 1.25.625.625 0 010-1.25zM7.5 8.5h-3v-1h1V6H5V5h1a.5.5 0 01.5.5v2h1v1z"] {
+  d: path("M 7 4.003 C 7 5.1055 6.103 6.003 5 6.003 C 3.8975 6.003 3 5.1055 3 4.003 C 3 2.9005 3.897 2.003 5 2.003 C 6.103 2.003 7 2.9005 7 4.003 Z M 1 9.503 C 1 7.7365 2.645 6.503 5 6.503 C 7.3555 6.503 9 7.7365 9 9.503 V 10.003 H 1 V 9.503 Z M 10 10.003 H 11 V 9.503 C 11 8.2217 10.1349 7.2207 8.7607 6.7676 C 9.5311 7.4563 10 8.403 10 9.503 V 10.003 Z M 7.4417 5.9539 C 8.3329 5.7522 9 4.9539 9 4 C 9 2.9846 8.2347 2.1411 7.2485 2.0183 C 7.7161 2.5476 8 3.2426 8 4 C 8 4.7244 7.7444 5.3871 7.3189 5.9051 C 7.3601 5.9209 7.4011 5.9371 7.4417 5.9539 Z");
+}
+/** 907442893608869888 */
+
+/**
+ * Snippet from #css-snippets applied the Nov 12, 2021 at 7:04:50 PM
+ * Created by Davri#0015 (457579346282938368)
+ * Snippet ID: 907333488779354112
+ */
+.members-2upGyL {
+    height: 100%;
+}
+.toolbar-1t6TWx>.iconWrapper-2OrFZ1.selected-1GqIat:nth-of-type(4)~:last-child {
+    margin-right: 56px;
+}
+.container-2PDP7D>.tabs-3L9Rgq {
+    height: 0;
+    padding: 0;
+    border: none;
+}
+.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg {
+    font-size: 0;
+    position: absolute;
+    right: 6px;
+    top: -36px;
+    width: 40px;
+    height: 24px;
+    margin: 0 8px;
+    padding: 0;
+    z-index: 2;
+    border-radius: 12px;
+    background-color: hsl(218, calc(var(--saturation-factor, 1) * 4.6%), 46.9%) !important;
+}
+.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg::after {
+    position: absolute;
+    top: 3px;
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border-radius: 50%;
+}
+.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg:first-of-type::after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18px' height='18px' fill='rgb(114, 118, 125)'><path d='M11.8 6.6C11.8 8.154 10.54 9.4 9 9.4C7.46 9.4 6.2 8.154 6.2 6.6C6.2 5.06 7.46 3.8 9 3.8C10.54 3.8 11.8 5.06 11.8 6.6ZM3.4 14.3C3.4 11.836 5.71 10.1 9 10.1C12.304 10.1 14.6 11.836 14.6 14.3V15H3.4V14.3Z'/></svg>");
+    right: 3px;    
+}
+.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg:last-of-type::after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18px' height='18px' fill='rgb(114, 118, 125)'><path d='M9-1zm0 4.752a1.25 1.25 90 110 2.5a1.25 1.25 90 010-2.5zM12 14h-6v-2h2V9H7V7h2a1 1 90 011 1v4h2v2z'/></svg>");
+    left: 3px;
+}
+.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg.active-2SVYP5 {
+    pointer-events: none;
+    opacity: 0;
+}
+/** 907333488779354112 */
