@@ -9,8 +9,8 @@
         discord-PowercordTwemojiEverywhere
         discord-Quick-Bot-Invite
         discord-Quick-Channel-Mute
-        discord-Scalable-Discord
-        discord-Send-Message-with-Webhook
+        # discord-Scalable-Discord
+        # discord-Send-Message-with-Webhook
         discord-SnowflakeInfo
         discord-Unindent
         discord-badges-everywhere
@@ -21,7 +21,7 @@
         discord-better-status-indicators
         discord-better-threads
         discord-block-messages
-        discord-channel-locker
+        # discord-channel-locker
         discord-channel-typing
         discord-copy-mentions
         discord-copy-raw-message
