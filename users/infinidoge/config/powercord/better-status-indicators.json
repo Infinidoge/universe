@@ -3,5 +3,6 @@
     "status-everywhere"
   ],
   "se-mobileStatus": "self+others",
-  "se-reducedStatuses": true
+  "se-reducedStatuses": true,
+  "statusDisplay": "default"
 }
