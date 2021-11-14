@@ -66,9 +66,7 @@ in
       ntfs3g
     ];
 
-    shellAliases = {
-      lsdisk = "lsblk -o name,size,mountpoint,fstype,label,uuid,fsavail,fsuse%";
-    };
+    shellAliases = { };
 
     variables.EDITOR =
       let
