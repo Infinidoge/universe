@@ -228,11 +228,11 @@ keys = [
         lazy.window.toggle_floating(),
         desc="Toggle window's floating mode"
     ),
-    # Key(
-    #     [Keys.SUPER, Keys.CONTROL], "r",
-    #     lazy.reload_config(),
-    #     desc="Reload Qtile Configuration",
-    # ),
+    Key(
+        [Keys.SUPER, Keys.CONTROL], "r",
+        lazy.reload_config(),
+        desc="Reload Qtile Configuration",
+    ),
     # Key(
     #     [Keys.SUPER, Keys.CONTROL], "r",
     #     lazy.restart(),
