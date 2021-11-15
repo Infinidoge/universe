@@ -356,6 +356,11 @@ keys = [
         lazy.spawn("speedcrunch"),
         desc="Launch Speedcrunch",
     ),
+    Key(
+        [Keys.SUPER, Keys.ALT], "s",
+        lazy.spawn("gnome-screenshot -i"), # Potentially replace with shutter
+        desc="Launch screenshot tool",
+    ),
 ]
 # fmt: on
 
