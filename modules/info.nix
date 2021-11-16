@@ -6,5 +6,15 @@ with lib;
       type = types.int;
       default = 1;
     };
+
+    graphical = mkOption {
+      type = with types; bool;
+      default = false;
+      description = "Whether or not we are in a graphical environment";
+    };
+  };
+
+  config = {
+    info.graphical = config.services.xserver.enable;
   };
 }

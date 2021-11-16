@@ -1,7 +1,7 @@
 { config, self, lib, pkgs, suites, profiles, inputs, ... }:
 let
-  ifGraphical = lib.optionals config.services.xserver.enable;
-  ifGraphical' = lib.optional config.services.xserver.enable;
+  ifGraphical = lib.optionals config.info.graphical;
+  ifGraphical' = lib.optional config.info.graphical;
 in
 {
   imports = lib.flatten [
