@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }: {
   programs.emacs = {
     enable = true;
+    extraPackages = epkgs: with epkgs; [ vterm ];
   };
 
   services.emacs = {
@@ -23,7 +24,6 @@
       gnumake
       isync
       jq
-      libvterm
       mu
       nodePackages.prettier
       nodejs
