@@ -18,7 +18,7 @@
         btrfs
         # peripherals.printing
 
-        services.privoxy
+        # services.privoxy
       ];
   };
 

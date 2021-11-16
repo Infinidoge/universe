@@ -14,7 +14,7 @@
         wireless
       ])
 
-      services.privoxy
+      # services.privoxy
     ])
 
     ./hardware-configuration.nix
