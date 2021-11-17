@@ -1,4 +1,4 @@
 {
-  "timestampSchematic": "%Y-%0M-%0D %0H:%0m:%0s, %G",
+  "timestampSchematic": "%Y-%0M-%0D %0H:%0m:%0s, %g ago",
   "timestampBubbleSchematic": "%W, %N %D, %Y %H:%0m"
 }
