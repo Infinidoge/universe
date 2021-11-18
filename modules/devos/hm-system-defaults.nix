@@ -13,6 +13,7 @@
           configFile."nix/registry.json".text = config.environment.etc."nix/registry.json".text;
           enable = true;
         };
+        home.stateVersion = config.system.stateVersion;
       }
       (lib.mkIf config.services.xserver.enable {
         xsession.enable = true;
