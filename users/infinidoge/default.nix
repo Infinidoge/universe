@@ -10,7 +10,7 @@ in
     (with profiles; [ virtualization ])
   ];
 
-  home-manager.users.infinidoge = { config, main, suites, profiles, ... }: {
+  home = { config, main, suites, profiles, ... }: {
     imports = lib.flatten [
       (with suites; [
         base
@@ -104,11 +104,13 @@ in
     };
   };
 
-  users.users.infinidoge = {
+  user = {
+    name = "infinidoge";
     uid = 1000;
     hashedPassword =
       "PASSWORD SET IN THE FUTURE";
-    description = "Infinidoge";
+    description = "Infinidoge, primary user of the system";
+    group = "users";
     isNormalUser = true;
     extraGroups = [ "wheel" "minecraft" "libvirtd" "bluetooth" ];
     shell = pkgs.zsh;
