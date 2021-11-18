@@ -1,15 +1,17 @@
-{ lib, ... }: {
+{ lib, ... }:
+with lib;
+{
   boot.loader = {
     grub = {
-      enable = lib.mkDefault true;
-      device = "nodev";
-      efiSupport = true;
-      useOSProber = true;
-      efiInstallAsRemovable = lib.mkDefault true;
+      enable = mkDefault true;
+      device = mkDefault "nodev";
+      efiSupport = mkDefault true;
+      useOSProber = mkDefault false;
+      efiInstallAsRemovable = mkDefault true;
     };
     efi = {
-      canTouchEfiVariables = lib.mkDefault false;
-      efiSysMountPoint = "/boot/efi";
+      canTouchEfiVariables = mkDefault false;
+      efiSysMountPoint = mkDefault "/boot/efi";
     };
   };
 }
