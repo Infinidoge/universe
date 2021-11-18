@@ -55,4 +55,9 @@
   nixpkgs.config = {
     allowUnfree = true;
   };
+
+  home-manager = {
+    useUserPackages = true;
+    useGlobalPkgs = true;
+  };
 }
