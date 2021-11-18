@@ -4,11 +4,11 @@
     displayManager.lightdm.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    xclip
-    xdotool
-    xorg.xwininfo
-    xorg.xauth
+  environment.systemPackages = with pkgs; lib.flatten [
+    (with xorg; [
+      xwininfo
+      xprop
+    ])
 
     blugon
   ];
