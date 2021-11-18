@@ -42,6 +42,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    hlissner-dotfiles.url = "github:hlissner/dotfiles";
+
     # start ANTI CORRUPTION LAYER
     # remove after https://github.com/NixOS/nix/pull/4641
     nixpkgs.follows = "nixos";
@@ -171,7 +173,7 @@
         sharedOverlays = [
           (final: prev: {
             __dontExport = true;
-            lib = prev.lib.extend (lfinal: lprev: { our = self.lib; });
+            lib = prev.lib.extend (lfinal: lprev: { our = self.lib; hlissner = inputs.hlissner-dotfiles.lib; });
           })
         ];
 
