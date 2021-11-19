@@ -8,6 +8,9 @@ with lib.hlissner;
     home = mkOpt attrs { };
 
     dotfiles = {
+      dir = mkOpt path (findFirst pathExists (toString ../.) [
+        "/etc/nixos"
+      ]);
       homeFile = mkOpt attrs { };
       configFile = mkOpt attrs { };
       dataFile = mkOpt attrs { };
@@ -25,5 +28,7 @@ with lib.hlissner;
         dataFile = mkAliasDefinitions options.dotfiles.dataFile;
       };
     };
+
+    bud.localFlakeClone = config.dotfiles.dir;
   };
 }
