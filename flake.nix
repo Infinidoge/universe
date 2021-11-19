@@ -113,6 +113,7 @@
     discord-rolecolor-everywhere = { url = "github:powercord-community/rolecolor-everywhere"; flake = false; };
     discord-scrollable-autocomplete = { url = "github:GriefMoDz/scrollable-autocomplete"; flake = false; };
     discord-send-timestamps = { url = "github:12944qwerty/send-timestamps"; flake = false; };
+    discord-server-count = { url = "github:TheShadowGamer/Server-Count"; flake = false; };
     discord-showAllMessageButtons = { url = "github:12944qwerty/showAllMessageButtons"; flake = false; };
     discord-smart-typers = { url = "github:GriefMoDz/smart-typers"; flake = false; };
     discord-total-members = { url = "github:cyyynthia/total-members"; flake = false; };

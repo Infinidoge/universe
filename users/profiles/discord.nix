@@ -61,6 +61,7 @@
         discord-rolecolor-everywhere
         discord-scrollable-autocomplete
         discord-send-timestamps
+        discord-server-count
         discord-showAllMessageButtons
         discord-smart-typers
         discord-total-members
