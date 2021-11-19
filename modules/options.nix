@@ -15,6 +15,8 @@ with lib.hlissner;
       configFile = mkOpt attrs { };
       dataFile = mkOpt attrs { };
     };
+
+    env = mkOpt attrs { };
   };
 
   config = {
@@ -28,6 +30,8 @@ with lib.hlissner;
         dataFile = mkAliasDefinitions options.dotfiles.dataFile;
       };
     };
+
+    environment.variables = mkAliasDefinitions options.env;
 
     bud.localFlakeClone = config.dotfiles.dir;
   };
