@@ -6,10 +6,24 @@ with lib.hlissner;
   options = with types; {
     user = mkOpt attrs { };
     home = mkOpt attrs { };
+
+    dotfiles = {
+      homeFile = mkOpt attrs { };
+      configFile = mkOpt attrs { };
+      dataFile = mkOpt attrs { };
+    };
   };
 
   config = {
     users.users.${config.user.name} = mkAliasDefinitions options.user;
     home-manager.users.${config.user.name} = mkAliasDefinitions options.home;
+
+    home = {
+      home.file = mkAliasDefinitions options.dotfiles.homeFile;
+      xdg = {
+        configFile = mkAliasDefinitions options.dotfiles.configFile;
+        dataFile = mkAliasDefinitions options.dotfiles.dataFile;
+      };
+    };
   };
 }
