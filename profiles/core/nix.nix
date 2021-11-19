@@ -41,7 +41,6 @@
         nf = "n flake";
         nepl = "n repl '<nixpkgs>'";
         srch = "ns nixos";
-        orch = "ns override";
         nrb = ifSudo "sudo nixos-rebuild";
         mn = ''
           manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | sk --preview="manix '{}'" | xargs manix
