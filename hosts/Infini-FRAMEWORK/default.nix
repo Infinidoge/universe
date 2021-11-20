@@ -8,7 +8,6 @@
       networking.wireless
 
       (with hardware; [
-        sound
         laptop
         gpu.intel
         wireless
@@ -44,6 +43,12 @@
     files = [
       "/etc/machine-id"
     ];
+  };
+
+  modules = {
+    hardware = {
+      audio.enable = true;
+    };
   };
 
   networking.interfaces.wlp170s0.useDHCP = true;
