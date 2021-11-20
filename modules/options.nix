@@ -8,9 +8,7 @@ with lib.hlissner;
     home = mkOpt attrs { };
 
     dotfiles = {
-      dir = mkOpt path (findFirst pathExists (toString ../.) [
-        "/etc/nixos"
-      ]);
+      dir = mkOpt str "/etc/nixos";
       homeFile = mkOpt attrs { };
       configFile = mkOpt attrs { };
       dataFile = mkOpt attrs { };
