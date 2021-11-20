@@ -9,7 +9,6 @@
         networking.wireless
 
         (with hardware; [
-          sound
           gpu.amdgpu
           laptop
           wireless
@@ -25,6 +24,12 @@
   system.stateVersion = "21.11";
 
   powerManagement.resumeCommands = "${pkgs.kmod}/bin/rmod atkbd; ${pkgs.kmod}/bin/modprobe atkbd reset=1";
+
+  modules = {
+    hardware = {
+      audio.enable = true;
+    };
+  };
 
   networking.interfaces.wlan0.useDHCP = true;
 

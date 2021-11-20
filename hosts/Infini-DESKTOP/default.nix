@@ -11,7 +11,6 @@
       networking.wireless
 
       (with hardware; [
-        sound
         gpu.nvidia
         wireless
       ])
@@ -29,12 +28,18 @@
 
   system.stateVersion = "21.05";
 
+  modules = {
+    hardware = {
+      audio.enable = true;
+    };
+  };
+
   networking.interfaces = {
     eth0.useDHCP = true;
     wlp41s0.useDHCP = true;
   };
 
-  home-manager.users.infinidoge = { profiles, ... }: {
+  home = { profiles, ... }: {
     imports = with profiles; [ stretchly ];
   };
 
