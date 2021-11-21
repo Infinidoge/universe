@@ -30,6 +30,7 @@
 
   modules = {
     hardware = {
+      wireless.enable = true;
       form.desktop = true;
     };
   };
