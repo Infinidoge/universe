@@ -3,7 +3,8 @@
 
 with lib;
 with lib.hlissner;
-let cfg = config.modules.hardware.audio;
+let
+  cfg = config.modules.hardware.audio;
 in
 {
   options.modules.hardware.audio = {
