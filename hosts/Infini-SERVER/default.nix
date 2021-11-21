@@ -8,4 +8,6 @@
       hardware.gpu.nvidia
     ];
   };
+
+  modules.hardware.form.server = true;
 }

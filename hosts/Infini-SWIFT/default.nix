@@ -10,7 +10,6 @@
 
         (with hardware; [
           gpu.amdgpu
-          laptop
           wireless
         ])
 
@@ -27,7 +26,7 @@
 
   modules = {
     hardware = {
-      audio.enable = true;
+      form.laptop = true;
     };
   };
 
