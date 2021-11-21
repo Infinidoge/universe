@@ -8,7 +8,6 @@
       networking.wireless
 
       (with hardware; [
-        laptop
         gpu.intel
         wireless
       ])
@@ -47,7 +46,7 @@
 
   modules = {
     hardware = {
-      audio.enable = true;
+      form.laptop = true;
     };
   };
 

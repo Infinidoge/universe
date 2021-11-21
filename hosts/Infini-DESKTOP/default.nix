@@ -30,7 +30,7 @@
 
   modules = {
     hardware = {
-      audio.enable = true;
+      form.desktop = true;
     };
   };
 
