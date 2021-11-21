@@ -15,10 +15,13 @@ in
 
   config = mkMerge [
     (mkIf cfg.desktop {
-      modules.hardware.audio.enable = true;
+      modules.hardware.audio.enable = mkDefault true;
     })
     (mkIf cfg.laptop {
-      modules.hardware.audio.enable = true;
+      modules.hardware = {
+        wireless.enable = mkDefault true;
+        audio.enable = mkDefault true;
+      };
 
       services = {
         xserver.libinput = {
@@ -26,7 +29,7 @@ in
           touchpad.naturalScrolling = true;
         };
 
-        logind.lidSwitch = "ignore";
+        logind.lidSwitch = mkDefault "ignore";
       };
 
       environment = {
@@ -36,8 +39,16 @@ in
 
 
     })
-    (mkIf cfg.portable { })
-    (mkIf cfg.raspi { })
+    (mkIf cfg.portable {
+      modules.hardware = {
+        wireless.enable = mkDefault true;
+      };
+    })
+    (mkIf cfg.raspi {
+      modules.hardware = {
+        wireless.enable = mkDefault true;
+      };
+    })
     (mkIf cfg.server { })
   ];
 }
