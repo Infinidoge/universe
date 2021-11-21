@@ -5,12 +5,9 @@
     ])
 
     (with profiles; [
-      (with hardware; [
-        rpi
-        wireless
-      ])
-
       networking.wireless
     ])
   ];
+
+  modules.hardware.form.raspi = true;
 }
