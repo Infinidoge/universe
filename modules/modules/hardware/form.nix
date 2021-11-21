@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, inputs, ... }:
 with lib;
 with lib.hlissner;
 let
@@ -45,9 +45,42 @@ in
       };
     })
     (mkIf cfg.raspi {
+      imports = [ inputs.nixos-hardware.outputs.nixosModules.raspberry-pi-4 ];
+
       modules.hardware = {
         wireless.enable = mkDefault true;
       };
+
+      boot = {
+        tmpOnTmpfs = true;
+        kernelParams = [
+          "8250.nr_uarts=1"
+          "console=ttyAMA0,115200"
+          "console=tty1"
+        ];
+
+        loader = {
+          raspberryPi = {
+            enable = true;
+            version = 4;
+          };
+
+          grub.enable = false;
+          generic-extlinux-compatible.enable = true;
+        };
+      };
+
+      hardware.raspberry-pi."4" = {
+        fkms-3d.enable = true;
+
+        audio.enable = config.modules.hardware.audio.enable;
+      };
+
+      powerManagement.cpuFreqGovernor = "ondemand";
+
+      environment.systemPackages = with pkgs; [
+        raspberrypi-eeprom
+      ];
     })
     (mkIf cfg.server { })
   ];
