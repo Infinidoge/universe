@@ -41,6 +41,11 @@ in
     })
     (mkIf cfg.portable {
       modules.hardware = {
+        gpu = {
+          nvidia = mkDefault true;
+          intel = mkDefault true;
+          amdgpu = mkDefault true;
+        };
         wireless.enable = mkDefault true;
       };
     })

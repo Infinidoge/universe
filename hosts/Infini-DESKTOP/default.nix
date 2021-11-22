@@ -8,10 +8,6 @@
     (with profiles; [
       networking.wireless
 
-      (with hardware; [
-        gpu.nvidia
-      ])
-
       btrfs
       virtualization
 
@@ -28,6 +24,7 @@
   modules = {
     boot.grub.enable = true;
     hardware = {
+      gpu.nvidia = true;
       wireless.enable = true;
       form.desktop = true;
     };
