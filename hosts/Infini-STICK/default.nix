@@ -3,8 +3,6 @@
     (with suites; [ base develop ])
 
     (with profiles; [
-      boot.grub
-
       networking.wireless
 
       (with hardware; [
@@ -14,8 +12,6 @@
           intel
           nvidia
         ])
-        laptop
-        wireless
       ])
 
       btrfs
@@ -29,7 +25,10 @@
   # networking.interfaces.wlp170s0.useDHCP = true;
   networking.interfaces.enp39s0.useDHCP = true;
 
-  modules.hardware.form.portable = true;
+  modules = {
+    boot.grub.enable = true;
+    hardware.form.portable = true;
+  };
 
   system.stateVersion = "21.11";
 }

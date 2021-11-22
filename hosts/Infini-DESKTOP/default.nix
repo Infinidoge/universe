@@ -6,13 +6,10 @@
     ])
 
     (with profiles; [
-      boot.grub
-
       networking.wireless
 
       (with hardware; [
         gpu.nvidia
-        wireless
       ])
 
       btrfs
@@ -29,6 +26,7 @@
   system.stateVersion = "21.05";
 
   modules = {
+    boot.grub.enable = true;
     hardware = {
       wireless.enable = true;
       form.desktop = true;
