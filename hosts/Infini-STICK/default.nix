@@ -5,15 +5,6 @@
     (with profiles; [
       networking.wireless
 
-      (with hardware; [
-        sound
-        (with gpu; [
-          amdgpu
-          intel
-          nvidia
-        ])
-      ])
-
       btrfs
 
       # services.privoxy
@@ -27,7 +18,10 @@
 
   modules = {
     boot.grub.enable = true;
-    hardware.form.portable = true;
+    hardware = {
+      audio.enable = true;
+      form.portable = true;
+    };
   };
 
   system.stateVersion = "21.11";
