@@ -3,11 +3,12 @@
     suites = with suites; [ base ];
     imports = [ ];
     profiles = with profiles; [
-      boot.grub
-
       hardware.gpu.nvidia
     ];
   };
 
-  modules.hardware.form.server = true;
+  modules = {
+    boot.grub.enable = true;
+    hardware.form.server = true;
+  };
 }

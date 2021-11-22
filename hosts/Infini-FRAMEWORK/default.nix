@@ -3,13 +3,10 @@
     (with suites; [ graphic ])
 
     (with profiles; [
-      boot.grub
-
       networking.wireless
 
       (with hardware; [
         gpu.intel
-        wireless
       ])
 
       # services.privoxy
@@ -45,6 +42,7 @@
   };
 
   modules = {
+    boot.grub.enable = true;
     hardware = {
       form.laptop = true;
     };
