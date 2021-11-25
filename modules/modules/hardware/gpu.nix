@@ -12,7 +12,7 @@ in
   };
 
   config = mkMerge [
-    (mkIf (any (with cfg; [ amdgpu nvidia intel ])) {
+    (mkIf (any (v: v) (with cfg; [ amdgpu nvidia intel ])) {
       hardware.opengl = {
         enable = true;
         driSupport = true;
