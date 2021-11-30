@@ -160,11 +160,7 @@
               inputs.polymc.overlay
             ];
           };
-          latest = {
-            overlays = [
-              deploy.overlay
-            ];
-          };
+          latest = { };
         };
 
         lib = import ./lib { lib = digga.lib // nixos.lib; };
