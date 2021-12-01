@@ -73,6 +73,9 @@
         discord-voice-user-count
         discord-webhook-tag
       ];
+      themes = with inputs; [
+        discord-amoled-cord
+      ];
     })
   ];
 }
