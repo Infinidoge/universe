@@ -7,8 +7,6 @@
         networking.wireless
 
         btrfs
-
-        # services.privoxy
       ];
   };
 
@@ -24,6 +22,9 @@
       form.laptop = true;
       gpu.amdgpu = true;
       wireless.enable = true;
+    };
+    services = {
+      proxy.enable = true;
     };
   };
 

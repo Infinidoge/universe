@@ -4,8 +4,6 @@
 
     (with profiles; [
       networking.wireless
-
-      services.privoxy
     ])
 
     ./hardware-configuration.nix
@@ -42,6 +40,9 @@
     hardware = {
       gpu.intel = true;
       form.laptop = true;
+    };
+    services = {
+      proxy.enable = true;
     };
   };
 
