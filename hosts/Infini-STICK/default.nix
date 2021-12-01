@@ -6,8 +6,6 @@
       networking.wireless
 
       btrfs
-
-      # services.privoxy
     ])
 
     ./hardware-configuration.nix
@@ -22,6 +20,7 @@
       audio.enable = true;
       form.portable = true;
     };
+    services.proxy.enable = true;
   };
 
   system.stateVersion = "21.11";
