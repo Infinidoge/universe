@@ -10,10 +10,6 @@
 
       btrfs
       virtualization
-
-      (with services; [
-        foldingathome
-      ])
     ])
 
     ./hardware-configuration.nix
@@ -27,6 +23,16 @@
       gpu.nvidia = true;
       wireless.enable = true;
       form.desktop = true;
+    };
+    services = {
+      foldingathome = {
+        enable = true;
+        user = "Infinidoge";
+        extra = {
+          control = true;
+          viewer = true;
+        };
+      };
     };
   };
 
