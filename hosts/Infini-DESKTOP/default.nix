@@ -38,25 +38,4 @@
   home = { profiles, ... }: {
     imports = with profiles; [ stretchly ];
   };
-
-  # services.minecraft-servers = {
-  #   enable = true;
-  #   openFirewall = true;
-
-  #   servers = {
-  #     test = {
-  #       enable = true;
-  #       eula = true;
-  #       # declarative = true;
-  #       # serverProperties.server-port = 25565;
-  #     };
-
-  #     # test2 = {
-  #     #   enable = true;
-  #     #   eula = true;
-  #     #   declarative = true;
-  #     #   serverProperties.server-port = 25566;
-  #     # };
-  #   };
-  # };
 }
