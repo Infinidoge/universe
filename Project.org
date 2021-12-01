@@ -72,3 +72,9 @@
 *** TODO SpeedCrunch
 
 *** TODO systemd
+
+* PROJ Miscellaneous things
+
+** TODO Setup IRC
+
+*** TODO ZNC setup
