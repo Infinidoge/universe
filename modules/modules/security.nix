@@ -10,4 +10,7 @@ with lib.hlissner;
     tmpOnTmpfs = mkDefault true;
     cleanTmpDir = mkDefault (!config.boot.tmpOnTmpfs);
   };
+
+  # Allow non-root users to allow other users to access mount point
+  programs.fuse.userAllowOther = mkDefault true;
 }
