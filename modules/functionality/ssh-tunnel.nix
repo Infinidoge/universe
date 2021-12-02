@@ -23,17 +23,17 @@ in
       type = types.submodule {
         options = {
           dynamic = mkOption {
-            type = with types; listOf (either int string);
+            type = with types; listOf (either port string);
             default = [ ];
             description = "List of dynamic ports to open through the ssh tunnel. See ssh(1) for ``-D``";
           };
           local = mkOption {
-            type = with types; listOf (either int string);
+            type = with types; listOf (either port string);
             default = [ ];
             description = "List of local ports to open through the ssh tunnel. See ssh(1) for ``-L``";
           };
           remote = mkOption {
-            type = with types; listOf (either int string);
+            type = with types; listOf (either port string);
             default = [ ];
             description = "List of remote ports to open through the ssh tunnel. See ssh(1) for ``-R``";
           };
