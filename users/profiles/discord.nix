@@ -74,7 +74,7 @@
         discord-webhook-tag
       ];
       themes = with inputs; [
-        discord-amoled-cord
+        # discord-amoled-cord
       ];
     })
   ];
