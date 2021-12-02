@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 with lib.hlissner;
 let
@@ -24,8 +24,8 @@ in
       };
 
       environment.systemPackages = with pkgs; [
-        (optional cfg.extra.control fahcontrol)
-        (optional cfg.extra.viewer fahviewer)
+        (mkIf cfg.extra.control pkgs.fahcontrol)
+        (mkIf cfg.extra.viewer pkgs.fahviewer)
       ];
     })
   ];
