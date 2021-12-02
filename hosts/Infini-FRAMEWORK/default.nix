@@ -44,6 +44,11 @@
     services = {
       proxy.enable = true;
     };
+    filesystems = {
+      btrfs = {
+        enable = true;
+      };
+    };
   };
 
   networking.interfaces.wlp170s0.useDHCP = true;
