@@ -45,8 +45,10 @@ in
       boot.loader = {
         systemd-boot = {
           enable = mkDefault true;
-          editor = false;
           consoleMode = "2";
+
+          # See desc in nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
+          editor = false;
         };
 
         efi.canTouchEfiVariables = true;
