@@ -8,7 +8,6 @@
     (with profiles; [
       networking.wireless
 
-      btrfs
       virtualization
     ])
 
@@ -33,6 +32,9 @@
           viewer = true;
         };
       };
+    };
+    filesystems = {
+      btrfs.enable = true;
     };
   };
 
