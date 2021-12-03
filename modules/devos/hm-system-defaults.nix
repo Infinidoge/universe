@@ -1,5 +1,8 @@
 { config, lib, ... }: {
   home-manager = {
+    useUserPackages = true;
+    useGlobalPkgs = true;
+
     extraSpecialArgs = {
       main = config;
     };
