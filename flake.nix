@@ -82,9 +82,11 @@
     discord-better-settings = { url = "github:mr-miner1/better-settings"; flake = false; };
     discord-better-status-indicators = { url = "github:GriefMoDz/better-status-indicators"; flake = false; };
     discord-better-threads = { url = "github:NurMarvin/better-threads"; flake = false; };
+    discord-betterinvites = { url = "github:12944qwerty/betterinvites"; flake = false; };
     discord-block-messages = { url = "github:cyyynthia/block-messages"; flake = false; };
     discord-channel-locker = { url = "github:TaiAurori/channel-locker"; flake = false; };
     discord-channel-typing = { url = "github:powercord-community/channel-typing"; flake = false; };
+    discord-copy-avatar-url = { url = "github:21Joakim/copy-avatar-url"; flake = false; };
     discord-copy-mentions = { url = "github:tealingg/copy-mentions"; flake = false; };
     discord-copy-raw-message = { url = "github:mic0ishere/copy-raw-message"; flake = false; };
     discord-copy-role-color = { url = "github:Antonio32A/copy-role-color"; flake = false; };
@@ -95,6 +97,7 @@
     discord-dm-typing-indicator = { url = "github:zt64/dm-typing-indicator"; flake = false; };
     discord-guild-profile = { url = "github:NurMarvin/guild-profile"; flake = false; };
     discord-inbox-unread-count = { url = "github:Juby210/inbox-unread-count"; flake = false; };
+    discord-kaomoji = { url = "github:davidcralph/kaomoji"; flake = false; };
     discord-message-link-embed = { url = "github:Juby210/message-link-embed"; flake = false; };
     discord-multitask = { url = "github:powercord-community/multitask"; flake = false; };
     discord-online-friends-count = { url = "github:GriefMoDz/online-friends-count"; flake = false; };

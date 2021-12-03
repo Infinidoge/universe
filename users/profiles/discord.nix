@@ -20,9 +20,11 @@
         discord-better-settings
         discord-better-status-indicators
         discord-better-threads
+        discord-betterinvites
         discord-block-messages
         # discord-channel-locker
         discord-channel-typing
+        discord-copy-avatar-url
         discord-copy-mentions
         discord-copy-raw-message
         discord-copy-role-color
@@ -39,6 +41,7 @@
         discord-dm-typing-indicator
         discord-guild-profile
         discord-inbox-unread-count
+        discord-kaomoji
         discord-message-link-embed
         # discord-multitask
         discord-online-friends-count
