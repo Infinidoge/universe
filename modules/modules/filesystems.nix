@@ -29,7 +29,7 @@ in
     (mkIf cfg.btrfs.enable {
       environment.systemPackages = with pkgs; [ btrfs-progs ];
 
-      services.btrfs.autoScrub = mkAliasDefinitions opt.scrub;
+      services.btrfs.autoScrub = mkAliasDefinitions opt.btrfs.scrub;
     })
   ];
 }

@@ -3,6 +3,7 @@ with lib;
 with lib.hlissner;
 let
   cfg = config.modules.locale;
+  opt = options.modules.locale;
 in
 {
   options.modules.locale = with types; {
@@ -13,10 +14,10 @@ in
     fonts = {
       fonts = mkOpt (listOf package) [ ];
       defaults = {
-        serif = mkOpt (listOf str) "DejaVu Serif";
-        emoji = mkOpt (listOf str) "Noto Color Emoji";
-        monospace = mkOpt (listOf str) "DejaVu Sans Mono";
-        sansSerif = mkOpt (listOf str) "DejaVu Sans";
+        serif = mkOpt (listOf str) [ "DejaVu Serif" ];
+        emoji = mkOpt (listOf str) [ "Noto Color Emoji" ];
+        monospace = mkOpt (listOf str) [ "DejaVu Sans Mono" ];
+        sansSerif = mkOpt (listOf str) [ "DejaVu Sans" ];
       };
     };
   };
@@ -29,7 +30,7 @@ in
 
     time.timeZone = cfg.timezone;
 
-    fonts.fontconfig.defaultFonts = mkAliasDefinitions options.defaults;
+    fonts.fontconfig.defaultFonts = cfg.fonts.defaults;
 
     console.packages = cfg.fonts.fonts;
   };
