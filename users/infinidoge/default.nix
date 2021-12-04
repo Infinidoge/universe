@@ -63,7 +63,6 @@ in
   environment = {
     systemPackages = with pkgs; [
       ffmpeg
-      ntfs3g
     ];
 
     shellAliases = { };
