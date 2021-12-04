@@ -87,18 +87,15 @@ in
     steam.enable = true;
   };
 
-  fonts = {
-    fonts = with pkgs; [
-      dejavu_fonts
-      emacs-all-the-icons-fonts
-      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
-    ];
+  modules = {
+    locale.fonts = {
+      fonts = with pkgs; [
+        (nerdfonts.override { fonts = modules.locale.fonts.defaults.monospace; })
+        dejavu_fonts
+      ];
 
-    fontconfig = {
-      enable = lib.mkDefault true;
-      defaultFonts = {
+      defaults = {
         monospace = [ "DejaVuSansMono" ];
-        sansSerif = [ "DejaVu Sans" ];
       };
     };
   };
