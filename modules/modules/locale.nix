@@ -5,10 +5,20 @@ let
   cfg = config.modules.locale;
 in
 {
-  options.modules.locale = {
-    keymap = mkOpt "us";
-    locale = mkOpt "en_us.UTF-8";
-    timezone = mkOpt "America/New_York";
+  options.modules.locale = with types; {
+    keymap = mkOpt str "us";
+    locale = mkOpt str "en_us.UTF-8";
+    timezone = mkOpt str "America/New_York";
+
+    fonts = {
+      fonts = mkOpt (listOf package) [ ];
+      defaults = {
+        serif = mkOpt (listOf str) "DejaVu Serif";
+        emoji = mkOpt (listOf str) "Noto Color Emoji";
+        monospace = mkOpt (listOf str) "DejaVu Sans Mono";
+        sansSerif = mkOpt (listOf str) "DejaVu Sans";
+      };
+    };
   };
 
   config = {
@@ -18,5 +28,9 @@ in
     i18n.defaultLocale = cfg.locale;
 
     time.timeZone = cfg.timezone;
+
+    fonts.fontconfig.defaultFonts = mkAliasDefinitions options.defaults;
+
+    console.packages = cfg.fonts.fonts;
   };
 }
