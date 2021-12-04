@@ -45,9 +45,8 @@
       proxy.enable = true;
     };
     filesystems = {
-      btrfs = {
-        enable = true;
-      };
+      enable = true;
+      btrfs.enable = true;
     };
   };
 
