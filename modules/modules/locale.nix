@@ -8,17 +8,12 @@ in
 {
   options.modules.locale = with types; {
     keymap = mkOpt str "us";
-    locale = mkOpt str "en_us.UTF-8";
+    locale = mkOpt str "en_US.UTF-8";
     timezone = mkOpt str "America/New_York";
 
     fonts = {
       fonts = mkOpt (listOf package) [ ];
-      defaults = {
-        serif = mkOpt (listOf str) [ "DejaVu Serif" ];
-        emoji = mkOpt (listOf str) [ "Noto Color Emoji" ];
-        monospace = mkOpt (listOf str) [ "DejaVu Sans Mono" ];
-        sansSerif = mkOpt (listOf str) [ "DejaVu Sans" ];
-      };
+      defaults = mkOpt attrs { };
     };
   };
 
@@ -30,7 +25,10 @@ in
 
     time.timeZone = cfg.timezone;
 
-    fonts.fontconfig.defaultFonts = cfg.fonts.defaults;
+    fonts = {
+      fonts = cfg.fonts.fonts;
+      fontconfig.defaultFonts = mkAliasDefinitions opt.fonts.defaults;
+    };
 
     console.packages = cfg.fonts.fonts;
   };
