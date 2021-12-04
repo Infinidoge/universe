@@ -90,7 +90,7 @@ in
   modules = {
     locale.fonts = {
       fonts = with pkgs; [
-        (nerdfonts.override { fonts = modules.locale.fonts.defaults.monospace; })
+        (nerdfonts.override { fonts = config.modules.locale.fonts.defaults.monospace; })
         dejavu_fonts
       ];
 

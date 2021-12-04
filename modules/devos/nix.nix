@@ -1,4 +1,4 @@
-{ channel, inputs, pkgs, lib, ... }:
+{ config, channel, inputs, pkgs, lib, self, ... }:
 with lib;
 {
   nix = {

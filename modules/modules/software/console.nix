@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, options, lib, ... }:
 with lib;
 with lib.hlissner;
 let
@@ -28,9 +28,9 @@ in
       enable = true;
       hwRender = true;
       extraConfig = ''
-        font-size=${cfg.kmscon.font.size}
+        font-size=${toString cfg.kmscon.font.size}
         font-name=${cfg.kmscon.font.font}
-        ${opt.kmscon.extraConfig}
+        ${cfg.kmscon.extraConfig}
       '';
       extraOptions = mkAliasDefinitions opt.kmscon.extraOptions;
     };
