@@ -34,7 +34,7 @@
       };
     };
     filesystems = {
-      enanbe = true;
+      enable = true;
       btrfs.enable = true;
     };
   };
