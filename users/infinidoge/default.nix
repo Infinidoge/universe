@@ -92,6 +92,7 @@ in
       fonts = with pkgs; [
         (nerdfonts.override { fonts = config.modules.locale.fonts.defaults.monospace; })
         dejavu_fonts
+        emacs-all-the-icons-fonts
       ];
 
       defaults = {
