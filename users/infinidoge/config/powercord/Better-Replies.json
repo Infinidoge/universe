@@ -1,5 +1,5 @@
 {
-  "--mention-cache": false,
+  "--mention-cache": true,
   "mention": "never",
   "ping": "always"
 }
