@@ -37,8 +37,8 @@
       enable = true;
       btrfs.enable = true;
     };
-    software = {
-      steam.enable = true;
+    desktop = {
+      gaming.enableAll = true;
     };
   };
 

@@ -24,7 +24,6 @@ in
 
         (ifGraphical [
           discord
-          gaming
         ])
       ])
 
