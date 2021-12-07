@@ -159,7 +159,6 @@
             imports = [ (digga.lib.importOverlays ./overlays) ];
             overlays = [
               # --- DevOS Overlays
-              digga.overlays.patchedNix
               nur.overlay
               agenix.overlay
               nvfetcher.overlay
