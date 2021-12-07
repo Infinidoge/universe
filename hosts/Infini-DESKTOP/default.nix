@@ -37,6 +37,9 @@
       enable = true;
       btrfs.enable = true;
     };
+    software = {
+      steam.enable = true;
+    };
   };
 
   networking.interfaces = {

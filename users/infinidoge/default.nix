@@ -83,8 +83,6 @@ in
 
   programs = {
     dconf.enable = true;
-
-    steam.enable = true;
   };
 
   modules = {
