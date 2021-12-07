@@ -6,7 +6,7 @@ let
 
   hw = config.modules.hardware;
 
-  steam = pkgs.steam.override {
+  steam = cfg.package.override {
     extraLibraries = (pkgs:
       (with config.hardware.opengl;
       if pkgs.hostPlatform.is64bit
@@ -14,27 +14,31 @@ let
       else [ package32 ] ++ extraPackages32)
 
       ++ (with pkgs; [ pipewire ]));
-
-
-    extraProfile = mkIf hw.gpu.nvidia ''
-      unset VK_ICD_FILENAMES
-      export VK_ICD_FILENAMES=${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json
-    '';
   };
 in
 {
-  options.modules.software.steam = {
+  options.modules.software.steam = with types; {
     enable = mkBoolOpt false;
+    package = let pkg = pkgs.steam; in
+      mkOpt package
+        (if hw.gpu.nvidia
+        then
+          pkg.override
+            {
+              extraProfile = ''
+                unset VK_ICD_FILENAMES
+                export VK_ICD_FILENAMES=${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json
+              '';
+            }
+        else pkg);
   };
 
   config = mkMerge [
     {
-      assertions = [
-        {
-          assertion = cfg.enable && !config.info.graphical;
-          message = "Steam cannot be enabled in a non-graphical environment";
-        }
-      ];
+      assertions = [{
+        assertion = if cfg.enable then config.info.graphical else true;
+        message = "Steam cannot be enabled in a non-graphical environment";
+      }];
     }
 
     (mkIf cfg.enable {
@@ -54,6 +58,7 @@ in
         steam.run
 
         pkgs.protonup
+        pkgs.wineWowPackages.stable
       ];
     })
   ];
