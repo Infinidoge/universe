@@ -4,8 +4,6 @@
 
     (with profiles; [
       networking.wireless
-
-      btrfs
     ])
 
     ./hardware-configuration.nix
@@ -21,7 +19,13 @@
       form.portable = true;
     };
     services.proxy.enable = true;
+    filesystems = {
+      enable = true;
+      btrfs.enable = true;
+    };
   };
+
+  environment.persistence."/persist" = { };
 
   system.stateVersion = "21.11";
 }
