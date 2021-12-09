@@ -46,7 +46,7 @@ in
           intel = mkDefault true;
           amdgpu = mkDefault true;
         };
-        wireless.enable = mkDefault true;
+        wifi.enable = true;
       };
     })
     (mkIf cfg.raspi {
