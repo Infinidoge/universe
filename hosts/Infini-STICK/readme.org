@@ -53,6 +53,13 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 <<cleanup>>
 #+END_SRC
 
+#+NAME: mount
+#+BEGIN_SRC bash :tangle mount.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
+<<boilerplate>>
+
+<<mounting>>
+#+END_SRC
+
 ** Script Boilerplate
 
 #+NAME: boilerplate
