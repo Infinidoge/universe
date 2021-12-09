@@ -17,8 +17,9 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 
 * Setup Scripts
 
-#+BEGIN_SRC bash :tangle setup.bash :tangle-mode :shebang "#!/usr/bin/env bash" :noweb yes
-DISK=$1
+#+NAME: full_install
+#+BEGIN_SRC bash :tangle setup.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
+<<boilerplate>>
 
 <<partitioning>>
 
@@ -30,7 +31,35 @@ DISK=$1
 
 <<installing>>
 
+<<full_extra>>
+
 <<finishing_setup>>
+
+<<cleanup>>
+#+END_SRC
+
+#+NAME: reinstall
+#+BEGIN_SRC bash :tangle reinstall.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
+<<boilerplate>>
+
+<<mounting>>
+
+<<installing>>
+
+<<reinstall_extra>>
+
+<<finishing_setup>>
+
+<<cleanup>>
+#+END_SRC
+
+** Script Boilerplate
+
+#+NAME: boilerplate
+#+BEGIN_SRC bash
+DISK=$1
+
+sudo mkdir -p /mnt
 #+END_SRC
 
 ** Partitioning
@@ -59,8 +88,6 @@ sudo mkfs.fat -F 32 -n boot "${DISK}2"
 
 #+NAME: subvolumes
 #+BEGIN_SRC bash
-sudo mkdir -p /mnt
-
 echo "LOG: Making subvolumes on ${DISK}1"
 sudo mount "${DISK}1" /mnt
 sudo btrfs subvolume create /mnt/root
@@ -95,16 +122,33 @@ sudo mount "${DISK}2" /mnt/boot/efi
 
 #+NAME: installing
 #+BEGIN_SRC bash
-echo "LOG: Cloning configuration"
-sudo git clone --no-hardlinks --progress /etc/nixos /mnt/persist/etc/nixos
-
 echo "LOG: Installing NixOS"
-sudo nixos-install --flake /mnt/persist/etc/nixos#Infini-STICK --no-root-password
+sudo nixos-install --flake /etc/nixos#Infini-STICK --no-root-password
+#+END_SRC
+
+** Extra (Full Install)
+
+#+NAME: full_extra
+#+BEGIN_SRC bash
+echo "LOG: Cloning configuration"
+sudo git clone --no-hardlinks --progress https://gitlab.com/infinidoge/devos.git /mnt/persist/etc/nixos
+#+END_SRC
+
+** Extra (Reinstall)
+
+#+NAME: reinstall_extra
+#+BEGIN_SRC bash
 #+END_SRC
 
 ** Finishing Setup
 
 #+NAME: finishing_setup
+#+BEGIN_SRC bash
+#+END_SRC
+
+** Cleanup
+
+#+NAME: cleanup
 #+BEGIN_SRC bash
 echo "LOG: Unmounting all"
 sudo umount -R /mnt
