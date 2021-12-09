@@ -25,7 +25,28 @@
     };
   };
 
-  environment.persistence."/persist" = { };
+  environment.persistence."/persist" = {
+    directories = [
+      "/home"
+      "/etc/nixos"
+
+      "/root/.local/share/nix"
+      "/root/.ssh"
+
+      # /etc directories
+      "/etc/ssh"
+
+      # /var directories
+      "/var/log"
+      "/var/lib/bluetooth"
+      "/var/lib/systemd/coredump"
+      "/var/db/sudo/lectured"
+    ];
+
+    files = [
+      "/etc/machine-id"
+    ];
+  };
 
   system.stateVersion = "21.11";
 }
