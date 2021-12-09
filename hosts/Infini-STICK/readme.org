@@ -60,6 +60,11 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 DISK=$1
 
 sudo mkdir -p /mnt
+
+if mountpoint -q -- "/mnt"; then
+    echo "ERROR: /mnt is a mounted filesystem, aborting"
+    exit 1
+fi
 #+END_SRC
 
 ** Partitioning
