@@ -3,6 +3,9 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
 
+let
+  uuid = uuid: "/dev/disk/by-uuid/${uuid}";
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -15,16 +18,44 @@
   boot.kernelParams = [ "boot.shell_on_fail" ];
   boot.supportedFilesystems = [ "btrfs" ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/b2165920-9be1-435d-838b-82346311892f";
-    fsType = "btrfs";
-    options = [ "subvol=root" "compress=zstd" "autodefrag" "noatime" ];
-  };
+  fileSystems =
+    let
+      main = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
+    in
+    {
+      "/" = {
+        device = "none";
+        fsType = "tmpfs";
+        options = [ "defaults" "size=4G" "mode=755" ];
+      };
 
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/0E4C-42B2";
-    fsType = "vfat";
-  };
+      "/persist" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=root" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
+
+      "/nix" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=nix" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
+
+      "/boot" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=boot" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
+
+      "/boot/efi" = {
+        device = uuid "3FC9-0182";
+        fsType = "vfat";
+        neededForBoot = true;
+      };
+    };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
