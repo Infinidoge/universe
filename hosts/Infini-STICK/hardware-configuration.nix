@@ -20,7 +20,7 @@ in
 
   fileSystems =
     let
-      main = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
+      main = uuid "2a87bd84-c453-4b76-969c-e0653391131e";
     in
     {
       "/" = {
