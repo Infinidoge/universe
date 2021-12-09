@@ -48,6 +48,8 @@ in
         };
         wireless.wifi.enable = true;
       };
+
+      hardware.nvidia.powerManagement.enable = false;
     })
     (mkIf cfg.raspi {
       # imports = [ inputs.nixos-hardware.outputs.nixosModules.raspberry-pi-4 ];

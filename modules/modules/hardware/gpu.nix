@@ -34,8 +34,8 @@ in
       services.xserver.videoDrivers = [ "nvidia" ];
 
       hardware.nvidia = {
-        modesetting.enable = true;
-        powerManagement.enable = true;
+        modesetting.enable = mkDefault true;
+        powerManagement.enable = mkDefault true;
       };
 
       virtualisation.docker.enableNvidia = true;
