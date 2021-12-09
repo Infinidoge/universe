@@ -16,40 +16,44 @@ in
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems = {
-    "/" = {
-      device = "none";
-      fsType = "tmpfs";
-      options = [ "defaults" "size=4G" "mode=755" ];
-    };
+  fileSystems =
+    let
+      main = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
+    in
+    {
+      "/" = {
+        device = "none";
+        fsType = "tmpfs";
+        options = [ "defaults" "size=4G" "mode=755" ];
+      };
 
-    "/persist" = {
-      device = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
-      fsType = "btrfs";
-      options = [ "subvol=root" "autodefrag" "noatime" "ssd" ];
-      neededForBoot = true;
-    };
+      "/persist" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=root" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
 
-    "/nix" = {
-      device = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
-      fsType = "btrfs";
-      options = [ "subvol=nix" "autodefrag" "noatime" "ssd" ];
-      neededForBoot = true;
-    };
+      "/nix" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=nix" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
 
-    "/boot" = {
-      device = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
-      fsType = "btrfs";
-      options = [ "subvol=boot" "autodefrag" "noatime" "ssd" ];
-      neededForBoot = true;
-    };
+      "/boot" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=boot" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
 
-    "/boot/efi" = {
-      device = uuid "3FC9-0182";
-      fsType = "vfat";
-      neededForBoot = true;
+      "/boot/efi" = {
+        device = uuid "3FC9-0182";
+        fsType = "vfat";
+        neededForBoot = true;
+      };
     };
-  };
 
   swapDevices = [{ device = uuid "28672ffb-9f1c-462b-b49d-8a14b3dd72b3"; }];
 
