@@ -4,12 +4,9 @@
 DISK=$1
 
 sudo mkdir -p /mnt
-
-if mountpoint -q -- "/mnt"; then
-    echo "ERROR: /mnt is a mounted filesystem, aborting"
-    exit 1
-fi
 # boilerplate ends here
+
+
 
 # [[[[file:/etc/nixos/hosts/Infini-STICK/readme.org::partitioning][partitioning]]][partitioning]]
 echo "LOG: Partitioning $DISK"

@@ -21,6 +21,8 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 #+BEGIN_SRC bash :tangle setup.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
 <<boilerplate>>
 
+<<mmount_check>>
+
 <<partitioning>>
 
 <<filesystems>>
@@ -55,13 +57,13 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 #+BEGIN_SRC bash :tangle mount.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
 <<boilerplate>>
 
+<<mount_check>>
+
 <<mounting>>
 #+END_SRC
 
 #+NAME: install
 #+BEGIN_SRC bash :tangle install.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
-<<mount>>
-
 <<installing>>
 #+END_SRC
 
@@ -72,7 +74,10 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 DISK=$1
 
 sudo mkdir -p /mnt
+#+END_SRC
 
+#+NAME: mount_check
+#+BEGIN_SRC bash
 if mountpoint -q -- "/mnt"; then
     echo "ERROR: /mnt is a mounted filesystem, aborting"
     exit 1
