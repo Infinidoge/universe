@@ -51,7 +51,7 @@ in
       };
 
       "/boot/efi" = {
-        device = uuid "3FC9-0182";
+        device = uuid "0339-DFBA";
         fsType = "vfat";
         neededForBoot = true;
       };
