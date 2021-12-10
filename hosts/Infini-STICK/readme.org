@@ -135,6 +135,10 @@ sudo mount -o subvol=root,autodefrag,noatime "${DISK}1" /mnt/persist
 sudo mount -o subvol=nix,autodefrag,noatime "${DISK}1" /mnt/nix
 sudo mount -o subvol=boot,autodefrag,noatime "${DISK}1" /mnt/boot
 
+echo "LOG: - - Mounting persistent subdirectories"
+sudo mkdir -p /mnt/home
+sudo mount --bind /mnt/persist/home /mnt/home
+
 echo "LOG: - Mounting EFI System Partition"
 sudo mkdir -p /mnt/boot/efi
 sudo mount "${DISK}2" /mnt/boot/efi
