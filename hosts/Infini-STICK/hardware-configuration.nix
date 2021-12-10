@@ -20,7 +20,10 @@ in
 
   fileSystems =
     let
-      main = uuid "2a87bd84-c453-4b76-969c-e0653391131e";
+      # main = uuid "2a87bd84-c453-4b76-969c-e0653391131e";
+      # esp = uuid "0339-DFBA";
+      main = uuid "10e03644-e9b8-4f0c-b1e5-42193c2969d1";
+      esp = uuid "37A3-9E22";
     in
     {
       "/" = {
@@ -51,7 +54,7 @@ in
       };
 
       "/boot/efi" = {
-        device = uuid "0339-DFBA";
+        device = esp;
         fsType = "vfat";
         neededForBoot = true;
       };
