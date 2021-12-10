@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# [[file:readme.org::reinstall][reinstall]]
+# [[file:readme.org::install][install]]
 # [[[[file:/etc/nixos/hosts/Infini-STICK/readme.org::mount][mount]]][mount]]
 # [[[[file:/etc/nixos/hosts/Infini-STICK/readme.org::boilerplate][boilerplate]]][boilerplate]]
 DISK=$1
@@ -32,17 +32,4 @@ sudo mount "${DISK}2" /mnt/boot/efi
 echo "LOG: Installing NixOS"
 sudo nixos-install --flake /etc/nixos#Infini-STICK --no-root-password
 # installing ends here
-
-# [[[[file:/etc/nixos/hosts/Infini-STICK/readme.org::reinstall_extra][reinstall_extra]]][reinstall_extra]]
-
-# reinstall_extra ends here
-
-# [[[[file:/etc/nixos/hosts/Infini-STICK/readme.org::finishing_setup][finishing_setup]]][finishing_setup]]
-
-# finishing_setup ends here
-
-# [[[[file:/etc/nixos/hosts/Infini-STICK/readme.org::cleanup][cleanup]]][cleanup]]
-echo "LOG: Unmounting all"
-sudo umount -R /mnt
-# cleanup ends here
-# reinstall ends here
+# install ends here

@@ -40,9 +40,7 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 
 #+NAME: reinstall
 #+BEGIN_SRC bash :tangle reinstall.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
-<<boilerplate>>
-
-<<mounting>>
+<<mount>>
 
 <<installing>>
 
@@ -58,6 +56,13 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 <<boilerplate>>
 
 <<mounting>>
+#+END_SRC
+
+#+NAME: install
+#+BEGIN_SRC bash :tangle install.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
+<<mount>>
+
+<<installing>>
 #+END_SRC
 
 ** Script Boilerplate
