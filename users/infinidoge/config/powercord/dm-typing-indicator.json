@@ -1,3 +1,4 @@
 {
-  "indicatorStyle": "both"
+  "indicatorStyle": "both",
+  "ignoreNonFriend": false
 }
