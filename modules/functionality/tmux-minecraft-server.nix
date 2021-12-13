@@ -43,7 +43,7 @@ let
   };
 in
 {
-  options.services.minecraft-server = {
+  options.services.tmux-minecraft-server = {
 
     enable = mkOption {
       type = types.bool;
@@ -179,7 +179,7 @@ in
         ln -sf ${eula} eula.txt
         ln -sf ${whitelist} whitelist.json
         cp -f ${serverProperties} server.properties
-      '');
+      '';
     };
 
     networking.firewall = mkIf cfg.openFirewall (with ports; {
