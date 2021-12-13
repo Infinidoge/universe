@@ -106,7 +106,13 @@ in
     description = "Infinidoge, primary user of the system";
     group = "users";
     isNormalUser = true;
-    extraGroups = [ "wheel" "minecraft" "libvirtd" "bluetooth" ];
+    extraGroups = [
+      "wheel"
+      "minecraft"
+      "libvirtd"
+      "bluetooth"
+      "disk"
+    ];
     shell = pkgs.zsh;
   };
 }
