@@ -26,7 +26,10 @@ in
       services = {
         xserver.libinput = {
           enable = true;
-          touchpad.naturalScrolling = true;
+          touchpad = {
+            clickMethod = "clickfinger";
+            naturalScrolling = true;
+          };
         };
 
         logind.lidSwitch = mkDefault "ignore";
