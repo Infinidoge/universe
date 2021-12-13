@@ -107,11 +107,11 @@ in
     group = "users";
     isNormalUser = true;
     extraGroups = [
-      "wheel"
-      "minecraft"
-      "libvirtd"
       "bluetooth"
       "disk"
+      "libvirtd"
+      "minecraft"
+      "wheel"
     ];
     shell = pkgs.zsh;
   };
