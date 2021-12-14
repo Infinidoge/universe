@@ -6,10 +6,11 @@
 
 * Partition Scheme
 
-| Position | Label           | FS Type | Size | Type                 |
-|----------+-----------------+---------+------+----------------------|
-|        0 | =boot=          | =vfat=  | 511M | EFI System Partition |
-|        1 | =Infini-SERVER= | =btrfs= | Rest | Root Partition       |
+| Position | Label           | FS Type          | Size | Type                 |
+|----------+-----------------+------------------+------+----------------------|
+|        1 | =boot=          | =vfat= / =fat32= | 511M | EFI System Partition |
+|        2 | =Infini-SERVER= | =btrfs=          | Rest | Root Partition       |
+|        3 | =swap=          | =swap=           | 24G  | Swap Space           |
 
 * Configuration
 
@@ -17,8 +18,8 @@ Setup for my main server hosting computer, using an Nvidia GPU and the =server= 
 
 * Setup Scripts
 
-#+NAME: full_install
-#+BEGIN_SRC bash :tangle setup.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
+#+NAME: preparation
+#+BEGIN_SRC bash :tangle prep.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
 <<boilerplate>>
 
 <<mmount_check>>
@@ -28,27 +29,15 @@ Setup for my main server hosting computer, using an Nvidia GPU and the =server= 
 <<filesystems>>
 
 <<subvolumes>>
-
-<<mounting>>
-
-<<installing>>
-
-<<full_extra>>
-
-<<finishing_setup>>
-
-<<cleanup>>
 #+END_SRC
 
-#+NAME: reinstall
-#+BEGIN_SRC bash :tangle reinstall.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
+#+NAME: install
+#+BEGIN_SRC bash :tangle install.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
 <<mount>>
 
 <<installing>>
 
-<<reinstall_extra>>
-
-<<finishing_setup>>
+<<install_extra>>
 
 <<cleanup>>
 #+END_SRC
@@ -62,8 +51,8 @@ Setup for my main server hosting computer, using an Nvidia GPU and the =server= 
 <<mounting>>
 #+END_SRC
 
-#+NAME: install
-#+BEGIN_SRC bash :tangle install.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
+#+NAME: bare_install
+#+BEGIN_SRC bash :tangle bare_install.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
 <<installing>>
 #+END_SRC
 
@@ -155,24 +144,17 @@ echo "LOG: Installing NixOS"
 sudo nixos-install --flake /etc/nixos#Infini-SERVER --no-root-password
 #+END_SRC
 
-** Extra (Full Install)
+** Extra (Install)
 
-#+NAME: full_extra
+#+NAME: install_extra
 #+BEGIN_SRC bash
 echo "LOG: Cloning configuration"
-sudo git clone --no-hardlinks --progress https://gitlab.com/infinidoge/devos.git /mnt/persist/etc/nixos
-#+END_SRC
+sudo chown -R infinidoge /mnt/persist/etc/nixos
+git clone --no-hardlinks --progress https://gitlab.com/infinidoge/devos.git /mnt/persist/etc/nixos
 
-** Extra (Reinstall)
-
-#+NAME: reinstall_extra
-#+BEGIN_SRC bash
-#+END_SRC
-
-** Finishing Setup
-
-#+NAME: finishing_setup
-#+BEGIN_SRC bash
+echo "LOG: Installing Doom Emacs"
+git clone --no-hardlinks --progress --depth 1 https://github.com/hlissner/doom-emacs /mnt/persist/home/infinidoge/.config/emacs
+HOME=/mnt/persist/home/infinidoge /mnt/persist/home/infinidoge/.config/emacs/bin/doom -y install --no-config
 #+END_SRC
 
 ** Cleanup
