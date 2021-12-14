@@ -20,8 +20,8 @@ in
 
   fileSystems =
     let
-      main = uuid "577db170-141b-4131-8df5-ca5e7b595294";
-      esp = uuid "E6C2-3E00";
+      main = uuid "07da2051-8c76-42e8-8b89-c5da96bf0cc4";
+      esp = uuid "FDF6-B1D7";
     in
     {
       "/" = {
@@ -59,7 +59,7 @@ in
     };
 
   swapDevices = [
-    { device = uuid "d6a57248-e29b-4366-aec6-721a7ddbe2ec"; }
+    { device = uuid "e5ffc9f3-4dfd-4b9b-81a2-1c583dc90f06"; }
   ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
