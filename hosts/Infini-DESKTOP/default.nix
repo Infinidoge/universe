@@ -7,8 +7,6 @@
 
     (with profiles; [
       networking.wireless
-
-      virtualization
     ])
 
     ./hardware-configuration.nix
@@ -40,6 +38,7 @@
     desktop = {
       gaming.enableAll = true;
     };
+    virtualization.enable = true;
   };
 
   networking.interfaces = {
