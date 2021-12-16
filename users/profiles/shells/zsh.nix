@@ -33,24 +33,16 @@
           # zsh modifications
           "zsh-interactive-cd"
           "command-not-found"
+          "sudo"
 
           # Aliases
           "alias-finder"
 
           # Applications
-          ## Docker
-          "docker"
           ## Python
           "pip"
-          "python"
-          ## Systemd
-          "systemd"
           ## Git
-          "git"
-          "github"
           "gitignore"
-          ## Emacs
-          "emacs"
           ## Vim
           "fancy-ctrl-z"
         ];
