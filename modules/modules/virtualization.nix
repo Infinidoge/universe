@@ -2,7 +2,7 @@
 with lib;
 with lib.hlissner;
 let
-  cfg = config.modules.virtualzation;
+  cfg = config.modules.virtualization;
 in
 {
   options.modules.virtualization = {
