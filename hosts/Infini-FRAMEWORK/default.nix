@@ -47,6 +47,12 @@
       enable = true;
       btrfs.enable = true;
     };
+    desktop = {
+      gaming = {
+        steam.enable = true;
+        multimc.enable = true;
+      };
+    };
   };
 
   networking.interfaces.wlp170s0.useDHCP = true;
