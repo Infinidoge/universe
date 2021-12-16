@@ -27,6 +27,7 @@
       mu
       nodePackages.prettier
       nodejs
+      perl
       python39Packages.pygments
       ripgrep
       shellcheck
