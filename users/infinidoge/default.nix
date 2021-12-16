@@ -6,8 +6,6 @@ in
 {
   imports = lib.flatten [
     (with suites; [ develop ])
-
-    (with profiles; [ virtualization ])
   ];
 
   home = { config, main, suites, profiles, ... }: {

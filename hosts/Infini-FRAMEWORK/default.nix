@@ -53,6 +53,7 @@
         multimc.enable = true;
       };
     };
+    virtualization.enable = true;
   };
 
   networking.interfaces.wlp170s0.useDHCP = true;
