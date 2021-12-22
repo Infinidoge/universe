@@ -56,7 +56,6 @@
         discord-pronoundb-powercord
         discord-quick-Status
         discord-quick-delete-pc
-        discord-quick-reply
         discord-reddit-parser
         discord-relationship-notifier
         discord-remove-invite-from-user-context-menu

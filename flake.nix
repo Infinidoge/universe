@@ -112,7 +112,6 @@
     discord-pronoundb-powercord = { url = "github:cyyynthia/pronoundb-powercord"; flake = false; };
     discord-quick-Status = { url = "github:D-Brox/quick-Status"; flake = false; };
     discord-quick-delete-pc = { url = "github:the-cord-plug/quick-delete-pc"; flake = false; };
-    discord-quick-reply = { url = "github:relative/quick-reply"; flake = false; };
     discord-reddit-parser = { url = "github:Rodentman87/reddit-parser"; flake = false; };
     discord-relationship-notifier = { url = "github:Twizzer/relationship-notifier"; flake = false; };
     discord-remove-invite-from-user-context-menu = { url = "github:SebbyLaw/remove-invite-from-user-context-menu"; flake = false; };
