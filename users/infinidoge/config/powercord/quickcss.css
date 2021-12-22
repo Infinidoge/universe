@@ -269,3 +269,28 @@
     opacity: 0;
 }
 /** 907333488779354112 */
+
+/**
+ * Snippet from #css-snippets applied the Dec 22, 2021 at 2:53:56 PM
+ * Created by Freeplay#5676 (158296466119458816)
+ * Snippet ID: 921928336802971699
+ */
+/* Horizontally listed media */
+[id*="message-accessories-"] {
+    display: flex;
+    flex-wrap: wrap;
+}
+[id*="message-accessories-"] > * {
+    margin-right: .4em !important;
+    min-height: 100% !important;
+}
+[id*="message-accessories-"] > div > a {
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+    background-color: var(--background-secondary);
+}
+[id*="message-reactions"] {
+    width: 100%;
+}
+/** 921928336802971699 */
