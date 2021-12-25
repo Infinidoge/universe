@@ -18,7 +18,6 @@
       clang
       cmake
       coreutils
-      editorconfig-checker
       fd
       fzf
       gnumake
@@ -33,11 +32,40 @@
       shellcheck
       sqlite
 
-      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+      # --- :tools ---
+      # :tools editorconfig
+      editorconfig-core-c
+      editorconfig-checker
+
+      # --- :app ---
+      # :app everywhere
+      xdotool
+      xclip
+
+      # --- :lang ---
+      # :lang org
+      ## +gnuplot
+      gnuplot
+      ## +roam2
+      graphviz
+
+      # :lang common-lisp
+      sbcl
+
+      # :lang latex
       (texlive.combine {
         inherit (texlive)
           scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed;
       })
+
+      # :lang markdow
+      pandoc
+      python39Packages.grip
+
+      # --- :checkers ---
+      # :checkers spell
+      ## +aspell
+      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
     ];
 
     # activation = { # Works in theory, but times out on rebuild
