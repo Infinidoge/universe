@@ -1,14 +1,19 @@
 { pkgs, lib, ... }: {
   environment.systemPackages = with pkgs; lib.lists.flatten [
     python3
+    python310
     (with python39Packages; [
-      pip
       black
-      mypy
+      isort
       jupyter
+      mypy
+      nose
+      pip
+      pyflakes
+      pyls-isort
+      pytest
     ])
     python-language-server
-
-    python310
+    pipenv
   ];
 }
