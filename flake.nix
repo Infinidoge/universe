@@ -231,6 +231,7 @@
                     python
                     racket
                     haskell
+                    nim
                   ])
                 ];
               };
