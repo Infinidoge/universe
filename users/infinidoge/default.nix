@@ -54,6 +54,9 @@ in
 
         sxiv
       ])
+
+      arduino
+      minipro
     ];
   };
 
@@ -106,6 +109,7 @@ in
     isNormalUser = true;
     extraGroups = [
       "bluetooth"
+      "dialout"
       "disk"
       "libvirtd"
       "minecraft"
