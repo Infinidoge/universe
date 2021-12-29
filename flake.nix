@@ -278,7 +278,10 @@
         templates.bud.path = ./.;
         templates.bud.description = "bud template";
 
-      } // {
-      budModules = { devos = import ./bud; };
-    };
+      }
+    //
+    {
+      budModules = { devos = import ./shell/bud; };
+    }
+  ;
 }
