@@ -97,6 +97,8 @@ in
         monospace = [ "DejaVuSansMono" ];
       };
     };
+
+    software.minipro.enable = true;
   };
 
   user = {
@@ -114,6 +116,7 @@ in
       "libvirtd"
       "minecraft"
       "wheel"
+      "plugdev"
     ];
     shell = pkgs.zsh;
   };
