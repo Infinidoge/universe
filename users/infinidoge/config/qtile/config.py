@@ -375,7 +375,7 @@ for i in groups:
             Key(
                 [Keys.SUPER],
                 i.name,
-                lazy.group[i.name].toscreen(),
+                lazy.group[i.name].toscreen(toggle=True),
                 desc=f"Switch to group {i.name}",
             ),
             Key(
