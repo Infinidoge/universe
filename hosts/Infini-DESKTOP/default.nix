@@ -20,6 +20,8 @@
       gpu.nvidia = true;
       wireless.enable = true;
       form.desktop = true;
+
+      peripherals.razer.enable = true;
     };
     services = {
       foldingathome = {
