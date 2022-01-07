@@ -53,6 +53,8 @@ in
         gnome.gnome-screenshot
 
         sxiv
+
+        libreoffice-fresh
       ])
 
       arduino
