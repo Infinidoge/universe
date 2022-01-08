@@ -13,6 +13,15 @@
     "author": "265924886461939712",
     "channel": "755015869914152981",
     "content": ".anchor-3Z-8Bb[href=\"https://support.discord.com\"] { display: none; }",
-    "timestamp": 1636867215000
+    "timestamp": 1636867215000,
+    "details": {
+      "title": "Remove Help Button"
+    }
+  },
+  {
+    "id": "907333488779354112",
+    "author": "457579346282938368",
+    "content": ".members-2upGyL {\n    height: 100%;\n}\n.toolbar-1t6TWx>.iconWrapper-2OrFZ1.selected-1GqIat:nth-of-type(4)~:last-child {\n    margin-right: 56px;\n}\n.container-2PDP7D>.tabs-3L9Rgq {\n    height: 0;\n    padding: 0;\n    border: none;\n}\n.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg {\n    font-size: 0;\n    position: absolute;\n    right: 6px;\n    top: -36px;\n    width: 40px;\n    height: 24px;\n    margin: 0 8px;\n    padding: 0;\n    z-index: 2;\n    border-radius: 12px;\n    background-color: hsl(218, calc(var(--saturation-factor, 1) * 4.6%), 46.9%) !important;\n}\n.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg::after {\n    position: absolute;\n    top: 3px;\n    width: 18px;\n    height: 18px;\n    background-color: white;\n    border-radius: 50%;\n}\n.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg:first-of-type::after {\n    content: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18px' height='18px' fill='rgb(114, 118, 125)'><path d='M11.8 6.6C11.8 8.154 10.54 9.4 9 9.4C7.46 9.4 6.2 8.154 6.2 6.6C6.2 5.06 7.46 3.8 9 3.8C10.54 3.8 11.8 5.06 11.8 6.6ZM3.4 14.3C3.4 11.836 5.71 10.1 9 10.1C12.304 10.1 14.6 11.836 14.6 14.3V15H3.4V14.3Z'/></svg>\");\n    right: 3px;    \n}\n.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg:last-of-type::after {\n    content: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18px' height='18px' fill='rgb(114, 118, 125)'><path d='M9-1zm0 4.752a1.25 1.25 90 110 2.5a1.25 1.25 90 010-2.5zM12 14h-6v-2h2V9H7V7h2a1 1 90 011 1v4h2v2z'/></svg>\");\n    left: 3px;\n}\n.container-2PDP7D>.tabs-3L9Rgq>.tab-XC_yrg.active-2SVYP5 {\n    pointer-events: none;\n    opacity: 0;\n}",
+    "timestamp": 1636761890000
   }
 ]
