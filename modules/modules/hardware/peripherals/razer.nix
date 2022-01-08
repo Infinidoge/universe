@@ -17,5 +17,7 @@ in
     };
 
     user.extraGroups = [ "plugdev" ];
+
+    home.home.packages = with pkgs; [ razergenie ]; # TODO replace with polychromatic
   };
 }
