@@ -245,3 +245,41 @@
     width: 100%;
 }
 /** 921928336802971699 */
+
+/**
+ * Snippet from #css-snippets applied the Jan 9, 2022 at 12:34:26 AM
+ * Created by ThatOtherAndrew#8134 (650459420635168769)
+ * Snippet ID: 929440925791449148
+ */
+[title^="https://discord.com/channels/"], [title^="https://ptb.discord.com/channels/"], [title^="https://canary.discord.com/channels/"] {
+  line-height: 0;
+  font-size: 0;
+  text-decoration-color: #fff !important;
+}
+[title^="https://discord.com/channels/"]::before, [title^="https://ptb.discord.com/channels/"]::before, [title^="https://canary.discord.com/channels/"]::before {
+  content: "✉ Jump to Message";
+  font-size: 16px;
+  user-select: text;
+  font-weight: 500;
+  transition: background-color 50ms ease-out, color 50ms ease-out;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 0 2px;
+  background: hsla(235, calc(var(--saturation-factor, 1) * 85.6%), 64.7%, 0.3);
+  color: hsl(236, calc(var(--saturation-factor, 1) * 83.3%), 92.9%);
+}
+[title^="https://discord.com/channels/"]:hover::before, [title^="https://ptb.discord.com/channels/"]:hover::before, [title^="https://canary.discord.com/channels/"]:hover::before {
+  background-color: hsl(235, calc(var(--saturation-factor, 1) * 85.6%), 64.7%);
+  color: #fff;
+}
+/** 929440925791449148 */
+
+/**
+ * Snippet from #css-snippets applied the Jan 9, 2022 at 12:34:48 AM
+ * Created by george.#0550 (590224302578860065)
+ * Snippet ID: 929485841229815859
+ */
+.wrapper-28eC3z svg {
+    overflow: hidden;
+}
+/** 929485841229815859 */
