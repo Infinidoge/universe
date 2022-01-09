@@ -40,6 +40,14 @@
     },
     "921928336802971699": {
       "title": "Horizontally Listed Media"
+    },
+    "929485841229815859": {
+      "title": "Fix Server List Lag",
+      "description": "Fixes the server list lagging on many Linux distros"
+    },
+    "929440925791449148": {
+      "title": "Jump to Message Buttons",
+      "description": "Replaces message links with a 'Jump to Message' button"
     }
   },
   "collapsedSnippets": [
@@ -55,6 +63,8 @@
     "921928336802971699",
     "865809923878682634",
     "780838821662294068",
-    "907333488779354112"
+    "907333488779354112",
+    "929485841229815859",
+    "929440925791449148"
   ]
 }
