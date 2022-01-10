@@ -54,6 +54,9 @@
     # end ANTI CORRUPTION LAYER
 
     # --- Application-Specific Flake Inputs
+    # # --- PolyMC
+    polymc.url = "github:PolyMC/PolyMC";
+
     # # --- Powercord
     powercord = { url = "github:powercord-org/powercord"; flake = false; };
     powercord-overlay.url = "github:LavaDesu/powercord-overlay";
@@ -165,6 +168,7 @@
 
               # --- Application-Specific Overlays
               inputs.powercord-overlay.overlay
+              inputs.polymc.overlay."x86_64-linux"
             ];
           };
           latest = {
