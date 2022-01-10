@@ -1,0 +1,57 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /etc/nixos/Project.org
+
+
+* DONE powercord
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-01-10 Mon 00:12
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Miscellaneous Configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+
+* DONE nixpkgs
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-01-10 Mon 00:12
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Miscellaneous Configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+
+* DONE htop
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-01-10 Mon 00:13
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Miscellaneous Configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+
+* DONE fontconfig
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-01-10 Mon 00:13
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Miscellaneous Configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+
+* DONE emacs
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-01-10 Mon 00:13
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Miscellaneous Configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+- Automatically install Doom Emacs
+
