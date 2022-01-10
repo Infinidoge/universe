@@ -15,7 +15,7 @@ in
     multimc = {
       enable = mkBoolOpt false;
       msaClientID = mkOpt str "01524508-0110-46fc-b468-362d31ca41e6";
-      package = mkOpt package pkgs.multimc;
+      package = mkOpt package pkgs.multimc; # TODO Replace with PolyMC
     };
     lutris = {
       enable = mkBoolOpt false;

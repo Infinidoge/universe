@@ -35,39 +35,31 @@
 
 * PROJ My computer configurations
 
-** DONE Readd Stretchly
+** TODO Autostart Stretchly
 
-** TODO Add Rofi
+** STRT Add Rofi
 
-*** TODO Desktop apps menu
+*** DONE Desktop apps menu
 
 *** TODO Commands menu
 
 - [ ] Modifier key for opening in shell
 
-*** TODO Add theming
+*** DONE Add theming
 
 - Possibly abstract out color theme to a Nix file to share
+
+** TODO Replace MultiMC with PolyMC
+
+** TODO Add Polychromatic
 
 ** PROJ Miscellaneous Configurations
 
 *** TODO dconf
 
-*** HOLD emacs
-
-- Automatically install Doom Emacs
-
-*** TODO fontconfig
-
-*** TODO htop
-
-*** TODO libreoffice
+*** HOLD libreoffice
 
 *** TODO neofetch
-
-*** DONE nixpkgs
-
-*** TODO powercord
 
 *** TODO SpeedCrunch
 
