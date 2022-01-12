@@ -58,7 +58,7 @@
           scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed;
       })
 
-      # :lang markdow
+      # :lang markdown
       pandoc
       python39Packages.grip
 
