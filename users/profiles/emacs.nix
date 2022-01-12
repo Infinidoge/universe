@@ -52,6 +52,10 @@
       # :lang common-lisp
       sbcl
 
+      # :lang csharp
+      mono
+      omnisharp-roslyn
+
       # :lang latex
       (texlive.combine {
         inherit (texlive)
