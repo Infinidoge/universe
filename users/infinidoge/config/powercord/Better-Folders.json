@@ -2,5 +2,7 @@
   "closeAllFolders": false,
   "closeOthers": true,
   "forceOpen": true,
-  "closeAllHomeButton": false
+  "closeAllHomeButton": false,
+  "folderSidebar": true,
+  "sidebarAnim": true
 }
