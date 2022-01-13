@@ -17,7 +17,7 @@
         ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
       '';
 
-      dotDir = ".config/zsh";
+      dotDir = "{config.xdg.configHome}zsh";
 
       history.path = "${dotDir}/.zsh_history";
 
