@@ -168,7 +168,7 @@
 
               # --- Application-Specific Overlays
               inputs.powercord-overlay.overlay
-              inputs.polymc.overlay."x86_64-linux"
+              inputs.polymc.overlay
             ];
           };
           latest = {
