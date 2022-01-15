@@ -17,9 +17,9 @@
         ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
       '';
 
-      dotDir = "${config.xdg.configHome}zsh";
+      dotDir = ".config/zsh";
 
-      history.path = "${dotDir}/.zsh_history";
+      history.path = "/home/infinidoge/${dotDir}/.zsh_history";
 
       shellAliases = main.environment.shellAliases // config.home.shellAliases;
 
