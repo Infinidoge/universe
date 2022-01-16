@@ -48,6 +48,10 @@
     "929440925791449148": {
       "title": "Jump to Message Buttons",
       "description": "Replaces message links with a 'Jump to Message' button"
+    },
+    "931904851586195476": {
+      "title": "Make PronounDB match timestamps",
+      "description": "Adjusts font size and weight of PronounDB's pronouns in chat to make them identical to timestamps, and makes it so that "
     }
   },
   "collapsedSnippets": [
@@ -65,6 +69,7 @@
     "780838821662294068",
     "907333488779354112",
     "929485841229815859",
-    "929440925791449148"
+    "929440925791449148",
+    "931904851586195476"
   ]
 }
