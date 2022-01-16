@@ -283,3 +283,16 @@
     overflow: hidden;
 }
 /** 929485841229815859 */
+
+/**
+ * Snippet from #css-snippets applied the Jan 16, 2022 at 12:09:04 AM
+ * Created by 5h3i1ah#6253 (268947234861744130)
+ * Snippet ID: 931904851586195476
+ */
+.pronoundb-pronouns {
+    font-size: 0.75rem !important;
+    height: 1.25rem;
+    cursor: default;
+    font-weight: 500;
+}
+/** 931904851586195476 */
