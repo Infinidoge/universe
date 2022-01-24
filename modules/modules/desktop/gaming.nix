@@ -12,11 +12,6 @@ in
       enable = mkBoolOpt false;
       package = mkOpt package pkgs.steam;
     };
-    multimc = {
-      enable = mkBoolOpt false;
-      msaClientID = mkOpt str "01524508-0110-46fc-b468-362d31ca41e6";
-      package = mkOpt package pkgs.multimc; # TODO Replace with PolyMC
-    };
     polymc = {
       enable = mkBoolOpt false;
       package = mkOpt package pkgs.polymc;
@@ -30,7 +25,6 @@ in
   config = mkMerge [
     {
       home.home.packages = with pkgs; [
-        (mkIf cfg.multimc.enable (cfg.multimc.package.override { msaClientID = cfg.multimc.msaClientID; }))
         (mkIf cfg.polymc.enable cfg.polymc.package)
         (mkIf cfg.lutris.enable cfg.lutris.packages)
       ];
@@ -44,7 +38,7 @@ in
     (mkIf cfg.enableAll {
       modules.desktop.gaming = {
         steam.enable = true;
-        multimc.enable = true;
+        polymc.enable = true;
         lutris.enable = true;
       };
     })

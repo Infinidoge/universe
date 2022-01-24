@@ -50,7 +50,7 @@
     desktop = {
       gaming = {
         steam.enable = true;
-        multimc.enable = true;
+        polymc.enable = true;
       };
     };
     virtualization.enable = true;

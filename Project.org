@@ -49,7 +49,7 @@
 
 - Possibly abstract out color theme to a Nix file to share
 
-** TODO Replace MultiMC with PolyMC
+** DONE Replace MultiMC with PolyMC
 
 ** TODO Add Polychromatic
 
