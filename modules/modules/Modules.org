@@ -11,7 +11,7 @@ Sets up applications for the specific purpose of playing games.
 
 Currently includes:
 - Steam
-- MultiMC (Soon PolyMC)
+- PolyMC
 - Lutris
 
 * Hardware :directory:
