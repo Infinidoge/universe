@@ -22,6 +22,10 @@ For updating inputs/packages, and any changes required to maintain working order
 bump: [flake inputs|INPUT]
 #+END_SRC
 
+*** =chore=
+
+A regular and necessary commit to update regularly-changed files, such as those including timestamps or state information.
+
 *** =dev=
 
 Work on project infrastructure and development tools: build scripts, repository config files (=.github/*=, =.direnv=, =.gitignore=, etc.)
