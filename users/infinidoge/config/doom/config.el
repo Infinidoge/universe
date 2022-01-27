@@ -243,5 +243,7 @@ And jumps to your `doom!' block."
   :init
   (setq lsp-python-ms-executable (executable-find "python-language-server")))
 
+ (setq lsp-csharp-server-path (executable-find "omnisharp"))
+
 ;; Disable excessive warnings in configuration directory
 (add-to-list '+emacs-lisp-disable-flycheck-in-dirs infinidoge-doom-private-dir)

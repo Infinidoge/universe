@@ -54,6 +54,7 @@
 
       # :lang csharp
       mono
+      omnisharp-roslyn
 
       # :lang latex
       (texlive.combine {
