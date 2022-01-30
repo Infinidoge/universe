@@ -4,19 +4,21 @@ with lib;
   nix = {
     package = pkgs.nixUnstable;
 
-    systemFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    settings = {
+      allowed-users = [ "@wheel" ];
 
-    autoOptimiseStore = true;
+      trusted-users = [ "root" "@wheel" ];
+
+      system-feature = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+
+      auto-optimise-store = true;
+
+      sandbox = true;
+    };
 
     gc.automatic = true;
 
     optimise.automatic = true;
-
-    useSandbox = true;
-
-    allowedUsers = [ "@wheel" ];
-
-    trustedUsers = [ "root" "@wheel" ];
 
     extraOptions = ''
       min-free = 536870912
