@@ -94,7 +94,7 @@
        lookup              ; navigate your code and its documentation
        lsp
        (magit +forge)             ; a git porcelain for Emacs
-       ;;make              ; run make tasks from Emacs
+       make              ; run make tasks from Emacs
        (pass +auth)              ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
