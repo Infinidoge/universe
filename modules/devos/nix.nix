@@ -9,7 +9,7 @@ with lib;
 
       trusted-users = [ "root" "@wheel" ];
 
-      system-feature = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
 
       auto-optimise-store = true;
 
