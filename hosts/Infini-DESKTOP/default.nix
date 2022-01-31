@@ -38,6 +38,8 @@
     ];
   };
 
+  hardware.nvidia.powerManagement.enable = false;
+
   modules = {
     boot.grub.enable = true;
     hardware = {
