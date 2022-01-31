@@ -12,7 +12,31 @@
     ./hardware-configuration.nix
   ];
 
-  system.stateVersion = "21.05";
+  system.stateVersion = "21.11";
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/home"
+      "/etc/nixos"
+
+      # /var directories
+      "/var/log"
+      "/var/lib/bluetooth"
+      "/var/lib/systemd/coredump"
+    ];
+
+    files = [
+      "/etc/machine-id"
+
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+
+      "/root/.local/share/nix/trusted-settings.json"
+      "/root/.ssh/known_hosts"
+    ];
+  };
 
   modules = {
     boot.grub.enable = true;
@@ -25,7 +49,7 @@
     };
     services = {
       foldingathome = {
-        enable = true;
+        enable = false;
         user = "Infinidoge";
         extra = {
           control = true;

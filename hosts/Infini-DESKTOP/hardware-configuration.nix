@@ -3,6 +3,9 @@
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
 
+let
+  uuid = uuid: "/dev/disk/by-uuid/${uuid}";
+in
 {
   imports = [ ];
 
@@ -10,31 +13,52 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ "boot.shell_on_fail" ];
+  boot.supportedFilesystems = [ "btrfs" ];
 
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
-  fileSystems."/" =
+  fileSystems =
+    let
+      main = uuid "13f97ece-823e-4785-b06e-6c284105d379";
+      esp = uuid "1DB7-2844";
+    in
     {
-      device = "/dev/disk/by-uuid/c40e2655-8f7e-4dd3-95ab-f2d48639cc59";
-      fsType = "ext4";
-    };
+      "/" = {
+        device = "none";
+        fsType = "tmpfs";
+        options = [ "defaults" "size=4G" "mode=755" ];
+      };
 
-  fileSystems."/boot/efi" =
-    {
-      device = "/dev/disk/by-uuid/21E6-6801";
-      fsType = "vfat";
-    };
+      "/persist" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=root" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
 
-  fileSystems."/home" =
-    {
-      device = "/dev/disk/by-uuid/26438642-0683-4ce3-af6b-b555cb8e388d";
-      fsType = "ext4";
+      "/nix" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=nix" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
+
+      "/boot" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=boot" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
+
+      "/boot/efi" = {
+        device = esp;
+        fsType = "vfat";
+        neededForBoot = true;
+      };
     };
 
   swapDevices = [
-    {
-      device = "/dev/disk/by-uuid/dfbe858e-5732-48d7-8777-37ed19138d7e";
-    }
+    { device = uuid "37916097-dbb9-4a74-b761-17043629642a"; }
   ];
-
 }
