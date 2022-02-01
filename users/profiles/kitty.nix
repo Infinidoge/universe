@@ -10,6 +10,6 @@
 
   home.shellAliases = {
     ssh = "kitty +kitten ssh";
-    softsh = "TERM=xterm-256color \ssh"; # https://github.com/charmbracelet/soft-serve/issues/72
+    softsh = "TERM=xterm-256color \\ssh"; # https://github.com/charmbracelet/soft-serve/issues/72
   };
 }
