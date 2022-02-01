@@ -56,6 +56,12 @@ in
         fsType = "vfat";
         neededForBoot = true;
       };
+
+      "/home/infinidoge/Hydrus" = {
+        device = uuid "b26b002b-2ed5-44ea-8018-f65c994a79cb";
+        fsType = "btrfs";
+        options = [ "subvol=Hydrus" "autodefrag" "noatime" "ssd" ];
+      };
     };
 
   swapDevices = [
