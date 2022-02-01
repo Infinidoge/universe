@@ -47,7 +47,7 @@
 
     # --- Application-Specific Flake Inputs
     # # --- PolyMC
-    polymc.url = "github:PolyMC/PolyMC";
+    # polymc.url = "github:PolyMC/PolyMC";
 
     # # --- Powercord
     powercord = { url = "github:powercord-org/powercord"; flake = false; };
@@ -160,7 +160,7 @@
 
               # --- Application-Specific Overlays
               inputs.powercord-overlay.overlay
-              inputs.polymc.overlay
+              # inputs.polymc.overlay
             ];
           };
           latest = { };
