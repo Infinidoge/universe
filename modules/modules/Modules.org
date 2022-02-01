@@ -30,6 +30,10 @@ Sets up printing drivers. Currently non-functional, but attempts to include driv
 
 Setup the OpenRazer daemon and install management software. Currently uses RazerGenie, to be replaced by Polychromatic.
 
+*** Fprint Sensor :module:
+
+Setup for the =fprintd= daemon for using fingerprints for authentication. Alias of =services.fprintd=.
+
 ** Audio :module:
 
 Sets up computer audio, specifically using PulseAudio.

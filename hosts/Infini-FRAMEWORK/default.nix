@@ -39,6 +39,10 @@
     hardware = {
       gpu.intel = true;
       form.laptop = true;
+
+      peripherals = {
+        fprint-sensor.enable = true;
+      };
     };
     services = {
       proxy.enable = true;
@@ -61,6 +65,4 @@
   hardware.video.hidpi.enable = false;
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   console.earlySetup = lib.mkDefault true;
-
-  services.fprintd.enable = true;
 }
