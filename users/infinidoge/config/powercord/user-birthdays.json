@@ -1,6 +1,7 @@
 {
   "alertSound": "",
-  "friendsToolbarIcon": true,
   "alertToasts": true,
-  "alertDesktop": false
+  "alertDesktop": false,
+  "friendsToolbarIcon": true,
+  "toolbarIcon": true
 }
