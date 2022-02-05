@@ -20,6 +20,10 @@
     };
   };
 
+  services = {
+    soft-serve.enable = true;
+  };
+
   environment.persistence."/persist" = {
     directories = [
       "/home"
