@@ -1,0 +1,145 @@
+{ config, lib, pkgs, ... }:
+with lib;
+with lib.hlissner;
+let
+  cfg = config.services.minecraft-servers;
+in
+{
+  options.services.minecraft-servers = {
+    enable = mkBoolOpt false;
+    eula = mkBoolOpt false;
+    dataDir = mkOpt types.path "/srv/minecraft";
+
+    servers = mkOption {
+      default = { };
+      type = types.attrsOf (types.submodule {
+        options = {
+          enable = mkBoolOpt false;
+
+          whitelist = mkOption {
+            type =
+              let
+                minecraftUUID = types.strMatching
+                  "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" // {
+                  description = "Minecraft UUID";
+                };
+              in
+              types.attrsOf minecraftUUID;
+            default = { };
+          };
+
+          serverProperties = mkOpt (with types; attrsOf (oneOf [ bool int str ])) { };
+
+          package = mkOpt types.package pkgs.minecraft-server;
+
+          jvmOpts = mkOpt (types.separatedString " ") "-Xmx2048M -Xms2048M";
+        };
+      });
+    };
+  };
+
+  config = mkIf cfg.enable
+    (
+      let
+        servers = attrsets.filterAttrs (_: cfg: cfg.enable) cfg.servers;
+      in
+      {
+        users.users.minecraft = {
+          description = "Minecraft server service user";
+          home = cfg.dataDir;
+          createHome = true;
+          isSystemUser = true;
+          group = "minecraft";
+        };
+        users.groups.minecraft = { };
+
+        assertions = [
+          {
+            assertion = cfg.eula;
+            message = "You must agree to Mojangs EULA to run minecraft-servers."
+              + " Read https://account.mojang.com/documents/minecraft_eula and"
+              + " set `services.minecraft-servers.eula` to `true` if you agree.";
+          }
+        ];
+
+        systemd.services = attrsets.mapAttrs'
+          (name: conf:
+            let
+              serverDir = "${cfg.dataDir}/${name}";
+              tmux = "${getBin pkgs.tmux}/bin/tmux";
+              tmuxSock = "/run/minecraft/${name}.sock";
+
+              startScript = pkgs.writeScript "minecraft-start-${name}" ''
+                #!${pkgs.runtimeShell}
+
+                cd ${serverDir}
+                ${tmux} -S ${tmuxSock} new -d ${conf.package}/bin/minecraft-server ${conf.jvmOpts}
+              '';
+
+              stopScript = pkgs.writeScript "minecraft-stop-${name}" ''
+                #!${pkgs.runtimeShell}
+
+                if ! [ -d "/proc/$1" ]; then
+                  exit 0
+                fi
+
+                ${tmux} -S ${tmuxSock} send-keys stop Enter
+              '';
+            in
+            {
+              name = "minecraft-server-${name}";
+              value = {
+                description = "Minecraft Server ${name}";
+                wantedBy = [ "multi-user.target" ];
+                after = [ "network.target" ];
+
+                serviceConfig = {
+                  ExecStart = "${startScript}";
+                  ExecStop = "${stopScript} $MAINPID";
+                  Restart = "always";
+                  User = "minecraft";
+                  Type = "forking";
+                  GuessMainPID = true;
+                  RuntimeDirectory = "minecraft";
+                };
+
+                preStart =
+                  let
+                    eula = builtins.toFile "eula.txt" ''
+                      # eula.txt managed by NixOS Configuration
+                      eula=true
+                    '';
+
+                    whitelist = pkgs.writeText "whitelist.json"
+                      (builtins.toJSON
+                        (mapAttrsToList (n: v: { name = n; uuid = v; }) conf.whitelist));
+
+                    serverProperties =
+                      let
+                        cfgToString = v: if builtins.isBool v then boolToString v else toString v;
+                      in
+                      pkgs.writeText "server.properties" (''
+                        # server.properties managed by NixOS configuration
+                      '' + concatStringsSep "\n" (mapAttrsToList
+                        (n: v: "${n}=${cfgToString v}")
+                        conf.serverProperties));
+                  in
+                  ''
+                    mkdir -p ${serverDir}
+                    ${pkgs.coreutils}/bin/chmod 770 ${cfg.dataDir}
+                    ${pkgs.coreutils}/bin/chmod 770 ${serverDir}
+                    cd ${serverDir}
+                    ln -sf ${eula} eula.txt
+                    ln -sf ${whitelist} whitelist.json
+                    cp -f ${serverProperties} server.properties
+                  '';
+
+                postStart = ''
+                  ${pkgs.coreutils}/bin/chmod 660 ${tmuxSock}
+                '';
+              };
+            })
+          servers;
+      }
+    );
+}
