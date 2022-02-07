@@ -15,7 +15,7 @@ let
       exit 0
     fi
 
-    ${tmux} -S ${cfg.dataDir}/minecraft-server.sock send-keys stop Enter
+    ${tmux} -S /run/minecraft/server.sock send-keys stop Enter
   '';
 
   files = {
@@ -182,11 +182,12 @@ in
       after = [ "network.target" ];
 
       serviceConfig = {
-        ExecStart = "${tmux} -S ${cfg.dataDir}/minecraft-server.sock new -d ${server} ${cfg.jvmOpts}";
+        ExecStart = ''${tmux} -S /run/minecraft/server.sock new -d ${server} ${cfg.jvmOpts}'';
         ExecStop = "${stopScript} $MAINPID";
         Restart = "always";
         User = "minecraft";
         Type = "forking";
+        RuntimeDirectory = "minecraft";
         GuessMainPID = true;
         WorkingDirectory = cfg.dataDir;
       };
@@ -199,8 +200,8 @@ in
 
       postStart = ''
         ${pkgs.coreutils}/bin/chmod 770 ${cfg.dataDir}
-        ${pkgs.coreutils}/bin/chmod 660 ${cfg.dataDir}/minecraft-server.sock
-        ${pkgs.coreutils}/bin/chgrp minecraft ${cfg.dataDir}/minecraft-server.sock
+        ${pkgs.coreutils}/bin/chmod 660 /run/minecraft/server.sock
+        ${pkgs.coreutils}/bin/chgrp minecraft /run/minecraft/server.sock
       '';
     };
 
