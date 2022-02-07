@@ -5,6 +5,19 @@ with lib.hlissner;
 let
   cfg = config.services.tmux-minecraft-server;
 
+  tmux = "${getBin pkgs.tmux}/bin/tmux";
+  server = "${cfg.package}/bin/minecraft-server";
+
+  stopScript = pkgs.writeScript "minecraft-stop" ''
+    #!${pkgs.runtimeShell}
+
+    if ! [ -d "/proc/$1" ]; then
+      exit 0
+    fi
+
+    ${tmux} -S ${cfg.dataDir}/minecraft-server.sock send-keys stop Enter
+  '';
+
   files = {
     # We don't allow eula=false anyways
     eula = builtins.toFile "eula.txt" ''
@@ -169,9 +182,12 @@ in
       after = [ "network.target" ];
 
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
+        ExecStart = "${tmux} -S ${cfg.dataDir}/minecraft-server.sock new -d ${server} ${cfg.jvmOpts}";
+        ExecStop = "${stopScript} $MAINPID";
         Restart = "always";
         User = "minecraft";
+        Type = "forking";
+        GuessMainPID = true;
         WorkingDirectory = cfg.dataDir;
       };
 
@@ -179,6 +195,12 @@ in
         ln -sf ${eula} eula.txt
         ln -sf ${whitelist} whitelist.json
         cp -f ${serverProperties} server.properties
+      '';
+
+      postStart = ''
+        ${pkgs.coreutils}/bin/chmod 770 ${cfg.dataDir}
+        ${pkgs.coreutils}/bin/chmod 660 ${cfg.dataDir}/minecraft-server.sock
+        ${pkgs.coreutils}/bin/chgrp minecraft ${cfg.dataDir}/minecraft-server.sock
       '';
     };
 
