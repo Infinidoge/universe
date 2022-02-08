@@ -42,6 +42,7 @@
         discord-guild-profile
         discord-inbox-unread-count
         discord-kaomoji
+        discord-mention-cache-fix
         discord-message-link-embed
         # discord-multitask
         discord-online-friends-count

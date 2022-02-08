@@ -93,6 +93,7 @@
     discord-guild-profile = { url = "github:NurMarvin/guild-profile"; flake = false; };
     discord-inbox-unread-count = { url = "github:Juby210/inbox-unread-count"; flake = false; };
     discord-kaomoji = { url = "github:davidcralph/kaomoji"; flake = false; };
+    discord-mention-cache-fix = { url = "github:asportnoy/mention-cache-fix"; flake = false; };
     discord-message-link-embed = { url = "github:Juby210/message-link-embed"; flake = false; };
     discord-multitask = { url = "github:powercord-community/multitask"; flake = false; };
     discord-online-friends-count = { url = "github:GriefMoDz/online-friends-count"; flake = false; };
