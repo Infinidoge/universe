@@ -16,6 +16,10 @@ in
         options = {
           enable = mkBoolOpt false;
 
+          autoStart = mkBoolOpt true;
+
+          restart = mkOpt types.str "always";
+
           whitelist = mkOption {
             type =
               let
@@ -90,13 +94,15 @@ in
               name = "minecraft-server-${name}";
               value = {
                 description = "Minecraft Server ${name}";
-                wantedBy = [ "multi-user.target" ];
+                wantedBy = mkIf conf.autoStart [ "multi-user.target" ];
                 after = [ "network.target" ];
+
+                enable = conf.enable;
 
                 serviceConfig = {
                   ExecStart = "${startScript}";
                   ExecStop = "${stopScript} $MAINPID";
-                  Restart = "always";
+                  Restart = conf.restart;
                   User = "minecraft";
                   Type = "forking";
                   GuessMainPID = true;
