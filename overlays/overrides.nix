@@ -2,6 +2,10 @@ channels: final: prev: {
 
   __dontExport = true; # overrides clutter up actual creations
 
+  inherit (channels.stable)
+    omnisharp-roslyn
+    ;
+
   inherit (channels.latest)
     cachix
     dhall
@@ -14,10 +18,6 @@ channels: final: prev: {
     signal-desktop
     starship
     deploy-rs
-    ;
-
-  inherit (channels.verystable)
-    omnisharp-roselyn
     ;
 
   haskellPackages = prev.haskellPackages.override
