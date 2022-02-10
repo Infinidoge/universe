@@ -7,8 +7,9 @@
 
   inputs = {
     # --- DevOS Flake Inputs
+    verystable.url = "github:nixos/nixpkgs/nixos-21.05";
+    stable.url = "github:nixos/nixpkgs/nixos-21.11";
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nixos.url = "github:nixos/nixpkgs";
     latest.url = "github:nixos/nixpkgs";
 
     digga.url = "github:divnix/digga";
@@ -164,6 +165,8 @@
               # inputs.polymc.overlay
             ];
           };
+          verystable = { };
+          stable = { };
           latest = { };
         };
 
