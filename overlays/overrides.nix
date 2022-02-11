@@ -10,7 +10,7 @@ channels: final: prev: {
     cachix
     dhall
     discord
-    discord-canary
+    # discord-canary
     element-desktop
     rage
     nixpkgs-fmt
@@ -19,6 +19,8 @@ channels: final: prev: {
     starship
     deploy-rs
     ;
+
+  discord-canary = prev.discord-canary-new;
 
   haskellPackages = prev.haskellPackages.override
     (old: {
