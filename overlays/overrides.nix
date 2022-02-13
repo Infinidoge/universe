@@ -21,6 +21,11 @@ channels: final: prev: {
     starship
     ;
 
+  inherit (channels.latest)
+    remarshal
+    spice-gtk
+    ;
+
   haskellPackages = prev.haskellPackages.override
     (old: {
       overrides = prev.lib.composeExtensions (old.overrides or (_: _: { })) (hfinal: hprev:
