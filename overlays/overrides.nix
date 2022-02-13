@@ -13,6 +13,7 @@ channels: final: prev: {
     discord
     discord-canary
     element-desktop
+    kitty
     nixpkgs-fmt
     qutebrowser
     rage
