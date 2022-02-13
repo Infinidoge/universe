@@ -8,16 +8,16 @@ channels: final: prev: {
 
   inherit (channels.latest)
     cachix
+    deploy-rs
     dhall
     discord
     discord-canary
     element-desktop
-    rage
     nixpkgs-fmt
     qutebrowser
+    rage
     signal-desktop
     starship
-    deploy-rs
     ;
 
   haskellPackages = prev.haskellPackages.override
