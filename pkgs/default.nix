@@ -4,7 +4,4 @@ final: prev: {
   # then, call packages with `final.callPackage`
 
   fabric-server = final.callPackage (import ./fabric-server) { };
-
-  discord-canary-new = final.callPackage (import ./discord) { branch = "canary"; };
-
 }
