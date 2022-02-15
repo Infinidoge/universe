@@ -61,7 +61,7 @@ Setup for my main desktop computer, using an Nvidia GPU and the =desktop= form f
 #+NAME: boilerplate
 #+BEGIN_SRC bash
 DISK=$1
-PARTITION_PREFIX="p"
+PARTITION_PREFIX=$2
 
 sudo mkdir -p /mnt
 #+END_SRC
