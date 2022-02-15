@@ -53,7 +53,7 @@
       sbcl
 
       # :lang csharp
-      mono
+      dotnetCorePackages.sdk_6_0
       omnisharp-roslyn
 
       # :lang latex
