@@ -2,7 +2,7 @@
 # [[file:readme.org::preparation][preparation]]
 # [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::boilerplate][boilerplate]]][boilerplate]]
 DISK=$1
-PARTITION_PREFIX="p"
+PARTITION_PREFIX=$2
 
 sudo mkdir -p /mnt
 # boilerplate ends here
