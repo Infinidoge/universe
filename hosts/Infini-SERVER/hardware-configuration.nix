@@ -22,6 +22,9 @@ in
     let
       main = uuid "5f24b2a6-643d-4abd-a3b2-61ee124700b5";
       esp = uuid "A2B8-4C6E";
+      data = uuid "";
+
+      btrfsOptions = [ "autodefrag" "noatime" ];
     in
     {
       "/" = {
@@ -33,21 +36,21 @@ in
       "/persist" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=root" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=root" "ssd" ] + btrfsOptions;
         neededForBoot = true;
       };
 
       "/nix" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=nix" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=nix" "ssd" ] + btrfsOptions;
         neededForBoot = true;
       };
 
       "/boot" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=boot" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=boot" "ssd" ] + btrfsOptions;
         neededForBoot = true;
       };
 
@@ -55,6 +58,12 @@ in
         device = esp;
         fsType = "vfat";
         neededForBoot = true;
+      };
+
+      "/srv" = {
+        device = data;
+        fsType = "btrfs";
+        options = [ "subvol=srv" "ssd" ] + btrfsOptions;
       };
     };
 
