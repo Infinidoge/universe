@@ -6,7 +6,6 @@
 
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = true;
     pinentryFlavor = (if main.services.xserver.enable then "qt" else "curses");
     extraConfig = ''
       allow-emacs-pinentry
