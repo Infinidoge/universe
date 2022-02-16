@@ -72,7 +72,10 @@
     wlp41s0.useDHCP = true;
   };
 
-  home = { profiles, ... }: {
+  home = { profiles, pkgs, ... }: {
     imports = with profiles; [ stretchly ];
+    home.packages = with pkgs; [
+      hydrus
+    ];
   };
 }

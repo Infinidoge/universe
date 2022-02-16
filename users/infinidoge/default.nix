@@ -42,8 +42,6 @@ in
       ncdu
 
       (ifGraphical [
-        hydrus
-
         speedcrunch
 
         teams
