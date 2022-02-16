@@ -39,7 +39,6 @@ in
     };
 
     home.packages = with pkgs; lib.flatten [
-      btrfs-progs
       ncdu
 
       (ifGraphical [
