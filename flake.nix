@@ -255,6 +255,7 @@
                   vim
                   gpg
                   ssh
+                  keychain
 
                   # Terminal
                   starship
