@@ -118,5 +118,10 @@ in
       "plugdev"
     ];
     shell = pkgs.zsh;
+
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ4SByf9+UzFW2ZSChURTD/KiGcCMHQQwus8v2Tglnyq infinidoge@Infini-FRAMEWORK"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAn6zCdIucse6eGvT3hFm7Unw9Qg6E37mAUE7HHL2d58 infinidoge@Infini-DESKTOP"
+    ];
   };
 }
