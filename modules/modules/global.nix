@@ -8,6 +8,10 @@ with lib.hlissner;
       Defaults lecture=never
     '';
     acme.acceptTerms = true;
+
+    pam = {
+      enableSSHAgentAuth = true;
+    };
   };
 
   boot = {
