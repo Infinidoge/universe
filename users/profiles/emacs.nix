@@ -59,8 +59,9 @@
       # :lang latex
       (texlive.combine {
         inherit (texlive)
-          scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed;
+          scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed biblatex biblatex-chicago;
       })
+      biber
 
       # :lang markdown
       pandoc

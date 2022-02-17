@@ -229,6 +229,7 @@ And jumps to your `doom!' block."
  org-latex-packages-alist '(("" "minted" "listingsutf8"))
  org-latex-pdf-process
  '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+   "biber %b"
    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")
  org-src-fontify-natively t
