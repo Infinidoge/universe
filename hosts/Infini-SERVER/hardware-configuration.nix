@@ -60,11 +60,11 @@ in
         neededForBoot = true;
       };
 
-      "/srv" = {
-        device = data;
-        fsType = "btrfs";
-        options = [ "subvol=srv" "ssd" ] + btrfsOptions;
-      };
+      # "/srv" = {
+      #   device = data;
+      #   fsType = "btrfs";
+      #   options = [ "subvol=srv" "ssd" ] + btrfsOptions;
+      # };
     };
 
   swapDevices = [
