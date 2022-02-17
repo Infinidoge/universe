@@ -36,21 +36,21 @@ in
       "/persist" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=root" "ssd" ] + btrfsOptions;
+        options = [ "subvol=root" "ssd" ] ++ btrfsOptions;
         neededForBoot = true;
       };
 
       "/nix" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=nix" "ssd" ] + btrfsOptions;
+        options = [ "subvol=nix" "ssd" ] ++ btrfsOptions;
         neededForBoot = true;
       };
 
       "/boot" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=boot" "ssd" ] + btrfsOptions;
+        options = [ "subvol=boot" "ssd" ] ++ btrfsOptions;
         neededForBoot = true;
       };
 
