@@ -59,7 +59,7 @@
       # :lang latex
       (texlive.combine {
         inherit (texlive)
-          scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed biblatex biblatex-chicago;
+          scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed biblatex biblatex-chicago lipsum;
       })
       biber
 
