@@ -210,3 +210,23 @@ sudo btrfs subvolume create /mnt/root/srv
 sudo btrfs subvolume create /mnt/root/srv/minecraft
 sudo btrfs subvolume create /mnt/root/srv/soft-serve
 #+END_SRC
+
+** Setup Backup Drive
+
+*** Partitioning
+
+#+NAME: backup_partitioning
+#+BEGIN_SRC bash
+echo "LOG: Partitioning $DISK for backup storage"
+sudo parted $DISK -- mktable gpt
+sudo parted $DISK -s -- mkpart primary btrfs 0% 100%
+#+END_SRC
+
+*** Making Filesystems
+
+#+NAME: backup_filesystems
+#+BEGIN_SRC bash
+echo "LOG: Making backup filesystems"
+echo "- Making btrfa filesystem on ${DISK}${PARTITION_PREFIX}1"
+sudo mkfs.btrfs "${DISK}${PARTITION_PREFIX}1" --csum xxhash -L "backup"
+#+END_SRC
