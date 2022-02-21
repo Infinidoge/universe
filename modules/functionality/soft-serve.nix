@@ -32,5 +32,7 @@ in
       script = "${pkgs.soft-serve}/bin/soft";
       serviceConfig.Type = "exec";
     };
+
+    networking.firewall.allowedTCPPorts = [ cfg.port ];
   };
 }
