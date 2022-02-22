@@ -246,5 +246,9 @@ And jumps to your `doom!' block."
 
  (setq lsp-csharp-server-path (executable-find "omnisharp"))
 
+(use-package! ox-extra
+  :config
+  (ox-extras-activate '(ignore-headlines)))
+
 ;; Disable excessive warnings in configuration directory
 (add-to-list '+emacs-lisp-disable-flycheck-in-dirs infinidoge-doom-private-dir)
