@@ -47,24 +47,24 @@ in
         neededForBoot = true;
       };
 
-      # "/persist" = {
-      #   device = main;
-      #   fsType = "btrfs";
-      #   options = [ "subvol=root" "ssd" ] ++ btrfsOptions;
-      #   neededForBoot = true;
-      # };
-
       "/persist" = {
-        device = "overlay";
-        fsType = "overlay";
-        options = [
-          "upperdir=/media/main/root"
-          "lowerdir=/media/data/root"
-          "workdir=/media/main/work"
-          "redirect_dir=on"
-        ];
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=root" "ssd" ] ++ btrfsOptions;
         neededForBoot = true;
       };
+
+      # "/persist" = {
+      #   device = "overlay";
+      #   fsType = "overlay";
+      #   options = [
+      #     "upperdir=/media/main/root"
+      #     "lowerdir=/media/data/root"
+      #     "workdir=/media/main/work"
+      #     "redirect_dir=on"
+      #   ];
+      #   neededForBoot = true;
+      # };
 
       "/nix" = {
         device = main;
