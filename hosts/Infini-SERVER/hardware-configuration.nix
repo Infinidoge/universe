@@ -22,21 +22,46 @@ in
     let
       main = uuid "5f24b2a6-643d-4abd-a3b2-61ee124700b5";
       esp = uuid "A2B8-4C6E";
-      data = uuid "";
+      data = uuid "34668afb-7514-46cd-8c2c-0dcf19cd4742";
 
-      btrfsOptions = [ "autodefrag" "noatime" ];
+      btrfsOptions = [ "defaults" "autodefrag" "noatime" ];
     in
     {
       "/" = {
-        device = "none";
+        device = "tmpfs";
         fsType = "tmpfs";
         options = [ "defaults" "size=4G" "mode=755" ];
+      };
+
+      "/media/main" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=/" "ssd" ] ++ btrfsOptions;
+        neededForBoot = true;
+      };
+
+      "/media/data" = {
+        device = data;
+        fsType = "btrfs";
+        options = [ "subvol=/" "ssd" ] ++ btrfsOptions;
+        neededForBoot = true;
       };
 
       "/persist" = {
         device = main;
         fsType = "btrfs";
         options = [ "subvol=root" "ssd" ] ++ btrfsOptions;
+        neededForBoot = true;
+      };
+
+      "/persist-test" = {
+        device = "overlay";
+        fsType = "overlay";
+        options = [
+          "upperdir=/media/main/root"
+          "lowerdir=/media/data/root"
+          "workdir=/media/main/work"
+        ];
         neededForBoot = true;
       };
 
@@ -59,12 +84,6 @@ in
         fsType = "vfat";
         neededForBoot = true;
       };
-
-      # "/srv" = {
-      #   device = data;
-      #   fsType = "btrfs";
-      #   options = [ "subvol=srv" "ssd" ] + btrfsOptions;
-      # };
     };
 
   swapDevices = [
