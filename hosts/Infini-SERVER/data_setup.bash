@@ -23,7 +23,7 @@ sudo parted $DISK -s -- mkpart primary btrfs 0% 100%
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::data_filesystems][data_filesystems]]][data_filesystems]]
 echo "LOG: Making data filesystems"
 echo "- Making btrfa filesystem on ${DISK}${PARTITION_PREFIX}1"
-sudo mkfs.btrfs "${DISK}${PARTITION_PREFIX}1" --csum xxhash -L "data"
+sudo mkfs.btrfs "${DISK}${PARTITION_PREFIX}1" --csum xxhash -L "data" -f
 # data_filesystems ends here
 
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::data_subvolumes][data_subvolumes]]][data_subvolumes]]
