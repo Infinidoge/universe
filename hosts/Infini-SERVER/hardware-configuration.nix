@@ -54,6 +54,13 @@ in
         neededForBoot = true;
       };
 
+      "/persist/srv" = {
+        device = data;
+        fsType = "btrfs";
+        options = [ "subvol=root/srv" "ssd" ] ++ btrfsOptions;
+        neededForBoot = true;
+      };
+
       # "/persist" = {
       #   device = "overlay";
       #   fsType = "overlay";

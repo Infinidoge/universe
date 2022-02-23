@@ -36,6 +36,8 @@
       # /var directories
       "/var/log"
       "/var/lib/systemd/coredump"
+
+      "/srv"
     ];
 
     files = [
