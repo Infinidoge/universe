@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 with lib.hlissner;
 {
@@ -25,4 +25,9 @@ with lib.hlissner;
 
   # Ensure certain necessary directories always exist
   services.ensure.directories = [ "/mnt" ];
+
+  # FIX: command-not-found database doesn't exist normally
+  system.activationScripts.channels-update.text = ''
+    ${pkgs.nix}/bin/nix-channel --update
+  '';
 }
