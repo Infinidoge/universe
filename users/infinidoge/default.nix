@@ -41,6 +41,8 @@ in
     home.packages = with pkgs; lib.flatten [
       ncdu
 
+      keepassxc
+
       (ifGraphical [
         speedcrunch
 
