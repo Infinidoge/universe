@@ -112,6 +112,7 @@
     discord-reddit-parser = { url = "github:Rodentman87/reddit-parser"; flake = false; };
     discord-relationship-notifier = { url = "github:Twizzer/relationship-notifier"; flake = false; };
     discord-remove-invite-from-user-context-menu = { url = "github:SebbyLaw/remove-invite-from-user-context-menu"; flake = false; };
+    discord-replace-timestamps-pc = { url = "github:SpoonMcForky/replace-timestamps-pc"; flake = false; };
     discord-report-messages = { url = "github:12944qwerty/report-messages"; flake = false; };
     discord-rolecolor-everywhere = { url = "github:powercord-community/rolecolor-everywhere"; flake = false; };
     discord-scrollable-autocomplete = { url = "github:GriefMoDz/scrollable-autocomplete"; flake = false; };
