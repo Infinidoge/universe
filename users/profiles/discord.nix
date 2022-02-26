@@ -60,6 +60,7 @@
         discord-reddit-parser
         discord-relationship-notifier
         discord-remove-invite-from-user-context-menu
+        discord-replace-timestamps-pc
         discord-report-messages
         discord-rolecolor-everywhere
         discord-scrollable-autocomplete
