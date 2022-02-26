@@ -9,8 +9,6 @@
         discord-PowercordTwemojiEverywhere
         discord-Quick-Bot-Invite
         discord-Quick-Channel-Mute
-        # discord-Scalable-Discord
-        # discord-Send-Message-with-Webhook
         discord-SnowflakeInfo
         discord-Unindent
         discord-badges-everywhere
@@ -22,7 +20,6 @@
         discord-better-threads
         discord-betterinvites
         discord-block-messages
-        # discord-channel-locker
         discord-channel-typing
         discord-copy-avatar-url
         discord-copy-mentions
@@ -40,11 +37,9 @@
         discord-discord-status
         discord-dm-typing-indicator
         discord-guild-profile
-        discord-inbox-unread-count
         discord-kaomoji
         discord-mention-cache-fix
         discord-message-link-embed
-        # discord-multitask
         discord-online-friends-count
         discord-permission-viewer
         discord-powercord-LinkChannels
@@ -52,10 +47,8 @@
         discord-powercord-mute-folder
         discord-powercord-ownertags
         discord-powercord-pindms
-        discord-powercord-ppl-moe
         discord-powercord-reverse-image-search
         discord-pronoundb-powercord
-        discord-quick-Status
         discord-quick-delete-pc
         discord-reddit-parser
         discord-relationship-notifier
