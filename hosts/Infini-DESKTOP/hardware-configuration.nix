@@ -37,6 +37,12 @@ in
         neededForBoot = true;
       };
 
+      "/media/main" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "autodefrag" "noatime" "ssd" ];
+      };
+
       "/nix" = {
         device = main;
         fsType = "btrfs";
