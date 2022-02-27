@@ -8,6 +8,7 @@ in
   options.services.minecraft-servers = {
     enable = mkBoolOpt false;
     eula = mkBoolOpt false;
+    openFirewall = mkBoolOpt false;
     dataDir = mkOpt types.path "/srv/minecraft";
 
     servers = mkOption {
@@ -17,6 +18,8 @@ in
           enable = mkBoolOpt false;
 
           autoStart = mkBoolOpt true;
+
+          openFirewall = mkBoolOpt cfg.openFirewall;
 
           restart = mkOpt types.str "always";
 
@@ -65,6 +68,24 @@ in
               + " set `services.minecraft-servers.eula` to `true` if you agree.";
           }
         ];
+
+        networking.firewall =
+          let
+            toOpen = attrsets.filterAttrs (_: cfg: cfg.openFirewall) servers;
+            UDPPorts = attrsets.mapAttrsToList (name: conf: conf.serverProperties.server-port or 25565) toOpen;
+            TCPPorts = concatLists
+              (attrsets.mapAttrsToList
+                (name: conf: with conf;
+                (optional (serverProperties.enable-rcon or false) (serverProperties."rcon.port" or 25575)) ++
+                (optional (serverProperties.enable-query or false) (serverProperties."query.port" or 25565))
+                )
+                toOpen
+              );
+          in
+          rec {
+            allowedUDPPorts = UDPPorts;
+            allowedTCPPorts = UDPPorts ++ TCPPorts;
+          };
 
         systemd.services = attrsets.mapAttrs'
           (name: conf:
