@@ -48,7 +48,7 @@ in
   config = mkIf cfg.enable
     (
       let
-        servers = attrsets.filterAttrs (_: cfg: cfg.enable) cfg.servers;
+        servers = filterAttrs (_: cfg: cfg.enable) cfg.servers;
       in
       {
         users.users.minecraft = {
@@ -71,10 +71,10 @@ in
 
         networking.firewall =
           let
-            toOpen = attrsets.filterAttrs (_: cfg: cfg.openFirewall) servers;
-            UDPPorts = attrsets.mapAttrsToList (name: conf: conf.serverProperties.server-port or 25565) toOpen;
+            toOpen = filterAttrs (_: cfg: cfg.openFirewall) servers;
+            UDPPorts = mapAttrsToList (name: conf: conf.serverProperties.server-port or 25565) toOpen;
             TCPPorts = concatLists
-              (attrsets.mapAttrsToList
+              (mapAttrsToList
                 (name: conf: with conf;
                 (optional (serverProperties.enable-rcon or false) (serverProperties."rcon.port" or 25575)) ++
                 (optional (serverProperties.enable-query or false) (serverProperties."query.port" or 25565))
@@ -87,7 +87,7 @@ in
             allowedTCPPorts = UDPPorts ++ TCPPorts;
           };
 
-        systemd.services = attrsets.mapAttrs'
+        systemd.services = mapAttrs'
           (name: conf:
             let
               serverDir = "${cfg.dataDir}/${name}";
