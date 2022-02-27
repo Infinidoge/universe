@@ -53,7 +53,10 @@
 
 (setq deft-recursive t)
 
-(setq tramp-default-method "ssh")
+(setq
+ tramp-default-method "ssh"
+ tramp-terminal-type "tramp"
+ )
 
 (after! flyspell
   (setq flyspell-lazy-idle-seconds 1))
