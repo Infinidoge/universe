@@ -39,7 +39,7 @@ in
 
           package = mkOpt types.package pkgs.minecraft-server;
 
-          jvmOpts = mkOpt (types.separatedString " ") "-Xmx2048M -Xms2048M";
+          jvmOpts = mkOpt (types.separatedString " ") "-Xmx2G -Xms1G";
         };
       });
     };
