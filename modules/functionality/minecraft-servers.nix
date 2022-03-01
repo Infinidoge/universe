@@ -153,8 +153,8 @@ in
                   in
                   ''
                     mkdir -p ${serverDir}
-                    ${pkgs.coreutils}/bin/chmod 770 ${cfg.dataDir}
-                    ${pkgs.coreutils}/bin/chmod 770 ${serverDir}
+                    ${pkgs.coreutils}/bin/chmod -R 775 ${cfg.dataDir}
+                    ${pkgs.coreutils}/bin/chmod -R 775 ${serverDir}
                     cd ${serverDir}
                     ln -sf ${eula} eula.txt
                     ln -sf ${whitelist} whitelist.json
