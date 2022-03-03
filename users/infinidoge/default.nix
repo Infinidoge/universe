@@ -19,10 +19,6 @@ in
         pass
         htop
         nnn
-
-        (ifGraphical [
-          discord
-        ])
       ])
 
       ./config
@@ -54,6 +50,8 @@ in
         sxiv
 
         libreoffice-fresh
+
+        powercord
       ])
 
       arduino

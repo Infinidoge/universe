@@ -48,73 +48,8 @@
 
     # --- Application-Specific Flake Inputs
     # # --- Powercord
-    powercord = { url = "github:powercord-org/powercord"; flake = false; };
-    powercord-overlay.url = "github:LavaDesu/powercord-overlay";
-    powercord-overlay.inputs.nixpkgs.follows = "latest";
-    powercord-overlay.inputs.powercord.follows = "powercord";
-
-    # # # --- Plugins
-    discord-Custom-Volume-Range = { url = "github:PandaDriver156/Custom-Volume-Range"; flake = false; };
-    discord-In-app-notifs = { url = "github:BenSegal855/In-app-notifs"; flake = false; };
-    discord-NSFW-tags = { url = "github:E-boi/NSFW-tags"; flake = false; };
-    discord-PowerAliases = { url = "github:LandenStephenss/PowerAliases"; flake = false; };
-    discord-PowercordTwemojiEverywhere = { url = "github:VenPlugs/PowercordTwemojiEverywhere"; flake = false; };
-    discord-Quick-Bot-Invite = { url = "github:A-Trash-Coder/Quick-Bot-Invite"; flake = false; };
-    discord-Quick-Channel-Mute = { url = "github:A-Trash-Coder/Quick-Channel-Mute"; flake = false; };
-    discord-SnowflakeInfo = { url = "github:NurMarvin/SnowflakeInfo"; flake = false; };
-    discord-Unindent = { url = "github:VenPlugs/Unindent"; flake = false; };
-    discord-badges-everywhere = { url = "github:powercord-community/badges-everywhere"; flake = false; };
-    discord-better-connections = { url = "github:AAGaming00/better-connections"; flake = false; };
-    discord-better-folders = { url = "github:Juby210/better-folders"; flake = false; };
-    discord-better-replies = { url = "github:cyyynthia/better-replies"; flake = false; };
-    discord-better-settings = { url = "github:mr-miner1/better-settings"; flake = false; };
-    discord-better-status-indicators = { url = "github:GriefMoDz/better-status-indicators"; flake = false; };
-    discord-better-threads = { url = "github:NurMarvin/better-threads"; flake = false; };
-    discord-betterinvites = { url = "github:12944qwerty/betterinvites"; flake = false; };
-    discord-block-messages = { url = "github:cyyynthia/block-messages"; flake = false; };
-    discord-channel-typing = { url = "github:powercord-community/channel-typing"; flake = false; };
-    discord-copy-avatar-url = { url = "github:21Joakim/copy-avatar-url"; flake = false; };
-    discord-copy-mentions = { url = "github:tealingg/copy-mentions"; flake = false; };
-    discord-copy-raw-message = { url = "github:mic0ishere/copy-raw-message"; flake = false; };
-    discord-copy-role-color = { url = "github:Antonio32A/copy-role-color"; flake = false; };
-    discord-css-toggler = { url = "github:12944qwerty/css-toggler"; flake = false; };
-    discord-custom-timestamps = { url = "github:TaiAurori/custom-timestamps"; flake = false; };
-    discord-cutecord = { url = "github:powercord-community/cutecord"; flake = false; };
-    discord-discord-status = { url = "github:KableKo/discord-status"; flake = false; };
-    discord-dm-typing-indicator = { url = "github:zt64/dm-typing-indicator"; flake = false; };
-    discord-guild-profile = { url = "github:NurMarvin/guild-profile"; flake = false; };
-    discord-kaomoji = { url = "github:davidcralph/kaomoji"; flake = false; };
-    discord-mention-cache-fix = { url = "github:asportnoy/mention-cache-fix"; flake = false; };
-    discord-message-link-embed = { url = "github:Juby210/message-link-embed"; flake = false; };
-    discord-online-friends-count = { url = "github:GriefMoDz/online-friends-count"; flake = false; };
-    discord-permission-viewer = { url = "github:powercord-community/permission-viewer"; flake = false; };
-    discord-powercord-LinkChannels = { url = "github:E-boi/powercord-LinkChannels"; flake = false; };
-    discord-powercord-message-tooltips = { url = "github:lorencerri/powercord-message-tooltips"; flake = false; };
-    discord-powercord-mute-folder = { url = "github:notsapinho/powercord-mute-folder"; flake = false; };
-    discord-powercord-ownertags = { url = "github:Puyodead1/powercord-ownertag"; flake = false; };
-    discord-powercord-pindms = { url = "github:Bricklou/powercord-pindms"; flake = false; };
-    discord-powercord-reverse-image-search = { url = "github:lorencerri/powercord-reverse-image-search"; flake = false; };
-    discord-pronoundb-powercord = { url = "github:cyyynthia/pronoundb-powercord"; flake = false; };
-    discord-quick-delete-pc = { url = "github:the-cord-plug/quick-delete-pc"; flake = false; };
-    discord-reddit-parser = { url = "github:Rodentman87/reddit-parser"; flake = false; };
-    discord-relationship-notifier = { url = "github:Twizzer/relationship-notifier"; flake = false; };
-    discord-remove-invite-from-user-context-menu = { url = "github:SebbyLaw/remove-invite-from-user-context-menu"; flake = false; };
-    discord-replace-timestamps-pc = { url = "github:SpoonMcForky/replace-timestamps-pc"; flake = false; };
-    discord-report-messages = { url = "github:12944qwerty/report-messages"; flake = false; };
-    discord-rolecolor-everywhere = { url = "github:powercord-community/rolecolor-everywhere"; flake = false; };
-    discord-scrollable-autocomplete = { url = "github:GriefMoDz/scrollable-autocomplete"; flake = false; };
-    discord-send-timestamps = { url = "github:12944qwerty/send-timestamps"; flake = false; };
-    discord-server-count = { url = "github:TheShadowGamer/Server-Count"; flake = false; };
-    discord-showAllMessageButtons = { url = "github:12944qwerty/showAllMessageButtons"; flake = false; };
-    discord-smart-typers = { url = "github:GriefMoDz/smart-typers"; flake = false; };
-    discord-total-members = { url = "github:cyyynthia/total-members"; flake = false; };
-    discord-user-birthdays = { url = "github:GriefMoDz/user-birthdays"; flake = false; };
-    discord-user-details = { url = "github:Juby210/user-details"; flake = false; };
-    discord-userid-info = { url = "github:webtax-gh/userid-info"; flake = false; };
-    discord-vcTimer = { url = "github:RazerMoon/vcTimer"; flake = false; };
-    discord-voice-chat-utilities = { url = "github:dutake/voice-chat-utilities"; flake = false; };
-    discord-voice-user-count = { url = "github:tuanbinhtran/voice-user-count"; flake = false; };
-    discord-webhook-tag = { url = "github:BenSegal855/webhook-tag"; flake = false; };
+    powercord-setup.url = "path:./subflakes/powercord";
+    powercord-setup.inputs.nixpkgs.follows = "latest";
   };
 
   outputs =
@@ -149,7 +84,7 @@
               ./pkgs/default.nix
 
               # --- Application-Specific Overlays
-              inputs.powercord-overlay.overlay
+              inputs.powercord-setup.overlay
             ];
           };
           verystable = { };
