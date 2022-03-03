@@ -1,7 +1,6 @@
-{ lib, fetchurl, stdenv, unzip, zip, jre_headless }:
+{ lib, fetchurl, stdenv, unzip, zip, jre_headless, lock }:
 
 let
-  lock = import ./lock.nix;
   libraries = lib.forEach lock.libraries fetchurl;
 in
 stdenv.mkDerivation {
@@ -23,7 +22,7 @@ stdenv.mkDerivation {
     EOF
 
     cat > fabric-server-launch.properties << EOF
-    launch.mainClass=net.fabricmc.loader.impl.launch.knot.KnotServer
+    launch.mainClass=${lock.mainClass}
     EOF
   '';
 
