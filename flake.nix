@@ -47,17 +47,11 @@
     hlissner-dotfiles.url = "github:hlissner/dotfiles";
 
     # --- Application-Specific Flake Inputs
-    # # --- PolyMC
-    # polymc.url = "github:PolyMC/PolyMC";
-
     # # --- Powercord
     powercord = { url = "github:powercord-org/powercord"; flake = false; };
     powercord-overlay.url = "github:LavaDesu/powercord-overlay";
     powercord-overlay.inputs.nixpkgs.follows = "latest";
     powercord-overlay.inputs.powercord.follows = "powercord";
-
-    # # # --- Themes
-    discord-amoled-cord = { url = "github:LuckFire/amoled-cord"; flake = false; };
 
     # # # --- Plugins
     discord-Custom-Volume-Range = { url = "github:PandaDriver156/Custom-Volume-Range"; flake = false; };
@@ -156,7 +150,6 @@
 
               # --- Application-Specific Overlays
               inputs.powercord-overlay.overlay
-              # inputs.polymc.overlay
             ];
           };
           verystable = { };
@@ -271,8 +264,7 @@
 
         devshell = ./shell;
 
-        homeConfigurations =
-          digga.lib.mkHomeConfigurations self.nixosConfigurations;
+        homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
 
         deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
 
