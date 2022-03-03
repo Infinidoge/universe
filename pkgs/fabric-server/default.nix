@@ -1,7 +1,7 @@
 { callPackage, writeTextFile, writeShellScriptBin, minecraft-server, jre_headless }:
 
 let
-  loader = callPackage ./generate-loader.nix { };
+  loader = callPackage ./generate-loader.nix { lock = import ./lock.nix; };
   log4j = writeTextFile {
     name = "log4j.xml";
     text = ''
