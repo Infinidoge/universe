@@ -1,6 +1,6 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i bash -p bash curl jq
-curl https://meta.fabricmc.net/v2/versions/loader/1.18.1/0.13.1/server/json \
+curl https://meta.fabricmc.net/v2/versions/loader/$1/$2/server/json \
 | jq -r '
   .mainClass,
   (.libraries[]
