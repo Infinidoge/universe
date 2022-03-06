@@ -54,7 +54,6 @@ in
         users.users.minecraft = {
           description = "Minecraft server service user";
           home = cfg.dataDir;
-          createHome = true;
           isSystemUser = true;
           group = "minecraft";
         };
