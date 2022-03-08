@@ -115,8 +115,8 @@ in
       "docker"
       "libvirtd"
       "minecraft"
-      "wheel"
       "plugdev"
+      "wheel"
     ];
     shell = pkgs.zsh;
 
