@@ -112,6 +112,7 @@ in
       "bluetooth"
       "dialout"
       "disk"
+      "docker"
       "libvirtd"
       "minecraft"
       "wheel"
