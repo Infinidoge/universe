@@ -6,6 +6,11 @@ with lib.hlissner;
   config = mkMerge [
     {
       networking.useDHCP = false;
+
+      services.avahi = {
+        enable = true;
+        nssmdns = true;
+      };
     }
   ];
 }
