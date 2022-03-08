@@ -10,8 +10,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    virtualisation.libvirtd.enable = true;
+    virtualisation = {
+      libvirtd.enable = true;
+      docker.enable = true;
+    };
     programs.dconf.enable = true;
-    environment.systemPackages = with pkgs; [ virt-manager ];
+    environment.systemPackages = with pkgs; [ virt-manager docker-compose docker-machine ];
   };
 }
