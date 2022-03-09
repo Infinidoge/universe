@@ -1,49 +1,4 @@
 /**
- * Snippet from #css-snippets applied the Nov 12, 2021 at 11:16:30 AM
- * Created by akisblack#6148 (845535118285602866)
- * Snippet ID: 898512654849687592
- */
-.sidebarRegion-VFTUkN {
-    flex: 0;
-}
-
-.contentColumnDefault-1VQkGM {
-    margin: 0 auto;
-}
-/** 898512654849687592 */
-
-/**
- * Snippet from #css-snippets applied the Nov 12, 2021 at 11:19:03 AM
- * Created by ADudeCalledLeo#8665 (169456051920437248)
- * Snippet ID: 885158901673230376
- */
-/* the main bit! */
-.container-3baos1 {
-  position: fixed;
-  left: 4px;
-  top: calc(100% - 52px);
-  width: 292px;
-  background-color: var(--background-tertiary);
-}
-
-/* PATCH for scrollers above the user panel to make space */
-.guilds-1SWlCJ, /* servers */
-.sidebar-2K8pFh /* channels */ {
-  height: calc(100% - 52px);
-}
-/** 885158901673230376 */
-
-/**
- * Snippet from #css-snippets applied the Nov 12, 2021 at 11:20:29 AM
- * Created by Davri#0015 (457579346282938368)
- * Snippet ID: 875021875120582676
- */
-.guildSection-1EoFKd > .flex-1xMQg5 > svg {
-    flex-shrink: 0;
-}
-/** 875021875120582676 */
-
-/**
  * Snippet from #css-snippets applied the Nov 12, 2021 at 11:22:53 AM
  * Created by mr_miner#9699 (678541597654253600)
  * Snippet ID: 870552834410680370
@@ -138,33 +93,7 @@
 
 
 
-/**
- * Snippet from #css-snippets applied the Nov 12, 2021 at 11:24:29 AM
- * Created by Freeplay#5676 (158296466119458816)
- * Snippet ID: 865701620201685012
- */
-[class*="chat-"] > [class*="title-"] > [class*="children-"] > [class*="topic-"] {
-    white-space: normal;
-    max-height: 2.4em;
-    font-size: .9em;
-    line-height: 1.2em;
-    text-overflow: ellipsis;
-    position: relative;
-}
-[class*="chat-"] > [class*="title-"] > [class*="children-"]::after {
-    content; unset;
-}
-[class*="chat-"] > [class*="title-"] > [class*="children-"] > [class*="topic-"]::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    height: 1em;
-    background: linear-gradient(to right, transparent, var(--background-primary), var(--background-primary)) !important;
-    display: flex;
-    width: 130px;
-}
-/** 865701620201685012 */
+
 
 /**
  * Snippet from #css-snippets applied the Nov 12, 2021 at 11:24:53 AM
@@ -180,44 +109,9 @@
 }
 /** 864076332505497641 */
 
-/**
- * Snippet from #css-snippets applied the Nov 12, 2021 at 11:24:59 AM
- * Created by mackenzie#0173 (574870314928832533)
- * Snippet ID: 863870341537071197
- */
-.roleColor-rz2vM0::after {
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  opacity: 0.125;
-  background: currentColor;
-}
-.member-3-YXUe .badges {
-  z-index: 0;
-}
-.member-3-YXUe.selected-aXhQR6 .roleColor-rz2vM0::after {
-  border-radius: 4px;
-}
-.membersGroup-v9BXpm + .member-3-YXUe {
-  margin-top: 5px;
-}
-.membersGroup-v9BXpm + .member-3-YXUe .roleColor-rz2vM0::after {
-  border-radius: 5px 5px 0 0;
-}
-/** 863870341537071197 */
 
-/**
- * Snippet from #css-snippets applied the Nov 12, 2021 at 7:01:52 PM
- * Created by CorellanStoma#1996 (288362986991648778)
- * Snippet ID: 907442893608869888
- */
-.icon-22AiRD [d="M6 1C3.243 1 1 3.244 1 6c0 2.758 2.243 5 5 5s5-2.242 5-5c0-2.756-2.243-5-5-5zm0 2.376a.625.625 0 110 1.25.625.625 0 010-1.25zM7.5 8.5h-3v-1h1V6H5V5h1a.5.5 0 01.5.5v2h1v1z"] {
-  d: path("M 7 4.003 C 7 5.1055 6.103 6.003 5 6.003 C 3.8975 6.003 3 5.1055 3 4.003 C 3 2.9005 3.897 2.003 5 2.003 C 6.103 2.003 7 2.9005 7 4.003 Z M 1 9.503 C 1 7.7365 2.645 6.503 5 6.503 C 7.3555 6.503 9 7.7365 9 9.503 V 10.003 H 1 V 9.503 Z M 10 10.003 H 11 V 9.503 C 11 8.2217 10.1349 7.2207 8.7607 6.7676 C 9.5311 7.4563 10 8.403 10 9.503 V 10.003 Z M 7.4417 5.9539 C 8.3329 5.7522 9 4.9539 9 4 C 9 2.9846 8.2347 2.1411 7.2485 2.0183 C 7.7161 2.5476 8 3.2426 8 4 C 8 4.7244 7.7444 5.3871 7.3189 5.9051 C 7.3601 5.9209 7.4011 5.9371 7.4417 5.9539 Z");
-}
-/** 907442893608869888 */
+
+
 
 
 
@@ -306,35 +200,3 @@
   -webkit-line-clamp: unset;
 }
 /** 949006652944834560 */
-
-/**
- * Snippet from #css-snippets applied the 7 Mar 2022 at 22:06:52
- * Created by katlyn#9607 (250322741406859265)
- * Snippet ID: 949001991567343616
- */
-.form-3gdLxP {
-  padding: 0px;
-}
-
-.inner-NQg18Y {
-  padding-top: 4px;
-}
-
-.channelTextArea-1VQBuV {
-  margin-bottom: 0px;
-}
-
-.base-3bcbY3 {
-  top: -24px;
-  left: 0px;
-  width: fit-content;
-  padding-right: 9px;
-  border-radius: 0 8px 0 0;
-  background-color: var(--channeltextarea-background);
-}
-
-.scrollableContainer-15eg7h {
-  border-radius: 0px;
-  min-height: 53px;
-}
-/** 949001991567343616 */
