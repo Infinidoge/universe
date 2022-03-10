@@ -26,9 +26,10 @@
  ;; General settings
  org-use-speed-commands t
  org-list-demote-modify-bullet '(("-" . "+") ("+" . "-") ("1." . "a."))
-;; org-list-demote-modify-bullet '(("-" . "-") ("1." . "a."))
+ ;; org-list-demote-modify-bullet '(("-" . "-") ("1." . "a."))
  org-startup-shrink-all-tables t
  org-startup-align-all-tables t
+ org-src-fontify-natively t
 
  ;; Export
  org-latex-listings 'minted
@@ -38,7 +39,6 @@
    "biber %b"
    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")
- org-src-fontify-natively t
  )
 
 ;; Run formatters in org src blocks on save
@@ -46,10 +46,7 @@
   (org-babel-map-src-blocks nil
     (if (equal (alist-get :format (org-babel-parse-header-arguments header-args) "yes")
                "yes")
-        (+format--org-region nil nil)
-      )
-    )
-  )
+        (+format--org-region nil nil))))
 
 (add-hook 'before-save-hook 'infinidoge/format-org-src-blocks)
 
