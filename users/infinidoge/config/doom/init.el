@@ -148,7 +148,7 @@
        ;;ocaml             ; an objective camel
        (org ;; organize your plain life in plain text
         +dragndrop
-        +jupyter
+        ;; +jupyter
         +pretty
         +gnuplot
         +roam2
