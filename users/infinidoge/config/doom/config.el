@@ -30,6 +30,8 @@
  org-startup-shrink-all-tables t
  org-startup-align-all-tables t
  org-src-fontify-natively t
+ org-display-custom-times nil
+ org-time-stamp-custom-formats '("<%d %b %Y>" . "<%y/%m/%d %a %H:%M:%S>")
 
  ;; Export
  org-latex-listings 'minted
