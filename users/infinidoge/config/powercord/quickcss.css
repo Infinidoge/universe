@@ -200,3 +200,28 @@
   -webkit-line-clamp: unset;
 }
 /** 949006652944834560 */
+
+/**
+ * Snippet from #css-snippets applied the 11 Mar 2022 at 15:48:07
+ * Created by Davri#0015 (457579346282938368)
+ * Snippet ID: 951894639596666940
+ */
+.modal-3Crloo .wrapper-2bCXfR {
+    opacity: 0;
+    animation: mediapopup 190ms ease-out forwards;
+    animation-delay: 80ms;
+}
+@keyframes mediapopup {
+    0% {
+        transform: scale(0.65);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.012);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/** 951894639596666940 */
