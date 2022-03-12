@@ -86,6 +86,12 @@ in
             allowedTCPPorts = UDPPorts ++ TCPPorts;
           };
 
+        system.activationScripts.minecraft-server-data-dir.text = ''
+          mkdir -p ${cfg.dataDir}
+          chown minecraft:minecraft ${cfg.dataDir}
+          chmod -R 775 ${cfg.dataDir}
+        '';
+
         systemd.services = mapAttrs'
           (name: conf:
             let
@@ -152,8 +158,7 @@ in
                   in
                   ''
                     mkdir -p ${serverDir}
-                    ${pkgs.coreutils}/bin/chmod -R 775 ${cfg.dataDir}
-                    ${pkgs.coreutils}/bin/chmod -R 775 ${serverDir}
+                    chmod -R 775 ${serverDir}
                     cd ${serverDir}
                     ln -sf ${eula} eula.txt
                     ln -sf ${whitelist} whitelist.json
