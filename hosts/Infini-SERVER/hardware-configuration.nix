@@ -22,7 +22,7 @@ in
     let
       main = uuid "5f24b2a6-643d-4abd-a3b2-61ee124700b5";
       esp = uuid "A2B8-4C6E";
-      data = null; # uuid "34668afb-7514-46cd-8c2c-0dcf19cd4742";
+      data = uuid "59abb0ff-fe4e-4061-87d2-b728b937656a";
 
       btrfsOptions = [ "defaults" "autodefrag" "noatime" ];
     in
