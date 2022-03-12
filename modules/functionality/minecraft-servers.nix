@@ -40,6 +40,8 @@ in
           package = mkOpt types.package pkgs.minecraft-server;
 
           jvmOpts = mkOpt (types.separatedString " ") "-Xmx2G -Xms1G";
+
+          symlinks = mkOpt (types.attrsOf types.package) { };
         };
       });
     };
@@ -157,6 +159,10 @@ in
                       '' + concatStringsSep "\n" (mapAttrsToList
                         (n: v: "${n}=${cfgToString v}")
                         conf.serverProperties));
+
+                    mkSymlinks = pkgs.writeShellScript "minecraft-server-${name}-symlinks"
+                      (concatStringsSep "\n"
+                        (mapAttrsToList (n: v: "ln -sf ${v} ${n}") conf.symlinks));
                   in
                   ''
                     mkdir -p ${serverDir}
@@ -165,6 +171,7 @@ in
                     ln -sf ${eula} eula.txt
                     ln -sf ${whitelist} whitelist.json
                     cp -f ${serverProperties} server.properties
+                    ${mkSymlinks}
                   '';
 
                 postStart = ''
