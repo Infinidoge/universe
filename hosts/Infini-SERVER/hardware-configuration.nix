@@ -22,7 +22,7 @@ in
     let
       main = uuid "5f24b2a6-643d-4abd-a3b2-61ee124700b5";
       esp = uuid "A2B8-4C6E";
-      data = uuid "34668afb-7514-46cd-8c2c-0dcf19cd4742";
+      data = null; # uuid "34668afb-7514-46cd-8c2c-0dcf19cd4742";
 
       btrfsOptions = [ "defaults" "autodefrag" "noatime" ];
     in
@@ -40,7 +40,7 @@ in
         neededForBoot = true;
       };
 
-      "/media/data" = {
+      "/media/data" = lib.mkIf (data != null) {
         device = data;
         fsType = "btrfs";
         options = [ "subvol=/" "ssd" ] ++ btrfsOptions;
@@ -54,7 +54,7 @@ in
         neededForBoot = true;
       };
 
-      "/persist/srv" = {
+      "/persist/srv" = lib.mkIf (data != null) {
         device = data;
         fsType = "btrfs";
         options = [ "subvol=root/srv" "ssd" ] ++ btrfsOptions;
