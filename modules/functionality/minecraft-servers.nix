@@ -51,13 +51,15 @@ in
         servers = filterAttrs (_: cfg: cfg.enable) cfg.servers;
       in
       {
-        users.users.minecraft = {
-          description = "Minecraft server service user";
-          home = cfg.dataDir;
-          isSystemUser = true;
-          group = "minecraft";
+        users = {
+          users.minecraft = {
+            description = "Minecraft server service user";
+            home = cfg.dataDir;
+            isSystemUser = true;
+            group = "minecraft";
+          };
+          groups.minecraft = { };
         };
-        users.groups.minecraft = { };
 
         assertions = [
           {
