@@ -52,6 +52,8 @@ in
         libreoffice-fresh
 
         powercord
+
+        (lib.optional main.modules.hardware.form.desktop qbittorrent)
       ])
 
       arduino
