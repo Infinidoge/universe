@@ -109,6 +109,7 @@
 ;;  '(evil-goggles-default-face ((t (:inherit 'highlight)))))
 
 ;; --- Nix ---
+;; FIXME: This should be done using :editor format
 (set-formatter! 'nixpkgs-fmt "nixpkgs-fmt" :modes '(nix-mode))
 
 (defun infinidoge/nixpkgs-fmt-fix ()
