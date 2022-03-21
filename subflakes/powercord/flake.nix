@@ -73,6 +73,9 @@
     discord-voice-chat-utilities = { url = "github:dutake/voice-chat-utilities"; flake = false; };
     discord-voice-user-count = { url = "github:tuanbinhtran/voice-user-count"; flake = false; };
     discord-webhook-tag = { url = "github:BenSegal855/webhook-tag"; flake = false; };
+
+    # --- Themes ---
+    discord-Discolored = { url = "github:NYRI4/Discolored"; flake = false; };
   };
 
   outputs = inputs@{ self, nixpkgs, fup, powercord-overlay, ... }:
@@ -159,7 +162,9 @@
               discord-voice-user-count
               discord-webhook-tag
             ];
-            themes = with inputs; [ ];
+            themes = with inputs; [
+              discord-Discolored
+            ];
           });
         };
       };
