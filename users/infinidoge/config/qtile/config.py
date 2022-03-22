@@ -358,7 +358,7 @@ keys = [
     ),
     Key(
         [Keys.SUPER, Keys.ALT], "s",
-        lazy.spawn("gnome-screenshot -i"), # Potentially replace with shutter
+        lazy.spawn("flameshot gui"),
         desc="Launch screenshot tool",
     ),
 ]

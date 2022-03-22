@@ -45,7 +45,7 @@ in
         teams
 
         libsForQt5.dolphin
-        gnome.gnome-screenshot
+        flameshot
 
         sxiv
 
