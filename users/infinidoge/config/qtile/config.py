@@ -347,6 +347,11 @@ keys = [
         desc="Launch Emacs",
     ),
     Key(
+        [Keys.SUPER, Keys.ALT, Keys.CONTROL], "e",
+        lazy.spawn("doom everywhere"),
+        desc="Launch Emacs 'everywhere' window",
+    ),
+    Key(
         [Keys.SUPER, Keys.ALT], "d",
         lazy.spawn("discordcanary"),
         desc="Launch Discord",
