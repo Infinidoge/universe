@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }: {
+{ config, main, pkgs, lib, ... }:
+let
+  ifGraphical = lib.optionals main.info.graphical;
+  ifGraphical' = lib.optional main.info.graphical;
+in
+{
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: with epkgs; [ vterm ];
@@ -14,7 +19,7 @@
       "${config.xdg.configHome}/emacs/bin"
     ];
 
-    packages = with pkgs; [
+    packages = with pkgs; lib.flatten [
       clang
       cmake
       coreutils
@@ -57,11 +62,25 @@
       omnisharp-roslyn
 
       # :lang latex
-      (texlive.combine {
-        inherit (texlive)
-          scheme-medium wrapfig capt-of minted fvextra upquote catchfile xstring framed biblatex biblatex-chicago lipsum;
-      })
-      biber
+      (ifGraphical [
+        (texlive.combine {
+          inherit (texlive)
+            scheme-medium
+
+            biblatex
+            biblatex-chicago
+            capt-of minted
+            catchfile
+            framed
+            fvextra
+            lipsum
+            upquote
+            wrapfig
+            xstring
+            ;
+        })
+        biber
+      ])
 
       # :lang markdown
       pandoc
