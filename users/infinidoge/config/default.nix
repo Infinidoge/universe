@@ -1,18 +1,20 @@
-{ config, main, ... }: {
+{ config, main, lib, ... }:
+with lib;
+{
   xdg.configFile = {
-    "qtile".source = ./qtile;
-
     "doom" = {
       source = ./doom;
       onChange = ''
         ${config.xdg.configHome}/emacs/bin/doom sync -p
       '';
     };
+  } // (mkIf main.info.graphical {
+    "qtile".source = ./qtile;
 
     "blugon".source = ./blugon;
-  };
+  });
 
-  home.bindmounts."${main.bud.localFlakeClone}/users/infinidoge/config" = {
+  home.bindmounts."${main.bud.localFlakeClone}/users/infinidoge/config" = mkIf main.info.graphical {
     allowOther = true;
     directories = [
       {
