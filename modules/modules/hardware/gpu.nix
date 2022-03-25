@@ -3,6 +3,7 @@ with lib;
 with lib.hlissner;
 let
   cfg = config.modules.hardware.gpu;
+  any' = any (v: v);
 in
 {
   options.modules.hardware.gpu = {
@@ -12,15 +13,23 @@ in
   };
 
   config = mkMerge [
-    (mkIf (any (v: v) (with cfg; [ amdgpu nvidia intel ])) {
+    (mkIf (any' (with cfg; [ amdgpu nvidia intel ])) {
       hardware.opengl = {
         enable = true;
         driSupport = true;
         driSupport32Bit = true;
 
-        extraPackages = with pkgs; [
-          vaapiVdpau
+        extraPackages = with pkgs; flatten [
           libvdpau-va-gl
+
+          (optionals (any' (with cfg; [ amdgpu intel ])) [
+            vaapiVdpau
+          ])
+
+          (optionals cfg.intel [
+            intel-media-driver
+            vaapiIntel
+          ])
         ];
       };
     })
@@ -41,8 +50,6 @@ in
       virtualisation.docker.enableNvidia = true;
     })
 
-    (mkIf cfg.intel {
-      hardware.opengl.extraPackages = with pkgs; [ intel-media-driver vaapiIntel ];
-    })
+    (mkIf cfg.intel { })
   ];
 }
