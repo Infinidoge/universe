@@ -8,11 +8,11 @@ with lib;
         ${config.xdg.configHome}/emacs/bin/doom sync -p
       '';
     };
-  } // (mkIf main.info.graphical {
+  } // optionalAttrs main.info.graphical {
     "qtile".source = ./qtile;
 
     "blugon".source = ./blugon;
-  });
+  };
 
   home.bindmounts."${main.bud.localFlakeClone}/users/infinidoge/config" = mkIf main.info.graphical {
     allowOther = true;
