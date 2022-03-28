@@ -98,6 +98,12 @@
 ;; --- GnuPG ---
 (setq epg-pinentry-mode 'loopback)
 
+;; --- langtool ---
+(use-package! langtool
+  :config
+  (setq langtool-bin "languagetool-commandline")
+  )
+
 ;; --- Evil Goggles ---
 (use-package! evil-goggles
   :config
