@@ -90,6 +90,9 @@ in
       # :checkers spell
       ## +aspell
       (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+
+      # :checkers grammar
+      languagetool
     ];
 
     # activation = { # Works in theory, but times out on rebuild
