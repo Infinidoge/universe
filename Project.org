@@ -70,3 +70,11 @@
 ** TODO Setup IRC
 
 *** TODO ZNC setup
+
+** PROJ Qtile
+
+*** TODO Add icons to the bar
+
+**** TODO Battery
+
+**** TODO Volume
