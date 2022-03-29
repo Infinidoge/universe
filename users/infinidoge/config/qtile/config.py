@@ -83,6 +83,10 @@ class Keys:
     NUM_LOCK = "mod2"
 
 
+def run_command(*args, **kwargs):
+    return os.popen(*args, **kwargs).read()
+
+
 # fmt: off
 keys = [
     # Switch between windows
@@ -330,6 +334,18 @@ keys = [
         desc="Toggle mute",
     ),
 
+    # Brightness
+    Key(
+        [], "XF86MonBrightnessUp",
+        lazy.spawn("brightnessctl set +5%"),
+        desc="Increase brightness",
+    ),
+    Key(
+        [], "XF86MonBrightnessDown",
+        lazy.spawn("brightnessctl set 5%-"),
+        desc="Decrease brightness",
+    ),
+
     # Application shortcuts
     Key(
         [Keys.SUPER], "Return",
@@ -533,11 +549,9 @@ def init_widget_list(main=True, laptop=False):
                                         ),
                                     ]
                                     for i, interface in enumerate(
-                                        os.popen(
+                                        run_command(
                                             "ifconfig -s  | awk {'print $1'} | grep -Ev -e Iface -e lo -e vir.+ -e docker.+ | tac"
-                                        )
-                                        .read()
-                                        .splitlines()
+                                        ).splitlines()
                                     )
                                 ],
                                 [],
@@ -564,6 +578,25 @@ def init_widget_list(main=True, laptop=False):
                         ],
                         *(
                             [
+                                [
+                                    widget.TextBox(
+                                        text=" 🔆",
+                                        padding=0,
+                                        fontsize=14,
+                                    ),
+                                    widget.Backlight(
+                                        backlight_name=(
+                                            run_command(
+                                                "brightnessctl -lm | grep backlight"
+                                            )
+                                            .splitlines()[0]
+                                            .split(",")[0]
+                                        ),
+                                        change_command="brightnessctl set {0}%",
+                                        step=5,
+                                        padding=5,
+                                    ),
+                                ],
                                 [
                                     widget.Battery(
                                         format="{char} {percent:2.1%} {hour:d}h:{min:02d}m",
