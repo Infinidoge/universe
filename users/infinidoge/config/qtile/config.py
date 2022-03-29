@@ -559,9 +559,9 @@ def init_widget_list(main=True, laptop=False):
                         ],
                         [
                             widget.TextBox(
-                                text=" 🖬",
+                                text="",
                                 padding=0,
-                                fontsize=14,
+                                fontsize=24,
                             ),
                             widget.Memory(
                                 padding=5,
