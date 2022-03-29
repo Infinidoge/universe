@@ -45,7 +45,9 @@ in
         teams
 
         libsForQt5.dolphin
+
         flameshot
+        brightnessctl
 
         sxiv
 
