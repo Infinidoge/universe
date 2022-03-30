@@ -17,6 +17,8 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 
+LAPTOP = os.getenv("LAPTOP", False)
+
 colors = [
     # panel background
     ["#282c34", "#282c34"],  # 0
@@ -85,6 +87,10 @@ class Keys:
 
 def run_command(*args, **kwargs):
     return os.popen(*args, **kwargs).read()
+
+
+def optional_list(condition, lst):
+    return lst if condition else []
 
 
 # fmt: off
@@ -335,15 +341,20 @@ keys = [
     ),
 
     # Brightness
-    Key(
-        [], "XF86MonBrightnessUp",
-        lazy.spawn("brightnessctl set +5%"),
-        desc="Increase brightness",
-    ),
-    Key(
-        [], "XF86MonBrightnessDown",
-        lazy.spawn("brightnessctl set 5%-"),
-        desc="Decrease brightness",
+    *optional_list(
+        LAPTOP,
+        [
+            Key(
+                [], "XF86MonBrightnessUp",
+                lazy.spawn("brightnessctl set +5%"),
+                desc="Increase brightness",
+            ),
+            Key(
+                [], "XF86MonBrightnessDown",
+                lazy.spawn("brightnessctl set 5%-"),
+                desc="Decrease brightness",
+            )
+        ]
     ),
 
     # Application shortcuts
@@ -519,27 +530,28 @@ def init_widget_list(main=True, laptop=False):
         ),
         widget.Sep(linewidth=0, padding=40, foreground=colors[2], background=colors[0]),
         widget.WindowName(foreground=colors[6], background=colors[0], padding=0),
-        *(
+        *optional_list(
+            main,
             [
                 widget.Systray(background=colors[0], padding=5),
-            ]
-            if main
-            else []
+            ],
         ),
         widget.Sep(linewidth=0, padding=6, foreground=colors[0], background=colors[0]),
         *create_powerline(
             [
                 # Widgets only found on the main screen's powerline
-                *(
+                *optional_list(
+                    main,
                     [
                         [
                             *sum(
                                 [
                                     [
-                                        *(
-                                            [widget.Sep(linewidth=2, padding=3)]
-                                            if i != 0
-                                            else []
+                                        *optional_list(
+                                            i != 0,
+                                            [
+                                                widget.Sep(linewidth=2, padding=3),
+                                            ],
                                         ),
                                         widget.TextBox(text=f"{interface}:", padding=2),
                                         widget.Net(
@@ -558,32 +570,18 @@ def init_widget_list(main=True, laptop=False):
                             )
                         ],
                         [
-                            widget.TextBox(
-                                text="",
-                                padding=0,
-                                fontsize=24,
-                            ),
-                            widget.Memory(
-                                padding=5,
-                            ),
+                            widget.TextBox(text="", padding=0, fontsize=24),
+                            widget.Memory(padding=5),
                         ],
                         [
-                            widget.TextBox(
-                                text=" Vol:",
-                                padding=0,
-                            ),
-                            widget.Volume(
-                                padding=5,
-                            ),
+                            widget.TextBox(text=" Vol:", padding=0),
+                            widget.Volume(padding=5),
                         ],
-                        *(
+                        *optional_list(
+                            laptop,
                             [
                                 [
-                                    widget.TextBox(
-                                        text=" 🔆",
-                                        padding=0,
-                                        fontsize=14,
-                                    ),
+                                    widget.TextBox(text=" 🔆", padding=0, fontsize=14),
                                     widget.Backlight(
                                         backlight_name=(
                                             run_command(
@@ -604,24 +602,14 @@ def init_widget_list(main=True, laptop=False):
                                         padding=5,
                                     ),
                                 ],
-                            ]
-                            if laptop
-                            else []
+                            ],
                         ),
-                    ]
-                    if main
-                    else []
+                    ],
                 ),
                 # Widgets found on the powerline of all screens
                 [
-                    widget.CurrentLayoutIcon(
-                        custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
-                        padding=0,
-                        scale=0.7,
-                    ),
-                    widget.CurrentLayout(
-                        padding=5,
-                    ),
+                    widget.CurrentLayoutIcon(padding=0, scale=0.7),
+                    widget.CurrentLayout(padding=5),
                 ],
                 [
                     widget.Clock(
@@ -644,7 +632,7 @@ def init_widget_list(main=True, laptop=False):
 screens = [
     Screen(
         bottom=bar.Bar(
-            init_widget_list(main=(i == 0), laptop=os.getenv("LAPTOP", False)),
+            init_widget_list(main=(i == 0), laptop=LAPTOP),
             size=20,
             opacity=1.0,
         ),
@@ -652,11 +640,7 @@ screens = [
         wallpaper_mode="fill",
     )
     for i in range(
-        int(
-            os.popen(
-                "xrandr --listmonitors | grep 'Monitors:' | awk {'print $2'}"
-            ).read()
-        )
+        int(run_command("xrandr --listmonitors | grep 'Monitors:' | awk {'print $2'}"))
     )
 ]
 
