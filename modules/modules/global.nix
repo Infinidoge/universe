@@ -23,8 +23,13 @@ with lib.hlissner;
   # Allow non-root users to allow other users to access mount point
   programs.fuse.userAllowOther = mkDefault true;
 
-  # Ensure certain necessary directories always exist
-  services.ensure.directories = [ "/mnt" ];
+  services = {
+    # Ensure certain necessary directories always exist
+    ensure.directories = [ "/mnt" ];
+
+    # Enable Early Out of Memory service
+    earlyoom.enable = true;
+  };
 
   # FIX: command-not-found database doesn't exist normally
   system.activationScripts.channels-update.text = ''
