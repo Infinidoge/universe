@@ -34,6 +34,7 @@
  org-time-stamp-custom-formats '("<%d %b %Y>" . "<%y/%m/%d %a %H:%M:%S>")
 
  ;; Export
+ org-latex-tables-centered nil
  org-latex-listings 'minted
  org-latex-packages-alist '(("" "minted" "listingsutf8"))
  org-latex-pdf-process
