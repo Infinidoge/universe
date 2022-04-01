@@ -580,21 +580,27 @@ def init_widget_list(main=True, laptop=False):
                         *optional_list(
                             laptop,
                             [
-                                [
-                                    widget.TextBox(text=" 🔆", padding=0, fontsize=14),
-                                    widget.Backlight(
-                                        backlight_name=(
-                                            run_command(
-                                                "brightnessctl -lm | grep backlight"
-                                            )
-                                            .splitlines()[0]
-                                            .split(",")[0]
+                                (
+                                    [
+                                        widget.TextBox(
+                                            text=" 🔆", padding=0, fontsize=14
                                         ),
-                                        change_command="brightnessctl set {0}%",
-                                        step=5,
-                                        padding=5,
-                                    ),
-                                ],
+                                        widget.Backlight(
+                                            backlight_name=(
+                                                backlight.splitlines()[0].split(",")[0]
+                                            ),
+                                            change_command="brightnessctl set {0}%",
+                                            step=5,
+                                            padding=5,
+                                        ),
+                                    ]
+                                    if (
+                                        backlight := run_command(
+                                            "brightnessctl -lm | grep backlight"
+                                        )
+                                    )
+                                    else []
+                                ),
                                 [  # TODO: Create battery icon widget using NerdFont icons
                                     widget.Battery(
                                         format="{char} {percent:2.1%} {hour:d}h:{min:02d}m",
