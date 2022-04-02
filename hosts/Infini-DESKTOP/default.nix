@@ -18,6 +18,7 @@
     directories = [
       "/home"
       "/etc/nixos"
+      "/etc/nixpkgs"
 
       # /var directories
       "/var/log"
