@@ -22,9 +22,6 @@
     bud.inputs.nixpkgs.follows = "nixos";
     bud.inputs.devshell.follows = "digga/devshell";
 
-    beautysh.url = "github:lovesegfault/beautysh";
-    bud.inputs.beautysh.follows = "beautysh";
-
     home.url = "github:nix-community/home-manager";
     home.inputs.nixpkgs.follows = "nixos";
 
