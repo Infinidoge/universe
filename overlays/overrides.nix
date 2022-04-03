@@ -11,6 +11,7 @@ channels: final: prev: {
     element-desktop
     kitty
     nixpkgs-fmt
+    omnisharp-roslyn
     qutebrowser
     rage
     signal-desktop
