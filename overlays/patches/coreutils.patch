@@ -1,0 +1,13 @@
+diff --git a/src/uname.c b/src/uname.c
+index 385674f..f802714 100644
+--- a/src/uname.c
++++ b/src/uname.c
+@@ -371,7 +371,7 @@ main (int argc, char **argv)
+     }
+ 
+   if (toprint & PRINT_OPERATING_SYSTEM)
+-    print_element (HOST_OPERATING_SYSTEM);
++    print_element ("Doge/Linux");
+ 
+   putchar ('\n');
+ 

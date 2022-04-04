@@ -22,7 +22,6 @@ in
     packages = with pkgs; lib.flatten [
       clang
       cmake
-      coreutils
       fd
       fzf
       gnumake
