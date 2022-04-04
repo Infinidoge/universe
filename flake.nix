@@ -45,7 +45,7 @@
 
     # --- Application-Specific Flake Inputs
     # # --- Powercord
-    powercord-setup.url = "path:./subflakes/powercord";
+    powercord-setup.url = "path:/etc/nixos/subflakes/powercord";
     powercord-setup.inputs.nixpkgs.follows = "latest";
   };
 
