@@ -23,6 +23,19 @@ channels: final: prev: {
     spice-gtk
     ;
 
+  inherit (channels.stable)
+    nvfetcher
+    ;
+
+  # https://github.com/NixOS/nixpkgs/issues/167579
+  python39Packages = prev.python39Packages.override
+    (old: {
+      overrides = prev.lib.composeExtensions (old.overrides or (_: _: { }))
+        (py39final: py39prev: {
+          inherit (channels.stable.python39Packages) pycurl;
+        });
+    });
+
   haskellPackages = prev.haskellPackages.override
     (old: {
       overrides = prev.lib.composeExtensions (old.overrides or (_: _: { })) (hfinal: hprev:
