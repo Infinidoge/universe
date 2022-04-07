@@ -24,7 +24,7 @@
 
     # home.url = "github:nix-community/home-manager";
     # FIXME: https://github.com/nix-community/home-manager/issues/2846
-    home.urk = "github:wentasah/home-manager";
+    home.url = "github:wentasah/home-manager";
     home.inputs.nixpkgs.follows = "nixos";
 
     deploy.url = "github:input-output-hk/deploy-rs";
