@@ -24,9 +24,7 @@
     bud.inputs.nixpkgs.follows = "nixos";
     bud.inputs.devshell.follows = "digga/devshell";
 
-    # home.url = "github:nix-community/home-manager";
-    # FIXME: https://github.com/nix-community/home-manager/issues/2846
-    home.url = "github:wentasah/home-manager";
+    home.url = "github:nix-community/home-manager";
     home.inputs.nixpkgs.follows = "nixos";
 
     deploy.url = "github:input-output-hk/deploy-rs";
