@@ -7,11 +7,13 @@
 
   inputs = {
     # --- DevOS Flake Inputs
+    # # --- Channels ---
     verystable.url = "github:nixos/nixpkgs/nixos-21.05";
     stable.url = "github:nixos/nixpkgs/nixos-21.11";
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
 
+    # # --- Libraries ---
     digga.url = "github:divnix/digga";
     digga.inputs.nixpkgs.follows = "nixos";
     digga.inputs.nixlib.follows = "nixos";
