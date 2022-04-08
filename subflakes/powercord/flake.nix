@@ -133,7 +133,7 @@
               discord-mention-cache-fix
               discord-message-link-embed
               discord-online-friends-count
-              discord-permission-viewer
+              # discord-permission-viewer # FIXME: https://github.com/powercord-community/permission-viewer/issues/20
               discord-powercord-LinkChannels
               discord-powercord-message-tooltips
               discord-powercord-mute-folder
