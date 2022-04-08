@@ -34,6 +34,9 @@ in
       };
     };
 
+    # FIXME: https://github.com/NixOS/nixpkgs/issues/167785
+    home.sessionVariables.MOZ_DISABLE_CONTENT_SANDBOX = "1";
+
     home.packages = with pkgs; lib.flatten [
       ncdu
 
