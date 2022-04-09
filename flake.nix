@@ -33,9 +33,6 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixos";
 
-    naersk.url = "github:nmattia/naersk";
-    naersk.inputs.nixpkgs.follows = "nixos";
-
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     impermanence.url = "github:nix-community/impermanence";
@@ -55,9 +52,7 @@
     , nixos
     , home
     , nixos-hardware
-    , nur
     , agenix
-    , nvfetcher
     , deploy
     , ...
     }@inputs:
@@ -74,7 +69,6 @@
             imports = [ (digga.lib.importOverlays ./overlays) ];
             overlays = [
               # --- DevOS Overlays
-              nur.overlay
               agenix.overlay
               ./pkgs/default.nix
 
