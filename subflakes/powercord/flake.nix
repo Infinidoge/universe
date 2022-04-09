@@ -110,7 +110,7 @@
               discord-better-folders
               discord-better-replies
               discord-better-settings
-              discord-better-status-indicators
+              # discord-better-status-indicators # FIXME: crashes on loading avatars
               discord-better-threads
               discord-betterinvites
               discord-block-messages
