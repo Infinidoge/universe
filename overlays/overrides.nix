@@ -8,6 +8,8 @@ channels: final: prev: {
 
   inherit (channels.stable)
     nvfetcher
+    # FIXME: https://github.com/NixOS/nixpkgs/issues/167785
+    firefox
     ;
 
   # https://github.com/NixOS/nixpkgs/issues/167579
