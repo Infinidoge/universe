@@ -7,7 +7,6 @@ channels: final: prev: {
     ;
 
   inherit (channels.stable)
-    nvfetcher
     # FIXME: https://github.com/NixOS/nixpkgs/issues/167785
     firefox
     ;
@@ -17,7 +16,7 @@ channels: final: prev: {
     (old: {
       overrides = prev.lib.composeExtensions (old.overrides or (_: _: { }))
         (py39final: py39prev: {
-          inherit (channels.stable.python39Packages) pycurl;
+          inherit (channels.latest.python39Packages) pycurl;
         });
     });
 }
