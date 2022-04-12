@@ -53,7 +53,6 @@
     , bud
     , nixos
     , home
-    , nixos-hardware
     , agenix
     , deploy
     , ...
@@ -61,8 +60,6 @@
     digga.lib.mkFlake
       {
         inherit self inputs;
-
-        patches = ./overlays/patches;
 
         channelsConfig = { allowUnfree = true; };
 
@@ -123,8 +120,6 @@
             Infini-SERVER = { };
           };
           importables = rec {
-            inherit (self) patches;
-
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
             };
@@ -150,10 +145,11 @@
 
         home = {
           imports = [ (digga.lib.importExportableModules ./users/modules) ];
-          modules = [ "${inputs.impermanence}/home-manager.nix" ];
+          modules = [
+            inputs.impermanence.nixosModules.home-manager.impermanence
+          ];
           importables = rec {
             inherit inputs;
-            inherit (self) patches;
 
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; self.lib.flattenSetList
