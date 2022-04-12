@@ -32,6 +32,11 @@ with lib;
       "nixos-config=${../../lib/compat/nixos}"
       "home-manager=${inputs.home}"
     ];
+
+    localRegistry = {
+      enable = true;
+      cacheGlobalRegistry = true;
+    };
   };
 
   nixpkgs.config = {
