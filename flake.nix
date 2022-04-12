@@ -39,6 +39,8 @@
 
     hlissner-dotfiles.url = "github:hlissner/dotfiles";
 
+    quick-nix-registry.url = "github:divnix/quick-nix-registry";
+
     # --- Application-Specific Flake Inputs
     # # --- Powercord
     powercord-setup.url = "path:/etc/nixos/subflakes/powercord";
@@ -104,6 +106,7 @@
               bud.nixosModules.bud
 
               inputs.impermanence.nixosModules.impermanence
+              inputs.quick-nix-registry.nixosModules.local-registry
             ];
           };
 
