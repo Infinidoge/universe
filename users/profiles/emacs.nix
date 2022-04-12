@@ -20,21 +20,12 @@ in
     ];
 
     packages = with pkgs; lib.flatten [
-      clang
-      cmake
+      # --- Doom Emacs ---
       fd
-      fzf
-      gnumake
-      isync
-      jq
-      mu
-      nodePackages.prettier
-      nodejs
-      perl
-      python39Packages.pygments
       ripgrep
-      shellcheck
-      sqlite
+      fzf
+
+      gnumake
 
       # --- :tools ---
       # :tools editorconfig
@@ -46,11 +37,18 @@ in
       xdotool
       xclip
 
+      # --- :editor ---
+      # :editor format
+      nodePackages.prettier
+
+
       # --- :lang ---
       # :lang org
+      python39Packages.pygments
       ## +gnuplot
       gnuplot
       ## +roam2
+      sqlite
       graphviz
 
       # :lang common-lisp
@@ -84,6 +82,12 @@ in
       # :lang markdown
       pandoc
       python39Packages.grip
+
+      # :lang sh
+      shellcheck
+
+      # :lang json
+      jq
 
       # --- :checkers ---
       # :checkers spell
