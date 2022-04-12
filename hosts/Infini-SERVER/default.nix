@@ -21,14 +21,7 @@
   };
 
   services = {
-    avahi = {
-      publish = {
-        enable = true;
-        domain = true;
-        addresses = true;
-      };
-      reflector = true;
-    };
+    avahi.reflector = true;
 
     soft-serve.enable = true;
   };
