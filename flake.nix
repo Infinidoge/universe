@@ -12,6 +12,7 @@
     stable.url = "github:nixos/nixpkgs/nixos-21.11";
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
+    fork.url = "github:Infinidoge/nixpkgs";
 
     # # --- Libraries ---
     digga.url = "github:divnix/digga";
@@ -78,6 +79,7 @@
           verystable = { };
           stable = { };
           latest = { };
+          fork = { };
         };
 
         lib = import ./lib { lib = digga.lib // nixos.lib; };
