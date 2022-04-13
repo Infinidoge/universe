@@ -6,6 +6,7 @@
       pull.rebase = true;
       merge.ignore.driver = "true";
       init.defaultBranch = "master";
+      status.showUntrackedFiles = "all";
     };
 
     aliases = {
