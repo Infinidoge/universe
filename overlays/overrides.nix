@@ -11,6 +11,10 @@ channels: final: prev: {
     firefox
     ;
 
+  inherit (channels.fork)
+    omnisharp-roslyn
+    ;
+
   # https://github.com/NixOS/nixpkgs/issues/167579
   python39Packages = prev.python39Packages.override
     (old: {
