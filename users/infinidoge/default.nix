@@ -16,9 +16,7 @@ in
         (ifGraphical' graphic)
       ])
       (with profiles; [
-        pass
         htop
-        nnn
       ])
 
       ./config
@@ -59,7 +57,6 @@ in
       ])
 
       arduino
-      minipro
     ];
   };
 

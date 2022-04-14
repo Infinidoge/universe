@@ -110,17 +110,6 @@
           };
 
           imports = [ (digga.lib.importHosts ./hosts) ];
-          hosts = {
-            # Desktops
-            Infini-DESKTOP = { };
-
-            # Laptops
-            Infini-SWIFT = { };
-            Infini-FRAMEWORK = { };
-
-            # Servers
-            Infini-SERVER = { };
-          };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
               users = digga.lib.rakeLeaves ./users;
@@ -182,9 +171,6 @@
                 ];
               };
           };
-          users = {
-            infinidoge = { };
-          }; # digga.lib.importers.rakeLeaves ./users/hm;
         };
 
         devshell = ./shell;
