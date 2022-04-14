@@ -6,11 +6,6 @@ channels: final: prev: {
     discord-canary
     ;
 
-  inherit (channels.stable)
-    # FIXME: https://github.com/NixOS/nixpkgs/issues/167785
-    firefox
-    ;
-
   inherit (channels.fork)
     omnisharp-roslyn
     ;
