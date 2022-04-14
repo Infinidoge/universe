@@ -63,30 +63,18 @@ in
     ];
   };
 
-  environment = {
-    systemPackages = with pkgs; [
-      ffmpeg
-    ];
-
-    shellAliases = { };
-
-    variables.EDITOR =
-      let
-        editorScript = pkgs.writeScriptBin "emacseditor" ''
-          #!${pkgs.runtimeShell}
-          if [ -z "$1" ]; then
-            exec ${pkgs.emacs}/bin/emacsclient --create-frame --alternate-editor ${pkgs.emacs}/bin/emacs
-          else
-            exec ${pkgs.emacs}/bin/emacsclient --alternate-editor ${pkgs.emacs}/bin/emacs "$@"
-          fi
-        '';
-      in
-      (lib.mkOverride 900 "${editorScript}/bin/emacseditor");
-  };
-
-  programs = {
-    dconf.enable = true;
-  };
+  environment.variables.EDITOR =
+    let
+      editorScript = pkgs.writeScriptBin "emacseditor" ''
+        #!${pkgs.runtimeShell}
+        if [ -z "$1" ]; then
+          exec ${pkgs.emacs}/bin/emacsclient --create-frame --alternate-editor ${pkgs.emacs}/bin/emacs
+        else
+          exec ${pkgs.emacs}/bin/emacsclient --alternate-editor ${pkgs.emacs}/bin/emacs "$@"
+        fi
+      '';
+    in
+    (lib.mkOverride 900 "${editorScript}/bin/emacseditor");
 
   modules = {
     locale.fonts = {
