@@ -20,8 +20,14 @@ with lib.hlissner;
     cleanTmpDir = mkDefault (!config.boot.tmpOnTmpfs);
   };
 
-  # Allow non-root users to allow other users to access mount point
-  programs.fuse.userAllowOther = mkDefault true;
+
+  programs = {
+    # Allow non-root users to allow other users to access mount point
+    fuse.userAllowOther = mkDefault true;
+
+    # Enable dconf for programs that need it
+    dconf.enable = true;
+  };
 
   services = {
     # Ensure certain necessary directories always exist
