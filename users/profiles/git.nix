@@ -41,6 +41,8 @@
       bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d";
 
       crypt = "!git-crypt";
+
+      root = "rev-parse --show-toplevel";
     };
   };
 }
