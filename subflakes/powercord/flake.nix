@@ -15,7 +15,6 @@
     discord-Custom-Volume-Range = { url = "github:PandaDriver156/Custom-Volume-Range"; flake = false; };
     discord-In-app-notifs = { url = "github:BenSegal855/In-app-notifs"; flake = false; };
     discord-NSFW-tags = { url = "github:E-boi/NSFW-tags"; flake = false; };
-    discord-PowerAliases = { url = "github:LandenStephenss/PowerAliases"; flake = false; };
     discord-PowercordTwemojiEverywhere = { url = "github:VenPlugs/PowercordTwemojiEverywhere"; flake = false; };
     discord-Quick-Bot-Invite = { url = "github:A-Trash-Coder/Quick-Bot-Invite"; flake = false; };
     discord-Quick-Channel-Mute = { url = "github:A-Trash-Coder/Quick-Channel-Mute"; flake = false; };
@@ -99,7 +98,6 @@
               discord-Custom-Volume-Range
               discord-In-app-notifs
               discord-NSFW-tags
-              discord-PowerAliases
               discord-PowercordTwemojiEverywhere
               discord-Quick-Bot-Invite
               discord-Quick-Channel-Mute
