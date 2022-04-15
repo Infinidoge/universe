@@ -511,7 +511,8 @@ def init_widget_list(main=True, laptop=False):
             other_screen_border=colors[4],
             foreground=colors[2],
             background=colors[0],
-            invert_mouse_wheel=True,
+            use_mouse_wheel=False,
+            disable_drag=True,
         ),
         widget.Chord(
             font="Ubuntu Mono",
