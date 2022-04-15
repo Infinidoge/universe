@@ -597,7 +597,7 @@ def init_widget_list(main=True, laptop=False):
                                     ]
                                     if (
                                         backlight := run_command(
-                                            "brightnessctl -lm | grep backlight"
+                                            "brightnessctl -lm --class=backlight"
                                         )
                                     )
                                     else []

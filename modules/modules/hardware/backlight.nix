@@ -9,7 +9,7 @@ in
   options.modules.hardware.backlight = with types; {
     enable = mkBoolOpt false;
     initialValue = mkOpt str "50%";
-    initialCommand = mkOpt str "${getMainProgram pkgs.brightnessctl} set ${cfg.initialValue}";
+    initialCommand = mkOpt str "${getMainProgram pkgs.brightnessctl} set ${cfg.initialValue} --class=backlight";
   };
 
   config.systemd.services = mkIf cfg.enable {
