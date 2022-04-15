@@ -55,7 +55,7 @@
     discord-pronoundb-powercord = { url = "github:cyyynthia/pronoundb-powercord"; flake = false; };
     discord-quick-delete-pc = { url = "github:the-cord-plug/quick-delete-pc"; flake = false; };
     discord-reddit-parser = { url = "github:Rodentman87/reddit-parser"; flake = false; };
-    discord-relationship-notifier = { url = "github:Twizzer/relationship-notifier"; flake = false; };
+    discord-relationship-notifier = { url = "github:discord-modifications/relationships-notifier"; flake = false; };
     discord-remove-invite-from-user-context-menu = { url = "github:SebbyLaw/remove-invite-from-user-context-menu"; flake = false; };
     discord-replace-timestamps-pc = { url = "github:SpoonMcForky/replace-timestamps-pc"; flake = false; };
     discord-report-messages = { url = "github:12944qwerty/report-messages"; flake = false; };
