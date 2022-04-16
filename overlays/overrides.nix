@@ -2,9 +2,8 @@ channels: final: prev: {
 
   __dontExport = true; # overrides clutter up actual creations
 
-  inherit (channels.latest)
-    discord-canary
-    ;
+  # Pin discord-canary version for powercord
+  # powercord = prev.powercord.override { inherit (channels.fork) discord-canary; };
 
   # https://github.com/NixOS/nixpkgs/issues/167579
   python39Packages = prev.python39Packages.override
