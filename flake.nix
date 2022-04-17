@@ -8,7 +8,6 @@
   inputs = {
     # --- DevOS Flake Inputs
     # # --- Channels ---
-    verystable.url = "github:nixos/nixpkgs/nixos-21.05";
     stable.url = "github:nixos/nixpkgs/nixos-21.11";
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
@@ -76,7 +75,6 @@
               inputs.powercord-setup.overlay
             ];
           };
-          verystable = { };
           stable = { };
           latest = { };
           fork = { };
