@@ -78,3 +78,10 @@
 **** TODO Battery
 
 **** TODO Volume
+
+* PROJ Refactor setup
+
+** TODO Declarative creation of partitions
+
+UUIDs can be generated using ~uuidgen~.
+~uuidgen --md5 --namespace <UUID> --name <NAME>~ is useful for deterministically generating UUIDs. Use the namespace to represent the computer itself, and the name to represent the partitions.
