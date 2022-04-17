@@ -16,7 +16,7 @@ TYPE[!][(scope)]: SUBJECT
 
 *** =bump=
 
-For updating inputs/packages, and any changes required to maintain working order post-update. Replace =dump= with =revert= then downgrading flake inputs.
+For updating inputs/packages, and any changes required to maintain working order post-update. Replace =bump= with =revert= then downgrading flake inputs.
 
 #+BEGIN_SRC commit
 bump: [flake inputs|INPUT]
