@@ -80,7 +80,7 @@
 
   outputs = inputs@{ self, nixpkgs, fup, powercord-overlay, ... }:
     let
-      patches = ./patches;
+      patch = name: "${./patches}/${name}.patch";
     in
     fup.lib.mkFlake rec {
 
@@ -120,7 +120,7 @@
               discord-copy-role-color
               (applyPatches {
                 src = discord-css-toggler;
-                patches = [ "${patches}/css-toggler.patch" ];
+                patches = [ (patch "css-toggler") ];
                 name = "discord-css-toggler";
               })
               discord-custom-timestamps
