@@ -87,7 +87,11 @@
         sharedOverlays = [
           (final: prev: {
             __dontExport = true;
-            lib = prev.lib.extend (lfinal: lprev: { our = self.lib; hlissner = inputs.hlissner-dotfiles.lib; });
+            lib = prev.lib.extend (lfinal: lprev: {
+              our = self.lib;
+              hlissner = inputs.hlissner-dotfiles.lib;
+              hm = home.lib.hm;
+            });
           })
         ];
 
