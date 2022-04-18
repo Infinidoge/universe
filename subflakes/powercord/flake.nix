@@ -8,7 +8,7 @@
 
     powercord = { url = "github:powercord-org/powercord"; flake = false; };
     # powercord-overlay.url = "github:LavaDesu/powercord-overlay";
-    powercord-overlay.url = "github:Infinidoge/powercord-overlay/patch-1";
+    powercord-overlay.url = "github:Infinidoge/powercord-overlay";
     powercord-overlay.inputs.nixpkgs.follows = "nixpkgs";
     powercord-overlay.inputs.powercord.follows = "powercord";
 
