@@ -1,0 +1,1186 @@
+diff --git a/src/Powercord/plugins/pc-updater/components/Icons.jsx b/src/Powercord/plugins/pc-updater/components/Icons.jsx
+deleted file mode 100644
+index dc8a71d..0000000
+--- a/src/Powercord/plugins/pc-updater/components/Icons.jsx
++++ /dev/null
+@@ -1,52 +0,0 @@
+-const { React } = require('powercord/webpack');
+-
+-module.exports = {
+-  UpToDate: () => <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+-    <path
+-      fill='#43b581'
+-      d='M11.19 1.36l-7 3.11C3.47 4.79 3 5.51 3 6.3V11c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6.3c0-.79-.47-1.51-1.19-1.83l-7-3.11c-.51-.23-1.11-.23-1.62 0zm-1.9 14.93L6.7 13.7c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 14.17l5.88-5.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.59 6.59c-.38.39-1.02.39-1.41 0z'
+-    />
+-  </svg>,
+-  Update: ({ color, animated }) =>
+-    <svg className={animated ? 'animated' : ''} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+-      <path
+-        fill={color || '#faa61a'}
+-        d='M10.997,8.747v3.68c0,0.35,0.19,0.68,0.49,0.86l3.12,1.85c0.36,0.21,0.82,0.09,1.03-0.26c0.21-0.36,0.1-0.82-0.26-1.03 l-2.87-1.71v-3.4c-0.01-0.4-0.35-0.74-0.76-0.74S10.997,8.337,10.997,8.747z'
+-      />
+-      <path
+-        fill={color || '#faa61a'}
+-        d='M20.997,9.497v-5.29c0-0.45-0.54-0.67-0.85-0.35l-1.78,1.78c-1.81-1.81-4.39-2.85-7.21-2.6c-4.19,0.38-7.64,3.75-8.1,7.94 c-0.6,5.42,3.63,10.02,8.94,10.02c4.59,0,8.38-3.44,8.93-7.88c0.07-0.6-0.4-1.12-1-1.12c-0.5,0-0.92,0.37-0.98,0.86 c-0.43,3.49-3.44,6.19-7.05,6.14c-3.71-0.05-6.84-3.18-6.9-6.9c-0.06-3.9,3.11-7.1,7-7.1c1.93,0,3.68,0.79,4.95,2.05l-2.09,2.09c-0.32,0.32-0.1,0.86,0.35,0.86h5.29C20.777,9.997,20.997,9.777,20.997,9.497z'
+-      />
+-    </svg>,
+-  Paused: () => <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+-    <path
+-      fill='#faa61a'
+-      d='M10 16c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1s-1 .45-1 1v6c0 .55.45 1 1 1zm2-14C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm2-4c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1s-1 .45-1 1v6c0 .55.45 1 1 1z'
+-    />
+-  </svg>,
+-  Error: () => <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+-    <path
+-      fill='#f04747'
+-      d='M12 7c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1s-1-.45-1-1V8c0-.55.45-1 1-1zm-.01-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm1-3h-2v-2h2v2z'
+-    />
+-  </svg>,
+-
+-  Powercord: (props) => <svg {...props} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 447 447'>
+-    <path
+-      fill='currentColor'
+-      d='M387.3,100.3c-11.9-11.9-31.2-11.9-43.1,0l-65.15,65.15l-48.6-48.6L295.6,51.7c11.9-11.9,11.9-31.2,0-43.1 c-11.9-11.9-31.2-11.9-43.1,0l-65.15,65.15L172.7,59.1c-2.7-2.7-7-2.7-9.7,0l-24.1,24.1c-2.7,2.7-2.7,7,0,9.7l4.8,4.8l-80.2,80.2 c-17,17-17,44.6,0,61.6l27.1,27.1l-24.2,24.2c-2.7,2.7-2.7,7,0,9.7l10.065,10.065C59.842,331.969,61.344,362.944,81,382.6l62.7,62.7 c2.7,2.7,7.1,2.9,9.8,0.2s2.7-7,0-9.7L90.7,373c-14.347-14.257-15.819-36.63-4.437-52.637L95.4,329.5c2.7,2.6,7,2.6,9.7,0l24.2-24.2 l27.1,27.1c16.9,17,44.6,17,61.6,0l80.2-80.2l4.8,4.8c2.7,2.7,7,2.7,9.7,0l24.1-24.1c2.7-2.7,2.7-7,0-9.7l-14.65-14.65l65.15-65.15 C399.2,131.5,399.2,112.2,387.3,100.3z'
+-    />
+-  </svg>,
+-  Plugin: (props) => <svg {...props} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+-    <path
+-      fill='currentColor'
+-      d='M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z'
+-    />
+-  </svg>,
+-  Theme: (props) => <svg {...props} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+-    <path
+-      fill='currentColor'
+-      d='M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3zm13.71-9.37l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41z'
+-    />
+-  </svg>
+-};
+diff --git a/src/Powercord/plugins/pc-updater/components/Settings.jsx b/src/Powercord/plugins/pc-updater/components/Settings.jsx
+deleted file mode 100644
+index a1b8b9b..0000000
+--- a/src/Powercord/plugins/pc-updater/components/Settings.jsx
++++ /dev/null
+@@ -1,464 +0,0 @@
+-const { React, getModule, i18n: { Messages, _chosenLocale: currentLocale } } = require('powercord/webpack');
+-const { Button, FormNotice, FormTitle, Tooltip, Icons: { FontAwesome } } = require('powercord/components');
+-const { SwitchItem, TextInput, Category, ButtonItem } = require('powercord/components/settings');
+-const { open: openModal, close: closeModal } = require('powercord/modal');
+-const { Confirm } = require('powercord/components/modal');
+-const { REPO_URL, CACHE_FOLDER } = require('powercord/constants');
+-const { clipboard } = require('electron');
+-const { readdirSync, existsSync, lstatSync } = require('fs');
+-
+-const Icons = require('./Icons');
+-const Update = require('./Update');
+-
+-module.exports = class UpdaterSettings extends React.PureComponent {
+-  constructor () {
+-    super();
+-    this.plugin = powercord.pluginManager.get('pc-updater');
+-    this.state = {
+-      opened: false,
+-      copied: false
+-    };
+-  }
+-
+-  render () {
+-    const isUnsupported = window.GLOBAL_ENV.RELEASE_CHANNEL !== 'canary';
+-    const moment = getModule([ 'momentProperties' ], false);
+-    // @todo: Make this be in its own store
+-    const awaitingReload = this.props.getSetting('awaiting_reload', false);
+-    const updating = this.props.getSetting('updating', false);
+-    const checking = this.props.getSetting('checking', false);
+-    const disabled = this.props.getSetting('disabled', false);
+-    const paused = this.props.getSetting('paused', false);
+-    const failed = this.props.getSetting('failed', false);
+-
+-    const updates = this.props.getSetting('updates', []);
+-    const disabledEntities = this.props.getSetting('entities_disabled', []);
+-    const checkingProgress = this.props.getSetting('checking_progress', [ 0, 0 ]);
+-    const last = moment(this.props.getSetting('last_check', false)).calendar();
+-
+-    let icon,
+-      title;
+-    if (disabled) {
+-      icon = <Icons.Update color='#f04747'/>;
+-      title = Messages.POWERCORD_UPDATES_DISABLED;
+-    } else if (paused) {
+-      icon = <Icons.Paused/>;
+-      title = Messages.POWERCORD_UPDATES_PAUSED;
+-    } else if (checking) {
+-      icon = <Icons.Update color='#7289da' animated/>;
+-      title = Messages.POWERCORD_UPDATES_CHECKING;
+-    } else if (updating) {
+-      icon = <Icons.Update color='#7289da' animated/>;
+-      title = Messages.POWERCORD_UPDATES_UPDATING;
+-    } else if (failed) {
+-      icon = <Icons.Error/>;
+-      title = Messages.POWERCORD_UPDATES_FAILED;
+-    } else if (updates.length > 0) {
+-      icon = <Icons.Update/>;
+-      title = Messages.POWERCORD_UPDATES_AVAILABLE;
+-    } else {
+-      icon = <Icons.UpToDate/>;
+-      title = Messages.POWERCORD_UPDATES_UP_TO_DATE;
+-    }
+-
+-    return <div className='powercord-updater powercord-text'>
+-      {awaitingReload
+-        ? this.renderReload()
+-        : isUnsupported && this.renderUnsupported()}
+-      <div className='top-section'>
+-        <div className='icon'>{icon}</div>
+-        <div className='status'>
+-          <h3>{title}</h3>
+-          {!disabled && !updating && (!checking || checkingProgress[1] > 0) && <div>
+-            {paused
+-              ? Messages.POWERCORD_UPDATES_PAUSED_RESUME
+-              : checking
+-                ? Messages.POWERCORD_UPDATES_CHECKING_STATUS.format({
+-                  checked: checkingProgress[0],
+-                  total: checkingProgress[1]
+-                })
+-                : Messages.POWERCORD_UPDATES_LAST_CHECKED.format({ date: last })}
+-          </div>}
+-        </div>
+-        <div className="about">
+-          <div>
+-            <span>{Messages.POWERCORD_UPDATES_UPSTREAM}</span>
+-            <span>{powercord.gitInfos.upstream.replace(REPO_URL, Messages.POWERCORD_UPDATES_UPSTREAM_OFFICIAL)}</span>
+-          </div>
+-          <div>
+-            <span>{Messages.POWERCORD_UPDATES_REVISION}</span>
+-            <span>{powercord.gitInfos.revision.substring(0, 7)}</span>
+-          </div>
+-          <div>
+-            <span>{Messages.POWERCORD_UPDATES_BRANCH}</span>
+-            <span>{powercord.gitInfos.branch}</span>
+-          </div>
+-        </div>
+-      </div>
+-      <div className='buttons'>
+-        {disabled || paused
+-          ? <Button
+-            size={Button.Sizes.SMALL}
+-            color={Button.Colors.GREEN}
+-            onClick={() => {
+-              this.props.updateSetting('paused', false);
+-              this.props.updateSetting('disabled', false);
+-            }}
+-          >
+-            {disabled ? Messages.POWERCORD_UPDATES_ENABLE : Messages.POWERCORD_UPDATES_RESUME}
+-          </Button>
+-          : (!checking && !updating && <>
+-            {updates.length > 0 && <Button
+-              size={Button.Sizes.SMALL}
+-              color={failed ? Button.Colors.RED : Button.Colors.GREEN}
+-              onClick={() => failed ? this.plugin.askForce() : this.plugin.doUpdate()}
+-            >
+-              {failed ? Messages.POWERCORD_UPDATES_FORCE : Messages.POWERCORD_UPDATES_UPDATE}
+-            </Button>}
+-            <Button
+-              size={Button.Sizes.SMALL}
+-              onClick={() => this.plugin.checkForUpdates(true)}
+-            >
+-              {Messages.POWERCORD_UPDATES_CHECK}
+-            </Button>
+-            <Button
+-              size={Button.Sizes.SMALL}
+-              color={Button.Colors.YELLOW}
+-              onClick={() => this.askPauseUpdates()}
+-            >
+-              {Messages.POWERCORD_UPDATES_PAUSE}
+-            </Button>
+-            <Button
+-              size={Button.Sizes.SMALL}
+-              color={Button.Colors.RED}
+-              onClick={() => this.askDisableUpdates(true, () => this.props.updateSetting('disabled', true))}
+-            >
+-              {Messages.POWERCORD_UPDATES_DISABLE}
+-            </Button>
+-          </>)}
+-      </div>
+-      {!disabled && !paused && !checking && updates.length > 0 && <div className='updates'>
+-        {updates.map(update => <Update
+-          {...update}
+-          key={update.id}
+-          updating={updating}
+-          onSkip={() => this.askSkipUpdate(() => this.plugin.skipUpdate(update.id, update.commits[0].id))}
+-          onDisable={() => this.askDisableUpdates(false, () => this.plugin.disableUpdates(update))}
+-        />)}
+-      </div>}
+-
+-      {disabledEntities.length > 0 && <Category
+-        name={Messages.POWERCORD_UPDATES_DISABLED_SECTION}
+-        opened={this.state.opened}
+-        onChange={() => this.setState({ opened: !this.state.opened })}
+-      >
+-        {disabledEntities.map(entity => <div key={entity.id} className='update'>
+-          <div className='title'>
+-            <div className='icon'>
+-              <Tooltip text={entity.icon} position='left'>
+-                {React.createElement(Icons[entity.icon])}
+-              </Tooltip>
+-            </div>
+-            <div className='name'>{entity.name}</div>
+-            <div className='actions'>
+-              <Button color={Button.Colors.GREEN} onClick={() => this.plugin.enableUpdates(entity.id)}>
+-                {Messages.POWERCORD_UPDATES_ENABLE}
+-              </Button>
+-            </div>
+-          </div>
+-        </div>)}
+-      </Category>}
+-      <FormTitle className='powercord-updater-ft'>{Messages.OPTIONS}</FormTitle>
+-      {!disabled && <>
+-        <SwitchItem
+-          value={this.props.getSetting('automatic', false)}
+-          onChange={() => this.props.toggleSetting('automatic')}
+-          note={Messages.POWERCORD_UPDATES_OPTS_AUTO_DESC}
+-        >
+-          {Messages.POWERCORD_UPDATES_OPTS_AUTO}
+-        </SwitchItem>
+-        <TextInput
+-          note={Messages.POWERCORD_UPDATES_OPTS_INTERVAL_DESC}
+-          onChange={val => this.props.updateSetting('interval', (Number(val) && Number(val) >= 10) ? Math.ceil(Number(val)) : 10, 15)}
+-          defaultValue={this.props.getSetting('interval', 15)}
+-          required={true}
+-        >
+-          {Messages.POWERCORD_UPDATES_OPTS_INTERVAL}
+-        </TextInput>
+-        <TextInput
+-          note={Messages.POWERCORD_UPDATES_OPTS_CONCURRENCY_DESC}
+-          onChange={val => this.props.updateSetting('concurrency', (Number(val) && Number(val) >= 1) ? Math.ceil(Number(val)) : 1, 2)}
+-          defaultValue={this.props.getSetting('concurrency', 2)}
+-          required={true}
+-        >
+-          {Messages.POWERCORD_UPDATES_OPTS_CONCURRENCY}
+-        </TextInput>
+-        <ButtonItem
+-          note={Messages.POWERCORD_UPDATES_OPTS_CHANGE_LOGS_DESC}
+-          button={Messages.POWERCORD_UPDATES_OPTS_CHANGE_LOGS}
+-          onClick={() => this.plugin.openChangeLogs()}
+-        >
+-          {Messages.POWERCORD_UPDATES_OPTS_CHANGE_LOGS}
+-        </ButtonItem>
+-        {/* <ButtonItem
+-          note={Messages.POWERCORD_UPDATES_OPTS_RELEASE_DESC}
+-          button={powercord.gitInfos.branch === 'v2'
+-            ? Messages.POWERCORD_UPDATES_OPTS_RELEASE_DEVELOP_BTN
+-            : Messages.POWERCORD_UPDATES_OPTS_RELEASE_STABLE_BTN}
+-          onClick={() => this.askChangeChannel(
+-            () => this.plugin.changeBranch(powercord.gitInfos.branch === 'v2' ? 'v2-dev' : 'v2')
+-          )}
+-        >
+-          {Messages.POWERCORD_UPDATES_OPTS_RELEASE}
+-        </ButtonItem> */}
+-
+-        <Category
+-          name={Messages.POWERCORD_UPDATES_OPTS_DEBUG}
+-          description={Messages.POWERCORD_UPDATES_OPTS_DEBUG_DESC}
+-          opened={this.state.debugInfoOpened}
+-          onChange={() => this.setState({ debugInfoOpened: !this.state.debugInfoOpened })}
+-        >
+-          {this.renderDebugInfo(moment)}
+-        </Category>
+-      </>}
+-    </div>;
+-  }
+-
+-  // --- PARTS
+-  renderReload () {
+-    const body = <>
+-      <p>{Messages.POWERCORD_UPDATES_AWAITING_RELOAD_DESC}</p>
+-      <Button
+-        size={Button.Sizes.SMALL}
+-        color={Button.Colors.YELLOW}
+-        look={Button.Looks.INVERTED}
+-        onClick={() => location.reload()}
+-      >
+-        {Messages.ERRORS_RELOAD}
+-      </Button>
+-    </>;
+-    return this._renderFormNotice(Messages.POWERCORD_UPDATES_AWAITING_RELOAD_TITLE, body);
+-  }
+-
+-  renderUnsupported () {
+-    const body = <p>
+-      {Messages.POWERCORD_UPDATES_UNSUPPORTED_DESC.format({ releaseChannel: window.GLOBAL_ENV.RELEASE_CHANNEL })}
+-    </p>;
+-    return this._renderFormNotice(Messages.POWERCORD_UPDATES_UNSUPPORTED_TITLE, body);
+-  }
+-
+-  _renderFormNotice (title, body) {
+-    return <FormNotice
+-      imageData={{
+-        width: 60,
+-        height: 60,
+-        src: '/assets/0694f38cb0b10cc3b5b89366a0893768.svg'
+-      }}
+-      type={FormNotice.Types.WARNING}
+-      title={title}
+-      body={body}
+-    />;
+-  }
+-
+-  // --- PROMPTS
+-  askSkipUpdate (callback) {
+-    this._ask(
+-      Messages.POWERCORD_UPDATES_SKIP_MODAL_TITLE,
+-      Messages.POWERCORD_UPDATES_SKIP_MODAL,
+-      Messages.POWERCORD_UPDATES_SKIP,
+-      callback
+-    );
+-  }
+-
+-  askPauseUpdates () {
+-    this._ask(
+-      Messages.POWERCORD_UPDATES_PAUSE,
+-      Messages.POWERCORD_UPDATES_PAUSE_MODAL,
+-      Messages.POWERCORD_UPDATES_PAUSE,
+-      () => this.props.updateSetting('paused', true)
+-    );
+-  }
+-
+-  askDisableUpdates (all, callback) {
+-    this._ask(
+-      Messages.POWERCORD_UPDATES_DISABLE,
+-      all ? Messages.POWERCORD_UPDATES_DISABLE_MODAL_ALL : Messages.POWERCORD_UPDATES_DISABLE_MODAL,
+-      Messages.POWERCORD_UPDATES_DISABLE,
+-      callback
+-    );
+-  }
+-
+-  askChangeChannel (callback) {
+-    this._ask(
+-      Messages.POWERCORD_UPDATES_OPTS_RELEASE_MODAL_HEADER,
+-      Messages.POWERCORD_UPDATES_OPTS_RELEASE_MODAL,
+-      Messages.POWERCORD_UPDATES_OPTS_RELEASE_SWITCH,
+-      callback
+-    );
+-  }
+-
+-  _ask (title, content, confirm, callback, red = true) {
+-    openModal(() => <Confirm
+-      red={red}
+-      header={title}
+-      confirmText={confirm}
+-      cancelText={Messages.CANCEL}
+-      onConfirm={callback}
+-      onCancel={closeModal}
+-    >
+-      <div className='powercord-text'>{content}</div>
+-    </Confirm>);
+-  }
+-
+-  // --- DEBUG STUFF (Intentionally left english-only)
+-  renderDebugInfo () {
+-    const { getRegisteredExperiments, getExperimentOverrides } = getModule([ 'initialize', 'getExperimentOverrides' ], false);
+-    const { apiManager: { apis }, api: { commands: { commands }, settings: { store: settingsStore } } } = powercord;
+-    const superProperties = getModule([ 'getSuperPropertiesBase64' ], false).getSuperProperties();
+-    const unauthorizedPlugins = Array.from(powercord.pluginManager.plugins.values()).filter(plugin =>
+-      plugin.__shortCircuit).map(plugin => plugin.manifest.name);
+-    const plugins = powercord.pluginManager.getPlugins().filter(plugin =>
+-      !powercord.pluginManager.get(plugin).isInternal && powercord.pluginManager.isEnabled(plugin)
+-    );
+-
+-    const enabledLabs = powercord.api.labs.experiments.filter(e => powercord.api.labs.isExperimentEnabled(e.id));
+-    const experimentOverrides = Object.keys(getExperimentOverrides()).length;
+-    const availableExperiments = Object.keys(getRegisteredExperiments()).length;
+-
+-    const discordPath = process.resourcesPath.slice(0, -10);
+-    const maskPath = (path) => {
+-      path = path.replace(/(?:\/home\/|C:\\Users\\|\/Users\/)([ \w.-]+).*/i, (path, username) => {
+-        const usernameIndex = path.indexOf(username);
+-        return [ path.slice(0, usernameIndex), username.charAt(0) + username.slice(1).replace(/[a-zA-Z]/g, '*'),
+-          path.slice(usernameIndex + username.length) ].join('');
+-      });
+-
+-      return path;
+-    };
+-
+-    const cachedFiles = (existsSync(CACHE_FOLDER) && readdirSync(CACHE_FOLDER)
+-      .filter(d => lstatSync(`${CACHE_FOLDER}/${d}`).isDirectory())
+-      .map(d => readdirSync(`${CACHE_FOLDER}/${d}`))
+-      .flat().length) || 'n/a';
+-
+-    const createPathReveal = (title, path) =>
+-      <div className='full-column'>
+-        {title}:&#10;<a
+-          onMouseEnter={() => this.setState({ pathsRevealed: true })}
+-          onMouseLeave={() => this.setState({ pathsRevealed: false })}
+-          onClick={() => window.DiscordNative.fileManager.showItemInFolder(path)}
+-        >{this.state.pathsRevealed ? path : maskPath(path)}</a>
+-      </div>;
+-
+-    return <FormNotice
+-      type={FormNotice.Types.PRIMARY}
+-      body={<div className={[ 'debug-info', this.state.copied && 'copied' ].filter(Boolean).join(' ')}>
+-        <code>
+-          <b>System / Discord </b>
+-          <div className='row'>
+-            <div className='column'>Locale:&#10;{currentLocale}</div>
+-            <div className='column'>OS:&#10;{window.platform.os.family}{window.platform.os.architecture === 64 ? ' 64-bit' : ''}</div>
+-            <div className='column'>Architecture:&#10;{superProperties.os_arch}</div>
+-            {process.platform === 'linux' && (
+-              <div className='column'>Distro:&#10;{superProperties.distro || 'n/a'}</div>
+-            )}
+-            <div className='column'>Release Channel:&#10;{superProperties.release_channel}</div>
+-            <div className='column'>App Version:&#10;{superProperties.client_version}</div>
+-            <div className='column'>Build Number:&#10;{superProperties.client_build_number}</div>
+-            <div className='column'>Build ID:&#10;{window.GLOBAL_ENV.SENTRY_TAGS.buildId.slice(0, 7)}</div>
+-            <div className='column'>Experiments:&#10;{experimentOverrides} / {availableExperiments}</div>
+-          </div>
+-
+-          <b>Process Versions </b>
+-          <div className='row'>
+-            <div className='column'>React:&#10;{React.version}</div>
+-            {[ 'electron', 'chrome', 'node' ].map(proc =>
+-              <div className='column'>{proc.charAt(0).toUpperCase() + proc.slice(1)}:&#10;{process.versions[proc]}</div>
+-            )}
+-          </div>
+-
+-          <b>Powercord </b>
+-          <div className='row'>
+-            <div className='column'>Commands:&#10;{Object.keys(commands).length}</div>
+-            <div className='column'>Settings:&#10;{Object.keys(settingsStore.getAllSettings()).length}</div>
+-            <div className='column'>Plugins:&#10;{powercord.pluginManager.getPlugins()
+-              .filter(plugin => powercord.pluginManager.isEnabled(plugin)).length} / {powercord.pluginManager.plugins.size}
+-            </div>
+-            <div className='column'>Themes:&#10;{powercord.styleManager.getThemes()
+-              .filter(theme => powercord.styleManager.isEnabled(theme)).length} / {powercord.styleManager.themes.size}
+-            </div>
+-            <div className='column'>Labs:&#10;{enabledLabs.length} / {powercord.api.labs.experiments.length}
+-            </div>
+-            <div className='column'>{`Settings Sync:\n${powercord.settings.get('settingsSync', false)}`}</div>
+-            <div className='column'>Cached Files:&#10;{cachedFiles}</div>
+-            <div className='column'>{`Account:\n${!!powercord.account}`}</div>
+-            <div className='column'>APIs:&#10;{apis.length}</div>
+-          </div>
+-
+-          <b>Git </b>
+-          <div className='row'>
+-            <div className='column'>Upstream:&#10;{powercord.gitInfos.upstream.replace(REPO_URL, 'Official')}</div>
+-            <div className='column'>Revision:&#10;
+-              <a
+-                href={`https://github.com/${powercord.gitInfos.upstream}/commit/${powercord.gitInfos.revision}`}
+-                target='_blank'
+-              >
+-                [{powercord.gitInfos.revision.substring(0, 7)}]
+-              </a>
+-            </div>
+-            <div className='column'>Branch:&#10;{powercord.gitInfos.branch}</div>
+-            <div className='column'>{`Latest:\n${!this.props.getSetting('updates', []).find(update => update.id === 'powercord')}`}</div>
+-          </div>
+-
+-          <b>Listings </b>
+-          <div className='row'>
+-            {createPathReveal('Powercord Path', powercord.basePath)}
+-            {createPathReveal('Discord Path', discordPath)}
+-            <div className='full-column'>Experiments:&#10;{experimentOverrides > 0 ? Object.keys(getExperimentOverrides()).join(', ') : 'n/a'}</div>
+-            <div className='full-column'>Labs:&#10;
+-              {enabledLabs.length ? enabledLabs.map(e => e.name).join(', ') : 'n/a'}
+-            </div>
+-            <div className='full-column'>
+-              Plugins:&#10;
+-              {(plugins.length > 6 ? `${(this.state.pluginsRevealed ? plugins : plugins.slice(0, 6)).join(', ')};` : plugins.join(', ')) || 'n/a'}&nbsp;
+-              {plugins.length > 6 &&
+-              <a onClick={() => this.setState({ pluginsRevealed: !this.state.pluginsRevealed })}>
+-                {this.state.pluginsRevealed ? 'Show less' : 'Show more'}
+-              </a>}
+-            </div>
+-            {unauthorizedPlugins.length > 0 && <div className='full-column'>
+-              Unauthorized Plugins:&#10;
+-              {unauthorizedPlugins.join(', ')}
+-            </div>}
+-            {window.bdplugins && <div className='full-column'>
+-              BetterDiscord Plugins:&#10;
+-              {Object.keys(window.bdplugins).join(', ')}
+-            </div>}
+-          </div>
+-        </code>
+-        <Button
+-          size={Button.Sizes.SMALL}
+-          color={this.state.copied ? Button.Colors.GREEN : Button.Colors.BRAND}
+-          onClick={() => this.handleDebugInfoCopy(plugins)}
+-        >
+-          <FontAwesome icon={this.state.copied ? 'clipboard-check' : 'clipboard'}/> {this.state.copied ? 'Copied!' : 'Copy'}
+-        </Button>
+-      </div>}
+-    />;
+-  }
+-
+-  handleDebugInfoCopy (plugins) {
+-    const extract = document.querySelector('.debug-info > code')
+-      .innerText.replace(/([A-Z/ ]+) (?=\s(?!C:\\).*?:)/g, '\n[$1]').replace(/(.*?):\s(.*.+)/g, '$1="$2"').replace(/[ -](\w*(?=.*=))/g, '$1');
+-
+-    this.setState({ copied: true });
+-    clipboard.writeText(
+-      `\`\`\`ini
+-      # Debugging Information | Result created: ${new Date().toUTCString()}
+-      ${extract.substring(0, extract.indexOf('\nPlugins', extract.indexOf('\nPlugins') + 1))}
+-      Plugins="${plugins.join(', ')}"${window.bdplugins ? `\nBDPlugins="${Object.keys(window.bdplugins).join(', ')}"` : ''}
+-      \`\`\``.replace(/ {6}|n\/a/g, '').replace(/(?![0-9]{1,3}) \/ (?=[0-9]{1,3})/g, '/')
+-    );
+-    setTimeout(() => this.setState({ copied: false }), 2500);
+-  }
+-};
+diff --git a/src/Powercord/plugins/pc-updater/components/Update.jsx b/src/Powercord/plugins/pc-updater/components/Update.jsx
+deleted file mode 100644
+index d2d9fb7..0000000
+--- a/src/Powercord/plugins/pc-updater/components/Update.jsx
++++ /dev/null
+@@ -1,45 +0,0 @@
+-const { React, i18n: { Messages } } = require('powercord/webpack');
+-const { Button } = require('powercord/components');
+-
+-const Icons = require('./Icons');
+-
+-module.exports = class Update extends React.PureComponent {
+-  constructor () {
+-    super();
+-    this.plugin = powercord.pluginManager.get('pc-updater');
+-  }
+-
+-  render () {
+-    const { name, icon, repo, commits, updating, onSkip, onDisable } = this.props;
+-    return <div className='update'>
+-      <div className='title'>
+-        <div className='icon'>
+-          {React.createElement(Icons[icon])}
+-        </div>
+-        <div className='name'>{name}</div>
+-        <div className='actions'>
+-          {updating
+-            ? <Button color={Button.Colors.GREEN} disabled>
+-              {Messages.POWERCORD_UPDATES_UPDATING_ITEM}
+-            </Button>
+-            : <>
+-              <Button look={Button.Looks.OUTLINED} color={Button.Colors.RED} onClick={onSkip}>
+-                {Messages.POWERCORD_UPDATES_SKIP}
+-              </Button>
+-              <Button color={Button.Colors.RED} onClick={onDisable}>
+-                {Messages.POWERCORD_UPDATES_DISABLE}
+-              </Button>
+-            </>}
+-        </div>
+-      </div>
+-      <div className='summary'>
+-        {commits.map(commit => <div key={commit.id}>
+-          <a href={`https://github.com/${repo}/commit/${commit.id}`} target='_blank'>
+-            <code>{commit.id.substring(0, 7)}</code>
+-          </a>
+-          <span>{commit.message} - {commit.author}</span>
+-        </div>)}
+-      </div>
+-    </div>;
+-  }
+-};
+diff --git a/src/Powercord/plugins/pc-updater/index.js b/src/Powercord/plugins/pc-updater/index.js
+deleted file mode 100644
+index 2a531d8..0000000
+--- a/src/Powercord/plugins/pc-updater/index.js
++++ /dev/null
+@@ -1,371 +0,0 @@
+-const { React, getModule, getModuleByDisplayName, i18n: { Messages } } = require('powercord/webpack');
+-const { open: openModal, close: closeModal } = require('powercord/modal');
+-const { Confirm } = require('powercord/components/modal');
+-const { Plugin } = require('powercord/entities');
+-
+-const { join } = require('path');
+-const { promisify } = require('util');
+-const cp = require('child_process');
+-const exec = promisify(cp.exec);
+-
+-const Settings = require('./components/Settings.jsx');
+-
+-const changelog = require('../../../../changelogs.json');
+-
+-module.exports = class Updater extends Plugin {
+-  constructor () {
+-    super();
+-
+-    this.checking = false;
+-    this.cwd = { cwd: join(__dirname, ...Array(4).fill('..')) };
+-  }
+-
+-  async startPlugin () {
+-    this.settings.set('paused', false);
+-    this.settings.set('failed', false);
+-    this.settings.set('checking', false);
+-    this.settings.set('updating', false);
+-    this.settings.set('awaiting_reload', false);
+-    this.settings.set('checking_progress', null);
+-
+-    this.loadStylesheet('style.scss');
+-    powercord.api.settings.registerSettings('pc-updater', {
+-      category: this.entityID,
+-      label: 'Updater', // Note to self: add this string to i18n last :^)
+-      render: Settings
+-    });
+-
+-    let minutes = Number(this.settings.get('interval', 15));
+-    if (minutes < 1) {
+-      this.settings.set('interval', 1);
+-      minutes = 1;
+-    }
+-
+-    this._interval = setInterval(this.checkForUpdates.bind(this), minutes * 60 * 1000);
+-    setTimeout(() => {
+-      this.checkForUpdates();
+-    }, 10e3);
+-
+-    const lastChangelog = this.settings.get('last_changelog', '');
+-    if (changelog.id !== lastChangelog) {
+-      this.openChangeLogs();
+-    }
+-  }
+-
+-  pluginWillUnload () {
+-    powercord.api.settings.unregisterSettings('pc-updater');
+-    clearInterval(this._interval);
+-  }
+-
+-  async checkForUpdates (allConcurrent = false) {
+-    if (
+-      this.settings.get('disabled', false) ||
+-      this.settings.get('paused', false) ||
+-      this.settings.get('checking', false) ||
+-      this.settings.get('updating', false)
+-    ) {
+-      return;
+-    }
+-
+-    this.settings.set('checking', true);
+-    this.settings.set('checking_progress', [ 0, 0 ]);
+-    const disabled = this.settings.get('entities_disabled', []).map(e => e.id);
+-    const skipped = this.settings.get('entities_skipped', []);
+-    const plugins = [ ...powercord.pluginManager.plugins.values() ].filter(p => !p.isInternal);
+-    const themes = [ ...powercord.styleManager.themes.values() ];
+-
+-    const entities = plugins.concat(themes).filter(e => !disabled.includes(e.updateIdentifier) && e.isUpdatable());
+-    if (!disabled.includes(powercord.updateIdentifier)) {
+-      entities.push(powercord);
+-    }
+-
+-    let done = 0;
+-    const updates = [];
+-    const entitiesLength = entities.length;
+-    const parallel = allConcurrent ? entitiesLength : this.settings.get('concurrency', 2);
+-    await Promise.all(Array(parallel).fill(null).map(async () => {
+-      let entity;
+-      while ((entity = entities.shift())) {
+-        try {
+-          const repo = await entity.getGitRepo();
+-          if (repo) {
+-            const shouldUpdate = await entity._checkForUpdates();
+-            if (shouldUpdate) {
+-              const commits = await entity._getUpdateCommits();
+-              if (commits[0] && skipped[entity.updateIdentifier] === commits[0].id) {
+-                continue;
+-              }
+-              updates.push({
+-                id: entity.updateIdentifier,
+-                name: entity.manifest?.name ?? 'Powercord',
+-                icon: entity.constructor.name === 'Theme' || entity.constructor.name === 'Powercord'
+-                  ? entity.constructor.name
+-                  : 'Plugin',
+-                commits,
+-                repo
+-              });
+-            }
+-          }
+-        } catch (e) {
+-          console.error('An error occurred while checking for updates for %s', entity.manifest?.name ?? 'Powercord', e);
+-        } finally {
+-          this.settings.set('checking_progress', [ ++done, entitiesLength ]);
+-        }
+-      }
+-    }));
+-
+-    this.settings.set('updates', updates);
+-    this.settings.set('last_check', Date.now());
+-    this.settings.set('checking', false);
+-    if (updates.length > 0) {
+-      if (this.settings.get('automatic', false)) {
+-        this.doUpdate();
+-      } else if (!document.querySelector('#powercord-updater, .powercord-updater')) {
+-        powercord.api.notices.sendToast('powercord-updater', {
+-          header: Messages.POWERCORD_UPDATES_TOAST_AVAILABLE_HEADER,
+-          content: Messages.POWERCORD_UPDATES_TOAST_AVAILABLE_DESC,
+-          icon: 'wrench',
+-          buttons: [ {
+-            text: Messages.POWERCORD_UPDATES_UPDATE,
+-            color: 'green',
+-            look: 'outlined',
+-            onClick: () => this.doUpdate()
+-          }, {
+-            text: Messages.POWERCORD_UPDATES_OPEN_UPDATER,
+-            color: 'blue',
+-            look: 'ghost',
+-            onClick: async () => {
+-              const settingsModule = await getModule([ 'open', 'saveAccountChanges' ]);
+-              settingsModule.open('pc-updater');
+-            }
+-          } ]
+-        });
+-      }
+-    }
+-  }
+-
+-  async doUpdate (force = false) {
+-    this.settings.set('failed', false);
+-    this.settings.set('updating', true);
+-    const updates = this.settings.get('updates', []);
+-    const failed = [];
+-    for (const update of [ ...updates ]) {
+-      let entity = powercord;
+-      if (update.id.startsWith('plugin')) {
+-        entity = powercord.pluginManager.get(update.id.replace('plugins_', ''));
+-      } else if (update.id.startsWith('theme')) {
+-        entity = powercord.styleManager.get(update.id.replace('themes_', ''));
+-      }
+-
+-      const success = await entity._update(force);
+-      updates.shift();
+-      this.settings.get('updates', updates);
+-      if (!success) {
+-        failed.push(update);
+-      }
+-    }
+-
+-    this.settings.set('updating', false);
+-    if (failed.length > 0) {
+-      this.settings.set('failed', true);
+-      this.settings.set('updates', failed);
+-      if (!document.querySelector('#powercord-updater, .powercord-updater')) {
+-        powercord.api.notices.sendToast('powercord-updater', {
+-          header: Messages.POWERCORD_UPDATES_TOAST_FAILED,
+-          type: 'danger',
+-          buttons: [ {
+-            text: Messages.POWERCORD_UPDATES_FORCE,
+-            color: 'red',
+-            look: 'outlined',
+-            onClick: () => this.askForce()
+-          }, {
+-            text: Messages.FRIEND_REQUEST_IGNORE,
+-            look: 'outlined',
+-            color: 'grey'
+-          }, {
+-            text: Messages.POWERCORD_UPDATES_OPEN_UPDATER,
+-            color: 'blue',
+-            look: 'ghost',
+-            onClick: async () => {
+-              const settingsModule = await getModule([ 'open', 'saveAccountChanges' ]);
+-              settingsModule.open('pc-updater');
+-            }
+-          } ]
+-        });
+-      }
+-    }
+-  }
+-
+-  // MODALS
+-  askForce (callback) {
+-    openModal(() =>
+-      React.createElement(Confirm, {
+-        red: true,
+-        header: Messages.SUPPRESS_EMBED_TITLE,
+-        confirmText: Messages.POWERCORD_UPDATES_FORCE,
+-        cancelText: Messages.CANCEL,
+-        onConfirm: () => {
+-          if (callback) {
+-            // eslint-disable-next-line callback-return
+-            callback();
+-          }
+-          this.doUpdate(true);
+-        },
+-        onCancel: closeModal
+-      }, React.createElement('div', { className: 'powercord-text' }, Messages.POWERCORD_UPDATES_FORCE_MODAL))
+-    );
+-  }
+-
+-  // UTILS
+-  skipUpdate (id, commit) {
+-    this.settings.set('entities_skipped', {
+-      ...this.settings.get('entities_skipped', {}),
+-      [id]: commit
+-    });
+-    this._removeUpdate(id);
+-  }
+-
+-  disableUpdates (entity) {
+-    this.settings.set('entities_disabled', [
+-      ...this.settings.get('entities_disabled', []),
+-      {
+-        id: entity.id,
+-        name: entity.name,
+-        icon: entity.icon
+-      }
+-    ]);
+-    this._removeUpdate(entity.id);
+-  }
+-
+-  enableUpdates (id) {
+-    this.settings.set('entities_disabled', this.settings.get('entities_disabled', []).filter(d => d.id !== id));
+-  }
+-
+-  _removeUpdate (id) {
+-    this.settings.set('updates', this.settings.get('updates', []).filter(u => u.id !== id));
+-  }
+-
+-  async getGitInfos () {
+-    const branch = await exec('git branch', this.cwd)
+-      .then(({ stdout }) =>
+-        stdout
+-          .toString()
+-          .split('\n')
+-          .find(l => l.startsWith('*'))
+-          .slice(2)
+-          .trim()
+-      );
+-
+-    const revision = await exec(`git rev-parse ${branch}`, this.cwd)
+-      .then(r => r.stdout.toString().trim());
+-
+-    const upstream = await exec('git remote get-url origin', this.cwd)
+-      .then(r => r.stdout.toString().match(/github\.com[:/]([\w-_]+\/[\w-_]+)/)[1]);
+-
+-    return {
+-      upstream,
+-      branch,
+-      revision
+-    };
+-  }
+-
+-  async changeBranch (branch) {
+-    await exec('git fetch origin +v2:v2', this.cwd);
+-    await exec(`git checkout ${branch}`, this.cwd);
+-    // location.reload();
+-  }
+-
+-  // Change Log
+-  async openChangeLogs () {
+-    const ChangeLog = await this._getChangeLogsComponent();
+-    openModal(() => React.createElement(ChangeLog, {
+-      changeLog: this.formatChangeLog(changelog)
+-    }));
+-  }
+-
+-  async _getChangeLogsComponent () {
+-    if (!this._ChangeLog) {
+-      const _this = this;
+-      const { video } = await getModule([ 'video', 'added' ]);
+-      const DiscordChangeLog = await getModuleByDisplayName('ChangelogStandardTemplate');
+-
+-      class ChangeLog extends DiscordChangeLog {
+-        constructor (props) {
+-          super(props);
+-
+-          this.oldRenderHeader = this.renderHeader;
+-          this.renderHeader = this.renderNewHeader.bind(this);
+-
+-          this.track = () => void 0;
+-          this.handleScroll = () => void 0;
+-        }
+-
+-        renderNewHeader () {
+-          const header = this.oldRenderHeader();
+-          header.props.children[0].props.children = `Powercord - ${header.props.children[0].props.children}`;
+-          return header;
+-        }
+-
+-        renderVideo () {
+-          if (!changelog.image) {
+-            return null;
+-          }
+-
+-          return React.createElement('img', {
+-            src: changelog.image,
+-            className: video,
+-            alt: ''
+-          });
+-        }
+-
+-        renderFooter () {
+-          const footer = super.renderFooter();
+-          footer.props.children = React.createElement('span', {
+-            style: { color: 'var(--text-normal)' },
+-            dangerouslySetInnerHTML: {
+-              __html: changelog.footer
+-            }
+-          });
+-          return footer;
+-        }
+-
+-        componentWillUnmount () {
+-          _this.settings.set('last_changelog', changelog.id);
+-        }
+-      }
+-
+-      this._ChangeLog = ChangeLog;
+-    }
+-    return this._ChangeLog;
+-  }
+-
+-  formatChangeLog (json) {
+-    let body = '';
+-    const colorToClass = {
+-      GREEN: 'added',
+-      ORANGE: 'progress',
+-      RED: 'fixed',
+-      BLURPLE: 'improved'
+-    };
+-    json.contents.forEach(item => {
+-      if (item.type === 'HEADER') {
+-        body += `${item.text.toUpperCase()} {${colorToClass[item.color]}${item.noMargin ? ' marginTop' : ''}}\n======================\n\n`;
+-      } else {
+-        if (item.text) {
+-          body += item.text;
+-          body += '\n\n';
+-        }
+-        if (item.list) {
+-          body += ` * ${item.list.join('\n\n * ')}`;
+-          body += '\n\n';
+-        }
+-      }
+-    });
+-    return {
+-      date: json.date,
+-      locale: 'en-us',
+-      revision: 1,
+-      body
+-    };
+-  }
+-};
+diff --git a/src/Powercord/plugins/pc-updater/manifest.json b/src/Powercord/plugins/pc-updater/manifest.json
+deleted file mode 100644
+index 07e89ba..0000000
+--- a/src/Powercord/plugins/pc-updater/manifest.json
++++ /dev/null
+@@ -1,7 +0,0 @@
+-{
+-  "name": "Updater",
+-  "version": "2.0.0",
+-  "description": "Ensure Powercord, plugins and themes are always up to date",
+-  "author": "Powercord Team",
+-  "license": "MIT"
+-}
+diff --git a/src/Powercord/plugins/pc-updater/style.scss b/src/Powercord/plugins/pc-updater/style.scss
+deleted file mode 100644
+index 55e7576..0000000
+--- a/src/Powercord/plugins/pc-updater/style.scss
++++ /dev/null
+@@ -1,211 +0,0 @@
+-.powercord-updater {
+-  .top-section {
+-    margin-top: 35px;
+-    display: flex;
+-
+-    .icon {
+-      width: 64px;
+-      margin-right: 15px;
+-      flex-shrink: 0;
+-    }
+-
+-    .animated path + path {
+-      transform-origin: 50% 50%;
+-      animation: rotate 1.2s infinite;
+-    }
+-
+-    @keyframes rotate {
+-      from {
+-        transform: rotate(0deg);
+-      }
+-      to {
+-        transform: rotate(360deg);
+-      }
+-    }
+-
+-    .status {
+-      display: flex;
+-      flex-direction: column;
+-      justify-content: space-evenly;
+-
+-      h3 {
+-        font-size: 28px;
+-      }
+-
+-      div {
+-        opacity: .7;
+-      }
+-    }
+-
+-    .about {
+-      display: flex;
+-      margin-left: auto;
+-      flex-direction: column;
+-      justify-content: space-evenly;
+-      font-family: SourceCodePro, Consolas, Liberation Mono, Menlo, Courier, monospace;
+-      font-size: 14px;
+-      opacity: .7;
+-
+-      div {
+-        display: flex;
+-        justify-content: space-between;
+-
+-        span {
+-          margin-left: 10px;
+-          width: 80px;
+-        }
+-      }
+-    }
+-  }
+-
+-  .buttons {
+-    display: flex;
+-    margin-top: 25px;
+-
+-    button + button {
+-      margin-left: 15px;
+-    }
+-  }
+-
+-  .updates {
+-    margin-top: 25px;
+-  }
+-
+-  .update {
+-    margin: 15px 0;
+-
+-    .title {
+-      display: flex;
+-      align-items: center;
+-
+-      .icon {
+-        width: 28px;
+-        height: 28px;
+-        margin-right: 10px;
+-      }
+-
+-      .name {
+-        font-size: 22px;
+-      }
+-
+-      .actions {
+-        display: flex;
+-        align-items: center;
+-        margin-left: auto;
+-
+-        button {
+-          height: 26px;
+-          min-height: 26px;
+-          padding: 2px 6px;
+-
+-          &:not(:last-child) {
+-            margin-right: 10px;
+-          }
+-        }
+-      }
+-    }
+-
+-    .summary {
+-      padding: 10px 55px;
+-
+-      div {
+-        margin-bottom: 10px;
+-      }
+-
+-      a {
+-        background-color: var(--background-secondary);
+-        margin-right: 10px;
+-      }
+-    }
+-  }
+-
+-  .buttons, .update {
+-    padding-bottom: 15px;
+-    margin-bottom: 20px;
+-    border-bottom: 1px var(--background-modifier-accent) solid;
+-  }
+-
+-  &-ft {
+-    margin-top: 40px;
+-    margin-bottom: 8px;
+-  }
+-
+-  .debug-info {
+-    display: flex;
+-    color: var(--interactive-normal);
+-    user-select: text;
+-    cursor: text;
+-
+-    &.copied b {
+-      color: #3ca374;
+-    }
+-
+-    code {
+-      white-space: pre-wrap;
+-      font-family: inherit;
+-      font-size: 12px;
+-    }
+-
+-    b {
+-      align-items: center;
+-      color: #7289da;
+-      text-transform: uppercase;
+-      display: flex;
+-
+-      &::after {
+-        content: "";
+-        margin-left: 4px;
+-        border: thin dashed;
+-        opacity: .6;
+-        flex: 1;
+-      }
+-
+-      transition: color .2s ease;
+-    }
+-
+-    .row {
+-      display: flex;
+-      flex-direction: row;
+-      flex-wrap: wrap;
+-      margin: 8px 0 8px 20px;
+-    }
+-
+-    .column {
+-      flex-basis: 25%;
+-
+-      &:nth-child(n+5) {
+-        margin-top: 8px;
+-      }
+-    }
+-
+-    .full-column {
+-      flex-basis: 100%;
+-
+-      &:nth-child(n+2) {
+-        margin-top: 8px;
+-      }
+-
+-      &> a {
+-        user-select: none;
+-      }
+-    }
+-
+-    &:hover {
+-      button {
+-        opacity: 1;
+-      }
+-    }
+-
+-    :last-child:not(button) > :last-child {
+-      flex-basis: 85%;
+-    }
+-
+-    button {
+-      opacity: 0;
+-      align-self: flex-end;
+-      transition: opacity .2s ease;
+-      position: absolute;
+-      right: 20px;
+-    }
+-  }
+-}

@@ -1,0 +1,38 @@
+diff --git a/src/Powercord/plugins/pc-mock/index.js b/src/Powercord/plugins/pc-mock/index.js
+deleted file mode 100644
+index e35988b..0000000
+--- a/src/Powercord/plugins/pc-mock/index.js
++++ /dev/null
+@@ -1,19 +0,0 @@
+-const { Plugin } = require('powercord/entities');
+-
+-module.exports = class Mock extends Plugin {
+-  startPlugin () {
+-    powercord.api.commands.registerCommand({
+-      command: 'mock',
+-      description: 'Mock a user...',
+-      usage: '{c} [text to mock]',
+-      executor: (args) => ({
+-        send: true,
+-        result: args.join(' ').split('').map((c, i) => i % 2 ? c.toUpperCase() : c).join('')
+-      })
+-    });
+-  }
+-
+-  pluginWillUnload () {
+-    powercord.api.commands.unregisterCommand('mock');
+-  }
+-};
+diff --git a/src/Powercord/plugins/pc-mock/manifest.json b/src/Powercord/plugins/pc-mock/manifest.json
+deleted file mode 100644
+index 8b0bc06..0000000
+--- a/src/Powercord/plugins/pc-mock/manifest.json
++++ /dev/null
+@@ -1,7 +0,0 @@
+-{
+-  "name": "Mock",
+-  "version": "1.0.0",
+-  "description": "Mock people",
+-  "author": "Melmsie",
+-  "license": "MIT"
+-}

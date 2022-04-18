@@ -95,6 +95,14 @@
         defaultPackage = packages.powercord;
         packages = with channels.nixpkgs; {
           powercord = (discord-plugged.override {
+            patches = (map patch [
+              "remove-heygirl"
+              "remove-lmgtfy"
+              "remove-mock"
+              "remove-spotify"
+              "remove-updater"
+            ]);
+
             plugins = with inputs; [
               discord-Custom-Volume-Range
               discord-In-app-notifs
