@@ -1,0 +1,68 @@
+diff --git a/src/Powercord/plugins/pc-heygirl/index.js b/src/Powercord/plugins/pc-heygirl/index.js
+deleted file mode 100644
+index bd97579..0000000
+--- a/src/Powercord/plugins/pc-heygirl/index.js
++++ /dev/null
+@@ -1,49 +0,0 @@
+-// idea based on http://heygirl.io/ (+used their images)
+-
+-const { Plugin } = require('powercord/entities');
+-
+-module.exports = class HeyGirl extends Plugin {
+-  constructor () {
+-    super();
+-
+-    this.URLs = [].concat(
+-      Array(3).fill('jpg'),
+-      Array(2).fill('gif'),
+-      Array(1).fill('png'),
+-      Array(4).fill('gif'),
+-      Array(3).fill('jpg'),
+-      Array(1).fill('png')
+-    ).map((format, id) => (
+-      `http://heygirl.io/img/gosling-square-${id + 1}.${format}`
+-    ));
+-  }
+-
+-  startPlugin () {
+-    powercord.api.commands.registerCommand({
+-      command: 'heygirl',
+-      description: 'Replaces every image with a random image of Ryan Gosling',
+-      usage: '{c}',
+-      executor: this.heygirl.bind(this)
+-    });
+-  }
+-
+-  pluginWillUnload () {
+-    powercord.api.commands.unregisterCommand('heygirl');
+-  }
+-
+-  getRandomURL () {
+-    return this.URLs[Math.floor(Math.random() * this.URLs.length)];
+-  }
+-
+-  heygirl () {
+-    document.querySelectorAll('[style*="background-image"]')
+-      .forEach(({ style }) => (
+-        style.backgroundImage = `url("${this.getRandomURL()}")`
+-      ));
+-
+-    document.querySelectorAll('img')
+-      .forEach(image => (
+-        image.src = this.getRandomURL()
+-      ));
+-  }
+-};
+diff --git a/src/Powercord/plugins/pc-heygirl/manifest.json b/src/Powercord/plugins/pc-heygirl/manifest.json
+deleted file mode 100644
+index 084c039..0000000
+--- a/src/Powercord/plugins/pc-heygirl/manifest.json
++++ /dev/null
+@@ -1,7 +0,0 @@
+-{
+-  "name": "Heygirl",
+-  "version": "1.0.0",
+-  "description": "heygirl",
+-  "author": "Powercord Team",
+-  "license": "MIT"
+-}
