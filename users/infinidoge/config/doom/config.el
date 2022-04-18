@@ -192,55 +192,10 @@
       )
 
 
-;; Setup custom functions to open private directory in my flake
-(defvar infinidoge-doom-private-dir "/etc/nixos/users/infinidoge/config/doom")
+;; Set doom-private-dir to the writeable location, as opposed to read-only symlink in $DOOMDIR
+(setq doom-private-dir "/etc/nixos/users/infinidoge/config/doom")
 ;; Disable excessive warnings in configuration directory
-(add-to-list '+emacs-lisp-disable-flycheck-in-dirs infinidoge-doom-private-dir)
-
-;; TODO: Fix the function to properly open the directory
-(defun infinidoge/doom/open-private-config ()
-  "Browse your `infinidoge-doom-private-dir'."
-  (interactive)
-  (infinidoge-doom-project-browse doom-private-dir))
-
-;; TODO: Fix the function to properly find files in the directory
-(defun infinidoge/doom/find-file-in-private-config ()
-  "Search for a file in `infinidoge-doom-private-dir'."
-  (interactive)
-  (infinidoge-doom-project-find-file doom-private-dir))
-
-(defun infinidoge/doom/goto-private-init-file ()
-  "Open your private init.el file.
-And jumps to your `doom!' block."
-  (interactive)
-  (find-file (expand-file-name "init.el" infinidoge-doom-private-dir))
-  (goto-char
-   (or (save-excursion
-         (goto-char (point-min))
-         (search-forward "(doom!" nil t))
-       (point))))
-
-(defun infinidoge/doom/goto-private-config-file ()
-  "Open your private config.el file."
-  (interactive)
-  (find-file (expand-file-name "config.el" infinidoge-doom-private-dir)))
-
-(defun infinidoge/doom/goto-private-packages-file ()
-  "Open your private packages.el file."
-  (interactive)
-  (find-file (expand-file-name "packages.el" infinidoge-doom-private-dir)))
-
-;; Bind functions to keybindings
-(map! :map help-map
-      "dc" #'infinidoge/doom/goto-private-config-file
-      "dC" #'infinidoge/doom/goto-private-init-file
-      "dpd" #'infinidoge/doom/goto-private-packages-file
-      )
-
-(map! :map doom-leader-file-map
-      "p" #'infinidoge/doom/find-file-in-private-config
-      "P" #'infinidoge/doom/open-private-config
-      )
+(add-to-list '+emacs-lisp-disable-flycheck-in-dirs doom-private-dir)
 
 ;; --- --- Original Configuration Comments --- ---
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
