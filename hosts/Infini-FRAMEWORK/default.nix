@@ -27,6 +27,7 @@
       "/var/lib/fprint"
       "/var/lib/bluetooth"
       "/var/lib/systemd/coredump"
+      "/var/lib/systemd/backlight"
     ];
 
     files = [
