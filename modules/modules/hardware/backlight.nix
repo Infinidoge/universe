@@ -12,12 +12,15 @@ in
     initialCommand = mkOpt str "${getMainProgram pkgs.brightnessctl} set ${cfg.initialValue} --class=backlight";
   };
 
-  config.systemd.services = mkIf cfg.enable {
-    "set-initial-backlight" = {
-      description = "Sets the initial backlight status on startup";
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig.Type = "oneshot";
-      script = cfg.initialCommand;
+  config = mkIf cfg.enable {
+    systemd.services = {
+      "set-initial-backlight" = {
+        description = "Sets the initial backlight status on startup";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig.Type = "oneshot";
+        script = cfg.initialCommand;
+      };
     };
+    boot.kernelParams = [ "systemd.restore_state=0" ];
   };
 }
