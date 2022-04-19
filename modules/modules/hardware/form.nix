@@ -24,6 +24,10 @@ in
         backlight.enable = mkDefault true;
       };
 
+      hardware = {
+        acpilight.enable = true;
+      };
+
       services = {
         xserver.libinput = {
           enable = true;
