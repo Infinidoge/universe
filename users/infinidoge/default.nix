@@ -105,6 +105,7 @@ in
       "libvirtd"
       "minecraft"
       "plugdev"
+      "video"
       "wheel"
     ];
     shell = pkgs.zsh;
