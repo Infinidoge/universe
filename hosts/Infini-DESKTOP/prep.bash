@@ -35,7 +35,6 @@ sudo btrfs subvolume create /mnt/root
 sudo btrfs subvolume create /mnt/root/home
 sudo mkdir -p /mnt/root/etc
 sudo btrfs subvolume create /mnt/root/etc/nixos
-sudo btrfs subvolume create /mnt/root/etc/nixpkgs
 sudo btrfs subvolume create /mnt/boot
 sudo btrfs subvolume create /mnt/nix
 sudo btrfs subvolume create /mnt/nix/store
