@@ -119,7 +119,6 @@
             suites = with profiles; self.lib.flattenSetList
               rec {
                 base = [
-                  core
                   (with users; [ root infinidoge ])
                 ];
                 graphic = base ++ [ graphical.qtile ];
