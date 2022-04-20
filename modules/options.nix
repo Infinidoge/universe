@@ -15,6 +15,11 @@ with lib.hlissner;
     };
 
     env = mkOpt attrs { };
+
+    info = {
+      monitors = mkOpt int 1;
+      graphical = mkBoolOpt config.services.xserver.enable;
+    };
   };
 
   config = {
