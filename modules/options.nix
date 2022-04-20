@@ -2,19 +2,22 @@
 { config, options, lib, home-manager, ... }:
 with lib;
 with lib.hlissner;
+let
+  mkAliasOpt = mkOpt types.attrs { };
+in
 {
   options = with types; {
-    user = mkOpt attrs { };
-    home = mkOpt attrs { };
+    user = mkAliasOpt;
+    home = mkAliasOpt;
 
     dotfiles = {
       dir = mkOpt str "/etc/nixos";
-      homeFile = mkOpt attrs { };
-      configFile = mkOpt attrs { };
-      dataFile = mkOpt attrs { };
+      homeFile = mkAliasOpt;
+      configFile = mkAliasOpt;
+      dataFile = mkAliasOpt;
     };
 
-    env = mkOpt attrs { };
+    env = mkAliasOpt;
 
     info = {
       monitors = mkOpt int 1;
