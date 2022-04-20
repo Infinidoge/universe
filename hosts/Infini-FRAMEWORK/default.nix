@@ -4,6 +4,7 @@
 
     (with profiles; [
       networking.wireless
+      services.proxy
     ])
 
     ./hardware-configuration.nix
@@ -44,9 +45,6 @@
       peripherals = {
         fprint-sensor.enable = true;
       };
-    };
-    services = {
-      proxy.enable = true;
     };
     filesystems = {
       enable = true;
