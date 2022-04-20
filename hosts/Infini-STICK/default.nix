@@ -19,10 +19,6 @@
       form.portable = true;
     };
     services.proxy.enable = false;
-    filesystems = {
-      enable = true;
-      btrfs.enable = true;
-    };
   };
 
   environment.persistence."/persist" = {

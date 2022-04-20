@@ -57,10 +57,6 @@
         };
       };
     };
-    filesystems = {
-      enable = true;
-      btrfs.enable = true;
-    };
     desktop = {
       gaming.enableAll = true;
     };
