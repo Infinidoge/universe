@@ -46,10 +46,6 @@
         fprint-sensor.enable = true;
       };
     };
-    filesystems = {
-      enable = true;
-      btrfs.enable = true;
-    };
     desktop = {
       gaming = {
         steam.enable = true;

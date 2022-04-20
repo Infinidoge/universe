@@ -14,10 +14,6 @@
       # gpu.nvidia = true;
       form.server = true;
     };
-    filesystems = {
-      enable = true;
-      btrfs.enable = true;
-    };
   };
 
   services = {

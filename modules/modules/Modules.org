@@ -91,21 +91,6 @@ Currently includes:
 - GRUB v2
 - systemd-boot
 
-* Filesystems :module:
-
-Sets up a variety of filesystems that may be needed on a computer, as well as any software necessary to manage them.
-
-Currently includes:
-- Filesystems
-  + btrfs
-    - btrfs-progs
-    - btrfs autoscrub service
-  + sshfs
-  + exfat
-  + ntfs
-- Software
-  + udevil
-
 * Locale :module:
 
 Sets up a variety of locale-related options like font, timezone, language, etc.
