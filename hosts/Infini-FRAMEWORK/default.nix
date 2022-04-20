@@ -57,7 +57,5 @@
 
   networking.interfaces.wlp170s0.useDHCP = true;
 
-  hardware.video.hidpi.enable = false;
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
-  console.earlySetup = lib.mkDefault true;
 }
