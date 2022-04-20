@@ -8,15 +8,15 @@ in
 {
   options.modules.hardware.backlight = with types; {
     enable = mkBoolOpt false;
-    initialValue = mkOpt str "50%";
-    initialCommand = mkOpt str "${getMainProgram pkgs.brightnessctl} set ${cfg.initialValue} --class=backlight";
+    initialValue = mkOpt str "50";
+    initialCommand = mkOpt str "${getMainProgram pkgs.acpilight} -set ${cfg.initialValue}";
   };
 
   config = mkIf cfg.enable {
     systemd.services = {
       "set-initial-backlight" = {
         description = "Sets the initial backlight status on startup";
-        wantedBy = [ "multi-user.target" ];
+        after = [ "multi-user.target" ];
         serviceConfig.Type = "oneshot";
         script = cfg.initialCommand;
       };
