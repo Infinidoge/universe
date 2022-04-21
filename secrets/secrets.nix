@@ -16,5 +16,5 @@ let
   ];
 in
 {
-  "secret.age".publicKeys = allKeys;
+  "wireless.age".publicKeys = allKeys;
 }
