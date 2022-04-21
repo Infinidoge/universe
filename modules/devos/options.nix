@@ -23,6 +23,8 @@ in
       monitors = mkOpt int 1;
       graphical = mkBoolOpt config.services.xserver.enable;
     };
+
+    secrets = mkOpt (attrsOf path) { };
   };
 
   config = {
@@ -40,5 +42,7 @@ in
     environment.variables = mkAliasDefinitions options.env;
 
     bud.localFlakeClone = config.dotfiles.dir;
+
+    secrets = mapAttrs (n: v: v.path) config.age.secrets;
   };
 }

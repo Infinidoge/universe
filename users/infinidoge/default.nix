@@ -89,12 +89,10 @@ in
     software.minipro.enable = true;
   };
 
-  age.secrets.infinidoge-password.file = "${self}/secrets/infinidoge-password.age";
-
   user = {
     name = "infinidoge";
     uid = 1000;
-    passwordFile = config.age.secrets.infinidoge-password.path;
+    passwordFile = config.secrets.infinidoge-password;
     description = "Infinidoge, primary user of the system";
     group = "users";
     isNormalUser = true;
