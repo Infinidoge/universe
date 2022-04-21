@@ -108,6 +108,8 @@
 
               inputs.impermanence.nixosModules.impermanence
               inputs.quick-nix-registry.nixosModules.local-registry
+
+              ./secrets
             ];
           };
 
