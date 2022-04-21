@@ -17,4 +17,6 @@ let
 in
 {
   "wireless.age".publicKeys = allKeys;
+  "infinidoge-password.age".publicKeys = allKeys;
+  "root-password.age".publicKeys = allKeys;
 }
