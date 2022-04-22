@@ -20,9 +20,6 @@
       "/root/.local/share/nix"
       "/root/.ssh"
 
-      # /etc directories
-      "/etc/ssh"
-
       # /var directories
       "/var/log"
       "/var/lib/fprint"
