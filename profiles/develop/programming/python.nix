@@ -12,7 +12,7 @@
       pyls-isort
       pytest
     ])
-    python-language-server
+    pyright
     pipenv
   ];
 }
