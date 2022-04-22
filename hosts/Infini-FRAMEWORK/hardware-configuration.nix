@@ -31,6 +31,13 @@ in
         neededForBoot = true;
       };
 
+      "/etc/ssh" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvolid=628" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
+
       "/media/main" = {
         device = main;
         fsType = "btrfs";
