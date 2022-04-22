@@ -1,8 +1,7 @@
 { pkgs, lib, ... }: {
   environment.systemPackages = with pkgs; lib.lists.flatten [
-    python3
     python310
-    (with python39Packages; [
+    (with python310Packages; [
       black
       isort
       jupyter
