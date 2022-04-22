@@ -51,6 +51,13 @@ in
         neededForBoot = true;
       };
 
+      "/etc/ssh" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvolid=264" "ssd" ] ++ btrfsOptions;
+        neededForBoot = true;
+      };
+
       "/persist/srv" = lib.mkIf (data != null) {
         device = data;
         fsType = "btrfs";
