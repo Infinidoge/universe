@@ -13,4 +13,9 @@ channels: final: prev: {
           inherit (channels.latest.python39Packages) pycurl;
         });
     });
+
+  qtile = prev.qtile.override {
+    python3 = final.python310;
+    python3Packages = final.python310Packages;
+  };
 }
