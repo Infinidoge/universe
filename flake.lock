@@ -493,22 +493,6 @@
         "type": "github"
       }
     },
-    "discord-copy-mentions": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1613408044,
-        "narHash": "sha256-RDYu0jy9PKhIVCu+M/mpmRo9MbikS1tAWlrWJeKB0x0=",
-        "owner": "tealingg",
-        "repo": "copy-mentions",
-        "rev": "cb541c89798a605b3d16b939f8c0c7332fdef60e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tealingg",
-        "repo": "copy-mentions",
-        "type": "github"
-      }
-    },
     "discord-copy-raw-message": {
       "flake": false,
       "locked": {
@@ -896,11 +880,11 @@
     "discord-replace-timestamps-pc": {
       "flake": false,
       "locked": {
-        "lastModified": 1650246514,
-        "narHash": "sha256-n/kWuqUZY39nTeXvnwGuvYBj3NdNKzPst1cNzhZ+7uI=",
+        "lastModified": 1650849411,
+        "narHash": "sha256-rCpY5qOAJmG2pKmp/H6jK1SGNJbP8p6BvMWLfjmNSN4=",
         "owner": "SpoonMcForky",
         "repo": "replace-timestamps-pc",
-        "rev": "72899142203c3d86e15f30dfe4691740d3415628",
+        "rev": "7a83ceb611d11cacee4111ce3ee4a24a9c419eba",
         "type": "github"
       },
       "original": {
@@ -1428,11 +1412,11 @@
     },
     "latest_2": {
       "locked": {
-        "lastModified": 1650864744,
-        "narHash": "sha256-JbgfshJ/6FM30AeKyTTHAHErUtOItNe6t9OHxqfu0/4=",
+        "lastModified": 1650890247,
+        "narHash": "sha256-+nwEzLWpEYP1hXaJodtV8Em5rgl905TpmaohyoaLCw8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a5774e76bb8c3145eac524be62375c937143b80c",
+        "rev": "5c1c4de7dafd4d0314f819e4f78fc6422b3ebb2e",
         "type": "github"
       },
       "original": {
@@ -1451,11 +1435,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1650865203,
-        "narHash": "sha256-oVsBn9n9nO2aZHyYV6ylJiuwmaLcl/zq/I/nj6ym1vs=",
+        "lastModified": 1650907554,
+        "narHash": "sha256-wcny+t9RBU9caVV5ET8rS4Leq5heyhPGh2UxNUglTlU=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "rev": "4048eb86bb1fc9df12cc8f689a2a199b829d857e",
+        "rev": "66c870b6556eeaebc0628fd5ba4a7fb51a26ab55",
         "type": "github"
       },
       "original": {
@@ -1466,11 +1450,11 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1650701402,
-        "narHash": "sha256-XKfstdtqDg+O+gNBx1yGVKWIhLgfEDg/e2lvJSsp9vU=",
+        "lastModified": 1650831523,
+        "narHash": "sha256-6pDZ08SAXsUx5rOP391x+TG39ENP/XA8VMa1tQvgEjc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bc41b01dd7a9fdffd32d9b03806798797532a5fe",
+        "rev": "87d34a6b8982e901b8e50096b8e79ebc0e66cda0",
         "type": "github"
       },
       "original": {
@@ -1586,11 +1570,11 @@
     "powercord": {
       "flake": false,
       "locked": {
-        "lastModified": 1649993021,
-        "narHash": "sha256-vWpoHbETghleBbrhATkd+aUTkfaA1x+eQikoxeUGBeY=",
+        "lastModified": 1650750918,
+        "narHash": "sha256-XMyG+WjC8w6BwZ68AhdZrfstKMoCNa1S6rjesuM0J+A=",
         "owner": "powercord-org",
         "repo": "powercord",
-        "rev": "b4103b08048f6410d1b6cbcf894dbbd598d04534",
+        "rev": "aff6488ef3d362d5e7665bc67f0cd577a467acfc",
         "type": "github"
       },
       "original": {
@@ -1611,11 +1595,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1650488068,
-        "narHash": "sha256-u+4b6XD1/ea8leAI00KGPU7kPlzjJiwyM1/CXcihcN4=",
+        "lastModified": 1650865653,
+        "narHash": "sha256-vIXU9jpegY1rICPOjmB6GnIiHLYr1no1VEcccm+ZNmg=",
         "owner": "Infinidoge",
         "repo": "powercord-overlay",
-        "rev": "262d4d4d98ff25b6246c674ec2fb027af49b5159",
+        "rev": "c2062e57f72b98677100837e585328b007f292cb",
         "type": "github"
       },
       "original": {
@@ -1646,7 +1630,6 @@
         "discord-block-messages": "discord-block-messages",
         "discord-channel-typing": "discord-channel-typing",
         "discord-copy-avatar-url": "discord-copy-avatar-url",
-        "discord-copy-mentions": "discord-copy-mentions",
         "discord-copy-raw-message": "discord-copy-raw-message",
         "discord-copy-role-color": "discord-copy-role-color",
         "discord-css-toggler": "discord-css-toggler",
@@ -1695,8 +1678,8 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1650681867,
-        "narHash": "sha256-tEAnf/4w77B6WKqB7SvmqGRuft87NglWl6weQkvAYMc=",
+        "lastModified": 1650890315,
+        "narHash": "sha256-os88pqknErCKdzCq1GHdb3V+5m+HSBP1DoaeeNFRH6Q=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
       },
