@@ -30,6 +30,7 @@
     nmap
     ntfs3g # Windows drives
     parted
+    rhash
     ripgrep
     rsync
     skim
@@ -44,5 +45,6 @@
     vim
     wget
     whois
+    xxHash
   ];
 }
