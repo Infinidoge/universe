@@ -227,11 +227,11 @@
     "discord-better-status-indicators": {
       "flake": false,
       "locked": {
-        "lastModified": 1649581637,
-        "narHash": "sha256-gTv338fC22feEqiIHdD0x6Piut8+x/Yb1h1QdQ1TbSE=",
+        "lastModified": 1650440972,
+        "narHash": "sha256-ITwEXveJesTTbqKqhwawtNxK3j4R5yX9ppnlf+l4v/A=",
         "owner": "GriefMoDz",
         "repo": "better-status-indicators",
-        "rev": "2e61acf7a7aba6ad68a6da75746f28f51c2775fd",
+        "rev": "2830e01d38d9b41bbd500673a605293abd22cae6",
         "type": "github"
       },
       "original": {
@@ -320,22 +320,6 @@
         "type": "github"
       }
     },
-    "discord-copy-mentions": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1613408044,
-        "narHash": "sha256-RDYu0jy9PKhIVCu+M/mpmRo9MbikS1tAWlrWJeKB0x0=",
-        "owner": "tealingg",
-        "repo": "copy-mentions",
-        "rev": "cb541c89798a605b3d16b939f8c0c7332fdef60e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tealingg",
-        "repo": "copy-mentions",
-        "type": "github"
-      }
-    },
     "discord-copy-raw-message": {
       "flake": false,
       "locked": {
@@ -403,11 +387,11 @@
     "discord-cutecord": {
       "flake": false,
       "locked": {
-        "lastModified": 1644137839,
-        "narHash": "sha256-knPTgj8epeC9/OxrtVRP6hffLPqj4e+oSzAqOlG5fQA=",
+        "lastModified": 1650678770,
+        "narHash": "sha256-qh6xQhTnaKJRe/jQ9Frj9zGQD7Q+EdYbVFVLnPgqWpc=",
         "owner": "powercord-community",
         "repo": "cutecord",
-        "rev": "c603792b85600d77b06d5a34d03feebad00575b3",
+        "rev": "11b801480443431cde91c418489248fc2cbf83a8",
         "type": "github"
       },
       "original": {
@@ -723,11 +707,11 @@
     "discord-replace-timestamps-pc": {
       "flake": false,
       "locked": {
-        "lastModified": 1650246514,
-        "narHash": "sha256-n/kWuqUZY39nTeXvnwGuvYBj3NdNKzPst1cNzhZ+7uI=",
+        "lastModified": 1650849411,
+        "narHash": "sha256-rCpY5qOAJmG2pKmp/H6jK1SGNJbP8p6BvMWLfjmNSN4=",
         "owner": "SpoonMcForky",
         "repo": "replace-timestamps-pc",
-        "rev": "72899142203c3d86e15f30dfe4691740d3415628",
+        "rev": "7a83ceb611d11cacee4111ce3ee4a24a9c419eba",
         "type": "github"
       },
       "original": {
@@ -1011,11 +995,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1650161686,
-        "narHash": "sha256-70ZWAlOQ9nAZ08OU6WY7n4Ij2kOO199dLfNlvO/+pf8=",
+        "lastModified": 1650701402,
+        "narHash": "sha256-XKfstdtqDg+O+gNBx1yGVKWIhLgfEDg/e2lvJSsp9vU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1ffba9f2f683063c2b14c9f4d12c55ad5f4ed887",
+        "rev": "bc41b01dd7a9fdffd32d9b03806798797532a5fe",
         "type": "github"
       },
       "original": {
@@ -1028,11 +1012,11 @@
     "powercord": {
       "flake": false,
       "locked": {
-        "lastModified": 1649993021,
-        "narHash": "sha256-vWpoHbETghleBbrhATkd+aUTkfaA1x+eQikoxeUGBeY=",
+        "lastModified": 1650750918,
+        "narHash": "sha256-XMyG+WjC8w6BwZ68AhdZrfstKMoCNa1S6rjesuM0J+A=",
         "owner": "powercord-org",
         "repo": "powercord",
-        "rev": "b4103b08048f6410d1b6cbcf894dbbd598d04534",
+        "rev": "aff6488ef3d362d5e7665bc67f0cd577a467acfc",
         "type": "github"
       },
       "original": {
@@ -1051,11 +1035,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1650255938,
-        "narHash": "sha256-mpiQRb/M0ySN3NFBELdC9W/uazk1RPDkLXUYN9zFwtE=",
+        "lastModified": 1650865653,
+        "narHash": "sha256-vIXU9jpegY1rICPOjmB6GnIiHLYr1no1VEcccm+ZNmg=",
         "owner": "Infinidoge",
         "repo": "powercord-overlay",
-        "rev": "49947755c1a5f1170b91378f4eeb4b302fac61e5",
+        "rev": "c2062e57f72b98677100837e585328b007f292cb",
         "type": "github"
       },
       "original": {
@@ -1086,7 +1070,6 @@
         "discord-block-messages": "discord-block-messages",
         "discord-channel-typing": "discord-channel-typing",
         "discord-copy-avatar-url": "discord-copy-avatar-url",
-        "discord-copy-mentions": "discord-copy-mentions",
         "discord-copy-raw-message": "discord-copy-raw-message",
         "discord-copy-role-color": "discord-copy-role-color",
         "discord-css-toggler": "discord-css-toggler",
