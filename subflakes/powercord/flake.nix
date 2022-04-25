@@ -116,7 +116,7 @@
               discord-better-folders
               discord-better-replies
               discord-better-settings
-              # discord-better-status-indicators # FIXME: crashes on loading avatars
+              discord-better-status-indicators
               discord-better-threads
               discord-betterinvites
               discord-block-messages
@@ -132,18 +132,18 @@
               discord-custom-timestamps
               discord-cutecord
               discord-discord-status
-              discord-dm-typing-indicator
+              # discord-dm-typing-indicator
               discord-guild-profile
               discord-kaomoji
               discord-mention-cache-fix
               discord-message-link-embed
               discord-online-friends-count
-              # discord-permission-viewer # FIXME: https://github.com/powercord-community/permission-viewer/issues/20
+              discord-permission-viewer
               discord-powercord-LinkChannels
               discord-powercord-message-tooltips
               discord-powercord-mute-folder
               discord-powercord-ownertags
-              discord-powercord-pindms
+              # discord-powercord-pindms
               discord-powercord-reverse-image-search
               discord-pronoundb-powercord
               discord-quick-delete-pc
