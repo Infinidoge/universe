@@ -3,7 +3,5 @@
 attr="$FLAKEROOT#$HOST"
 if [ -x /run/wrappers/bin/sudo ]; then
     export PATH=/run/wrappers/bin:$PATH
-    sudo nixos-rebuild --flake "$attr" "${@:-switch}"
-else
-    nixos-rebuild --flake "$attr" "${@:-switch}"
 fi
+nixos-rebuild --flake "$attr" --use-remote-sudo "${@:-switch}"
