@@ -45,6 +45,11 @@
     # # --- Powercord
     powercord-setup.url = "path:/etc/nixos/subflakes/powercord";
     powercord-setup.inputs.nixpkgs.follows = "latest";
+
+    # # --- Minecraft
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    nix-minecraft.inputs.nixpkgs.follows = "nixos";
+    nix-minecraft.inputs.digga.follows = "digga";
   };
 
   outputs =
@@ -73,6 +78,7 @@
 
               # --- Application-Specific Overlays
               inputs.powercord-setup.overlay
+              inputs.nix-minecraft.overlay
             ];
           };
           stable = { };
@@ -108,6 +114,7 @@
 
               inputs.impermanence.nixosModules.impermanence
               inputs.quick-nix-registry.nixosModules.local-registry
+              inputs.nix-minecraft.nixosModules.minecraft-servers
 
               ./secrets
             ];
