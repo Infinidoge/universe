@@ -32,7 +32,6 @@
     discord-block-messages = { url = "github:cyyynthia/block-messages"; flake = false; };
     discord-channel-typing = { url = "github:powercord-community/channel-typing"; flake = false; };
     discord-copy-avatar-url = { url = "github:21Joakim/copy-avatar-url"; flake = false; };
-    discord-copy-mentions = { url = "github:tealingg/copy-mentions"; flake = false; };
     discord-copy-raw-message = { url = "github:mic0ishere/copy-raw-message"; flake = false; };
     discord-copy-role-color = { url = "github:Antonio32A/copy-role-color"; flake = false; };
     discord-css-toggler = { url = "github:12944qwerty/css-toggler"; flake = false; };
@@ -123,7 +122,6 @@
               discord-block-messages
               discord-channel-typing
               discord-copy-avatar-url
-              discord-copy-mentions
               discord-copy-raw-message
               discord-copy-role-color
               (applyPatches {
