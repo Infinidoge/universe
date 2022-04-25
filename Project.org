@@ -8,7 +8,7 @@
 
 - Updating script
 
-*** TODO Package fabric server
+*** DONE Package fabric server
 
 - Should compose with ~minecraft-server~ to allow for different version combinations
 - Possible declarative mod setup
