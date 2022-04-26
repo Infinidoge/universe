@@ -21,7 +21,6 @@ in
       modules.hardware = {
         wireless.enable = mkDefault true;
         audio.enable = mkDefault true;
-        backlight.enable = mkDefault true;
       };
 
       hardware = {
