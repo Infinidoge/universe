@@ -2,18 +2,6 @@
 
 * PROJ Server Configuration
 
-** TODO Minecraft Servers module
-
-*** TODO Repackage ~minecraft-server~ for all versions
-
-- Updating script
-
-*** DONE Package fabric server
-
-- Should compose with ~minecraft-server~ to allow for different version combinations
-- Possible declarative mod setup
-  + Would require packaging mods, Modrinth packaging helper script?
-
 ** TODO GitLab setup
 
 ** TODO Nginx setup
@@ -39,17 +27,9 @@
 
 ** STRT Add Rofi
 
-*** DONE Desktop apps menu
-
 *** TODO Commands menu
 
 - [ ] Modifier key for opening in shell
-
-*** DONE Add theming
-
-- Possibly abstract out color theme to a Nix file to share
-
-** DONE Replace MultiMC with PolyMC
 
 ** TODO Add Polychromatic
 
@@ -70,14 +50,6 @@
 ** TODO Setup IRC
 
 *** TODO ZNC setup
-
-** PROJ Qtile
-
-*** TODO Add icons to the bar
-
-**** TODO Battery
-
-**** TODO Volume
 
 * PROJ Refactor setup
 

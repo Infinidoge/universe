@@ -55,3 +55,70 @@ Archived entries from file /etc/nixos/Project.org
 
 - Automatically install Doom Emacs
 
+
+* DONE Replace MultiMC with PolyMC
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-04-26 Tue 11:15
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+
+* DONE Add theming
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-04-26 Tue 11:15
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Add Rofi
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+- Possibly abstract out color theme to a Nix file to share
+
+
+* DONE Desktop apps menu
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-04-26 Tue 11:16
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Add Rofi
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+
+* DONE Minecraft Servers module
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-04-26 Tue 11:16
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: Server Configuration
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+** DONE Repackage ~minecraft-server~ for all versions
+
+- Updating script
+
+** DONE Package fabric server
+
+- Should compose with ~minecraft-server~ to allow for different version combinations
+- Possible declarative mod setup
+  + Would require packaging mods, Modrinth packaging helper script?
+
+
+* PROJ Qtile
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-04-26 Tue 11:17
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: Miscellaneous things
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: PROJ
+:END:
+
+** TODO Add icons to the bar
+
+*** TODO Battery
+
+*** TODO Volume
