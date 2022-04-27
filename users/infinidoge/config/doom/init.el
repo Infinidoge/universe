@@ -153,6 +153,7 @@
         +pretty
         +gnuplot
         +roam2
+        +present
         )
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
