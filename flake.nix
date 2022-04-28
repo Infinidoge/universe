@@ -41,6 +41,8 @@
 
     quick-nix-registry.url = "github:divnix/quick-nix-registry";
 
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+
     # --- Application-Specific Flake Inputs
     # # --- Powercord
     powercord-setup.url = "path:/etc/nixos/subflakes/powercord";
@@ -115,6 +117,7 @@
               ./secrets
 
               # --- Library Modules ---
+              inputs.nixos-wsl.nixosModules.wsl
               inputs.impermanence.nixosModules.impermanence
               inputs.quick-nix-registry.nixosModules.local-registry
 

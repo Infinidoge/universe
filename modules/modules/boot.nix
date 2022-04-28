@@ -19,7 +19,7 @@ in
     {
       assertions = [
         {
-          assertion = (count (v: v) [ cfg.grub.enable cfg.systemd-boot.enable ]) == 1;
+          assertion = (count (v: v) [ cfg.grub.enable cfg.systemd-boot.enable config.wsl.enable ]) == 1;
           message = "Must enable one and only one bootloader";
         }
       ];
