@@ -1,5 +1,7 @@
 { pkgs, lib, budUtils, ... }: {
   bud.cmds = with pkgs; {
+    up.enable = false;
+
     rb = {
       writer = budUtils.writeBashWithPaths [ nixUnstable nixos-rebuild git coreutils mercurial ];
       synopsis = "rb (switch|boot|test)";
