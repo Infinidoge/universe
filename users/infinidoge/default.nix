@@ -92,7 +92,7 @@ in
   user = {
     name = "infinidoge";
     uid = 1000;
-    passwordFile = config.secrets.infinidoge-password;
+    passwordFile = lib.mkIf config.modules.secrets.enable config.secrets.infinidoge-password;
     description = "Infinidoge, primary user of the system";
     group = "users";
     isNormalUser = true;
