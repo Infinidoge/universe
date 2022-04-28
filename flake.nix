@@ -105,18 +105,21 @@
             channelName = "nixos";
             imports = [ (digga.lib.importExportableModules ./modules) ];
             modules = [
+              # --- DevOS Modules ---
               { lib.our = self.lib; }
               digga.nixosModules.bootstrapIso
               digga.nixosModules.nixConfig
               home.nixosModules.home-manager
               agenix.nixosModules.age
               bud.nixosModules.bud
+              ./secrets
 
+              # --- Library Modules ---
               inputs.impermanence.nixosModules.impermanence
               inputs.quick-nix-registry.nixosModules.local-registry
-              inputs.nix-minecraft.nixosModules.minecraft-servers
 
-              ./secrets
+              # --- Application Modules ---
+              inputs.nix-minecraft.nixosModules.minecraft-servers
             ];
           };
 
