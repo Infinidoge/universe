@@ -2,11 +2,11 @@
   bud.cmds = with pkgs; {
     up.enable = false;
 
-    rb = {
+    b = {
       writer = budUtils.writeBashWithPaths [ nixUnstable nixos-rebuild git coreutils mercurial ];
-      synopsis = "rb (switch|boot|test)";
+      synopsis = "b (switch|boot|test)";
       help = "Shortcut for nixos-rebuild using the current hostname";
-      script = ./rb.bash;
+      script = ./b.bash;
     };
 
     install-doom = {
