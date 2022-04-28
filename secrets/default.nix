@@ -1,4 +1,4 @@
-{ lib, self, ... }:
+{ lib, self, config, ... }:
 let
   folder = ./.;
   toFile = name: "${folder}/${name}";
@@ -7,5 +7,7 @@ let
   secrets = lib.mapAttrs' (n: v: lib.nameValuePair (lib.removeSuffix ".age" n) { file = toFile n; }) filtered;
 in
 {
-  age.secrets = secrets;
+  options.modules.secrets.enable = lib.mkOpt lib.types.bool true;
+
+  config.age.secrets = lib.mkIf config.modules.secrets.enable secrets;
 }
