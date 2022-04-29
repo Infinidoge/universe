@@ -1,6 +1,5 @@
 result
 .direnv
-doc/index.html
 
 # Result of bud commands
 vm
