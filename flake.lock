@@ -382,11 +382,11 @@
     "discord-better-folders": {
       "flake": false,
       "locked": {
-        "lastModified": 1648222761,
-        "narHash": "sha256-//0MX0DNtgSs/DRnyNPqd91tL9mepTChZtc8PsebkPs=",
+        "lastModified": 1651313962,
+        "narHash": "sha256-zuLPEHMZ5ixDmsgcArRfjOPR4Nu9kiHwfLGjpXGZpts=",
         "owner": "Juby210",
         "repo": "better-folders",
-        "rev": "926c8b5dd7d0557f3dbffeec0ce8c5a99bfbf681",
+        "rev": "0618c4945d0476d7333637508763c66ff86621ec",
         "type": "github"
       },
       "original": {
@@ -1805,8 +1805,8 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1651280037,
-        "narHash": "sha256-Pq9+JzHRQGMXkQSa6N6PE8nfSeyQVtPWnBb2Xc1PhWE=",
+        "lastModified": 1651435361,
+        "narHash": "sha256-EZdCmNKe2nh36d3xjt2KAkwOFevYwDwzOJnWebLWu8c=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
       },
