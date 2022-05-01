@@ -1,1 +1,4 @@
 # nvfetcher toml
+[kmscon]
+src.git = "https://github.com/Aetf/kmscon"
+fetch.github = "Aetf/kmscon"
