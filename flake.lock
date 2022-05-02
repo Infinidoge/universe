@@ -1722,11 +1722,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1650865653,
-        "narHash": "sha256-vIXU9jpegY1rICPOjmB6GnIiHLYr1no1VEcccm+ZNmg=",
+        "lastModified": 1651450509,
+        "narHash": "sha256-RHnY7jKE0SF5gl9NTAZovsxouM5qcvpnURVFZ3cqJLA=",
         "owner": "Infinidoge",
         "repo": "powercord-overlay",
-        "rev": "c2062e57f72b98677100837e585328b007f292cb",
+        "rev": "3c01f97cee174f54486032fe5688ccf48eb7ee2d",
         "type": "github"
       },
       "original": {
@@ -1805,8 +1805,8 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1651435361,
-        "narHash": "sha256-EZdCmNKe2nh36d3xjt2KAkwOFevYwDwzOJnWebLWu8c=",
+        "lastModified": 1651450573,
+        "narHash": "sha256-04p8EZyuEC3aethsMNyP1JlTC2NTRAiRkSknBVAmcfM=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
       },
