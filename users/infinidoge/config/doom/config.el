@@ -77,6 +77,12 @@
  projectile-project-search-path '("~/Projects/" "~/Documents/School")
  )
 
+;; --- Treemacs ---
+(use-package! treemacs
+  :init
+  (setq +treemacs-git-mode 'extended)
+  )
+
 ;; --- Deft ---
 (setq
  deft-recursive t
