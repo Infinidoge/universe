@@ -132,10 +132,6 @@
 (add-hook 'before-save-hook #'infinidoge/nixpkgs-fmt-fix)
 
 ;; --- LSP ---
-(use-package! lsp-python-ms
-  :init
-  (setq lsp-python-ms-executable (executable-find "python-language-server")))
-
 (setq lsp-csharp-server-path (executable-find "omnisharp"))
 
 ;; --- Keybindings ---
