@@ -1722,7 +1722,6 @@
         ]
       },
       "locked": {
-        "lastModified": 1651450509,
         "narHash": "sha256-RHnY7jKE0SF5gl9NTAZovsxouM5qcvpnURVFZ3cqJLA=",
         "owner": "Infinidoge",
         "repo": "powercord-overlay",
