@@ -179,11 +179,11 @@
     "discord-better-folders": {
       "flake": false,
       "locked": {
-        "lastModified": 1651313962,
-        "narHash": "sha256-zuLPEHMZ5ixDmsgcArRfjOPR4Nu9kiHwfLGjpXGZpts=",
+        "lastModified": 1651702431,
+        "narHash": "sha256-T0WxOezetfb3KMmD8DSLvvFs7D/d/cx/9vnUgFQGSoM=",
         "owner": "Juby210",
         "repo": "better-folders",
-        "rev": "0618c4945d0476d7333637508763c66ff86621ec",
+        "rev": "bbd2757cb779bdca61e1fac6b25468938626a268",
         "type": "github"
       },
       "original": {
@@ -867,11 +867,11 @@
     "discord-user-details": {
       "flake": false,
       "locked": {
-        "lastModified": 1650206329,
-        "narHash": "sha256-CPmMbsYUWvK0FIgbH2NFjJUPxxNa5J12tButDOWPoR8=",
+        "lastModified": 1651701198,
+        "narHash": "sha256-EI8JDRnM8KWbPRJK2f+aknX/GiTUaaHOC72d9zFEbGU=",
         "owner": "Juby210",
         "repo": "user-details",
-        "rev": "867793337258c88a34d6924d426316bf0ed2a730",
+        "rev": "d3e9fc097045c04de94a005f571bcd792c871aa4",
         "type": "github"
       },
       "original": {
@@ -995,11 +995,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1651007983,
-        "narHash": "sha256-GNay7yDPtLcRcKCNHldug85AhAvBpTtPEJWSSDYBw8U=",
+        "lastModified": 1651558728,
+        "narHash": "sha256-8HzyRnWlgZluUrVFNOfZAOlA1fghpOSezXvxhalGMUo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e10da1c7f542515b609f8dfbcf788f3d85b14936",
+        "rev": "cbe587c735b734405f56803e267820ee1559e6c1",
         "type": "github"
       },
       "original": {
