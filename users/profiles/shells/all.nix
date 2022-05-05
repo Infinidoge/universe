@@ -3,6 +3,6 @@
     ./bash.nix
     ./fish.nix
     ./zsh.nix
-    ./nushell.nix
+    # ./nushell.nix
   ];
 }
