@@ -369,6 +369,11 @@ keys = [
         desc="Start Firefox (New Window)",
     ),
     Key(
+        [Keys.SUPER, Keys.ALT, Keys.CONTROL], "f",
+        lazy.spawn("firefox --private-window"),
+        desc="Start Firefox (New Private Window)",
+    ),
+    Key(
         [Keys.SUPER, Keys.ALT], "e",
         lazy.spawn("emacsclient -c -a 'emacs'"),
         desc="Launch Emacs",
