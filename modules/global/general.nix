@@ -19,8 +19,6 @@
 
   system.activationScripts = {
     # FIX: command-not-found database doesn't exist normally
-    channels-update.text = ''
-      ${pkgs.nix}/bin/nix-channel --update
-    '';
+    channels-update.text = "${pkgs.nix}/bin/nix-channel --update";
   };
 }
