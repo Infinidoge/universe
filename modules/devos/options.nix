@@ -4,6 +4,7 @@ with lib;
 with lib.hlissner;
 let
   mkAliasOpt = mkOpt types.attrs { };
+  mkInfoOpt = mkOpt types.str "";
 in
 {
   options = with types; {
@@ -22,6 +23,7 @@ in
     info = {
       monitors = mkOpt int 1;
       graphical = mkBoolOpt config.services.xserver.enable;
+      model = mkInfoOpt;
     };
 
     secrets = mkOpt (attrsOf path) { };

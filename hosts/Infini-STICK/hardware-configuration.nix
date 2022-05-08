@@ -58,4 +58,6 @@ in
     };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  info.model = "Portable Installation";
 }

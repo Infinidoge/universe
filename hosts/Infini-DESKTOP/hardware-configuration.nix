@@ -77,4 +77,9 @@ in
   swapDevices = [
     { device = uuid "37916097-dbb9-4a74-b761-17043629642a"; }
   ];
+
+  info = {
+    monitors = 3;
+    model = "Custom Desktop";
+  };
 }

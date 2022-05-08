@@ -23,4 +23,6 @@
   # Public hash and duplicate password is good enough
   user.hashedPassword = "$6$SDBGTp1hVS7eOs3P$uJwwxOUxrRaMTAPdc349vvSfA7u.4SHtJuXvxxIo4v70WT9KQqmbOOF5qWS9/.okv.HkcBe0CVj5fLaPy9Oew.";
   users.users.root.hashedPassword = "$6$SDBGTp1hVS7eOs3P$uJwwxOUxrRaMTAPdc349vvSfA7u.4SHtJuXvxxIo4v70WT9KQqmbOOF5qWS9/.okv.HkcBe0CVj5fLaPy9Oew.";
+
+  info.model = "Windows Subsystem for Linux";
 }
