@@ -103,4 +103,9 @@ in
   ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+
+  info = {
+    monitors = 0;
+    model = "Headless Server";
+  };
 }
