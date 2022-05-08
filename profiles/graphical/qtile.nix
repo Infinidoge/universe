@@ -3,6 +3,8 @@
 
   services.xserver.windowManager.qtile.enable = true;
 
+  info.env.wm = "qtile";
+
   environment.systemPackages = with pkgs; [
     xsecurelock
   ];

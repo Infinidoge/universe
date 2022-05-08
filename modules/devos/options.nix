@@ -24,6 +24,9 @@ in
       monitors = mkOpt int 1;
       graphical = mkBoolOpt config.services.xserver.enable;
       model = mkInfoOpt;
+      env = {
+        wm = mkInfoOpt;
+      };
     };
 
     secrets = mkOpt (attrsOf path) { };
