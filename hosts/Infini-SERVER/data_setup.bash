@@ -2,7 +2,7 @@
 # [[file:readme.org::data_setup][data_setup]]
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::boilerplate][boilerplate]]][boilerplate]]
 DISK=$1
-PARTITION_PREFIX=$2
+PART=$DISK$2
 
 sudo mkdir -p /mnt
 # boilerplate ends here
@@ -22,13 +22,13 @@ sudo parted $DISK -s -- mkpart primary btrfs 0% 100%
 
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::data_filesystems][data_filesystems]]][data_filesystems]]
 echo "LOG: Making data filesystems"
-echo "- Making btrfa filesystem on ${DISK}${PARTITION_PREFIX}1"
-sudo mkfs.btrfs "${DISK}${PARTITION_PREFIX}1" --csum xxhash -L "data" -f
+echo "- Making btrfa filesystem on ${PART}1"
+sudo mkfs.btrfs "${PART}1" --csum xxhash -L "data" -f
 # data_filesystems ends here
 
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::data_subvolumes][data_subvolumes]]][data_subvolumes]]
-echo "LOG: Making data subvolumes on ${DISK}${PARTITION_PREFIX}1"
-sudo mount "${DISK}${PARTITION_PREFIX}1" /mnt
+echo "LOG: Making data subvolumes on ${PART}1"
+sudo mount "${PART}1" /mnt
 sudo btrfs subvolume create /mnt/root
 sudo btrfs subvolume create /mnt/root/srv
 sudo btrfs subvolume create /mnt/root/srv/minecraft
