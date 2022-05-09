@@ -63,7 +63,7 @@ sudo nixos-install --flake /etc/nixos#Infini-STICK --no-root-password
 
 # [[[[file:/etc/nixos/hosts/Infini-STICK/readme.org::full_extra][full_extra]]][full_extra]]
 echo "LOG: Cloning configuration"
-sudo git clone --no-hardlinks --progress https://gitlab.com/infinidoge/devos.git /mnt/persist/etc/nixos
+sudo git clone --no-hardlinks --progress https://gitlab.com/infinidoge/universe.git /mnt/persist/etc/nixos
 # full_extra ends here
 
 # [[[[file:/etc/nixos/hosts/Infini-STICK/readme.org::finishing_setup][finishing_setup]]][finishing_setup]]

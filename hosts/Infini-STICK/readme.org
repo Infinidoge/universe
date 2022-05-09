@@ -157,7 +157,7 @@ sudo nixos-install --flake /etc/nixos#Infini-STICK --no-root-password
 #+NAME: full_extra
 #+BEGIN_SRC bash
 echo "LOG: Cloning configuration"
-sudo git clone --no-hardlinks --progress https://gitlab.com/infinidoge/devos.git /mnt/persist/etc/nixos
+sudo git clone --no-hardlinks --progress https://gitlab.com/infinidoge/universe.git /mnt/persist/etc/nixos
 #+END_SRC
 
 ** Extra (Reinstall)
