@@ -22,7 +22,7 @@ Setup for my main server hosting computer, using an Nvidia GPU and the =server= 
 #+BEGIN_SRC bash :tangle prep.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
 <<boilerplate>>
 
-<<mmount_check>>
+<<mount_check>>
 
 <<partitioning>>
 
