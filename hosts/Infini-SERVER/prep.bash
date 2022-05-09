@@ -2,7 +2,7 @@
 # [[file:readme.org::preparation][preparation]]
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::boilerplate][boilerplate]]][boilerplate]]
 DISK=$1
-PARTITION_PREFIX=$2
+PART=$DISK$2
 
 sudo mkdir -p /mnt
 # boilerplate ends here
@@ -20,17 +20,17 @@ sudo parted $DISK -s -- set 1 esp on
 
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::filesystems][filesystems]]][filesystems]]
 echo "LOG: Making filesystems"
-echo "- Making fat32 filesystem on ${DISK}${PARTITION_PREFIX}1"
-sudo mkfs.fat -F 32 -n boot "${DISK}${PARTITION_PREFIX}1"
-echo "- Making btrfs filesystem on ${DISK}${PARTITION_PREFIX}2"
-sudo mkfs.btrfs "${DISK}${PARTITION_PREFIX}2" -L "Infini-SERVER" -f
-echo "- Making swap space on ${DISK}${PARTITION_PREFIX}3"
-sudo mkswap -L swap "${DISK}${PARTITION_PREFIX}3"
+echo "- Making fat32 filesystem on ${PART}1"
+sudo mkfs.fat -F 32 -n boot "${PART}1"
+echo "- Making btrfs filesystem on ${PART}2"
+sudo mkfs.btrfs "${PART}2" -L "Infini-SERVER" -f
+echo "- Making swap space on ${PART}3"
+sudo mkswap -L swap "${PART}3"
 # filesystems ends here
 
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::subvolumes][subvolumes]]][subvolumes]]
-echo "LOG: Making subvolumes on ${DISK}${PARTITION_PREFIX}2"
-sudo mount "${DISK}${PARTITION_PREFIX}2" /mnt
+echo "LOG: Making subvolumes on ${PART}2"
+sudo mount "${PART}2" /mnt
 sudo btrfs subvolume create /mnt/root
 sudo btrfs subvolume create /mnt/root/home
 sudo mkdir -p /mnt/root/etc
