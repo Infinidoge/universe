@@ -32,7 +32,7 @@ My main laptop, the [[https://frame.work][Framework Laptop]].
 #+BEGIN_SRC bash :tangle prep.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
 <<boilerplate>>
 
-<<mmount_check>>
+<<mount_check>>
 
 <<partitioning>>
 

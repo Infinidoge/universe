@@ -21,7 +21,7 @@ Setup with a wide array of hardware compatibility, specifically using the =porta
 #+BEGIN_SRC bash :tangle setup.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
 <<boilerplate>>
 
-<<mmount_check>>
+<<mount_check>>
 
 <<partitioning>>
 
