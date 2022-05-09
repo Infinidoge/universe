@@ -1,4 +1,4 @@
-#+TITLE: Infini-STICK Specification
+#+TITLE: Infini-STICK Setup
 #+AUTHOR: Infinidoge
 #+OPTIONS: toc:nil
 #+LaTeX_CLASS_OPTIONS: [12pt]
