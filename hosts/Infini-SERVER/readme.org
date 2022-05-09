@@ -1,4 +1,4 @@
-#+TITLE: Infini-SERVER Specification
+#+TITLE: Infini-SERVER Setup
 #+AUTHOR: Infinidoge
 #+OPTIONS: toc:nil
 #+LaTeX_CLASS_OPTIONS: [12pt]
