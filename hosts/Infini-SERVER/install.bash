@@ -43,7 +43,7 @@ sudo nixos-install --flake /etc/nixos#Infini-SERVER --no-root-password
 # [[[[file:/etc/nixos/hosts/Infini-SERVER/readme.org::install_extra][install_extra]]][install_extra]]
 echo "LOG: Cloning configuration"
 sudo chown -R infinidoge /mnt/persist/etc/nixos
-git clone --no-hardlinks --progress https://gitlab.com/infinidoge/devos.git /mnt/persist/etc/nixos
+git clone --no-hardlinks --progress https://gitlab.com/infinidoge/universe.git /mnt/persist/etc/nixos
 
 echo "LOG: Installing Doom Emacs"
 git clone --no-hardlinks --progress --depth 1 https://github.com/hlissner/doom-emacs /mnt/persist/home/infinidoge/.config/emacs
