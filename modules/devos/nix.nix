@@ -16,7 +16,10 @@ with lib;
       sandbox = true;
     };
 
-    gc.automatic = true;
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 3d";
+    };
 
     optimise.automatic = true;
 
