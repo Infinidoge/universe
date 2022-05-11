@@ -7,6 +7,7 @@ in
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: with epkgs; [ vterm ];
+    package = pkgs.emacsNativeComp;
   };
 
   services.emacs = {
