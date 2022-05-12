@@ -18,6 +18,7 @@ in
       modules.hardware.audio.enable = mkDefault true;
       info.stationary = mkDefault true;
     })
+
     (mkIf cfg.laptop {
       modules.hardware = {
         wireless.enable = mkDefault true;
@@ -44,9 +45,8 @@ in
         variables.LAPTOP = "True";
         systemPackages = with pkgs; [ acpi ];
       };
-
-
     })
+
     (mkIf cfg.portable {
       modules.hardware = {
         gpu = {
@@ -59,6 +59,7 @@ in
 
       hardware.nvidia.powerManagement.enable = false;
     })
+
     (mkIf cfg.raspi {
       # imports = [ inputs.nixos-hardware.outputs.nixosModules.raspberry-pi-4 ];
 
@@ -97,6 +98,7 @@ in
       #   raspberrypi-eeprom
       # ];
     })
+
     (mkIf cfg.server {
       info = {
         monitors = mkDefault 0;
