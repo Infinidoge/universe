@@ -122,3 +122,33 @@ Archived entries from file /etc/nixos/Project.org
 *** TODO Battery
 
 *** TODO Volume
+
+* KILL dconf
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-05-12 Thu 10:14
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Miscellaneous Configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: KILL
+:END:
+
+
+* DONE neofetch
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-05-12 Thu 10:14
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Miscellaneous Configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: DONE
+:END:
+
+
+* KILL systemd
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-05-12 Thu 10:14
+:ARCHIVE_FILE: /etc/nixos/Project.org
+:ARCHIVE_OLPATH: My computer configurations/Miscellaneous Configurations
+:ARCHIVE_CATEGORY: Project
+:ARCHIVE_TODO: KILL
+:END:
+

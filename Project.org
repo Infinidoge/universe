@@ -35,15 +35,9 @@
 
 ** PROJ Miscellaneous Configurations
 
-*** TODO dconf
-
 *** HOLD libreoffice
 
-*** TODO neofetch
-
-*** TODO SpeedCrunch
-
-*** TODO systemd
+*** IDEA SpeedCrunch
 
 * PROJ Miscellaneous things
 
