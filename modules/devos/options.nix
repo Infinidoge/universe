@@ -27,6 +27,7 @@ in
       env = {
         wm = mkInfoOpt;
       };
+      stationary = mkBoolOpt false;
     };
 
     secrets = mkOpt (attrsOf path) { };

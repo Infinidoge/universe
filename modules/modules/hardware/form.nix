@@ -16,6 +16,7 @@ in
   config = mkMerge [
     (mkIf cfg.desktop {
       modules.hardware.audio.enable = mkDefault true;
+      info.stationary = mkDefault true;
     })
     (mkIf cfg.laptop {
       modules.hardware = {
@@ -100,6 +101,7 @@ in
       info = {
         monitors = mkDefault 0;
         model = mkDefault "Headless Server";
+        stationary = mkDefault true;
       };
     })
   ];
