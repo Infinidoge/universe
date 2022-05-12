@@ -96,6 +96,11 @@ in
       #   raspberrypi-eeprom
       # ];
     })
-    (mkIf cfg.server { })
+    (mkIf cfg.server {
+      info = {
+        monitors = mkDefault 0;
+        model = mkDefault "Headless Server";
+      };
+    })
   ];
 }
