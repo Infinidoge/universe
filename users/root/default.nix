@@ -1,5 +1,8 @@
 { lib, config, self, ... }: {
-  users.users.root.passwordFile = lib.mkIf config.modules.secrets.enable config.secrets.root-password;
+  users.users.root = {
+    passwordFile = lib.mkIf config.modules.secrets.enable config.secrets.root-password;
+    openssh.authorizedKeys.keys = import ./ssh-keys.nix;
+  };
 
   home-manager.users.root = { suites, profiles, ... }: {
     imports = lib.lists.flatten [
