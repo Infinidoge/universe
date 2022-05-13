@@ -5,6 +5,8 @@
     ./hardware-configuration.nix
   ];
 
+  system.stateVersion = "22.05";
+
   modules = {
     boot = {
       grub.enable = true;
