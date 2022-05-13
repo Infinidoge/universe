@@ -43,6 +43,9 @@
 
       "/root/.local/share/nix/trusted-settings.json"
       "/root/.ssh/known_hosts"
+      "/root/.ssh/id_25519"
+      "/root/.ssh/id_25519.pub"
+      "/root/.ssh/immutable_files.txt"
     ];
   };
 }
