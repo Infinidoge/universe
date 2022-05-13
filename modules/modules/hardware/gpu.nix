@@ -22,13 +22,17 @@ in
         extraPackages = with pkgs; flatten [
           libvdpau-va-gl
 
-          (optionals (any' (with cfg; [ amdgpu intel ])) [
+          (optionals (any' (with cfg; [ amdgpu intel nvidia ])) [
             vaapiVdpau
           ])
 
           (optionals cfg.intel [
             intel-media-driver
             vaapiIntel
+          ])
+
+          (optionals cfg.nvidia [
+            nvidia-vaapi-driver
           ])
         ];
       };
