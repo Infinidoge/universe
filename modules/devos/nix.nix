@@ -29,7 +29,9 @@ with lib;
       keep-outputs = true
       keep-derivations = true
       fallback = true
-    '';
+    '' + (if config.modules.secrets.enable then ''
+      secret-key-files = ${config.secrets.binary-cache-private-key}
+    '' else "");
 
     # nixPath = [
     #   "nixpkgs=${channel.input}"
