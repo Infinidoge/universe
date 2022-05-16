@@ -77,6 +77,11 @@
 
 (add-hook 'before-save-hook #'infinidoge/nixpkgs-fmt-fix)
 
+;; --- JSON ---
+(setq js-indent-level 2)
+(after! editorconfig
+  (add-to-list 'editorconfig-indentation-alist '(json-mode js-indent-level)))
+
 ;; --- LSP ---
 (setq lsp-csharp-server-path (executable-find "omnisharp"))
 
