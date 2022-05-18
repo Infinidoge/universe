@@ -46,6 +46,8 @@ with lib;
             prin
             prin "$(color 15)Disks"
             info disk
+
+            info cols
         }
 
         kernel_shorthand="off"
@@ -53,6 +55,7 @@ with lib;
         memory_percent="on"
         memory_unit="gib"
         separator=" ➜"
+        color_blocks="off"
 
         # Disk
         disk_show=('/' '/media/main' '/media/data')
