@@ -68,14 +68,8 @@
 ;;  '(evil-goggles-default-face ((t (:inherit 'highlight)))))
 
 ;; --- Nix ---
-;; FIXME: This should be done using :editor format
-(set-formatter! 'nixpkgs-fmt "nixpkgs-fmt" :modes '(nix-mode))
-
-(defun infinidoge/nixpkgs-fmt-fix ()
-  (when (eq major-mode 'nix-mode)
-    (format-all-buffer)))
-
-(add-hook 'before-save-hook #'infinidoge/nixpkgs-fmt-fix)
+;; Replace nixfmt in format-all with nixpkgs-fmt
+(set-formatter! 'nixfmt "nixpkgs-fmt" :modes '(nix-mode))
 
 ;; --- JSON ---
 (setq js-indent-level 2)
