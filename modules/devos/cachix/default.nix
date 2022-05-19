@@ -7,5 +7,5 @@ let
 in
 {
   inherit imports;
-  nix.settings.substituters = [ "https://cache.nixos.org/" ];
+  nix.settings.substituters = lib.mkOrder 1 [ "https://cache.nixos.org/" ];
 }
