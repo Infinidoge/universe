@@ -28,6 +28,9 @@ in
         wm = mkInfoOpt;
       };
       stationary = mkBoolOpt false;
+      loc = {
+        home = mkBoolOpt config.info.stationary;
+      };
     };
 
     secrets = mkOpt (attrsOf path) { };
