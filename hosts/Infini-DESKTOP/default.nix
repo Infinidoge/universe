@@ -1,7 +1,7 @@
 { suites, profiles, pkgs, lib, ... }: {
   imports = lib.lists.flatten [
     (with suites; [
-      graphic
+      base
       develop
     ])
 
@@ -56,6 +56,7 @@
       };
     };
     desktop = {
+      wm.enable = true;
       gaming.enableAll = true;
     };
     virtualization.enable = true;

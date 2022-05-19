@@ -1,6 +1,6 @@
 { suites, profiles, pkgs, lib, ... }: {
   imports = lib.lists.flatten [
-    (with suites; [ graphic ])
+    (with suites; [ base ])
 
     (with profiles; [
       networking.wireless
@@ -44,6 +44,7 @@
       };
     };
     desktop = {
+      wm.enable = true;
       gaming = {
         steam.enable = true;
         polymc.enable = true;

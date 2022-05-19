@@ -1,6 +1,6 @@
 { suites, profiles, pkgs, lib, ... }: {
   imports = lib.our.flattenListSet {
-    suites = with suites; [ graphic develop ];
+    suites = with suites; [ base develop ];
     imports = [ ./hardware-configuration.nix ];
     profiles = with profiles;
       [
@@ -26,6 +26,7 @@
     services = {
       proxy.enable = true;
     };
+    desktop.wm.enable = true;
   };
 
   networking.interfaces.wlan0.useDHCP = true;
