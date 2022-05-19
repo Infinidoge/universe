@@ -136,7 +136,6 @@
                 base = [
                   (with users; [ root infinidoge ])
                 ];
-                graphic = base ++ [ graphical.qtile ];
 
                 develop = [
                   (with profiles.develop.programming; [
