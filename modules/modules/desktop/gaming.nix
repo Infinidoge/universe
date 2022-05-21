@@ -20,6 +20,10 @@ in
       enable = mkBoolOpt cfg.enableAll;
       package = mkOpt package pkgs.lutris;
     };
+    olympus = {
+      enable = mkBoolOpt cfg.enableAll;
+      package = mkOpt package pkgs.olympus;
+    };
   };
 
   config = mkMerge [
@@ -27,6 +31,7 @@ in
       home.home.packages = with pkgs; [
         (mkIf cfg.polymc.enable cfg.polymc.package)
         (mkIf cfg.lutris.enable cfg.lutris.package)
+        (mkIf cfg.olympus.enable cfg.olympus.package)
       ];
 
       modules.software.steam = {
