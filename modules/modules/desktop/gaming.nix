@@ -9,15 +9,15 @@ in
   options.modules.desktop.gaming = with types; {
     enableAll = mkBoolOpt false;
     steam = {
-      enable = mkBoolOpt false;
+      enable = mkBoolOpt cfg.enableAll;
       package = mkOpt package pkgs.steam;
     };
     polymc = {
-      enable = mkBoolOpt false;
+      enable = mkBoolOpt cfg.enableAll;
       package = mkOpt package pkgs.polymc;
     };
     lutris = {
-      enable = mkBoolOpt false;
+      enable = mkBoolOpt cfg.enableAll;
       packages = mkOpt package pkgs.lutris;
     };
   };
@@ -34,13 +34,5 @@ in
         package = mkAliasDefinitions opt.steam.package;
       };
     }
-
-    (mkIf cfg.enableAll {
-      modules.desktop.gaming = {
-        steam.enable = true;
-        polymc.enable = true;
-        lutris.enable = true;
-      };
-    })
   ];
 }
