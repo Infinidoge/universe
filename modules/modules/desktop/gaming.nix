@@ -18,7 +18,7 @@ in
     };
     lutris = {
       enable = mkBoolOpt cfg.enableAll;
-      packages = mkOpt package pkgs.lutris;
+      package = mkOpt package pkgs.lutris;
     };
   };
 
@@ -26,7 +26,7 @@ in
     {
       home.home.packages = with pkgs; [
         (mkIf cfg.polymc.enable cfg.polymc.package)
-        (mkIf cfg.lutris.enable cfg.lutris.packages)
+        (mkIf cfg.lutris.enable cfg.lutris.package)
       ];
 
       modules.software.steam = {
