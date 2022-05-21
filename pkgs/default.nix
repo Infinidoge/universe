@@ -7,4 +7,6 @@ final: prev: {
     version = "unstable-2022-04-28";
     src = final.sources.kmscon.src;
   });
+
+  olympus = prev.callPackage ./olympus.nix { };
 }
