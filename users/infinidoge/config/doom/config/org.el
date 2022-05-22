@@ -13,6 +13,7 @@
  org-src-fontify-natively t
  org-display-custom-times nil
  org-time-stamp-custom-formats '("<%d %b %Y>" . "<%y/%m/%d %a %H:%M:%S>")
+ org-link-descriptive nil
 
  ;; Export
  org-latex-tables-centered nil
