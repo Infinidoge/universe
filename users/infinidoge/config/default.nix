@@ -30,9 +30,9 @@ with lib;
             prin "$(color 7)PC" "${if main.info.model != "" then main.info.model else "A Computer"}"
             info "$(color 15)├─$(color 6) CPU" cpu
             info "$(color 15)├─$(color 6) GPU" gpu
-            info "$(color 15)├─$(color 6) Memory" memory
             info "$(color 15)├─$(color 6) Battery" battery
-            info "$(color 15)└─$(color 6) Resolution" resolution
+            info "$(color 15)├─$(color 6) Resolution" resolution
+            info "$(color 15)└─$(color 6) Memory" memory
 
             ${ if main.info.graphical then ''
             prin
