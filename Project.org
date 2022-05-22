@@ -39,6 +39,10 @@
 
 *** IDEA SpeedCrunch
 
+** TODO Add ALVR
+
+[[https://github.com/alvr-org/alvr]]
+
 * PROJ Miscellaneous things
 
 ** TODO Setup IRC
