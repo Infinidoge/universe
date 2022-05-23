@@ -1,8 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   networking = {
     useDHCP = false;
-    firewall.checkReversePath = "loose";
+    firewall = {
+      checkReversePath = "loose";
+      trustedInterfaces = [ "tailscale0" ];
+      allowedUDPPorts = [ config.services.tailscale.port ];
+    };
   };
 
   services = {
