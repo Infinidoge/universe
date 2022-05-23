@@ -29,6 +29,7 @@
       # /var directories
       "/var/log"
       "/var/lib/systemd/coredump"
+      "/var/lib/tailscale"
     ];
 
     files = [
