@@ -1,23 +1,18 @@
-{ config, lib, pkgs, ... }:
-with lib;
-with lib.hlissner;
+{ pkgs, ... }:
 {
-  options = { };
-  config = mkMerge [
-    {
-      networking.useDHCP = false;
+  networking.useDHCP = false;
 
-      services.avahi = {
+  services = {
+    avahi = {
+      enable = true;
+      nssmdns = true;
+      publish = {
         enable = true;
-        nssmdns = true;
-        publish = {
-          enable = true;
-          userServices = true;
-        };
-        extraServiceFiles = {
-          ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
-        };
+        userServices = true;
       };
-    }
-  ];
+      extraServiceFiles = {
+        ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
+      };
+    };
+  };
 }
