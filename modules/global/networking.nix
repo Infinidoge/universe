@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
-  networking.useDHCP = false;
+  networking = {
+    useDHCP = false;
+    firewall.checkReversePath = "loose";
+  };
 
   services = {
     avahi = {
@@ -14,5 +17,7 @@
         ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
       };
     };
+
+    tailscale.enable = true;
   };
 }
