@@ -1508,14 +1508,15 @@
         ],
         "nixpkgs": [
           "nixos"
-        ]
+        ],
+        "packwiz": "packwiz"
       },
       "locked": {
-        "lastModified": 1652735930,
-        "narHash": "sha256-Qzb+JNc2Aip9/SMMV2F2PXevJhPE2ifhYhAO0KNiBQU=",
+        "lastModified": 1653513645,
+        "narHash": "sha256-Ee4ssGuJjNZn8EQPFhn0rp3rpAqZCZ459kQuicBVsxc=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "rev": "c833242ab8c3e8b1b1cb58f2197f3fba0adeaca6",
+        "rev": "60d4ee4e7dfb164874ecf2661b7706a207f54e4e",
         "type": "github"
       },
       "original": {
@@ -1665,6 +1666,22 @@
         "id": "nixpkgs",
         "ref": "nixos-21.11",
         "type": "indirect"
+      }
+    },
+    "packwiz": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1653266347,
+        "narHash": "sha256-XwGacEVfQAduDCSMQFRw7Xnx4bND2zaV7l27B+2u5xg=",
+        "owner": "packwiz",
+        "repo": "packwiz",
+        "rev": "e71b63ea98283c8c1f0e03ee51ae40f452f22a61",
+        "type": "github"
+      },
+      "original": {
+        "owner": "packwiz",
+        "repo": "packwiz",
+        "type": "github"
       }
     },
     "poetry2nix": {
