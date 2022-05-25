@@ -568,7 +568,10 @@ def init_widget_list(main=True, laptop=False):
                                     ]
                                     for i, interface in enumerate(
                                         run_command(
-                                            "ifconfig -s  | awk {'print $1'} | grep -Ev -e Iface -e lo -e vir.+ -e docker.+ | tac"
+                                            "ifconfig -s"
+                                            " | awk {'print $1'}"
+                                            " | grep -Ev -e Iface -e lo -e vir.+ -e docker.+ -e tailscale.+"
+                                            " | tac"
                                         ).splitlines()
                                     )
                                 ],
