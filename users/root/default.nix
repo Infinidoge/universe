@@ -10,5 +10,11 @@
         base
       ])
     ];
+
+    programs.ssh.matchBlocks = {
+      "server.doge-inc.net" = {
+        identityFile = "/root/.ssh/id_25519";
+      };
+    };
   };
 }
