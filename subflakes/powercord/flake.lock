@@ -579,11 +579,11 @@
     "discord-powercord-ownertags": {
       "flake": false,
       "locked": {
-        "lastModified": 1651091800,
-        "narHash": "sha256-1LuOqeYL96KGo+fhU2FnmHpU5Y2pFQvsQCL4snUtMxE=",
+        "lastModified": 1653395542,
+        "narHash": "sha256-c298D4ZYx2hwyt3ktA/LAjPLx5SeWs5tMQgqe4vqHzs=",
         "owner": "Puyodead1",
         "repo": "powercord-ownertag",
-        "rev": "8ab135efeced91f2e830be6c4c8c5eb5c89d3327",
+        "rev": "e18cb405bc66a5abc5c0a6d977c6f811234fce24",
         "type": "github"
       },
       "original": {
@@ -995,11 +995,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1652659998,
-        "narHash": "sha256-FqNrXC1EE6U2RACwXBlsAvg1lqQGLYpuYb6+W3DL9vA=",
+        "lastModified": 1653407748,
+        "narHash": "sha256-g9puJaILRTb9ttlLQ7IehpV7Wcy0n+vs8LOFu6ylQcM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1d7db1b9e4cf1ee075a9f52e5c36f7b9f4207502",
+        "rev": "5ce6597eca7d7b518c03ecda57d45f9404b5e060",
         "type": "github"
       },
       "original": {
@@ -1012,11 +1012,11 @@
     "powercord": {
       "flake": false,
       "locked": {
-        "lastModified": 1651753279,
-        "narHash": "sha256-sW61sXYgXUZCNFocFvAE87Inn4bl04huBY02p9tT4pQ=",
+        "lastModified": 1653036173,
+        "narHash": "sha256-aYmO7dt0pTmVEL81zCHBI2d7ZKXzsDCgiHIJcglSfjY=",
         "owner": "powercord-org",
         "repo": "powercord",
-        "rev": "02bd12f997af9d3858a7effa06739fddd07280e1",
+        "rev": "e5dbcc47eb350773095255f19374b0bbf535d8ba",
         "type": "github"
       },
       "original": {
