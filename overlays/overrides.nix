@@ -5,6 +5,10 @@ channels: final: prev: {
   # Pin discord-canary version for powercord
   # powercord = prev.powercord.override { inherit (channels.fork) discord-canary; };
 
+  inherit (channels.latest)
+    polymc
+    ;
+
   # https://github.com/NixOS/nixpkgs/issues/167579
   python39Packages = prev.python39Packages.override
     (old: {
