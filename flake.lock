@@ -1504,11 +1504,11 @@
     },
     "latest_2": {
       "locked": {
-        "lastModified": 1653618409,
-        "narHash": "sha256-8KnFUCZRqT86h8G33fBsPLkXKfLN05s72zFmtVmt+gA=",
+        "lastModified": 1653626668,
+        "narHash": "sha256-2iLp2UCQTDfFVvtLPGx1bU0Cw9wMBev0wC3zlBCMtzI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "03eb4fd7ae049f4db4c196956b33afbe0a9ceaae",
+        "rev": "6a37587050d65fafed103d39e1cbf2bc569e28e8",
         "type": "github"
       },
       "original": {
@@ -1839,7 +1839,7 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1653627002,
+        "lastModified": 1653627250,
         "narHash": "sha256-eVDCi3UPnRFcV5RtitmqfpOR5G59zr0b5A9SXYFXbJY=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
