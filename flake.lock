@@ -302,11 +302,11 @@
     "discord-Quick-Channel-Mute": {
       "flake": false,
       "locked": {
-        "lastModified": 1604449042,
-        "narHash": "sha256-V3FUw9/AvsagH66F3rVB/o1R56JbuQ6YdW5eAWR9wNA=",
+        "lastModified": 1653595190,
+        "narHash": "sha256-Bp4JwZ857B6UGFOHiutp5fw7uBGC1a0DkRLkguI/+xA=",
         "owner": "A-Trash-Coder",
         "repo": "Quick-Channel-Mute",
-        "rev": "c6e994b7a93ab1db951ff67f83209c8f01d717b1",
+        "rev": "d9743e040523c1a394832b7b1729ca2fda5f99ae",
         "type": "github"
       },
       "original": {
@@ -430,11 +430,11 @@
     "discord-better-status-indicators": {
       "flake": false,
       "locked": {
-        "lastModified": 1651028559,
-        "narHash": "sha256-P/qeQ/wMq9SbcfnU6G0hpb4KYa5f4IUkJXZsGPqUnoQ=",
+        "lastModified": 1653550870,
+        "narHash": "sha256-3UZtBBGNfhQZJP7Q4NptIALG0rSNe2WwabGQ5xoG0qo=",
         "owner": "GriefMoDz",
         "repo": "better-status-indicators",
-        "rev": "c21fc4019287333cb89ab4d6ec08c9d573e8b975",
+        "rev": "0186a1664a00b9438b94747b2a438a642cf25856",
         "type": "github"
       },
       "original": {
@@ -827,6 +827,22 @@
         "type": "github"
       }
     },
+    "discord-powercord-tone-indicators": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1653613429,
+        "narHash": "sha256-yxKBkzK8mAyilsT6z94Xca2qx/IOVg7aROgsn3AWlnw=",
+        "owner": "asportnoy",
+        "repo": "powercord-tone-indicators",
+        "rev": "85a130c12aadc4a41a8b0f3c08a736e28369cfc9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "asportnoy",
+        "repo": "powercord-tone-indicators",
+        "type": "github"
+      }
+    },
     "discord-pronoundb-powercord": {
       "flake": false,
       "locked": {
@@ -910,11 +926,11 @@
     "discord-replace-timestamps-pc": {
       "flake": false,
       "locked": {
-        "lastModified": 1650849411,
-        "narHash": "sha256-rCpY5qOAJmG2pKmp/H6jK1SGNJbP8p6BvMWLfjmNSN4=",
+        "lastModified": 1653588088,
+        "narHash": "sha256-sRUapSRz2Vh8RA4o2O9IlOwdeaTTK9D2twhztQiLj7Y=",
         "owner": "SpoonMcForky",
         "repo": "replace-timestamps-pc",
-        "rev": "7a83ceb611d11cacee4111ce3ee4a24a9c419eba",
+        "rev": "15bba0527c3c1054af6f59ff31ba67c8a1df2d05",
         "type": "github"
       },
       "original": {
@@ -1488,11 +1504,11 @@
     },
     "latest_2": {
       "locked": {
-        "lastModified": 1653537176,
-        "narHash": "sha256-6iD23IzKZruwQ5MgPMc9aYibU8asZryAPwhn+Iv3vaQ=",
+        "lastModified": 1653618409,
+        "narHash": "sha256-8KnFUCZRqT86h8G33fBsPLkXKfLN05s72zFmtVmt+gA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "f55a73b4fd84dc91a9d392359e8335f34d29a028",
+        "rev": "03eb4fd7ae049f4db4c196956b33afbe0a9ceaae",
         "type": "github"
       },
       "original": {
@@ -1793,6 +1809,7 @@
         "discord-powercord-ownertags": "discord-powercord-ownertags",
         "discord-powercord-pindms": "discord-powercord-pindms",
         "discord-powercord-reverse-image-search": "discord-powercord-reverse-image-search",
+        "discord-powercord-tone-indicators": "discord-powercord-tone-indicators",
         "discord-pronoundb-powercord": "discord-pronoundb-powercord",
         "discord-quick-delete-pc": "discord-quick-delete-pc",
         "discord-reddit-parser": "discord-reddit-parser",
@@ -1822,8 +1839,8 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1653539512,
-        "narHash": "sha256-0yWVuhOnpwgDqn7NaJZ3zGmWf8jOxVhV/tBgoIYCfgQ=",
+        "lastModified": 1653620826,
+        "narHash": "sha256-2g9h27W3775s9PvyoKMCr3uTd737SKgx07H1F1GP8kI=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
       },
