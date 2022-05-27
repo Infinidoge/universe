@@ -51,6 +51,7 @@
     discord-powercord-ownertags = { url = "github:Puyodead1/powercord-ownertag"; flake = false; };
     discord-powercord-pindms = { url = "github:Bricklou/powercord-pindms"; flake = false; };
     discord-powercord-reverse-image-search = { url = "github:lorencerri/powercord-reverse-image-search"; flake = false; };
+    discord-powercord-tone-indicators = { url = "github:asportnoy/powercord-tone-indicators"; flake = false; };
     discord-pronoundb-powercord = { url = "github:cyyynthia/pronoundb-powercord"; flake = false; };
     discord-quick-delete-pc = { url = "github:the-cord-plug/quick-delete-pc"; flake = false; };
     discord-reddit-parser = { url = "github:Rodentman87/reddit-parser"; flake = false; };
@@ -145,6 +146,7 @@
               discord-powercord-ownertags
               # discord-powercord-pindms
               discord-powercord-reverse-image-search
+              discord-powercord-tone-indicators
               discord-pronoundb-powercord
               discord-quick-delete-pc
               discord-reddit-parser
