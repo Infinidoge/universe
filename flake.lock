@@ -1839,8 +1839,8 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1653620826,
-        "narHash": "sha256-2g9h27W3775s9PvyoKMCr3uTd737SKgx07H1F1GP8kI=",
+        "lastModified": 1653626854,
+        "narHash": "sha256-F2755sSG74gLWDiRGRJfLlnMbQ4Ok5jYAjn9dcfmbmI=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
       },
