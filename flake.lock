@@ -830,11 +830,11 @@
     "discord-powercord-tone-indicators": {
       "flake": false,
       "locked": {
-        "lastModified": 1653613429,
-        "narHash": "sha256-yxKBkzK8mAyilsT6z94Xca2qx/IOVg7aROgsn3AWlnw=",
+        "lastModified": 1653623048,
+        "narHash": "sha256-vRblxdAXgEsEsWHmiz3QWjJUhlHfJQIjJsXv5FpTwVw=",
         "owner": "asportnoy",
         "repo": "powercord-tone-indicators",
-        "rev": "85a130c12aadc4a41a8b0f3c08a736e28369cfc9",
+        "rev": "ac06d7c6079163b2600db0f43ea622aa445a3bea",
         "type": "github"
       },
       "original": {
@@ -1839,8 +1839,8 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1653626854,
-        "narHash": "sha256-F2755sSG74gLWDiRGRJfLlnMbQ4Ok5jYAjn9dcfmbmI=",
+        "lastModified": 1653627002,
+        "narHash": "sha256-eVDCi3UPnRFcV5RtitmqfpOR5G59zr0b5A9SXYFXbJY=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
       },
