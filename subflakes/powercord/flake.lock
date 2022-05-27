@@ -16,22 +16,6 @@
         "type": "github"
       }
     },
-    "discord-better-connections": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1630183822,
-        "narHash": "sha256-2T6ouo0RdTcCo82ShB1jBKXlzI+ZORi6dXchkgfxas8=",
-        "owner": "AAGaming00",
-        "repo": "better-connections",
-        "rev": "89f3c233cf3fa2ef8b1316ad75cff01629282650",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AAGaming00",
-        "repo": "better-connections",
-        "type": "github"
-      }
-    },
     "discord-Discolored": {
       "flake": false,
       "locked": {
@@ -173,6 +157,22 @@
       "original": {
         "owner": "powercord-community",
         "repo": "badges-everywhere",
+        "type": "github"
+      }
+    },
+    "discord-better-connections": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1630183822,
+        "narHash": "sha256-2T6ouo0RdTcCo82ShB1jBKXlzI+ZORi6dXchkgfxas8=",
+        "owner": "AAGaming00",
+        "repo": "better-connections",
+        "rev": "89f3c233cf3fa2ef8b1316ad75cff01629282650",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AAGaming00",
+        "repo": "better-connections",
         "type": "github"
       }
     },
@@ -627,11 +627,11 @@
     "discord-powercord-tone-indicators": {
       "flake": false,
       "locked": {
-        "lastModified": 1653613429,
-        "narHash": "sha256-yxKBkzK8mAyilsT6z94Xca2qx/IOVg7aROgsn3AWlnw=",
+        "lastModified": 1653623048,
+        "narHash": "sha256-vRblxdAXgEsEsWHmiz3QWjJUhlHfJQIjJsXv5FpTwVw=",
         "owner": "asportnoy",
         "repo": "powercord-tone-indicators",
-        "rev": "85a130c12aadc4a41a8b0f3c08a736e28369cfc9",
+        "rev": "ac06d7c6079163b2600db0f43ea622aa445a3bea",
         "type": "github"
       },
       "original": {
@@ -1043,8 +1043,12 @@
     },
     "powercord-overlay": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"],
-        "powercord": ["powercord"]
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "powercord": [
+          "powercord"
+        ]
       },
       "locked": {
         "lastModified": 1652726147,
