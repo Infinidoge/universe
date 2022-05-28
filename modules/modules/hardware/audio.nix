@@ -12,7 +12,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    hardware.pulseaudio.enable = true;
     sound = {
       enable = true;
       mediaKeys = {
@@ -21,21 +20,11 @@ in
       };
     };
 
-    # HACK Prevents ~/.esd_auth files by disabling the esound protocol module
-    #      for pulseaudio, which I likely don't need. Is there a better way?
-    hardware.pulseaudio.configFile =
-      let inherit (pkgs) runCommand pulseaudio;
-        paConfigFile =
-          runCommand "disablePulseaudioEsoundModule"
-            { buildInputs = [ pulseaudio ]; } ''
-            mkdir "$out"
-            cp ${pulseaudio}/etc/pulse/default.pa "$out/default.pa"
-            sed -i -e 's|load-module module-esound-protocol-unix|# ...|' "$out/default.pa"
-          '';
-      in
-      mkIf config.hardware.pulseaudio.enable
-        "${paConfigFile}/default.pa";
-
-    user.extraGroups = [ "audio" ];
+    services.pipewire = {
+      enable = true;
+      wireplumber.enable = true;
+      pulse.enable = true;
+      alsa.enable = true;
+    };
   };
 }
