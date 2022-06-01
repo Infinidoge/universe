@@ -4,7 +4,7 @@
 
     (with profiles; [
       networking.wireless
-      services.proxy
+      # services.proxy
     ])
 
     ./hardware-configuration.nix
