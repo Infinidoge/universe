@@ -44,7 +44,8 @@
       wireless.enable = true;
       form.desktop = true;
 
-      peripherals.razer.enable = true;
+      # FIXME: openrazer does not properly build under Linux 5.18
+      # peripherals.razer.enable = true;
     };
     services = {
       foldingathome = {
