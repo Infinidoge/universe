@@ -29,6 +29,7 @@ in
       networking.wireless = {
         enable = true;
         userControlled.enable = true;
+        fallbackToWPA2 = mkDefault false;
       };
     })
   ];
