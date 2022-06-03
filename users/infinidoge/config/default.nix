@@ -72,7 +72,7 @@ with lib;
     "blugon".source = ./blugon;
   };
 
-  home.bindmounts."${main.bud.localFlakeClone}/users/infinidoge/config" = mkIf main.info.graphical {
+  home.bindmounts."${main.dotfiles.dir}/users/infinidoge/config" = mkIf main.info.graphical {
     allowOther = true;
     directories = [
       {
