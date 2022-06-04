@@ -75,4 +75,9 @@
       hydrus
     ];
   };
+
+  services.minecraft-servers = {
+    enable = true;
+    eula = true;
+  };
 }
