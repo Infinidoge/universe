@@ -15,6 +15,9 @@
 
     # Ensure certain necessary directories always exist
     ensure.directories = [ "/mnt" ];
+
+    # Accept EULA for all minecraft servers
+    minecraft-servers.eula = true;
   };
 
   system.activationScripts = {
