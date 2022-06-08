@@ -8,6 +8,7 @@
  org-use-speed-commands t
  org-list-demote-modify-bullet '(("-" . "+") ("+" . "-") ("1." . "a."))
  ;; org-list-demote-modify-bullet '(("-" . "-") ("1." . "a."))
+ org-list-allow-alphabetical t
  org-startup-shrink-all-tables t
  org-startup-align-all-tables t
  org-src-fontify-natively t
