@@ -323,6 +323,23 @@ keys = [
         ],
     ),
 
+    # Volume
+    Key(
+        [], "XF86AudioRaiseVolume",
+        lazy.spawn("amixer set Master 2%+"),
+        desc="Raise volume",
+    ),
+    Key(
+        [], "XF86AudioLowerVolume",
+        lazy.spawn("amixer set Master 2%-"),
+        desc="Lower volume",
+    ),
+    Key(
+        [], "XF86AudioMute",
+        lazy.spawn("amixer set Master toggle"),
+        desc="Toggle mute",
+    ),
+
     # Brightness
     *optional_list(
         LAPTOP,

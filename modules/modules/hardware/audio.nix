@@ -12,13 +12,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    sound = {
-      enable = true;
-      mediaKeys = {
-        enable = true;
-        volumeStep = "2%";
-      };
-    };
+    sound.enable = true;
 
     services.pipewire = {
       enable = true;
