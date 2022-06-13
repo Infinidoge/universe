@@ -64,11 +64,6 @@
     virtualization.enable = true;
   };
 
-  networking.interfaces = {
-    eth0.useDHCP = true;
-    wlp41s0.useDHCP = true;
-  };
-
   home = { profiles, pkgs, ... }: {
     imports = with profiles; [ stretchly ];
     home.packages = with pkgs; [

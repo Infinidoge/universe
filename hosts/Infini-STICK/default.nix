@@ -9,9 +9,6 @@
     ./hardware-configuration.nix
   ];
 
-  networking.interfaces.wlp170s0.useDHCP = true;
-  # networking.interfaces.enp39s0.useDHCP = true;
-
   modules = {
     boot.grub.enable = true;
     hardware = {

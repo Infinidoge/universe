@@ -54,8 +54,6 @@
     virtualization.enable = true;
   };
 
-  networking.interfaces.wlp170s0.useDHCP = true;
-
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
 
   systemd.services.set-initial-backlight = {

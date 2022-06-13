@@ -28,6 +28,4 @@
     };
     desktop.wm.enable = true;
   };
-
-  networking.interfaces.wlan0.useDHCP = true;
 }

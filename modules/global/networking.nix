@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 {
   networking = {
-    useDHCP = false;
+    useDHCP = true;
     firewall = {
       checkReversePath = "loose";
       trustedInterfaces = [ "tailscale0" ];
