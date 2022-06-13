@@ -27,6 +27,7 @@
   systemd.services.update-root-nix-channels = {
     description = "Runs nix-channel --update on startup";
     wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
     serviceConfig.Type = "oneshot";
     script = "${pkgs.nix}/bin/nix-channel --update";
   };
