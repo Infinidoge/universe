@@ -24,10 +24,6 @@
     soft-serve.enable = true;
   };
 
-  networking.interfaces = {
-    enp0s25.useDHCP = true;
-  };
-
   environment.persistence."/persist" = {
     directories = [
       "/home"
