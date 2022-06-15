@@ -46,5 +46,6 @@
     wget
     whois
     xxHash
+    zip
   ];
 }
