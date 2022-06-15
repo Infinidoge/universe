@@ -81,8 +81,6 @@
 
 ;; Set doom-private-dir to the writeable location, as opposed to read-only symlink in $DOOMDIR
 (setq doom-private-dir "/etc/nixos/users/infinidoge/config/doom")
-;; Disable excessive warnings in configuration directory
-(add-to-list '+emacs-lisp-disable-flycheck-in-dirs doom-private-dir)
 
 ;; --- --- Original Configuration Comments --- ---
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
