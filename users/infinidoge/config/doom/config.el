@@ -82,6 +82,9 @@
 ;; Set doom-private-dir to the writeable location, as opposed to read-only symlink in $DOOMDIR
 (setq doom-private-dir "/etc/nixos/users/infinidoge/config/doom")
 
+;; --- Emojify ---
+(add-to-list 'emojify-inhibit-major-modes 'org-mode)
+
 ;; --- --- Original Configuration Comments --- ---
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
