@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  nix.settings.substituters = lib.mkIf (config.networking.hostName != "Infini-DESKTOP")
+  nix.settings.substituters = lib.mkIf (config.networking.hostName != "Infini-DESKTOP" && config.info.loc.home)
     ((if config.info.loc.home then (lib.mkOrder 300) else lib.mkAfter) [
       "ssh://infini-desktop"
     ]);
