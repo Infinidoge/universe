@@ -27,6 +27,7 @@
       "/var/lib/systemd/coredump"
       "/var/lib/systemd/backlight"
       "/var/lib/tailscale"
+      "/var/lib/alsa"
     ];
 
     files = [
