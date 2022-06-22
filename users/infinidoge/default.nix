@@ -40,16 +40,12 @@ in
       (ifGraphical [
         speedcrunch
 
-        teams
-
-        libsForQt5.dolphin
-
         flameshot
         brightnessctl
 
         sxiv
 
-        libreoffice-fresh
+        # libreoffice-fresh
 
         powercord
 
