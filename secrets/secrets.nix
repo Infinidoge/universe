@@ -9,6 +9,7 @@ let
   };
   users = {
     infinidoge = import ../users/infinidoge/ssh-keys.nix;
+    root = import ../users/root/ssh-keys.nix;
   };
   allKeys = flatten [
     (attrValues systems)
