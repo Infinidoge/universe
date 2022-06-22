@@ -380,7 +380,7 @@ keys = [
     ),
     Key(
         [Keys.SUPER, Keys.ALT, Keys.CONTROL], "e",
-        lazy.spawn("doom everywhere"),
+        lazy.spawn("doom +everywhere"),
         desc="Launch Emacs 'everywhere' window",
     ),
     Key(
