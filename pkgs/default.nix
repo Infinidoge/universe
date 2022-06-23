@@ -4,7 +4,7 @@ final: prev: {
   # then, call packages with `final.callPackage`
 
   kmscon = prev.kmscon.overrideAttrs (old: {
-    version = "unstable-${final.sources.kmscon.version}";
+    version = "unstable-2022-04-28";
     src = final.sources.kmscon.src;
   });
 
