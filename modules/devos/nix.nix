@@ -48,7 +48,13 @@ with lib;
 
 
   environment = {
-    systemPackages = with pkgs; [ nix-index nixos-option nixfmt nixpkgs-fmt ];
+    systemPackages = with pkgs; [
+      nix-index
+      nixos-option
+      nixfmt
+      nixpkgs-fmt
+      nix-du
+    ];
 
     shellAliases =
       let ifSudo = mkIf config.security.sudo.enable;
