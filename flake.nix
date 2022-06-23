@@ -4,7 +4,7 @@
   inputs = {
     # --- DevOS Flake Inputs
     # # --- Channels ---
-    stable.url = "github:nixos/nixpkgs/nixos-21.11";
+    stable.url = "github:nixos/nixpkgs/nixos-22.05";
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
     fork.url = "github:Infinidoge/nixpkgs";
