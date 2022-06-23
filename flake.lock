@@ -830,11 +830,11 @@
     "discord-powercord-tone-indicators": {
       "flake": false,
       "locked": {
-        "lastModified": 1653623048,
-        "narHash": "sha256-vRblxdAXgEsEsWHmiz3QWjJUhlHfJQIjJsXv5FpTwVw=",
+        "lastModified": 1655480246,
+        "narHash": "sha256-kGhuX40u6N2os9bJTaVea8wP2Ko6EMFeCT9PXPShDm8=",
         "owner": "asportnoy",
         "repo": "powercord-tone-indicators",
-        "rev": "ac06d7c6079163b2600db0f43ea622aa445a3bea",
+        "rev": "546aa82154caa0590bdf2505bf00fb5a210d97e2",
         "type": "github"
       },
       "original": {
@@ -1782,11 +1782,11 @@
     "powercord": {
       "flake": false,
       "locked": {
-        "lastModified": 1653036173,
-        "narHash": "sha256-aYmO7dt0pTmVEL81zCHBI2d7ZKXzsDCgiHIJcglSfjY=",
+        "lastModified": 1655592510,
+        "narHash": "sha256-01TH83E5gfYGYwlFPCWp7hJ/spvrEajJNefLNgFLUUw=",
         "owner": "powercord-org",
         "repo": "powercord",
-        "rev": "e5dbcc47eb350773095255f19374b0bbf535d8ba",
+        "rev": "794f8c60aba250a655233901e07cd721853774ab",
         "type": "github"
       },
       "original": {
@@ -1807,11 +1807,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1652726147,
-        "narHash": "sha256-3W9P+rxAulQs7D7VQskMM9wE7OQDXBVZKC/4mZncjXA=",
+        "lastModified": 1656026574,
+        "narHash": "sha256-fNGu2Ml6kk7teiywRnWjWMjPv8pPLI1plXeMlvuEiao=",
         "owner": "Infinidoge",
         "repo": "powercord-overlay",
-        "rev": "e082219f5c790be76e4a311cffa9795898a04d08",
+        "rev": "9de1f2ffe18ecce8b1d84804ddccda9fa42ec72e",
         "type": "github"
       },
       "original": {
@@ -1891,8 +1891,8 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1654577348,
-        "narHash": "sha256-eVDCi3UPnRFcV5RtitmqfpOR5G59zr0b5A9SXYFXbJY=",
+        "lastModified": 1656026622,
+        "narHash": "sha256-Qs+Nd2ymGcvg+dXlhv/J25/pMCmwUTYIlLNDnaPJoi8=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
       },
