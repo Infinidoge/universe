@@ -1,0 +1,21 @@
+{
+    "kmscon": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "kmscon",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "Aetf",
+            "repo": "kmscon",
+            "rev": "b65f4269b03de580923ab390bde795e7956b633f",
+            "sha256": "sha256-OnBGdg+EU6ddjebUb+PbXJgIXTcUBL1p4CATlPWsypk=",
+            "type": "github"
+        },
+        "version": "b65f4269b03de580923ab390bde795e7956b633f"
+    }
+}
