@@ -9,6 +9,10 @@ channels: final: prev: {
     polymc
     ;
 
+  inherit (channels.stable)
+    hydrus
+    ;
+
   qtile = prev.qtile.override {
     python3 = final.python310;
     python3Packages = final.python310Packages;
