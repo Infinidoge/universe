@@ -40,7 +40,6 @@ in
       (ifGraphical [
         speedcrunch
 
-        flameshot
         brightnessctl
 
         sxiv

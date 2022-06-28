@@ -179,6 +179,7 @@
                   kitty
                   rofi
                   themeing
+                  flameshot
                 ];
               };
           };
