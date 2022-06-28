@@ -114,7 +114,7 @@
               discord-Unindent
               discord-badges-everywhere
               discord-better-connections
-              # discord-better-folders
+              discord-better-folders
               discord-better-replies
               discord-better-settings
               discord-better-status-indicators
