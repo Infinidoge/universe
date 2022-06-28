@@ -179,11 +179,11 @@
     "discord-better-folders": {
       "flake": false,
       "locked": {
-        "lastModified": 1651702431,
-        "narHash": "sha256-T0WxOezetfb3KMmD8DSLvvFs7D/d/cx/9vnUgFQGSoM=",
+        "lastModified": 1656078577,
+        "narHash": "sha256-KvTRDovNwOEeHPdlQqiOZjuZhk1N14cSrVTT46L0O2o=",
         "owner": "Juby210",
         "repo": "better-folders",
-        "rev": "bbd2757cb779bdca61e1fac6b25468938626a268",
+        "rev": "e0e63285ab020e1e215504629ba684ae5755e828",
         "type": "github"
       },
       "original": {
@@ -467,11 +467,11 @@
     "discord-mention-cache-fix": {
       "flake": false,
       "locked": {
-        "lastModified": 1646838396,
-        "narHash": "sha256-paDz8VR3rHrKQ42kPxhX+Lzxqcj7ETHlKA3HX5nxoFM=",
+        "lastModified": 1656435391,
+        "narHash": "sha256-8iJtCHwUuooQ0WiCsb2pYXpYTHhftmmAd2+UiTnLa8w=",
         "owner": "asportnoy",
         "repo": "mention-cache-fix",
-        "rev": "78b80bc2fa12284cbc75b5b371804d717909aa93",
+        "rev": "66c918b976cb8edccd719a5b1bbb3a3c217b8fa3",
         "type": "github"
       },
       "original": {
@@ -1011,11 +1011,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1655895887,
-        "narHash": "sha256-AbihSVmPKFcQmaVgzNSLQ8sLAaVTTELPSzZ+/gRVfyk=",
+        "lastModified": 1656239181,
+        "narHash": "sha256-wW1xRFBn376yGloXZ4QzBE4hjipMawpV18Lshd9QSPw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e1e08fe28bf0588a41cd556eac40b98d2793da99",
+        "rev": "f2537a505d45c31fe5d9c27ea9829b6f4c4e6ac5",
         "type": "github"
       },
       "original": {
