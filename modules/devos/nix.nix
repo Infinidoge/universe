@@ -19,6 +19,7 @@ with lib;
     gc = {
       automatic = true;
       options = "--delete-older-than 3d";
+      dates = "weekly";
     };
 
     optimise.automatic = true;
