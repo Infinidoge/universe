@@ -7,7 +7,7 @@
     stable.url = "github:nixos/nixpkgs/nixos-22.05";
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
-    fork.url = "github:Infinidoge/nixpkgs";
+    fork.url = "github:Infinidoge/nixpkgs/combined/all";
 
     # # --- Libraries ---
     digga.url = "github:divnix/digga";
