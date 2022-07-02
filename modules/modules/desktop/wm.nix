@@ -20,6 +20,7 @@ in
       services.xserver = {
         enable = true;
         displayManager.lightdm.enable = true;
+        xkbOptions = "compose:ralt";
       };
 
       environment.systemPackages = with pkgs; flatten [
