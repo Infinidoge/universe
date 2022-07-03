@@ -19,7 +19,10 @@ in
 
   config = {
     console.keyMap = mkDefault cfg.keymap;
-    services.xserver.layout = mkDefault cfg.keymap;
+    services.xserver = {
+      layout = mkDefault cfg.keymap;
+      xkbOptions = "compose:ralt";
+    };
 
     i18n.defaultLocale = cfg.locale;
 
