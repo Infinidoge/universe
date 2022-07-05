@@ -30,6 +30,7 @@
     nmap
     ntfs3g # Windows drives
     parted
+    perl
     rhash
     ripgrep
     rsync
