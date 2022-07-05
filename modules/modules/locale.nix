@@ -22,6 +22,7 @@ in
     services.xserver = {
       layout = mkDefault cfg.keymap;
       xkbOptions = "compose:ralt";
+      libinput.enable = true;
     };
 
     i18n.defaultLocale = cfg.locale;
