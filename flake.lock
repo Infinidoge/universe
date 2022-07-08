@@ -1783,11 +1783,11 @@
     "powercord": {
       "flake": false,
       "locked": {
-        "lastModified": 1655592510,
-        "narHash": "sha256-01TH83E5gfYGYwlFPCWp7hJ/spvrEajJNefLNgFLUUw=",
+        "lastModified": 1657230161,
+        "narHash": "sha256-rxeltTWsAhqnfW04YjP03xh0+htM7vly6nkb28o27/g=",
         "owner": "powercord-org",
         "repo": "powercord",
-        "rev": "794f8c60aba250a655233901e07cd721853774ab",
+        "rev": "59df79dbeb7140b29e1abc68ec211853d070a5a6",
         "type": "github"
       },
       "original": {
@@ -1892,8 +1892,8 @@
         "powercord-overlay": "powercord-overlay"
       },
       "locked": {
-        "lastModified": 1656442223,
-        "narHash": "sha256-Yj7z0PpETl3wqBVXGzoSh2wABY9kRQtilNm546OcxO4=",
+        "lastModified": 1657252328,
+        "narHash": "sha256-oY0oIyOfjwwecloijYlrdrWSuvoi6V3LwEfzpK+r2fE=",
         "path": "/etc/nixos/subflakes/powercord",
         "type": "path"
       },
