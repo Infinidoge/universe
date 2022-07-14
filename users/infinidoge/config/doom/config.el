@@ -67,6 +67,12 @@
 ;; (custom-set-faces
 ;;  '(evil-goggles-default-face ((t (:inherit 'highlight)))))
 
+;; --- Undo ---
+(setq
+ evil-want-fine-undo t
+ undo-limit 80000000
+ )
+
 ;; --- Nix ---
 ;; Replace nixfmt in format-all with nixpkgs-fmt
 (set-formatter! 'nixfmt "nixpkgs-fmt" :modes '(nix-mode))
