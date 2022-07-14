@@ -20,7 +20,7 @@
 ;; --- Projectile ----
 (setq
  projectile-indexing-method 'hybrid
- projectile-project-search-path '("~/Projects/" "~/Documents/School")
+ projectile-project-search-path '("~/Projects/")
  )
 
 ;; --- Treemacs ---
