@@ -196,4 +196,7 @@
  )
 
 
+;; Set doom-private-dir to the writeable location, as opposed to read-only symlink in $DOOMDIR
+(setq doom-private-dir "/etc/nixos/users/infinidoge/config/doom/")
+
 (load! "init/evil-goggles")
