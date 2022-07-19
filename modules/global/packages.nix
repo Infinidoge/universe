@@ -19,6 +19,7 @@
     exfat # Windows drives
     fd
     ffmpeg
+    frei
     git
     htop
     iputils
