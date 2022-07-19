@@ -1,5 +1,5 @@
 {
-  description = "A highly structured configuration database.";
+  description = "Infinidoge's NixOS configuration";
 
   inputs = {
     # --- DevOS Flake Inputs
