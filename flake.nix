@@ -45,7 +45,7 @@
     powercord-setup.inputs.nixpkgs.follows = "latest";
 
     # # --- Minecraft
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft/refactor/fu";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     nix-minecraft.inputs.nixpkgs.follows = "nixos";
   };
 
