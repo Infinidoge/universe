@@ -1,8 +1,4 @@
 # nvfetcher toml
-[kmscon]
-src.git = "https://github.com/Aetf/kmscon"
-fetch.github = "Aetf/kmscon"
-
 [frei]
 src.github = "alexcoder04/frei"
 fetch.github = "alexcoder04/frei"
