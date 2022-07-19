@@ -46,7 +46,7 @@ class Apps:
 
     TERMINAL = guess_terminal(preference="kitty")  # Set preference if necessary
     SHELL = "zsh"
-    EDITOR = "emacsclient -c -a 'emacs'"
+    EDITOR = "emacsclient -c"
 
     @classmethod
     def terminal_command(cls, program, args=tuple(), *, terminal=None):
