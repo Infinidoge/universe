@@ -1,0 +1,21 @@
+{
+    "frei": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "frei",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "alexcoder04",
+            "repo": "frei",
+            "rev": "v0.1.0",
+            "sha256": "sha256-9CV6B7fRHXl73uI2JRv3RiaFczLHHBOd7/8UoCAwK6w=",
+            "type": "github"
+        },
+        "version": "v0.1.0"
+    }
+}
