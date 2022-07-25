@@ -18,7 +18,7 @@
 
  ;; Export
  org-latex-tables-centered nil
- org-latex-listings 'minted
+ org-latex-src-block-backend 'minted
  org-latex-packages-alist '(("" "minted" "listingsutf8"))
  org-latex-pdf-process
  '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
