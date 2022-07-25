@@ -32,7 +32,7 @@
 ;; --- Deft ---
 (setq
  deft-recursive t
- deft-directory "~/Documents/Notes"
+ deft-directory "~/Notes/"
  )
 
 ;; --- Tramp ---
