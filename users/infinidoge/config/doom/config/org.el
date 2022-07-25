@@ -2,7 +2,7 @@
 (setq
  ;; Directories
  org-directory "~/Documents/Org"
- org-agenda-files '("~/Documents/" "~/Documents/Notes/" "~/Documents/Org/" "~/Documents/Org/agenda/" "~/Projects/" "~/Documents/School/")
+ org-agenda-files '("~/Documents/" "~/Notes/" "~/Documents/Org/" "~/Documents/Org/agenda/" "~/Projects/" "~/Documents/School/")
 
  ;; General settings
  org-use-speed-commands t
