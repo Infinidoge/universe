@@ -47,9 +47,3 @@
 (use-package! ox-extra
   :config
   (ox-extras-activate '(ignore-headlines)))
-
-;; Load babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((R . t)
-   (latex . t)))
