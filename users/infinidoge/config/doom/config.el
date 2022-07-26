@@ -35,6 +35,20 @@
  deft-directory "~/Notes/"
  )
 
+(map! :map deft-mode-map
+      :n "gr"  #'deft-refresh
+      :n "C-s" #'deft-filter
+      :i "C-n" #'deft-new-file
+      :i "C-m" #'deft-new-file-named
+      :i "C-d" #'deft-delete-file
+      :i "C-r" #'deft-rename-file
+      :n "r"   #'deft-rename-file
+      :n "a"   #'deft-new-file
+      :n "A"   #'deft-new-file-named
+      :n "d"   #'deft-delete-file
+      :n "D"   #'deft-archive-file
+      :n "q"   #'kill-current-buffer)
+
 ;; --- Tramp ---
 (setq
  tramp-default-method "ssh"
