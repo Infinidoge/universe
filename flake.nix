@@ -47,6 +47,10 @@
     # # --- Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     nix-minecraft.inputs.nixpkgs.follows = "nixos";
+
+    # # --- Rust
+    fenix.url = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows = "nixos";
   };
 
   outputs =
@@ -76,6 +80,7 @@
               # --- Domain-Specific Overlays
               inputs.powercord-setup.overlay
               inputs.nix-minecraft.overlay
+              inputs.fenix.overlay
             ];
           };
           stable = { };
@@ -139,6 +144,7 @@
                     haskell
                     java
                     nim
+                    rust
                   ])
                 ];
               };
