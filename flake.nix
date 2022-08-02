@@ -39,7 +39,7 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
-    # --- Application-Specific Flake Inputs
+    # --- Domain-Specific Flake Inputs
     # # --- Powercord
     powercord-setup.url = "path:/etc/nixos/subflakes/powercord";
     powercord-setup.inputs.nixpkgs.follows = "latest";
@@ -73,7 +73,7 @@
               agenix.overlay
               ./pkgs/default.nix
 
-              # --- Application-Specific Overlays
+              # --- Domain-Specific Overlays
               inputs.powercord-setup.overlay
               inputs.nix-minecraft.overlay
             ];
@@ -116,7 +116,7 @@
               inputs.impermanence.nixosModules.impermanence
               inputs.quick-nix-registry.nixosModules.local-registry
 
-              # --- Application Modules ---
+              # --- Domain-Specific Modules ---
               inputs.nix-minecraft.nixosModules.minecraft-servers
             ];
           };
