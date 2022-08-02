@@ -1562,11 +1562,11 @@
         "packwiz": "packwiz"
       },
       "locked": {
-        "lastModified": 1658248648,
-        "narHash": "sha256-oMweF+QvemSEaecd7vv+k3FNsLVnJn1+FtMX/SeSB9o=",
+        "lastModified": 1659299593,
+        "narHash": "sha256-kZy2+71KxQ3K5lmxU+M7n/1vUeXB1Bffe58SvD3oVag=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "rev": "8fd0e600fdb1a8fa001d7f256ff5b3d50c081940",
+        "rev": "e938604d437abc372035149c24494423a8e557cb",
         "type": "github"
       },
       "original": {
