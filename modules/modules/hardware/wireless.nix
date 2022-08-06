@@ -30,6 +30,7 @@ in
         enable = true;
         userControlled.enable = true;
         fallbackToWPA2 = mkDefault false;
+        environmentFile = config.secrets.wireless;
       };
     })
   ];
