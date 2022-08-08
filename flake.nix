@@ -137,6 +137,7 @@
                     python
                     racket
                     haskell
+                    java
                     nim
                   ])
                 ];
