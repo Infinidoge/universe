@@ -5,6 +5,7 @@ with lib;
     "doom" = {
       source = ./doom;
       onChange = ''
+        echo "[doom] applying doom configuration"
         ${config.xdg.configHome}/emacs/bin/doom sync -p
       '';
     };
