@@ -6,7 +6,6 @@ Sets up
 - Widgets
 - Screens
 """
-import subprocess
 import os
 
 from typing import List, Any  # noqa: F401
