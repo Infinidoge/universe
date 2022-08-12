@@ -374,7 +374,7 @@ keys = [
     ),
     Key(
         [Keys.SUPER, Keys.ALT], "e",
-        lazy.spawn("emacsclient -c -a 'emacs'"),
+        lazy.spawn(Apps.EDITOR),
         desc="Launch Emacs",
     ),
     Key(
