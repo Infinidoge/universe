@@ -19,6 +19,10 @@ in
     grep = "rg";
     gi = "grep -i";
 
+    # TODO: Investigate psgrep
+    psg = "ps x | gi -e 'PID\\s+TTY\\s+STAT\\s+TIME\\s+COMMAND' -e ";
+    psag = "ps ax | gi -e 'PID\\s+TTY\\s+STAT\\s+TIME\\s+COMMAND' -e ";
+
     # internet ip
     myip = "curl ipecho.net/plain";
 
