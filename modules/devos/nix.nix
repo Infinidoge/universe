@@ -55,6 +55,15 @@ with lib;
       nixfmt
       nixpkgs-fmt
       nix-du
+
+      (writeScriptBin "wherenix" ''
+        #!/usr/bin/env bash
+        ${unixtools.whereis}/bin/whereis "''${@}" \
+        | ${gawk}/bin/awk '{ print substr($0, length($1)+2) }' \
+        | ${findutils}/bin/xargs -r ${coreutils}/bin/readlink -f \
+        | ${coreutils}/bin/sort \
+        | ${coreutils}/bin/uniq
+      '')
     ];
 
     shellAliases =
