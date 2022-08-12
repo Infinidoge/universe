@@ -49,5 +49,7 @@ in
     mktmp = "cd $(mktemp -d)";
 
     edit = "$EDITOR";
+
+    path = "tr ':' '\n' <<< \"$PATH\"";
   };
 }
