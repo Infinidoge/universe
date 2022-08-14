@@ -14,10 +14,10 @@
         add_newline = true;
 
         format = ''
-          ([╳](bold grey) $status$cmd_duration)
-          [┌┨[$username@$hostname](${section.user_host})┠(┨$shell$shlvl┠)──(┨$nix_shell┠)───────────┨](${line_style})
-          [┝┫$directory(┣━┫$git_branch$git_status(@$git_commit)( $git_metrics)( $git_state))┃](${line_style})
-          [└┨](${line_style})$character'';
+          ($status$cmd_duration)
+          [┃[$username@$hostname](${section.user_host})┃($shlvl┃)($nix_shell┃)](${line_style})
+          [┃$directory(┃$git_branch$git_status(@$git_commit)( $git_metrics)( $git_state))](${line_style})
+          [┃($shell)┃](${line_style})$character'';
 
         character = rec {
           success_symbol = "[❯](bold purple)";
@@ -48,7 +48,7 @@
 
         directory = {
           style = "cyan";
-          read_only = " ";
+          read_only = " ";
           format = "[$read_only]($read_only_style)[$path]($style)";
         };
 
@@ -59,24 +59,24 @@
         };
 
         git_status = {
-          format = "([「$all_status$ahead_behind」]($style))";
+          format = " $ahead_behind$all_status";
           conflicted = "⚠️";
-          ahead = "⟫\${count} ";
-          behind = "⟪\${count}";
-          diverged = "🔀 ";
-          untracked = "📁 ";
-          stashed = "↪ ";
-          modified = "𝚫 ";
-          staged = "✔ ";
-          renamed = "⇆ ";
-          deleted = "✘ ";
-          style = "bold bright-white";
+          ahead = "[⟫\${count}](green bold) ";
+          behind = "[⟪\${count}](red bold)";
+          diverged = "[🔀](red bold) ";
+          untracked = "[📁](grey bold) ";
+          stashed = "[↪](grey bold) ";
+          modified = "[𝚫](yellow bold) ";
+          staged = "[✔](green bold) ";
+          renamed = "[⇆](blue bold) ";
+          deleted = "[✘](red bold) ";
+          style = "bold";
         };
 
         nix_shell = {
-          format = "[$symbol$state $name]($style)";
-          pure_msg = "λ";
-          impure_msg = "⎔";
+          format = "[$symbol$state $name]($style bold)";
+          pure_msg = "✔";
+          impure_msg = "𝚫";
           symbol = " ";
         };
 
@@ -93,7 +93,7 @@
 
         shlvl = {
           disabled = false;
-          format = " [$symbol$shlvl]($style)";
+          format = " [$symbol$shlvl]($style bold)";
           symbol = " ";
           threshold = 0;
         };
