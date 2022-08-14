@@ -7,6 +7,7 @@
     stable.url = "github:nixos/nixpkgs/nixos-22.05";
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
+    staging.url = "github:nixos/nixpkgs/staging";
     fork.url = "github:Infinidoge/nixpkgs/combined/all";
 
     # # --- Libraries ---
@@ -85,6 +86,7 @@
           };
           stable = { };
           latest = { };
+          staging = { };
           fork = { };
         };
 
