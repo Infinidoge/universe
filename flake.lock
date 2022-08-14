@@ -1972,7 +1972,8 @@
         "nixos-wsl": "nixos-wsl",
         "powercord-setup": "powercord-setup",
         "quick-nix-registry": "quick-nix-registry",
-        "stable": "stable"
+        "stable": "stable",
+        "staging": "staging"
       }
     },
     "rust-analyzer-src": {
@@ -2021,6 +2022,22 @@
       "original": {
         "owner": "nixos",
         "ref": "nixos-22.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "staging": {
+      "locked": {
+        "lastModified": 1660500112,
+        "narHash": "sha256-+ij430pRWW/wRU8YZ/ZEQaMZ3q50iaRSQEZ1ZOVmLD4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7ef4d517f3687960738b931b4bae0f0de4b9d08c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "staging",
         "repo": "nixpkgs",
         "type": "github"
       }
