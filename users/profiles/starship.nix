@@ -60,16 +60,16 @@
 
         git_status = {
           format = " $ahead_behind$all_status";
-          conflicted = "⚠️";
+          conflicted = "";
           ahead = "[⟫\${count}](green bold) ";
           behind = "[⟪\${count}](red bold)";
-          diverged = "[🔀](red bold) ";
-          untracked = "[📁](grey bold) ";
+          diverged = "[](red bold) ";
+          untracked = "[](grey bold) ";
           stashed = "[↪](grey bold) ";
-          modified = "[𝚫](yellow bold) ";
-          staged = "[✔](green bold) ";
-          renamed = "[⇆](blue bold) ";
-          deleted = "[✘](red bold) ";
+          modified = "[](yellow bold) ";
+          staged = "[](green bold) ";
+          renamed = "[](blue bold) ";
+          deleted = "[](red bold) ";
           style = "bold";
         };
 
