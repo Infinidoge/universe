@@ -13,7 +13,7 @@
 ;; --- Appearance ---
 (setq
  doom-theme 'doom-one
- display-line-numbers-type t
+ display-line-numbers-type 'relative
  doom-modeline-enable-word-count t
  )
 
