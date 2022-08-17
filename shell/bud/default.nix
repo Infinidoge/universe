@@ -9,6 +9,13 @@
       script = ./b.bash;
     };
 
+    gc = {
+      writer = budUtils.writeBashWithPaths [ nixUnstable ];
+      synopsis = "gc [-d]";
+      help = "Shortcut for nix-collect-garbage for both the user and root";
+      script = ./gc.bash;
+    };
+
     install-doom = {
       writer = budUtils.writeBashWithPaths [ git coreutils emacs ];
       synopsis = "install-doom [ARGS]";
