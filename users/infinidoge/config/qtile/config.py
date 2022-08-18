@@ -55,11 +55,29 @@ class Apps:
         return f"{terminal or cls.TERMINAL} {' '.join(args)} -- {program}"
 
     @classmethod
+    def shell_command(cls, command, args=tuple(), *, shell=None):
+        """
+        Returns a string of a command to run a command in the shell, with the given arguments.
+        """
+        return f'{shell or cls.SHELL} {" ".join(args)} -- "{command}"'
+
+    @classmethod
     def open_in_terminal(cls, program, args=tuple(), *, terminal=None):
         """
         Opens a program in the terminal, with the given arguments.
         """
         return lazy.spawn(cls.terminal_command(program, args=args, terminal=terminal))
+
+    @classmethod
+    def shell_in_terminal(
+        cls, command, sargs=tuple(), targs=tuple(), *, shell=None, terminal=None
+    ):
+        """
+        Opens a program in the terminal using the shell, with the given shell and terminal arguments.
+        """
+        return cls.open_in_terminal(
+            cls.shell_command(command, sargs, shell=shell), targs, terminal=terminal
+        )
 
     @classmethod
     def open_in_editor(cls, file_, args=tuple()):
@@ -261,12 +279,12 @@ keys = [
     # Keys for spawning commands or applications
     Key(
         [Keys.SUPER], "r",
-        lazy.spawncmd(),
+        lazy.spawncmd(command=Apps.shell_command("%s", args=("-ic",))),
         desc="Spawn a command using a prompt widget",
     ),
     Key(
         [Keys.SUPER, Keys.SHIFT], "r",
-        lazy.spawncmd(prompt="shell", command=Apps.terminal_command("%s", args=("--hold",))),
+        lazy.spawncmd(prompt="shell", command=Apps.terminal_command(Apps.shell_command("%s", args=("-ic",)), args=("--hold",))),
         desc="Spawn a command in a shell using a prompt widget",
     ),
     Key(
