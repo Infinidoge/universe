@@ -13,10 +13,6 @@ channels: final: prev: {
     hydrus
     ;
 
-  inherit (channels.fork)
-    kmscon
-    ;
-
   qtile = prev.qtile.override {
     python3 = final.python310;
     python3Packages = final.python310Packages;
