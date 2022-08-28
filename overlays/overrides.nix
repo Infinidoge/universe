@@ -7,6 +7,7 @@ channels: final: prev: {
 
   inherit (channels.latest)
     polymc
+    kmscon
     ;
 
   inherit (channels.stable)
