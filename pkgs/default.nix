@@ -6,4 +6,6 @@ final: prev: {
   olympus = final.callPackage ./olympus.nix { };
 
   frei = final.callPackage ./frei.nix { source = final.sources.frei; };
+
+  nix-modrinth-prefetch = final.callPackage ./nix-modrinth-prefetch.nix { };
 }
