@@ -3,7 +3,7 @@ final: prev: {
   sources = prev.callPackage (import ./_sources/generated.nix) { };
   # then, call packages with `final.callPackage`
 
-  olympus = prev.callPackage ./olympus.nix { };
+  olympus = final.callPackage ./olympus.nix { };
 
-  frei = prev.callPackage ./frei.nix { source = final.sources.frei; };
+  frei = final.callPackage ./frei.nix { source = final.sources.frei; };
 }
