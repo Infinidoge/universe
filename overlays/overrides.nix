@@ -6,6 +6,7 @@ channels: final: prev: {
   # powercord = prev.powercord.override { inherit (channels.fork) discord-canary; };
 
   inherit (channels.latest)
+    discord-canary
     polymc
     kmscon
     ;
