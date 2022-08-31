@@ -46,7 +46,7 @@ in
 
         # libreoffice-fresh
 
-        powercord
+        discord-canary # FIXME: powercord
 
         (lib.optional main.modules.hardware.form.desktop qbittorrent)
       ])
