@@ -1563,11 +1563,11 @@
     },
     "latest_2": {
       "locked": {
-        "lastModified": 1662213869,
-        "narHash": "sha256-2Hc5gFeA7ptIJI2ISutqEjsjbAGLTWOoO38V3ZjXhMI=",
+        "lastModified": 1662911707,
+        "narHash": "sha256-QD2q7ogO0swh1Sqdpmw85Jn9D1pkRu96Gr18swkUWWw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1134c6d957fd7ebe22020dd44d281367902f4e88",
+        "rev": "0e63de944b8387b1ce67d73b4cf07ce225dc5fff",
         "type": "github"
       },
       "original": {
