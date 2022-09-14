@@ -12,4 +12,15 @@
       sha256 = "sha256-9CV6B7fRHXl73uI2JRv3RiaFczLHHBOd7/8UoCAwK6w=";
     });
   };
+  qtile = {
+    pname = "qtile";
+    version = "62b9e5951d5d9c2f5e9c9a1fcb595696ed16d71d";
+    src = fetchFromGitHub ({
+      owner = "qtile";
+      repo = "qtile";
+      rev = "62b9e5951d5d9c2f5e9c9a1fcb595696ed16d71d";
+      fetchSubmodules = false;
+      sha256 = "sha256-wlfmTUtdvj6akzXj8JK/950cRQkv/z/fRKqCff4GvmE=";
+    });
+  };
 }

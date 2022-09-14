@@ -15,4 +15,5 @@ channels: final: prev: {
     hydrus
     ;
 
+  qtile = final.qtile-unstable;
 }
