@@ -338,6 +338,7 @@ keys = [
                 desc="Logs out of the system",
             ),
         ],
+        name="Power",
     ),
 
     # Volume
