@@ -17,5 +17,24 @@
             "type": "github"
         },
         "version": "v0.1.0"
+    },
+    "qtile": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "qtile",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "qtile",
+            "repo": "qtile",
+            "rev": "62b9e5951d5d9c2f5e9c9a1fcb595696ed16d71d",
+            "sha256": "sha256-wlfmTUtdvj6akzXj8JK/950cRQkv/z/fRKqCff4GvmE=",
+            "type": "github"
+        },
+        "version": "62b9e5951d5d9c2f5e9c9a1fcb595696ed16d71d"
     }
 }

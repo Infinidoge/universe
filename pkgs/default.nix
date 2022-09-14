@@ -8,4 +8,6 @@ final: prev: {
   frei = final.callPackage ./frei.nix { source = final.sources.frei; };
 
   nix-modrinth-prefetch = final.callPackage ./nix-modrinth-prefetch.nix { };
+
+  qtile-unstable = final.callPackage ./qtile.nix { source = final.sources.qtile; };
 }
