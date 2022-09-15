@@ -669,7 +669,7 @@ screens = [
             size=20,
             opacity=1.0,
         ),
-        wallpaper="~/.config/qtile/images/BotanBackground.jpg",  # TODO: Fetch background with Nix
+        wallpaper="~/.config/qtile/images/BotanBackground.jpg",
         wallpaper_mode="fill",
     )
     for i in range(
