@@ -57,12 +57,13 @@ in
 
   environment.variables.EDITOR =
     let
+      pkg = config.home-manager.users.infinidoge.programs.emacs.package;
       editorScript = pkgs.writeScriptBin "emacseditor" ''
         #!${pkgs.runtimeShell}
         if [ -z "$1" ]; then
-          exec ${pkgs.emacs}/bin/emacsclient --create-frame --alternate-editor ${pkgs.emacs}/bin/emacs
+          exec ${pkg}/bin/emacsclient --create-frame --alternate-editor ${pkg}/bin/emacs
         else
-          exec ${pkgs.emacs}/bin/emacsclient --alternate-editor ${pkgs.emacs}/bin/emacs "$@"
+          exec ${pkg}/bin/emacsclient --alternate-editor ${pkg}/bin/emacs "$@"
         fi
       '';
     in
