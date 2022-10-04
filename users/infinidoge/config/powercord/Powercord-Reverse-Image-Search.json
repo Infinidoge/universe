@@ -1,9 +1,0 @@
-{
-  "RIS-provider-google-images": false,
-  "RIS-provider-yandex": true,
-  "RIS-provider-tineye": false,
-  "RIS-provider-saucenao": true,
-  "RIS-provider-imgops": true,
-  "RIS-enlargeImages": true,
-  "RIS-convertPNG": true
-}
