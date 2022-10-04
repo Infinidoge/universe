@@ -41,10 +41,6 @@
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
     # --- Domain-Specific Flake Inputs
-    # # --- Powercord
-    powercord-setup.url = "path:/etc/nixos/subflakes/powercord";
-    powercord-setup.inputs.nixpkgs.follows = "latest";
-
     # # --- Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft/develop";
     nix-minecraft.inputs.nixpkgs.follows = "nixos";
