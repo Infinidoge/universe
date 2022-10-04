@@ -75,7 +75,6 @@
               ./pkgs/default.nix
 
               # --- Domain-Specific Overlays
-              inputs.powercord-setup.overlay
               inputs.nix-minecraft.overlay
               inputs.fenix.overlay
             ];
