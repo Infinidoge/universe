@@ -125,7 +125,7 @@ in
               Service = {
                 ExecStart = "${startScript}";
                 ExecStop = "${stopScript}";
-                Environment = "PATH=${makeBinPath [ pkgs.coreutils pkgs.utillinux pkgs.gnugrep pkgs.bindfs ]}:/run/wrappers/bin";
+                Environment = "PATH=${makeBinPath [ pkgs.coreutils pkgs.util-linux pkgs.gnugrep pkgs.bindfs ]}:/run/wrappers/bin";
               };
             };
           };
@@ -159,7 +159,7 @@ in
             inherit (dir) source target;
             targetDir = escapeShellArg (concatPaths [ persistentStoragePath source ]);
             mountPoint = escapeShellArg (concatPaths [ config.home.homeDirectory target ]);
-            mount = "${pkgs.utillinux}/bin/mount";
+            mount = "${pkgs.util-linux}/bin/mount";
             bindfsOptions = concatStringsSep "," (
               optional (!cfg.${persistentStoragePath}.allowOther) "no-allow-other"
               ++ optional (versionAtLeast pkgs.bindfs.version "1.14.9") "fsname=${targetDir}"
