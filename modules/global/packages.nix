@@ -43,7 +43,7 @@
     unixtools.whereis
     unzip
     usbutils
-    utillinux
+    util-linux
     vim
     wget
     whois
