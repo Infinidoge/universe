@@ -328,11 +328,6 @@ keys = [
                 desc="Shuts down the system",
             ),
             Key(
-                [], "k",
-                lazy.spawn("systemctl kexec"),
-                desc="Quick reboots system, directly loading kernel into memory",
-            ),
-            Key(
                 [], "l",
                 lazy.spawn("kill -9 -1"),
                 desc="Logs out of the system",
