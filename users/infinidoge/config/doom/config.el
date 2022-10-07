@@ -80,6 +80,14 @@
   ;; (evil-goggles-use-diff-refine-faces)
   (evil-goggles-use-magit-faces)
   )
+
+(setq
+ evil-goggles-duration 0.1
+ evil-goggles-pulse nil
+ evil-goggles-enable-change t
+ evil-goggles-enable-delete t
+ )
+
 ;; (custom-set-faces
 ;;  '(evil-goggles-default-face ((t (:inherit 'highlight)))))
 
