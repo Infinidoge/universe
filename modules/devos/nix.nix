@@ -55,6 +55,7 @@ with lib;
       nixfmt
       nixpkgs-fmt
       nix-du
+      comma
 
       (writeScriptBin "wherenix" ''
         #!/usr/bin/env bash
