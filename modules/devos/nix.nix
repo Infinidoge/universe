@@ -31,11 +31,11 @@ with lib;
       fallback = true
     '';
 
-    nixPath = [
-      "nixpkgs=${channel.input}"
-      "nixos-config=${../../lib/compat/nixos}"
-      "home-manager=${inputs.home}"
-    ];
+    # nixPath = [
+    #   "nixpkgs=${channel.input}"
+    #   "nixos-config=${../../lib/compat/nixos}"
+    #   "home-manager=${inputs.home}"
+    # ];
 
     localRegistry = {
       enable = true;
