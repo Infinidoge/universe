@@ -13,7 +13,7 @@ in
     # git
     g = "git";
 
-    gcd = "cd $(git root)";
+    gcd = "cd $(git root || echo \".\")";
 
     # grep
     grep = "rg";
