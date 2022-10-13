@@ -46,6 +46,8 @@ in
 
         # libreoffice-fresh
 
+        krita
+
         discord-canary
 
         (lib.optional main.modules.hardware.form.desktop qbittorrent)
