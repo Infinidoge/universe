@@ -15,7 +15,6 @@
       audio.enable = true;
       form.portable = true;
     };
-    services.proxy.enable = false;
   };
 
   environment.persistence."/persist" = {

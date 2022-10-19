@@ -191,13 +191,13 @@
           };
         };
 
-        devshell = ./shell;
+        devshells.x86_64-linux.default = ./shell;
 
         homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
 
         deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
 
-        defaultTemplate = self.templates.bud;
+        templates.default = self.templates.bud;
         templates.bud.path = ./.;
         templates.bud.description = "bud template";
 
