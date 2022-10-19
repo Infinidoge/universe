@@ -16,6 +16,8 @@
     digga.inputs.nixlib.follows = "nixos";
     digga.inputs.home-manager.follows = "home";
     digga.inputs.deploy.follows = "deploy";
+    digga.inputs.darwin.follows = "blank";
+    blank.url = "github:divnix/blank";
 
     bud.url = "github:divnix/bud";
     bud.inputs.nixpkgs.follows = "nixos";
