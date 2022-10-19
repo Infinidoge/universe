@@ -49,7 +49,7 @@
       wm.enable = true;
       gaming = {
         steam.enable = true;
-        polymc.enable = true;
+        prismlauncher.enable = true;
       };
     };
     virtualization.enable = true;

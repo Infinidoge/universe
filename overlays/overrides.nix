@@ -4,7 +4,6 @@ channels: final: prev: {
 
   inherit (channels.latest)
     discord-canary
-    polymc
     kmscon
     ;
 
