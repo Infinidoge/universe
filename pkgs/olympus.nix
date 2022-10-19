@@ -1,5 +1,6 @@
 # Taken from https://github.com/VergeDX/config-nixpkgs/blob/899f13750c9c1795d455eeee9cb28d3aa74a0866/packages/gui/olympus.nix
 { stdenv
+, lib
 , fetchzip
 , unzip
 , makeDesktopItem
@@ -40,6 +41,8 @@ buildFHSUserEnv {
     pkgs.gtk3
     pkgs.glib
   ];
+
+  meta.platforms = lib.platforms.linux;
 
   # https://github.com/EverestAPI/Olympus/blob/main/lib-linux/olympus.desktop
   # https://stackoverflow.com/questions/8822097/how-to-replace-a-whole-line-with-sed

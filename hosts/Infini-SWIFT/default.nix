@@ -5,8 +5,6 @@
     profiles = with profiles;
       [
         networking.wireless
-
-        btrfs
       ];
   };
 
@@ -22,9 +20,6 @@
       form.laptop = true;
       gpu.amdgpu = true;
       wireless.enable = true;
-    };
-    services = {
-      proxy.enable = true;
     };
     desktop.wm.enable = true;
   };
