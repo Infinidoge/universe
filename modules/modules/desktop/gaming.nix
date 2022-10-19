@@ -12,9 +12,9 @@ in
       enable = mkBoolOpt cfg.enableAll;
       package = mkOpt package pkgs.steam;
     };
-    polymc = {
+    prismlauncher = {
       enable = mkBoolOpt cfg.enableAll;
-      package = mkOpt package pkgs.polymc;
+      package = mkOpt package pkgs.prismlauncher;
     };
     lutris = {
       enable = mkBoolOpt cfg.enableAll;
@@ -29,7 +29,7 @@ in
   config = mkMerge [
     {
       home.home.packages = with pkgs; [
-        (mkIf cfg.polymc.enable cfg.polymc.package)
+        (mkIf cfg.prismlauncher.enable cfg.prismlauncher.package)
         (mkIf cfg.lutris.enable cfg.lutris.package)
         (mkIf cfg.olympus.enable cfg.olympus.package)
       ];
