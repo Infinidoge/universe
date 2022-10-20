@@ -193,7 +193,7 @@
           };
         };
 
-        devshells.x86_64-linux.default = ./shell;
+        devshell = ./shell;
 
         homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
 
