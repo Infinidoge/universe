@@ -14,13 +14,13 @@
   };
   qtile = {
     pname = "qtile";
-    version = "62b9e5951d5d9c2f5e9c9a1fcb595696ed16d71d";
+    version = "37d5d8acfcb0ed1642ad6f032b1a57a0938814a9";
     src = fetchFromGitHub ({
       owner = "qtile";
       repo = "qtile";
-      rev = "62b9e5951d5d9c2f5e9c9a1fcb595696ed16d71d";
+      rev = "37d5d8acfcb0ed1642ad6f032b1a57a0938814a9";
       fetchSubmodules = false;
-      sha256 = "sha256-wlfmTUtdvj6akzXj8JK/950cRQkv/z/fRKqCff4GvmE=";
+      sha256 = "sha256-/stKfUnk2UwA7+XhkgxesVNG5ovAhyC3ktfBr/oxE0k=";
     });
   };
 }
