@@ -24,7 +24,7 @@ in
     psag = "ps ax | gi -e 'PID\\s+TTY\\s+STAT\\s+TIME\\s+COMMAND' -e ";
 
     # internet ip
-    myip = "curl ipecho.net/plain";
+    myip = "echo $(curl -s ipecho.net/plain)";
 
     # sudo
     s = ifSudo "sudo -E ";
