@@ -28,9 +28,6 @@
       (lib.mkIf config.services.xserver.enable {
         xsession.enable = true;
       })
-      {
-        manual.manpages.enable = false; # FIXME: Manuel doesn't build in home-manager
-      }
     ];
   };
 }
