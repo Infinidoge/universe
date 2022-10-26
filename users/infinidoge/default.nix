@@ -28,6 +28,7 @@ in
         userName = "Infinidoge";
       };
       firefox.enable = config.info.graphical;
+      adb.enable = config.info.graphical;
     };
 
     home.packages = with pkgs; lib.flatten [
@@ -95,6 +96,7 @@ in
     group = "users";
     isNormalUser = true;
     extraGroups = [
+      "adbusers"
       "bluetooth"
       "dialout"
       "disk"
