@@ -62,9 +62,9 @@ in
       editorScript = pkgs.writeScriptBin "emacseditor" ''
         #!${pkgs.runtimeShell}
         if [ -z "$1" ]; then
-          exec ${pkg}/bin/emacsclient --create-frame --alternate-editor ${pkg}/bin/emacs
+          exec ${pkg}/bin/emacsclient --create-frame
         else
-          exec ${pkg}/bin/emacsclient --alternate-editor ${pkg}/bin/emacs "$@"
+          exec ${pkg}/bin/emacsclient "$@"
         fi
       '';
     in
