@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, ... }:
 {
   bud.enable = true;
 
@@ -8,6 +8,8 @@
 
     udevil.enable = true;
   };
+
+  wsl.defaultUser = config.user.name;
 
   services = {
     # Enable Early Out of Memory service
