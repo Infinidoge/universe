@@ -1,8 +1,4 @@
 # nvfetcher toml
-[frei]
-src.github = "alexcoder04/frei"
-fetch.github = "alexcoder04/frei"
-
 [qtile]
 src.git = "https://github.com/qtile/qtile.git"
 fetch.github = "qtile/qtile"

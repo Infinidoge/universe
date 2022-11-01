@@ -1,23 +1,4 @@
 {
-    "frei": {
-        "cargoLocks": null,
-        "extract": null,
-        "name": "frei",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "alexcoder04",
-            "repo": "frei",
-            "rev": "v0.1.0",
-            "sha256": "sha256-9CV6B7fRHXl73uI2JRv3RiaFczLHHBOd7/8UoCAwK6w=",
-            "type": "github"
-        },
-        "version": "v0.1.0"
-    },
     "qtile": {
         "cargoLocks": null,
         "extract": null,
@@ -31,10 +12,10 @@
             "name": null,
             "owner": "qtile",
             "repo": "qtile",
-            "rev": "37d5d8acfcb0ed1642ad6f032b1a57a0938814a9",
-            "sha256": "sha256-/stKfUnk2UwA7+XhkgxesVNG5ovAhyC3ktfBr/oxE0k=",
+            "rev": "0b0280190efc09029c1e3f9fd369ea7206782623",
+            "sha256": "sha256-aICD9OMlInWwRUMi1oy52FiKGxU25FGQh4KKcVAQ++A=",
             "type": "github"
         },
-        "version": "37d5d8acfcb0ed1642ad6f032b1a57a0938814a9"
+        "version": "0b0280190efc09029c1e3f9fd369ea7206782623"
     }
 }
