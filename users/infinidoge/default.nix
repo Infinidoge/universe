@@ -27,8 +27,8 @@ in
         userEmail = "infinidoge@doge-inc.net";
         userName = "Infinidoge";
       };
-      firefox.enable = config.info.graphical;
       adb.enable = config.info.graphical;
+      firefox.enable = main.info.graphical;
     };
 
     home.packages = with pkgs; lib.flatten [
