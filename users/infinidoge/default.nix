@@ -27,7 +27,6 @@ in
         userEmail = "infinidoge@doge-inc.net";
         userName = "Infinidoge";
       };
-      adb.enable = config.info.graphical;
       firefox.enable = main.info.graphical;
     };
 
@@ -86,6 +85,10 @@ in
     desktop.wm.qtile.enable = true;
 
     software.minipro.enable = true;
+  };
+
+  programs = {
+    adb.enable = config.info.graphical;
   };
 
   user = {
