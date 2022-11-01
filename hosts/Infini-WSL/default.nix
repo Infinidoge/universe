@@ -12,7 +12,6 @@
   wsl = {
     enable = true;
     automountPath = "/media";
-    defaultUser = "infinidoge";
     startMenuLaunchers = true;
   };
 
