@@ -46,8 +46,6 @@
     # # --- Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft/develop";
     nix-minecraft.inputs.nixpkgs.follows = "nixos";
-    prismlauncher.url = "github:PrismLauncher/PrismLauncher";
-    prismlauncher.inputs.nixpkgs.follows = "nixos";
 
     # # --- Rust
     fenix.url = "github:nix-community/fenix";
@@ -80,7 +78,6 @@
 
               # --- Domain-Specific Overlays
               inputs.nix-minecraft.overlay
-              inputs.prismlauncher.overlay
               inputs.fenix.overlay
             ];
           };
