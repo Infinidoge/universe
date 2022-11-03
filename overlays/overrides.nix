@@ -5,6 +5,7 @@ channels: final: prev: {
   inherit (channels.latest)
     discord-canary
     kmscon
+    prismlauncher
     ;
 
   inherit (channels.stable)
