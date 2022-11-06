@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
@@ -27,6 +27,12 @@
       }
       (lib.mkIf config.services.xserver.enable {
         xsession.enable = true;
+      })
+      (lib.mkIf config.info.graphical {
+        xdg.systemDirs.data = [
+          "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
+          "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
+        ];
       })
     ];
   };
