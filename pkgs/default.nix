@@ -8,4 +8,6 @@ final: prev: {
   nix-modrinth-prefetch = final.callPackage ./nix-modrinth-prefetch.nix { };
 
   qtile-unstable = final.callPackage ./qtile.nix { source = final.sources.qtile; };
+
+  mcaselector = final.callPackage ./mcaselector.nix { };
 }
