@@ -6,7 +6,10 @@ with lib;
     sudo.extraConfig = ''
       Defaults lecture=never
     '';
-    acme.acceptTerms = true;
+    acme = {
+      acceptTerms = true;
+      defaults.email = "infinidoge@inx.moe";
+    };
 
     pam.enableSSHAgentAuth = true;
   };
