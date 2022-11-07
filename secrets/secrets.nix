@@ -21,4 +21,6 @@ in
   "infinidoge-password.age".publicKeys = allKeys;
   "root-password.age".publicKeys = allKeys;
   "binary-cache-private-key.age".publicKeys = allKeys;
+  "inx.moe.pem.age".publicKeys = allKeys;
+  "inx.moe.key.age".publicKeys = allKeys;
 }
