@@ -98,9 +98,12 @@
       };
       openFirewall = true;
       preferences = {
-        replaceTwitter = server.hostname;
+        hideTweetStats = true;
+        hlsPlayback = true;
         infiniteScroll = true;
         proxyVideos = true;
+        replaceTwitter = server.hostname;
+        theme = "Black";
       };
     };
   };
