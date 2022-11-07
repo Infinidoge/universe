@@ -47,4 +47,33 @@
       "/root/.ssh/immutable_files.txt"
     ];
   };
+
+  services = {
+    nginx = {
+      enable = true;
+      virtualHosts = {
+        "nitter.inx.moe" = {
+          enableACME = true;
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://localhost:8000";
+          };
+        };
+      };
+    };
+
+    nitter = rec {
+      enable = true;
+      server = {
+        port = 8000;
+        hostname = "nitter.inx.moe";
+      };
+      openFirewall = true;
+      preferences = {
+        replaceTwitter = server.hostname;
+        infiniteScroll = true;
+        proxyVideos = true;
+      };
+    };
+  };
 }
