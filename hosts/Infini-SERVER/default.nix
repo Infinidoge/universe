@@ -1,4 +1,4 @@
-{ suites, profiles, pkgs, lib, ... }: {
+{ config, suites, profiles, pkgs, lib, ... }: {
   imports = lib.flatten [
     (with suites; [ base ])
 
@@ -48,23 +48,51 @@
     ];
   };
 
+  age.secrets."inx.moe.pem".owner = "nginx";
+  age.secrets."inx.moe.pem".group = "nginx";
+  age.secrets."inx.moe.key".owner = "nginx";
+  age.secrets."inx.moe.key".group = "nginx";
+
   services = {
-    nginx = {
-      enable = true;
-      virtualHosts = {
-        "nitter.inx.moe" = {
-          enableACME = true;
-          forceSSL = true;
-          locations."/" = {
-            proxyPass = "http://localhost:8000";
+    nginx =
+      let
+        cfg = config.services.nginx;
+        ssl = { sslCertificate = config.secrets."inx.moe.pem"; sslCertificateKey = config.secrets."inx.moe.key"; forceSSL = true; };
+      in
+      {
+        enable = true;
+
+        statusPage = true;
+
+        recommendedTlsSettings = true;
+        recommendedOptimisation = true;
+        recommendedGzipSettings = true;
+        recommendedProxySettings = true;
+
+        virtualHosts = {
+          "*.inx.moe" = ssl // {
+            listen = lib.flatten
+              (map
+                (addr: [
+                  { inherit addr; port = 443; ssl = true; }
+                  { inherit addr; port = 80; ssl = false; }
+                ])
+                cfg.defaultListenAddresses);
+
+            globalRedirect = "inx.moe";
+          };
+          "nitter.inx.moe" = ssl // {
+            locations."/" = {
+              proxyPass = "http://localhost:8000";
+            };
           };
         };
       };
-    };
 
     nitter = rec {
       enable = true;
       server = {
+        title = "Nitter | inx.moe";
         port = 8000;
         hostname = "nitter.inx.moe";
       };
@@ -75,5 +103,10 @@
         proxyVideos = true;
       };
     };
+  };
+
+  networking.firewall = {
+    allowedUDPPorts = [ 80 443 ];
+    allowedTCPPorts = [ 80 443 ];
   };
 }
