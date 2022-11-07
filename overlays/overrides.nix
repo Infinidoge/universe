@@ -12,5 +12,9 @@ channels: final: prev: {
     hydrus
     ;
 
+  inherit (channels.fork)
+    nitter
+    ;
+
   qtile = final.qtile-unstable;
 }
