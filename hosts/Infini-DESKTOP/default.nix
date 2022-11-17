@@ -69,6 +69,7 @@
     imports = with profiles; [ stretchly ];
     home.packages = with pkgs; [
       hydrus
+      sidequest
     ];
   };
 
