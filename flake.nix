@@ -78,7 +78,7 @@
 
               # --- Domain-Specific Overlays
               inputs.nix-minecraft.overlay
-              inputs.fenix.overlay
+              inputs.fenix.overlays.default
             ];
           };
           stable = { };
