@@ -10,4 +10,6 @@ final: prev: {
   qtile-unstable = final.callPackage ./qtile.nix { source = final.sources.qtile; };
 
   mcaselector = final.callPackage ./mcaselector.nix { };
+
+  sim65 = final.callPackage ./sim65.nix { };
 }
