@@ -11,7 +11,9 @@
   # I don't use Windows, but when I do, I want NixOS there with me,
   wsl = {
     enable = true;
-    automountPath = "/media";
+    wslConf = {
+      automount.root = "/media";
+    };
     startMenuLaunchers = true;
   };
 
