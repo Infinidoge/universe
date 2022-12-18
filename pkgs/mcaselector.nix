@@ -26,10 +26,10 @@ stdenv.mkDerivation (self: rec {
 
   installPhase = ''
     mkdir -pv $out/share/java $out/bin
-    cp ${src} $out/share/java/${self.name}.jar
+    cp ${src} $out/share/java/${self.pname}.jar
 
     makeWrapper ${jre}/bin/java $out/bin/mcaselector \
-      --add-flags "-jar $out/share/java/${self.name}.jar"
+      --add-flags "-jar $out/share/java/${self.pname}.jar"
   '';
 
   meta = with lib; {
