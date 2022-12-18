@@ -17,6 +17,8 @@ in
     let
       main = uuid "13f97ece-823e-4785-b06e-6c284105d379";
       esp = uuid "1DB7-2844";
+
+      btrfsOptions = [ "defaults" "autodefrag" "noatime" ];
     in
     {
       "/" = {
@@ -29,6 +31,13 @@ in
         device = main;
         fsType = "btrfs";
         options = [ "subvol=root" "autodefrag" "noatime" "ssd" ];
+        neededForBoot = true;
+      };
+
+      "/persist/srv" = {
+        device = main;
+        fsType = "btrfs";
+        options = [ "subvol=root/srv" "ssd" ] ++ btrfsOptions;
         neededForBoot = true;
       };
 
