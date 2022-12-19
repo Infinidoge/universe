@@ -5,7 +5,7 @@ channels: final: prev: {
   inherit (channels.latest)
     discord-canary
     kmscon
-    prismlauncher
+    # prismlauncher
 
     # https://nixpk.gs/pr-tracker.html?pr=200098
     nitter
@@ -16,4 +16,6 @@ channels: final: prev: {
     ;
 
   qtile = final.qtile-unstable;
+
+  prismlauncher = channels.latest.prismlauncher.override { jdk = final.jdk17; };
 }
