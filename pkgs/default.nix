@@ -12,4 +12,6 @@ final: prev: {
   mcaselector = final.callPackage ./mcaselector.nix { };
 
   sim65 = final.callPackage ./sim65.nix { };
+
+  unbted = final.callPackage ./unbted.nix { };
 }
