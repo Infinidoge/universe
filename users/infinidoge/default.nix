@@ -35,6 +35,8 @@ in
 
       keepassxc
 
+      unbted
+
       (ifGraphical [
         speedcrunch
 
