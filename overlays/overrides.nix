@@ -9,6 +9,9 @@ channels: final: prev: {
 
     # https://nixpk.gs/pr-tracker.html?pr=200098
     nitter
+
+    # https://github.com/NixOS/nixpkgs/issues/206958
+    clisp
     ;
 
   inherit (channels.stable)
