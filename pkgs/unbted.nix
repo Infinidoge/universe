@@ -1,3 +1,4 @@
+# Based on this example: https://git.marvid.fr/scolobb/nix-GINsim
 { stdenv
 , fetchurl
 , makeWrapper
