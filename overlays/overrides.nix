@@ -15,5 +15,9 @@ channels: final: prev: {
     hydrus
     ;
 
+  inherit (channels.fork)
+    packwiz
+    ;
+
   qtile = final.qtile-unstable;
 }
