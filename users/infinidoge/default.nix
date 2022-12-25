@@ -36,6 +36,7 @@ in
       keepassxc
 
       unbted
+      packwiz
 
       (ifGraphical [
         speedcrunch
