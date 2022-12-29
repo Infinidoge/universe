@@ -59,6 +59,13 @@
           viewer = true;
         };
       };
+      apcupsd = {
+        enable = true;
+        primary = true;
+        config = {
+          address = "0.0.0.0";
+        };
+      };
     };
     desktop = {
       wm.enable = true;
