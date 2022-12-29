@@ -16,6 +16,13 @@
       # gpu.nvidia = true;
       form.server = true;
     };
+    services.apcupsd = {
+      enable = true;
+      primary = false;
+      config = {
+        address = "192.168.1.212";
+      };
+    };
   };
 
   services = {
