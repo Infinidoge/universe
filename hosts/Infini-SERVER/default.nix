@@ -17,7 +17,7 @@
       form.server = true;
     };
     services.apcupsd = {
-      enable = true;
+      enable = false;
       primary = false;
       config = {
         address = "192.168.1.212";
