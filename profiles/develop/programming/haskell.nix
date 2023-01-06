@@ -3,12 +3,10 @@
     haskell-language-server
     ghc
     cabal-install
+    ormolu
 
     (with haskellPackages; [
       hoogle
-
-      brittany
-      hls-brittany-plugin
     ])
 
     stack
