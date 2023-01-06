@@ -108,6 +108,7 @@
 
 ;; --- LSP ---
 (setq lsp-csharp-server-path (executable-find "omnisharp"))
+(setq lsp-haskell-formatting-provider "ormolu")
 
 ;; --- --- Original Configuration Comments --- ---
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
