@@ -15,7 +15,7 @@
     digga.inputs.nixpkgs.follows = "nixos";
     digga.inputs.nixlib.follows = "nixos";
     digga.inputs.home-manager.follows = "home";
-    digga.inputs.deploy.follows = "deploy";
+    digga.inputs.deploy.follows = "blank";
     digga.inputs.darwin.follows = "blank";
     blank.url = "github:divnix/blank";
 
@@ -26,8 +26,8 @@
     home.url = "github:nix-community/home-manager";
     home.inputs.nixpkgs.follows = "nixos";
 
-    deploy.url = "github:input-output-hk/deploy-rs";
-    deploy.inputs.nixpkgs.follows = "nixos";
+    # deploy.url = "github:input-output-hk/deploy-rs";
+    # deploy.inputs.nixpkgs.follows = "nixos";
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixos";
@@ -59,7 +59,7 @@
     , nixos
     , home
     , agenix
-    , deploy
+      # , deploy
     , ...
     }@inputs:
     digga.lib.mkFlake
@@ -194,7 +194,7 @@
 
         homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
 
-        deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
+        # deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
 
         templates.default = self.templates.bud;
         templates.bud.path = ./.;
