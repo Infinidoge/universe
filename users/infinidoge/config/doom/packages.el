@@ -48,3 +48,6 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+(package! emacsql-sqlite :built-in 'prefer)
+(package! pdf-tools :built-in 'prefer)

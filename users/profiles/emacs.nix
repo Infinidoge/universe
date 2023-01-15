@@ -6,7 +6,7 @@ in
 {
   programs.emacs = {
     enable = true;
-    extraPackages = epkgs: with epkgs; [ vterm ];
+    extraPackages = epkgs: with epkgs; [ vterm pdf-tools emacsql-sqlite ];
     package = pkgs.emacsNativeComp;
   };
 
@@ -49,7 +49,6 @@ in
       ## +gnuplot
       gnuplot
       ## +roam2
-      sqlite
       graphviz
 
       # :lang common-lisp
