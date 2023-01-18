@@ -29,7 +29,7 @@ in
         SOFT_SERVE_REPO_PATH = cfg.repo_path;
         SOFT_SERVE_INITIAL_ADMIN_KEY = cfg.initial_admin_key;
       };
-      script = "${pkgs.soft-serve}/bin/soft";
+      script = "${pkgs.soft-serve}/bin/soft serve";
       serviceConfig.Type = "exec";
     };
 
