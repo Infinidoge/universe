@@ -45,7 +45,7 @@ in
 
         sxiv
 
-        # libreoffice-fresh
+        libreoffice-fresh
 
         krita
 
