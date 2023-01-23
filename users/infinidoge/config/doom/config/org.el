@@ -12,6 +12,7 @@
  org-startup-shrink-all-tables t
  org-startup-align-all-tables t
  org-src-fontify-natively t
+ org-edit-src-content-indentation 0
  org-display-custom-times nil
  org-time-stamp-custom-formats '("<%d %b %Y>" . "<%y/%m/%d %a %H:%M:%S>")
  org-link-descriptive nil
