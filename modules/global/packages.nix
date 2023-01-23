@@ -25,6 +25,8 @@
     iputils
     jq
     lynx
+    man-pages
+    man-pages-posix
     manix
     moreutils
     neofetch
