@@ -110,6 +110,11 @@
 (setq lsp-csharp-server-path (executable-find "omnisharp"))
 (setq lsp-haskell-formatting-provider "ormolu")
 
+(after! lsp-mode
+  (add-to-list 'lsp-enabled-clients 'clangd)
+  (set-lsp-priority! 'clangd 1) ; ccls has priority 0
+  )
+
 ;; --- --- Original Configuration Comments --- ---
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
