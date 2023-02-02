@@ -54,6 +54,9 @@ in
       # :lang common-lisp
       sbcl
 
+      # :lang cc
+      clang-tools
+
       # :lang csharp
       dotnetCorePackages.sdk_6_0
       omnisharp-roslyn
