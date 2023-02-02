@@ -20,7 +20,7 @@
  ;; Export
  org-latex-tables-centered nil
  org-latex-src-block-backend 'minted
- org-latex-packages-alist '(("" "minted" "listingsutf8"))
+ org-latex-packages-alist '(("" "minted" "listingsutf8") ("cdot" "SIunits"))
  org-latex-pdf-process
  '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
    "biber %b"
