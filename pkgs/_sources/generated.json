@@ -1,6 +1,7 @@
 {
     "qtile": {
         "cargoLocks": null,
+        "date": "2023-01-29",
         "extract": null,
         "name": "qtile",
         "passthru": null,
@@ -12,10 +13,10 @@
             "name": null,
             "owner": "qtile",
             "repo": "qtile",
-            "rev": "0b0280190efc09029c1e3f9fd369ea7206782623",
-            "sha256": "sha256-aICD9OMlInWwRUMi1oy52FiKGxU25FGQh4KKcVAQ++A=",
+            "rev": "ffbf518ed7b2f376b77347fae09aa92514e89d4a",
+            "sha256": "sha256-3FFMmLuw2cIViXCQJvTLpYUQli5u9s4qtDU6WHh4Te4=",
             "type": "github"
         },
-        "version": "0b0280190efc09029c1e3f9fd369ea7206782623"
+        "version": "ffbf518ed7b2f376b77347fae09aa92514e89d4a"
     }
 }
