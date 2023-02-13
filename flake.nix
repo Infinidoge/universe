@@ -73,7 +73,7 @@
             imports = [ (digga.lib.importOverlays ./overlays) ];
             overlays = [
               # --- DevOS Overlays
-              agenix.overlay
+              agenix.overlays.default
               ./pkgs/default.nix
 
               # --- Domain-Specific Overlays
