@@ -37,6 +37,48 @@
 
 (add-hook 'before-save-hook 'infinidoge/format-org-src-blocks)
 
+;; Unescape and Escape code in org src blocks before/after formatting to prevent org's escaping from messing with formatting
+(defun infinidoge/before-format--org-region (beg end)
+  (let ((element (org-element-at-point)))
+    (save-excursion
+      (let* ((block-beg (save-excursion
+                          (goto-char (org-babel-where-is-src-block-head element))
+                          (line-beginning-position 2)))
+             (block-end (save-excursion
+                          (goto-char (org-element-property :end element))
+                          (skip-chars-backward " \t\n")
+                          (line-beginning-position)))
+             (beg (if beg (max beg block-beg) block-beg))
+             (end (if end (min end block-end) block-end))
+             (lang (org-element-property :language element))
+             (major-mode (org-src-get-lang-mode lang)))
+        (if (eq major-mode 'org-mode)
+            (user-error "Cannot reformat an org src block in org-mode")
+          (org-unescape-code-in-region beg end)))))
+  )
+
+(defun infinidoge/after-format--org-region (beg end)
+  (let ((element (org-element-at-point)))
+    (save-excursion
+      (let* ((block-beg (save-excursion
+                          (goto-char (org-babel-where-is-src-block-head element))
+                          (line-beginning-position 2)))
+             (block-end (save-excursion
+                          (goto-char (org-element-property :end element))
+                          (skip-chars-backward " \t\n")
+                          (line-beginning-position)))
+             (beg (if beg (max beg block-beg) block-beg))
+             (end (if end (min end block-end) block-end))
+             (lang (org-element-property :language element))
+             (major-mode (org-src-get-lang-mode lang)))
+        (if (eq major-mode 'org-mode)
+            (user-error "Cannot reformat an org src block in org-mode")
+          (org-escape-code-in-region beg end)))))
+  )
+
+(advice-add '+format--org-region :before #'infinidoge/before-format--org-region)
+(advice-add '+format--org-region :after #'infinidoge/after-format--org-region)
+
 ;; Automatically tangle src blocks on save
 (defun infinidoge/tangle-on-save ()
   (when (eq major-mode 'org-mode)
