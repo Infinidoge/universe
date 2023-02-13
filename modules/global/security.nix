@@ -28,7 +28,7 @@ with lib;
   services.openssh = {
     enable = true;
     openFirewall = mkDefault true;
-    forwardX11 = mkDefault false;
+    settings.X11Forwarding = mkDefault false;
     hostKeys = mkDefault [
       {
         bits = 4096;
