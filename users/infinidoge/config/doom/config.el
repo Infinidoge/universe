@@ -111,8 +111,7 @@
 (setq lsp-haskell-formatting-provider "ormolu")
 
 (after! lsp-mode
-  (add-to-list 'lsp-enabled-clients 'clangd)
-  (set-lsp-priority! 'clangd 1) ; ccls has priority 0
+  (add-to-list 'lsp-disabled-clients 'ccls)
   )
 
 ;; --- --- Original Configuration Comments --- ---
