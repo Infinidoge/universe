@@ -43,7 +43,7 @@ in
 
         brightnessctl
 
-        sxiv
+        mpv
 
         libreoffice-fresh
 
