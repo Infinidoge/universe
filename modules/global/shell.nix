@@ -34,10 +34,12 @@ in
     ctl = "systemctl";
     stl = ifSudo "s systemctl";
     utl = "systemctl --user";
-    ut = "systemctl --user start";
-    un = "systemctl --user stop";
-    up = ifSudo "s systemctl start";
-    dn = ifSudo "s systemctl stop";
+    ut = "utl start";
+    un = "utl stop";
+    ur = "utl restart";
+    up = ifSudo "stl start";
+    dn = ifSudo "stl stop";
+    rt = ifSudo "stl restart";
     jtl = "journalctl";
 
     # Miscellaneous
