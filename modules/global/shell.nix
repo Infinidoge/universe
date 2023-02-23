@@ -5,7 +5,6 @@ in
 {
   environment.shellAliases = {
     # quick cd
-    ".." = "cd ..";
     "..." = "cd ../..";
     "...." = "cd ../../..";
     "....." = "cd ../../../..";
@@ -20,8 +19,8 @@ in
     gi = "grep -i";
 
     # TODO: Investigate psgrep
-    psg = "ps x | gi -e 'PID\\s+TTY\\s+STAT\\s+TIME\\s+COMMAND' -e ";
-    psag = "ps ax | gi -e 'PID\\s+TTY\\s+STAT\\s+TIME\\s+COMMAND' -e ";
+    psg = "ps x | head -n -2 | gi -e 'PID\\s+TTY\\s+STAT\\s+TIME\\s+COMMAND' -e ";
+    psag = "ps ax | head -n -2 | gi -e 'PID\\s+TTY\\s+STAT\\s+TIME\\s+COMMAND' -e ";
 
     # internet ip
     myip = "echo $(curl -s ipecho.net/plain)";
@@ -41,6 +40,7 @@ in
     dn = ifSudo "s systemctl stop";
     jtl = "journalctl";
 
+    # Miscellaneous
     ll = "ls -al";
     dd = "dd status=progress";
     cat = "bat --paging=never";
@@ -55,5 +55,6 @@ in
     edit = "$EDITOR";
 
     path = "tr ':' '\n' <<< \"$PATH\"";
+    timestamp = "date +%s -d";
   };
 }
