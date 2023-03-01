@@ -8,6 +8,9 @@ let
   docs = pkgWithCategory "docs";
   devos = pkgWithCategory "devos";
 
+  pythonEnv = pkgs.python310.withPackages (p: with p; [
+    pkgs.qtile.passthru.unwrapped
+  ]);
 in
 {
   _file = toString ./.;
@@ -30,6 +33,10 @@ in
     unset _PATH
   '');
 
+  devshell.packages = [
+    pythonEnv
+  ];
+
   commands = with pkgs; [
     (devos nixUnstable)
     (devos agenix)
@@ -51,4 +58,11 @@ in
     (devos cachix)
 
   ;
+
+  env = [
+    {
+      name = "PYTHONPATH";
+      value = "${pythonEnv}/${pythonEnv.sitePackages}";
+    }
+  ];
 }
