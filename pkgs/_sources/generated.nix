@@ -3,14 +3,14 @@
 {
   qtile = {
     pname = "qtile";
-    version = "a6514a0f4aed6bd9175528971f82d5f936443553";
+    version = "4c69fca361bcb1d9753b37b9b903af32b27983c5";
     src = fetchFromGitHub ({
       owner = "qtile";
       repo = "qtile";
-      rev = "a6514a0f4aed6bd9175528971f82d5f936443553";
+      rev = "4c69fca361bcb1d9753b37b9b903af32b27983c5";
       fetchSubmodules = false;
-      sha256 = "sha256-+OLpAOPRMBJG54fSZ9wSmkxSdWsxZjWUlEve+vA/VPQ=";
+      sha256 = "sha256-c/1+17k+kx5M9c/VcXA6+o9GWzbM69IJkhCbK8NEdlc=";
     });
-    date = "2023-02-21";
+    date = "2023-02-27";
   };
 }
