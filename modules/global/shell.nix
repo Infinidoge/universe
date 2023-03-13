@@ -11,12 +11,18 @@ in
 
     # ls
     ls = "exa";
-    la = "ls -1";
-    l = "ls --long --all --no-permissions --no-user --git --icons";
+    la = "ls --long --no-filesize --no-permissions --no-user --git --icons";
+    lat = "la --tree";
+    l = "la --all";
     lt = "l --tree";
+    le = "l --extended";
+    lg = "l --gitignore";
+    lgt = "lt --gitignore";
     ll = "ls --long --all --group";
     llt = "ll --tree";
-    le = "ll --extended";
+    lle = "ll --extended";
+    llg = "ll --gitignore";
+    llgt = "llt --gitignore";
 
     # git
     g = "git";
