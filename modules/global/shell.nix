@@ -9,6 +9,15 @@ in
     "...." = "cd ../../..";
     "....." = "cd ../../../..";
 
+    # ls
+    ls = "exa";
+    la = "ls -1";
+    l = "ls --long --all --no-permissions --no-user --git --icons";
+    lt = "l --tree";
+    ll = "ls --long --all --group";
+    llt = "ll --tree";
+    le = "ll --extended";
+
     # git
     g = "git";
 
@@ -43,7 +52,6 @@ in
     jtl = "journalctl";
 
     # Miscellaneous
-    ll = "ls -al";
     dd = "dd status=progress";
     cat = "bat --paging=never";
 
