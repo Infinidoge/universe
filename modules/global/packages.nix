@@ -16,6 +16,7 @@
     direnv
     dnsutils
     dosfstools
+    exa
     exfat # Windows drives
     fd
     ffmpeg
