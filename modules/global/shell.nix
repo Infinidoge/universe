@@ -54,6 +54,7 @@ in
     # Miscellaneous
     dd = "dd status=progress";
     cat = "bat --paging=never";
+    catp = "bat --paging=always";
 
     lsdisk = "lsblk -o name,size,mountpoints,fstype,label,uuid,fsavail,fsuse%";
 
