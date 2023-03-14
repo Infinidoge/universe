@@ -24,7 +24,7 @@ in
 
     programs = {
       git = {
-        userEmail = "infinidoge@doge-inc.net";
+        userEmail = "infinidoge@inx.moe";
         userName = "Infinidoge";
       };
       firefox.enable = main.info.graphical;
