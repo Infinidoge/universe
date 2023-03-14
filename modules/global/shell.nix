@@ -18,7 +18,7 @@ in
     le = "l --extended";
     lg = "l --gitignore";
     lgt = "lt --gitignore";
-    ll = "ls --long --all --group";
+    ll = "ls --long --all --group --icons";
     llt = "ll --tree";
     lle = "ll --extended";
     llg = "ll --gitignore";
