@@ -16,13 +16,13 @@ in
     l = "la --all";
     lt = "l --tree";
     le = "l --extended";
-    lg = "l --gitignore";
-    lgt = "lt --gitignore";
+    lg = "l --git-ignore";
+    lgt = "lt --git-ignore";
     ll = "ls --long --all --group --icons";
     llt = "ll --tree";
     lle = "ll --extended";
-    llg = "ll --gitignore";
-    llgt = "llt --gitignore";
+    llg = "ll --git-ignore";
+    llgt = "llt --git-ignore";
 
     # git
     g = "git";
