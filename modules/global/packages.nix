@@ -16,6 +16,7 @@
     direnv
     dnsutils
     dosfstools
+    erdtree
     exa
     exfat # Windows drives
     fd
