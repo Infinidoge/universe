@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   ifSudo = lib.mkIf config.security.sudo.enable;
 in
@@ -10,7 +10,7 @@ in
     "....." = "cd ../../../..";
 
     # ls
-    ls = "exa";
+    ls = "${lib.getExe pkgs.exa}"; # HACK: Bypasses PATH so it works in nix develop shell
     la = "ls --long --no-filesize --no-permissions --no-user --git --icons";
     lat = "la --tree";
     l = "la --all";
