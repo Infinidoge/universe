@@ -144,6 +144,7 @@
                     java
                     nim
                     rust
+                    zig
                   ])
                 ];
               };
