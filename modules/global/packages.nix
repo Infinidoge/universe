@@ -11,6 +11,7 @@
     bat
     binutils
     btrfs-progs
+    cloc
     coreutils-doge
     curl
     direnv
