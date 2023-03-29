@@ -1,15 +1,16 @@
 { config, self, lib, pkgs, suites, profiles, inputs, ... }:
 let
+  inherit (lib) flatten optional mkIf;
   ifGraphical = lib.optionals config.info.graphical;
   ifGraphical' = lib.optional config.info.graphical;
 in
 {
-  imports = lib.flatten [
+  imports = flatten [
     (with suites; [ develop ])
   ];
 
   home = { config, main, suites, profiles, ... }: {
-    imports = lib.flatten [
+    imports = flatten [
       (with suites; [
         base
 
@@ -30,7 +31,7 @@ in
       firefox.enable = main.info.graphical;
     };
 
-    home.packages = with pkgs; lib.flatten [
+    home.packages = with pkgs; flatten [
       ncdu
 
       keepassxc
@@ -51,7 +52,7 @@ in
 
         discord-canary
 
-        (lib.optional main.modules.hardware.form.desktop qbittorrent)
+        (optional main.modules.hardware.form.desktop qbittorrent)
       ])
 
       arduino
@@ -97,7 +98,7 @@ in
   user = {
     name = "infinidoge";
     uid = 1000;
-    passwordFile = lib.mkIf config.modules.secrets.enable config.secrets.infinidoge-password;
+    passwordFile = mkIf config.modules.secrets.enable config.secrets.infinidoge-password;
     description = "Infinidoge, primary user of the system";
     group = "users";
     isNormalUser = true;
