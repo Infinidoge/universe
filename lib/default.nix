@@ -27,6 +27,4 @@ rec {
     replaceStrings
       [ "." ] [ "" ]
       (strings.sanitizeDerivationName (removePrefix "/" name));
-
-  getMainProgram = package: "${package}/bin/${attrByPath ["meta" "mainProgram"] package.pname package}";
 })
