@@ -64,14 +64,10 @@ in
       pkg = config.home-manager.users.infinidoge.programs.emacs.package;
       editorScript = pkgs.writeScriptBin "emacseditor" ''
         #!${pkgs.runtimeShell}
-        if [ -z "$1" ]; then
-          exec ${pkg}/bin/emacsclient --create-frame
-        else
-          exec ${pkg}/bin/emacsclient "$@"
-        fi
+        exec ${pkg}/bin/emacsclient --create-frame "$@"
       '';
     in
-    (lib.mkOverride 900 "${editorScript}/bin/emacseditor");
+    (lib.mkForce "${editorScript}/bin/emacseditor");
 
   modules = {
     locale.fonts = {
