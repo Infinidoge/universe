@@ -16,6 +16,7 @@
     directories = [
       "/home"
       "/etc/nixos"
+      "/etc/nixos-private"
 
       "/root/.local/share/nix"
       "/root/.ssh"
