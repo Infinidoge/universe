@@ -701,6 +701,21 @@
         "type": "github"
       }
     },
+    "private": {
+      "locked": {
+        "lastModified": 1680192378,
+        "narHash": "sha256-/zpk/EIDQkwoEPsYksKywno8+XAsKfYs0hxPekGafuk=",
+        "ref": "refs/heads/master",
+        "rev": "f451f10bd4711ebc4c538c18a92e722a00ef1697",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/Infinidoge/universe-private"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/Infinidoge/universe-private"
+      }
+    },
     "quick-nix-registry": {
       "inputs": {
         "globalRegistry": "globalRegistry"
@@ -735,6 +750,7 @@
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware_2",
         "nixos-wsl": "nixos-wsl",
+        "private": "private",
         "quick-nix-registry": "quick-nix-registry",
         "stable": "stable",
         "staging": "staging"

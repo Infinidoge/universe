@@ -2,6 +2,8 @@
   description = "Infinidoge's NixOS configuration";
 
   inputs = {
+    private.url = "git+ssh://git@github.com/Infinidoge/universe-private";
+
     # --- DevOS Flake Inputs
     # # --- Channels ---
     stable.url = "github:nixos/nixpkgs/nixos-22.05";
@@ -148,6 +150,8 @@
                   ])
                 ];
               };
+
+            inherit (inputs) private;
           };
         };
 
