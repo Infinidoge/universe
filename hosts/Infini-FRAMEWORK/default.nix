@@ -1,9 +1,10 @@
-{ suites, profiles, pkgs, lib, ... }: {
+{ suites, profiles, pkgs, lib, private, ... }: {
   imports = lib.lists.flatten [
     (with suites; [ base ])
 
+    private.nixosModules.wireless
+
     (with profiles; [
-      networking.wireless
       # services.proxy
     ])
 

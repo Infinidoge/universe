@@ -1,11 +1,10 @@
-{ suites, profiles, pkgs, lib, ... }: {
+{ suites, profiles, pkgs, lib, private, ... }: {
   imports = lib.our.flattenListSet {
     suites = with suites; [ base develop ];
-    imports = [ ./hardware-configuration.nix ];
-    profiles = with profiles;
-      [
-        networking.wireless
-      ];
+    imports = [
+      ./hardware-configuration.nix
+      private.nixosModules.wireless
+    ];
   };
 
   system.stateVersion = "21.11";
