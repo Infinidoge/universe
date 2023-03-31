@@ -61,7 +61,7 @@
     , nixos
     , home
     , agenix
-      # , deploy
+    , private
     , ...
     }@inputs:
     digga.lib.mkFlake
@@ -117,6 +117,8 @@
               bud.nixosModules.bud
               ./secrets
 
+              private.nixosModules.networking
+
               # --- Library Modules ---
               inputs.nixos-wsl.nixosModules.wsl
               inputs.impermanence.nixosModules.impermanence
@@ -151,7 +153,7 @@
                 ];
               };
 
-            inherit (inputs) private;
+            inherit private;
           };
         };
 
