@@ -51,6 +51,7 @@ in
         krita
 
         discord-canary
+        schildichat-desktop
 
         (optional main.modules.hardware.form.desktop qbittorrent)
       ])
