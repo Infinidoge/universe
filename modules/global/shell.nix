@@ -3,6 +3,11 @@ let
   ifSudo = lib.mkIf config.security.sudo.enable;
 in
 {
+  programs = {
+    fish.enable = true;
+    zsh.enable = true;
+  };
+
   environment.shellAliases = {
     # quick cd
     "..." = "cd ../..";
