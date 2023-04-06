@@ -22,5 +22,7 @@
       help = "Installs Doom Emacs from https://github.com/hlissner/doom-emacs";
       script = ./install-doom.bash;
     };
+
+    update.writer = lib.mkForce (budUtils.writeBashWithPaths [ nixUnstable git mercurial openssh ]);
   };
 }
