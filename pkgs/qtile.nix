@@ -16,7 +16,8 @@
 
 let
   unwrapped = python3Packages.buildPythonPackage rec {
-    inherit (source) pname version src;
+    inherit (source) pname src;
+    version = "0.0.0+${source.version}";
 
     patches = [
       ./patches/qtile-fix-restart.patch # https://github.com/NixOS/nixpkgs/issues/139568
