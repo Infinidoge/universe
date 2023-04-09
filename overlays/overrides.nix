@@ -16,6 +16,7 @@ channels: final: prev: {
     ;
 
   inherit (channels.fork)
+    nitter
     ;
 
   qtile = final.qtile-unstable;
