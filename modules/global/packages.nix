@@ -53,6 +53,7 @@
     wget
     whois
     xxHash
+    yq
     zip
   ];
 }
