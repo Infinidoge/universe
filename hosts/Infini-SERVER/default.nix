@@ -3,6 +3,7 @@
     (with suites; [ base ])
 
     private.nixosModules.minecraft-servers
+    private.nixosModules.nitter
     ./hardware-configuration.nix
   ];
 
