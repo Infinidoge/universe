@@ -16,7 +16,6 @@ channels: final: prev: {
     ;
 
   inherit (channels.fork)
-    packwiz
     ;
 
   qtile = final.qtile-unstable;
