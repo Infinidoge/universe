@@ -7,6 +7,10 @@
 , wrapGAppsHook
 }:
 
+let
+  jre' = jre.override { enableJavaFX = true; };
+in
+
 stdenv.mkDerivation (self: rec {
   pname = "mcaselector";
   version = "2.1";
@@ -28,7 +32,7 @@ stdenv.mkDerivation (self: rec {
     mkdir -pv $out/share/java $out/bin
     cp ${src} $out/share/java/${self.pname}.jar
 
-    makeWrapper ${jre}/bin/java $out/bin/mcaselector \
+    makeWrapper ${jre'}/bin/java $out/bin/mcaselector \
       --add-flags "-jar $out/share/java/${self.pname}.jar"
   '';
 
