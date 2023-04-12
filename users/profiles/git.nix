@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   programs.git = {
     enable = true;
+    package = pkgs.gitFull;
 
     extraConfig = {
       pull.rebase = true;
