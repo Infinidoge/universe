@@ -6,14 +6,13 @@ channels: final: prev: {
     discord-canary
     kmscon
     prismlauncher
+
+    # https://nixpk.gs/pr-tracker.html?pr=225481
+    nitter
     ;
 
   inherit (channels.stable)
     hydrus
-    ;
-
-  inherit (channels.fork)
-    nitter
     ;
 
   qtile = final.qtile-unstable;
