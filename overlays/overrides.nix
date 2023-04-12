@@ -6,9 +6,6 @@ channels: final: prev: {
     discord-canary
     kmscon
     prismlauncher
-
-    # https://github.com/NixOS/nixpkgs/issues/206958
-    clisp
     ;
 
   inherit (channels.stable)
