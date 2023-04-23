@@ -54,6 +54,7 @@
     whois
     xxHash
     yq
+    yt-dlp
     zip
   ];
 }

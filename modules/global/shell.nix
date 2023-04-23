@@ -78,5 +78,9 @@ in
 
     path = "tr ':' '\n' <<< \"$PATH\"";
     timestamp = "date +%s -d";
+
+    # yt-dlp
+    yt-m4a = ''yt-dlp -f "bestaudio[ext=m4a]" -o "%(title)s.%(ext)s"'';
+    yt-mp4 = ''yt-dlp -f "best[ext=mp4]" -o "%(title)s.%(ext)s"'';
   };
 }
