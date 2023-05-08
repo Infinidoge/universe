@@ -50,7 +50,7 @@ in
 
         krita
 
-        discord-canary
+        (discord-canary.override { withVencord = true; })
         schildichat-desktop
 
         (optional main.modules.hardware.form.desktop qbittorrent)
