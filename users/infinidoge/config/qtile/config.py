@@ -592,7 +592,7 @@ def init_widget_list(main=True, laptop=False):
                             )
                         ],
                         [
-                            widget.TextBox(text="", padding=0, fontsize=24),
+                            widget.TextBox(text="󰍛", padding=1, fontsize=18),
                             widget.Memory(padding=5),
                         ],
                         [
