@@ -666,8 +666,8 @@ screens = [
             size=20,
             opacity=1.0,
         ),
-        wallpaper="~/.config/qtile/images/BotanBackground.jpg",
-        wallpaper_mode="fill",
+        wallpaper="@wallpaper@",
+        wallpaper_mode="@wallpaper_mode@",
     )
     for i in range(
         int(run_command("xrandr --listmonitors | grep 'Monitors:' | awk {'print $2'}"))
