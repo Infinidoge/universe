@@ -14,4 +14,6 @@ final: prev: {
   sim65 = final.callPackage ./sim65.nix { };
 
   unbted = final.callPackage ./unbted.nix { };
+
+  substituteSubset = final.callPackage ./substitute-subset.nix { };
 }
