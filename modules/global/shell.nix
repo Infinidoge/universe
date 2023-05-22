@@ -29,6 +29,9 @@ in
     llg = "ll --git-ignore";
     llgt = "llt --git-ignore";
 
+    # erdtree
+    et = "erd";
+
     # git
     g = "git";
 
