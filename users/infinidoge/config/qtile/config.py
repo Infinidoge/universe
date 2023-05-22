@@ -16,7 +16,7 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 
-LAPTOP = os.getenv("LAPTOP", False)
+LAPTOP = bool(os.getenv("LAPTOP", False))
 
 colors = [
     # panel background
