@@ -9,8 +9,6 @@ channels: final: prev: {
     ;
 
   inherit (channels.fork)
-    # https://nixpk.gs/pr-tracker.html?pr=229173
-    discord-canary
     ;
 
   inherit (channels.stable)
