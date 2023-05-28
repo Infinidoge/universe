@@ -69,6 +69,8 @@ in
 
     cat = "bat --paging=never";
     catp = "bat --paging=always";
+    acat = "mpv --no-audio-display";
+    vcat = "mpv";
 
     lsdisk = "lsblk -o name,size,mountpoints,fstype,label,uuid,fsavail,fsuse%";
 
