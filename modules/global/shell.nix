@@ -72,8 +72,8 @@ in
 
     lsdisk = "lsblk -o name,size,mountpoints,fstype,label,uuid,fsavail,fsuse%";
 
-    mnt = "s mount";
-    umnt = "s umount";
+    mnt = ifSudo "s mount";
+    umnt = ifSudo "s umount";
 
     mktmp = "cd $(mktemp -d)";
 
