@@ -9,6 +9,8 @@ channels: final: prev: {
     ;
 
   inherit (channels.fork)
+    # https://nixpk.gs/pr-tracker.html?pr=234673
+    nitter
     ;
 
   inherit (channels.stable)
