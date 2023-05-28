@@ -34,7 +34,6 @@ in
 
     # git
     g = "git";
-
     gcd = "cd $(git root || echo \".\")";
 
     # grep
@@ -67,6 +66,7 @@ in
 
     # Miscellaneous
     dd = "dd status=progress";
+
     cat = "bat --paging=never";
     catp = "bat --paging=always";
 
