@@ -20,6 +20,7 @@
     digga.inputs.deploy.follows = "blank";
     digga.inputs.darwin.follows = "blank";
     blank.url = "github:divnix/blank";
+    digga.inputs.flake-utils-plus.url = "github:ravensiris/flake-utils-plus/ravensiris/fix-devshell-legacy-packages";
 
     bud.url = "github:divnix/bud";
     bud.inputs.nixpkgs.follows = "nixos";
