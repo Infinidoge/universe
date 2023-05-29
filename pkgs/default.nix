@@ -15,5 +15,7 @@ final: prev: {
 
   unbted = final.callPackage ./unbted.nix { };
 
+  setris = final.callPackage ./setris.nix { };
+
   substituteSubset = final.callPackage ./substitute-subset.nix { };
 }
