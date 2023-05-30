@@ -29,9 +29,6 @@
     home.url = "github:nix-community/home-manager";
     home.inputs.nixpkgs.follows = "nixos";
 
-    # deploy.url = "github:input-output-hk/deploy-rs";
-    # deploy.inputs.nixpkgs.follows = "nixos";
-
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixos";
     agenix.inputs.home-manager.follows = "home";
@@ -202,8 +199,6 @@
         devshell = ./shell;
 
         homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
-
-        # deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
 
         templates.default = self.templates.bud;
         templates.bud.path = ./.;
