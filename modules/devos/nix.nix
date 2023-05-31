@@ -88,7 +88,7 @@ with lib;
         '';
 
         # fix nixos-option
-        nixos-option = "nixos-option -I nixpkgs=${self}/lib/compat";
+        # nixos-option = "nixos-option -I nixpkgs=${self}/lib/compat";
       };
   };
 }
