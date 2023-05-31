@@ -5,7 +5,8 @@
 }:
 
 stdenv.mkDerivation {
-  name = "sim65";
+  pname = "sim65";
+  version = "unstable-2022-03-03";
 
   src = fetchFromGitHub {
     owner = "sittner";
