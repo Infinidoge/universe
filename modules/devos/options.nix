@@ -23,7 +23,7 @@ in
     info = {
       monitors = mkOpt int 1;
       graphical = mkBoolOpt config.services.xserver.enable;
-      model = mkInfoOpt;
+      model = mkOpt types.str "A Computer";
       env = {
         wm = mkInfoOpt;
       };
