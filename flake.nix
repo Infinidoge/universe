@@ -149,6 +149,7 @@
                     rust
                     zig
                     lua
+                    kotlin
                   ])
                 ];
               };
