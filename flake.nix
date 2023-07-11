@@ -141,15 +141,15 @@
 
                 develop = [
                   (with profiles.develop.programming; [
-                    python
-                    racket
                     haskell
                     java
+                    kotlin
+                    lua
                     nim
+                    python
+                    racket
                     rust
                     zig
-                    lua
-                    kotlin
                   ])
                 ];
               };
