@@ -148,6 +148,7 @@
                     nim
                     rust
                     zig
+                    lua
                   ])
                 ];
               };
