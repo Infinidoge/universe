@@ -102,6 +102,7 @@
 
 ;; --- LSP ---
 (setq lsp-csharp-server-path (executable-find "omnisharp"))
+(setq lsp-clients-lua-language-server-bin (executable-find "lua-language-server"))
 (setq lsp-haskell-formatting-provider "ormolu")
 
 (after! lsp-mode
