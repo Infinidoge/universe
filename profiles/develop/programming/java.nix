@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    openjdk17
+    openjdk19
     clang-tools
   ];
 }
