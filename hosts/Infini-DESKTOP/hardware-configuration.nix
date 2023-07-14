@@ -76,7 +76,7 @@ in
       };
 
       "/home/infinidoge/Hydrus" = {
-        device = uuid "b26b002b-2ed5-44ea-8018-f65c994a79cb";
+        device = uuid "2a025f29-4058-4a76-8f38-483f0925375d";
         fsType = "btrfs";
         options = [ "subvol=Hydrus" "autodefrag" "noatime" "ssd" ];
       };
