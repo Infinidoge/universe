@@ -6,7 +6,7 @@
 
     # --- DevOS Flake Inputs
     # # --- Channels ---
-    stable.url = "github:nixos/nixpkgs/nixos-22.05";
+    stable.url = "github:nixos/nixpkgs/nixos-23.05";
     nixos.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
     staging.url = "github:nixos/nixpkgs/staging";
