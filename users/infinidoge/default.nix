@@ -28,7 +28,10 @@ in
         userEmail = "infinidoge@inx.moe";
         userName = "Infinidoge";
       };
-      firefox.enable = main.info.graphical;
+      firefox = {
+        enable = main.info.graphical;
+        package = pkgs.firefox-devedition;
+      };
     };
 
     home.packages = with pkgs; flatten [
