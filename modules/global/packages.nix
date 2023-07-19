@@ -25,6 +25,7 @@
     frei
     git
     htop
+    hyfetch
     iputils
     jq
     lynx
@@ -32,7 +33,6 @@
     man-pages-posix
     manix
     moreutils
-    neofetch
     nmap
     ntfs3g # Windows drives
     parted
