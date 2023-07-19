@@ -39,6 +39,8 @@ in
       unbted
       packwiz
 
+      toot
+
       (ifGraphical [
         speedcrunch
 
