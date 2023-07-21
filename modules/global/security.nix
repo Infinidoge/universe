@@ -14,6 +14,11 @@ with lib;
     pam.enableSSHAgentAuth = true;
   };
 
+  hardware = {
+    enableRedistributableFirmware = mkDefault true;
+    cpu.amd.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
+  };
+
   boot = {
     # Make tmp volatile, using tmpfs is speedy on SSD systems
     # Redundant on opt-in state systems
