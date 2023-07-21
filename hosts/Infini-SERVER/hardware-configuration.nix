@@ -21,7 +21,7 @@ in
       esp = uuid "A2B8-4C6E";
       data = uuid "59abb0ff-fe4e-4061-87d2-b728b937656a";
 
-      btrfsOptions = [ "defaults" "autodefrag" "noatime" ];
+      commonOptions = [ "autodefrag" "noatime" "ssd" ];
     in
     {
       "/" = {
@@ -33,35 +33,35 @@ in
       "/media/main" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=/" "ssd" ] ++ btrfsOptions;
+        options = [ "subvol=/" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/media/data" = lib.mkIf (data != null) {
         device = data;
         fsType = "btrfs";
-        options = [ "subvol=/" "ssd" ] ++ btrfsOptions;
+        options = [ "subvol=/" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/persist" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=root" "ssd" ] ++ btrfsOptions;
+        options = [ "subvol=root" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/etc/ssh" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvolid=264" "ssd" ] ++ btrfsOptions;
+        options = [ "subvolid=264" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/persist/srv" = lib.mkIf (data != null) {
         device = data;
         fsType = "btrfs";
-        options = [ "subvol=root/srv" "ssd" ] ++ btrfsOptions;
+        options = [ "subvol=root/srv" ] ++ commonOptions;
         neededForBoot = true;
       };
 
@@ -80,14 +80,14 @@ in
       "/nix" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=nix" "ssd" ] ++ btrfsOptions;
+        options = [ "subvol=nix" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/boot" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=boot" "ssd" ] ++ btrfsOptions;
+        options = [ "subvol=boot" ] ++ commonOptions;
         neededForBoot = true;
       };
 
