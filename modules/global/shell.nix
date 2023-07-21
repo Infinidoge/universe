@@ -17,14 +17,14 @@ in
     # ls
     ls = "${lib.getExe pkgs.exa}"; # HACK: Bypasses PATH so it works in nix develop shell
     la = "ls --long --no-filesize --no-permissions --no-user --git --icons";
-    lat = "la --tree";
+    lat = "la --tree -I .git";
     l = "la --all";
-    lt = "l --tree";
+    lt = "l --tree -I .git";
     le = "l --extended";
     lg = "l --git-ignore";
     lgt = "lt --git-ignore";
     ll = "ls --long --all --group --icons";
-    llt = "ll --tree";
+    llt = "ll --tree -I .git";
     lle = "ll --extended";
     llg = "ll --git-ignore";
     llgt = "llt --git-ignore";
