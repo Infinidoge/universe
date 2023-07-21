@@ -11,9 +11,6 @@ in
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  hardware.enableRedistributableFirmware = lib.mkDefault true;
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
   fileSystems =
     let
       main = uuid "13f97ece-823e-4785-b06e-6c284105d379";
