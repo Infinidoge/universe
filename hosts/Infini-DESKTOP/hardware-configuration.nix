@@ -16,53 +16,53 @@ in
       main = uuid "13f97ece-823e-4785-b06e-6c284105d379";
       esp = uuid "1DB7-2844";
 
-      btrfsOptions = [ "defaults" "autodefrag" "noatime" ];
+      commonOptions = [ "autodefrag" "noatime" "ssd" ];
     in
     {
       "/" = {
         device = "none";
         fsType = "tmpfs";
-        options = [ "defaults" "size=16G" "mode=755" ];
+        options = [ "defaults" "size=28G" "mode=755" ];
       };
 
       "/persist" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=root" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=root" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/persist/srv" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=root/srv" "ssd" ] ++ btrfsOptions;
+        options = [ "subvol=root/srv" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/etc/ssh" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvolid=262" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvolid=262" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/media/main" = {
         device = main;
         fsType = "btrfs";
-        options = [ "autodefrag" "noatime" "ssd" ];
+        options = commonOptions;
       };
 
       "/nix" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=nix" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=nix" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/boot" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=boot" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=boot" ] ++ commonOptions;
         neededForBoot = true;
       };
 
@@ -75,7 +75,7 @@ in
       "/home/infinidoge/Hydrus" = {
         device = uuid "2a025f29-4058-4a76-8f38-483f0925375d";
         fsType = "btrfs";
-        options = [ "subvol=Hydrus" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=Hydrus" ] ++ commonOptions;
       };
     };
 

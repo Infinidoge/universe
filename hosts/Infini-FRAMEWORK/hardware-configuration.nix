@@ -16,6 +16,7 @@ in
   fileSystems =
     let
       main = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
+      commonOptions = [ "autodefrag" "noatime" "ssd" ];
     in
     {
       "/" = {
@@ -27,34 +28,34 @@ in
       "/persist" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=root" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=root" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/etc/ssh" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvolid=628" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvolid=628" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/media/main" = {
         device = main;
         fsType = "btrfs";
-        options = [ "autodefrag" "noatime" "ssd" ];
+        options = commonOptions;
       };
 
       "/nix" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=nix" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=nix" ] ++ commonOptions;
         neededForBoot = true;
       };
 
       "/boot" = {
         device = main;
         fsType = "btrfs";
-        options = [ "subvol=boot" "autodefrag" "noatime" "ssd" ];
+        options = [ "subvol=boot" ] ++ commonOptions;
         neededForBoot = true;
       };
 
