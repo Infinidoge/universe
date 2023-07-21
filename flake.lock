@@ -409,11 +409,11 @@
     },
     "fork": {
       "locked": {
-        "lastModified": 1685301054,
-        "narHash": "sha256-OZwCarL92q2Qkie/ahZj8vJgBBJMZ1pKrWxNLZZT35c=",
+        "lastModified": 1689903276,
+        "narHash": "sha256-ts3dcM0O4V+rrJN2uUQhiYbto7lDlFmh3XLU7HLQ3iM=",
         "owner": "Infinidoge",
         "repo": "nixpkgs",
-        "rev": "6e540becc9aa9b046dcef78964a1866bc4a3e7ec",
+        "rev": "298c16291f188742c31cf7812ce61773a1c63f3b",
         "type": "github"
       },
       "original": {
