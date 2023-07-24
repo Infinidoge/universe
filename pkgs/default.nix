@@ -3,6 +3,7 @@ final: prev: {
   sources = prev.callPackage (import ./_sources/generated.nix) { };
   # then, call packages with `final.callPackage`
 
+  hexagon = final.callPackage ./hexagon.nix { };
   mcaselector = final.callPackage ./mcaselector.nix { };
   nix-modrinth-prefetch = final.callPackage ./nix-modrinth-prefetch.nix { };
   olympus = final.callPackage ./olympus.nix { };
