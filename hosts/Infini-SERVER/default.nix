@@ -5,6 +5,7 @@
     private.nixosModules.minecraft-servers
     private.nixosModules.nitter
     ./hardware-configuration.nix
+    ./filesystems.nix
   ];
 
   system.stateVersion = "22.05";
