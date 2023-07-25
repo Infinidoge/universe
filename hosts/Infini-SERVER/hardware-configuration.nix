@@ -65,18 +65,6 @@ in
         neededForBoot = true;
       };
 
-      # "/persist" = {
-      #   device = "overlay";
-      #   fsType = "overlay";
-      #   options = [
-      #     "upperdir=/media/main/root"
-      #     "lowerdir=/media/data/root"
-      #     "workdir=/media/main/work"
-      #     "redirect_dir=on"
-      #   ];
-      #   neededForBoot = true;
-      # };
-
       "/nix" = {
         device = main;
         fsType = "btrfs";
