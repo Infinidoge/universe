@@ -14,6 +14,7 @@ in
   fileSystems =
     let
       main = uuid "13f97ece-823e-4785-b06e-6c284105d379";
+      backup = uuid "dabfc36b-20d1-4b09-8f55-4f9df7499741";
       esp = uuid "1DB7-2844";
 
       commonOptions = [ "autodefrag" "noatime" "ssd" ];
@@ -48,6 +49,12 @@ in
 
       "/media/main" = {
         device = main;
+        fsType = "btrfs";
+        options = commonOptions;
+      };
+
+      "/media/backup" = {
+        device = backup;
         fsType = "btrfs";
         options = commonOptions;
       };
