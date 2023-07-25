@@ -8,6 +8,7 @@
     private.nixosModules.wireless
 
     ./hardware-configuration.nix
+    ./filesystems.nix
   ];
 
   system.stateVersion = "21.11";
