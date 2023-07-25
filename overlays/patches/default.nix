@@ -1,7 +1,12 @@
-final: prev: {
-  coreutils-doge = prev.coreutils.overrideAttrs (old: {
-    patches = [ ./coreutils.patch ];
+final: prev:
+
+let
+  addPatches = package: patches: package.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ patches;
   });
+in
+{
+  coreutils-doge = addPatches prev.coreutils [ ./coreutils.patch ];
 
   # nitter = prev.nitter.overrideAttrs (old: {
   #   patches = (old.patches or [ ]) ++ [
