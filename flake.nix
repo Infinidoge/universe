@@ -106,7 +106,7 @@
             system = "x86_64-linux";
             channelName = "nixos";
             imports = [ (digga.lib.importExportableModules ./modules) ];
-            modules = [
+            modules = let users = digga.lib.rakeLeaves ./users; in [
               # --- DevOS Modules ---
               { lib.our = self.lib; }
               digga.nixosModules.bootstrapIso
@@ -125,87 +125,54 @@
 
               # --- Domain-Specific Modules ---
               inputs.nix-minecraft.nixosModules.minecraft-servers
+
+              # --- Users ---
+              users.root
+              users.infinidoge
             ];
           };
 
           imports = [ (digga.lib.importHosts ./hosts) ];
-          importables = rec {
-            profiles = digga.lib.rakeLeaves ./profiles // {
-              users = digga.lib.rakeLeaves ./users;
-            };
-            suites = with profiles; self.lib.flattenSetList
-              rec {
-                base = [
-                  (with users; [ root infinidoge ])
-                ];
-
-                develop = [
-                  (with profiles.develop.programming; [
-                    haskell
-                    java
-                    kotlin
-                    lua
-                    nim
-                    python
-                    racket
-                    rust
-                    zig
-                  ])
-                ];
-              };
-
+          importables = {
             inherit private;
+            profiles = digga.lib.rakeLeaves ./profiles;
           };
         };
 
-        home = {
-          imports = [ (digga.lib.importExportableModules ./users/modules) ];
-          modules = [
-            inputs.impermanence.nixosModules.home-manager.impermanence
-          ];
-          importables = rec {
-            inherit inputs;
-
+        home =
+          let
             profiles = digga.lib.rakeLeaves ./users/profiles;
-            suites = with profiles; self.lib.flattenSetList
-              rec {
-                base = [
-                  # Base Configuration
-                  xdg
+          in
+          {
+            imports = [ (digga.lib.importExportableModules ./users/modules) ];
+            modules = with profiles; [
+              inputs.impermanence.nixosModules.home-manager.impermanence
 
-                  # Programs
-                  direnv
-                  git
-                  emacs
-                  vim
-                  gpg
-                  ssh
-                  keychain
+              # Base Configuration
+              xdg
 
-                  # Terminal
-                  starship
-                  shells.all
-                  tmux
-                ];
+              # Programs
+              direnv
+              git
+              emacs
+              vim
+              gpg
+              ssh
+              keychain
 
-                graphic = [
-                  kitty
-                  rofi
-                  themeing
-                  flameshot
-                ];
-              };
+              # Terminal
+              starship
+              shells.all
+              tmux
+            ];
+            importables = {
+              inherit inputs profiles;
+            };
           };
-        };
 
         devshell = ./shell;
 
         homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
-
-        templates.default = self.templates.bud;
-        templates.bud.path = ./.;
-        templates.bud.description = "bud template";
-
       }
     //
     {

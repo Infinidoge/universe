@@ -1,10 +1,5 @@
-{ suites, profiles, pkgs, lib, private, ... }: {
+{ pkgs, lib, private, ... }: {
   imports = lib.lists.flatten [
-    (with suites; [
-      base
-      develop
-    ])
-
     private.nixosModules.wireless
 
     ./hardware-configuration.nix

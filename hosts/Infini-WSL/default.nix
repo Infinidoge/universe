@@ -1,11 +1,5 @@
-{ suites, profiles, pkgs, lib, ... }: {
-  imports = lib.lists.flatten [
-    (with suites; [
-      base
-      develop
-    ])
-  ];
-
+{ pkgs, lib, ... }:
+{
   system.stateVersion = "22.05";
 
   # I don't use Windows, but when I do, I want NixOS there with me,

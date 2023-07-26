@@ -1,4 +1,4 @@
-{ config, self, lib, pkgs, suites, profiles, inputs, ... }:
+{ config, self, lib, pkgs, profiles, inputs, ... }:
 let
   inherit (lib) flatten optional mkIf;
   ifGraphical = lib.optionals config.info.graphical;
@@ -6,18 +6,30 @@ let
 in
 {
   imports = flatten [
-    (with suites; [ develop ])
+    (with profiles.develop.programming; [
+      haskell
+      java
+      kotlin
+      lua
+      nim
+      python
+      racket
+      rust
+      zig
+    ])
   ];
 
-  home = { config, main, suites, profiles, ... }: {
+  home = { config, main, profiles, ... }: {
     imports = flatten [
-      (with suites; [
-        base
-
-        (ifGraphical' graphic)
-      ])
       (with profiles; [
         htop
+
+        (ifGraphical' [
+          kitty
+          rofi
+          themeing
+          flameshot
+        ])
       ])
 
       ./config
