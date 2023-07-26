@@ -4,13 +4,7 @@
     openssh.authorizedKeys.keys = import ./ssh-keys.nix;
   };
 
-  home-manager.users.root = { suites, profiles, ... }: {
-    imports = lib.lists.flatten [
-      (with suites; [
-        base
-      ])
-    ];
-
+  home-manager.users.root = { ... }: {
     programs.ssh.matchBlocks = {
       "server.doge-inc.net" = {
         identityFile = "/root/.ssh/id_25519";
