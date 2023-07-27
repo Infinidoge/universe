@@ -59,7 +59,6 @@
   outputs =
     { self
     , digga
-    , bud
     , nixos
     , home
     , agenix
@@ -117,7 +116,6 @@
               digga.nixosModules.nixConfig
               home.nixosModules.home-manager
               agenix.nixosModules.age
-              bud.nixosModules.bud
               ./secrets
 
               private.nixosModules.networking
@@ -178,9 +176,5 @@
 
         homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
       }
-    //
-    {
-      budModules = { devos = import ./shell/bud; };
-    }
   ;
 }

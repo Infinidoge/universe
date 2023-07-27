@@ -146,9 +146,8 @@ Managed using `agenix`.
 
 ### `/shell`
 
-Things related to the shell environment for this configuration. Most notably, the `bud` CLI tool, and the devshell.
-This section really needs a refactor, considering `bud` is a dead project, and the setup for the devShell is poorly organised.
-Dig through at your own peril.
+Things related to the shell environment for this configuration.
+This is pending a redo, since I recently replaced `bud` with [my own CLI tool, `universe-cli`](https://github.com/Infinidoge/universe-cli).
 
 ### `/users`
 
