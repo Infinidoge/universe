@@ -8,6 +8,8 @@
 
   # Packages wanted everywhere
   environment.systemPackages = with pkgs; [
+    universe-cli
+
     bat
     binutils
     btrfs-progs

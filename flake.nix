@@ -83,6 +83,7 @@
               # --- Domain-Specific Overlays
               inputs.nix-minecraft.overlay
               inputs.fenix.overlays.default
+              inputs.universe-cli.overlays.default
             ];
           };
           stable = { };
