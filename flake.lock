@@ -745,18 +745,14 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1633971123,
-        "narHash": "sha256-WmI4NbH1IPGFWVkuBkKoYgOnxgwSfWDgdZplJlQ93vA=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e4ef597edfd8a0ba5f12362932fc9b1dd01a0aef",
-        "type": "github"
+        "lastModified": 0,
+        "narHash": "sha256-GGMupfk/lGzPBQ/dRrcQEhiFZ0F5KPg0j5Q4Fb5coxc=",
+        "path": "/nix/store/r2bbhmlfvfpir9hp8fjs31kj13kwgwyl-source",
+        "type": "path"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable-small",
-        "repo": "nixpkgs",
-        "type": "github"
+        "id": "nixpkgs",
+        "type": "indirect"
       }
     },
     "nixpkgs-unstable": {
@@ -829,22 +825,6 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_5": {
-      "locked": {
-        "lastModified": 1681358109,
-        "narHash": "sha256-eKyxW4OohHQx9Urxi7TQlFBTDWII+F+x2hklDOQPB50=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "96ba1c52e54e74c3197f4d43026b3f3d92e83ff9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -979,7 +959,10 @@
     "rust-overlay_2": {
       "inputs": {
         "flake-utils": "flake-utils_9",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": [
+          "universe-cli",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1690252178,
@@ -1128,11 +1111,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1690432659,
-        "narHash": "sha256-ZTq7tWTY0fdTctQ65ZwEFePVRzdqkqdnCvmf+dka4qs=",
+        "lastModified": 1690485748,
+        "narHash": "sha256-rHdGcc2R8onZsh4c5unYFjeS5YHShAu5rhe4TgpD7s4=",
         "owner": "Infinidoge",
         "repo": "universe-cli",
-        "rev": "2376afcb7e03e565f905b42446c64378bccfadae",
+        "rev": "37165084de0c1a35ed446c41e54da3bfd6b53385",
         "type": "github"
       },
       "original": {
