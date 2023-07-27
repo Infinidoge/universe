@@ -47,6 +47,8 @@ in
     };
 
     home.packages = with pkgs; flatten [
+      inputs.universe-cli.packages.x86_64-linux.default
+
       ncdu
 
       keepassxc

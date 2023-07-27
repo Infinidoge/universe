@@ -4,6 +4,9 @@
   inputs = {
     private.url = "git+ssh://git@github.com/Infinidoge/universe-private";
 
+    universe-cli.url = "github:Infinidoge/universe-cli";
+    universe-cli.inputs.nixpkgs.follows = "nixos";
+
     # --- DevOS Flake Inputs
     # # --- Channels ---
     stable.url = "github:nixos/nixpkgs/nixos-23.05";
