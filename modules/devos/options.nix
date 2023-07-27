@@ -50,8 +50,6 @@ in
 
     environment.variables = mkAliasDefinitions options.env;
 
-    bud.localFlakeClone = config.dotfiles.dir;
-
     secrets = mapAttrs (n: v: v.path) config.age.secrets;
   };
 }

@@ -1,7 +1,5 @@
 { config, lib, ... }:
 {
-  bud.enable = true;
-
   programs = {
     # Enable dconf for programs that need it
     dconf.enable = true;
