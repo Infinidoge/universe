@@ -9,6 +9,8 @@ in
   };
 
   environment.shellAliases = {
+    uni = "universe-cli";
+
     # quick cd
     "..." = "cd ../..";
     "...." = "cd ../../..";
