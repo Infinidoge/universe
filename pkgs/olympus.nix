@@ -30,7 +30,7 @@ let
   };
 in
 buildFHSUserEnv {
-  name = "olympus";
+  inherit (olympus) name;
   runScript = "${olympus}/opt/olympus/olympus";
   targetPkgs = pkgs: [
     pkgs.freetype

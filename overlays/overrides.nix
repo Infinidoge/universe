@@ -1,21 +1,13 @@
-channels: final: prev: {
+inputs: final: prev:
+let
+  mkPkgs = channel: channel.legacyPackages.${final.system};
 
-  __dontExport = true; # overrides clutter up actual creations
-
-  inherit (channels.latest)
-    # discord-canary
-    kmscon
-    prismlauncher
+  latest = mkPkgs inputs.latest;
+  fork = mkPkgs inputs.fork;
+in
+{
+  inherit (latest)
     ;
 
-  inherit (channels.fork)
-    # https://nixpk.gs/pr-tracker.html?pr=244591
-    firefox-devedition
-    ;
 
-  inherit (channels.stable)
-    hydrus
-    ;
-
-  qtile = final.qtile-unstable;
 }

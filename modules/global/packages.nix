@@ -10,6 +10,7 @@
   environment.systemPackages = with pkgs; [
     universe-cli
 
+    agenix
     bat
     binutils
     btrfs-progs

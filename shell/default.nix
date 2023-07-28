@@ -1,6 +1,24 @@
-{ self, inputs, ... }:
+{ self, lib, ... }:
+
 {
-  exportedModules = [
-    ./devos.nix
-  ];
+  perSystem = { pkgs, ... }: {
+    devshells.default =
+      let
+        pythonEnv = (pkgs.python310.withPackages (p: with p; [
+          pkgs.qtile.passthru.unwrapped
+        ]));
+      in
+      {
+        devshell.packages = [
+          pythonEnv
+        ];
+
+        env = [
+          {
+            name = "PYTHONPATH";
+            value = "${pythonEnv}/${pythonEnv.sitePackages}";
+          }
+        ];
+      };
+  };
 }
