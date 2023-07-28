@@ -19,6 +19,8 @@ with lib;
     cpu.amd.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
   };
 
+  users.mutableUsers = false;
+
   boot = {
     # Make tmp volatile, using tmpfs is speedy on SSD systems
     # Redundant on opt-in state systems

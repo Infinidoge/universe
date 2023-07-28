@@ -26,5 +26,9 @@ rec {
   sanitizeName = name:
     replaceStrings
       [ "." ] [ "" ]
-      (strings.sanitizeDerivationName (removePrefix "/" name));
-})
+      (sanitizeDerivationName (removePrefix "/" name));
+} // (
+  import ./digga.nix { inherit lib; }
+) // (
+  import ./hosts.nix { inherit lib; }
+))

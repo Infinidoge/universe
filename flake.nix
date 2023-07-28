@@ -2,39 +2,32 @@
   description = "Infinidoge's NixOS configuration";
 
   inputs = {
+    # nixpkgs
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    latest.url = "github:nixos/nixpkgs";
+    fork.url = "github:Infinidoge/nixpkgs/combined/all";
+
+    # configuration components
     private.url = "git+ssh://git@github.com/Infinidoge/universe-private";
 
     universe-cli.url = "github:Infinidoge/universe-cli";
-    universe-cli.inputs.nixpkgs.follows = "nixos";
+    universe-cli.inputs.nixpkgs.follows = "nixpkgs";
 
-    # --- DevOS Flake Inputs
-    # # --- Channels ---
-    stable.url = "github:nixos/nixpkgs/nixos-23.05";
-    nixos.url = "github:nixos/nixpkgs/nixos-unstable";
-    latest.url = "github:nixos/nixpkgs";
-    staging.url = "github:nixos/nixpkgs/staging";
-    fork.url = "github:Infinidoge/nixpkgs/combined/all";
+    # nix libraries
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
-    # # --- Libraries ---
-    digga.url = "github:divnix/digga";
-    digga.inputs.nixpkgs.follows = "nixos";
-    digga.inputs.nixlib.follows = "nixos";
-    digga.inputs.home-manager.follows = "home";
-    digga.inputs.deploy.follows = "blank";
-    digga.inputs.darwin.follows = "blank";
-    blank.url = "github:divnix/blank";
-    digga.inputs.flake-utils-plus.url = "github:ravensiris/flake-utils-plus/ravensiris/fix-devshell-legacy-packages";
+    haumea.url = "github:nix-community/haumea/v0.2.2";
+    haumea.inputs.nixpkgs.follows = "nixpkgs";
 
-    bud.url = "github:divnix/bud";
-    bud.inputs.nixpkgs.follows = "nixos";
-    bud.inputs.devshell.follows = "digga/devshell";
-
-    home.url = "github:nix-community/home-manager";
-    home.inputs.nixpkgs.follows = "nixos";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixos";
-    agenix.inputs.home-manager.follows = "home";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.home-manager.follows = "home-manager";
+
+    devshell.url = "github:numtide/devshell";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
@@ -49,132 +42,132 @@
     # --- Domain-Specific Flake Inputs
     # # --- Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft/develop";
-    nix-minecraft.inputs.nixpkgs.follows = "nixos";
+    nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
 
     # # --- Rust
     fenix.url = "github:nix-community/fenix";
-    fenix.inputs.nixpkgs.follows = "nixos";
+    fenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    { self
-    , digga
-    , nixos
-    , home
-    , agenix
-    , private
-    , ...
-    }@inputs:
-    digga.lib.mkFlake
-      {
-        inherit self inputs;
+  outputs = inputs@{ flake-parts, nixpkgs, private, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ self, lib, ... }: {
+    systems = [ "x86_64-linux" ];
 
-        channelsConfig = { allowUnfree = true; };
+    debug = true;
 
-        channels = {
-          nixos = {
-            imports = [ (digga.lib.importOverlays ./overlays) ];
-            overlays = [
-              # --- DevOS Overlays
-              agenix.overlays.default
-              ./pkgs/default.nix
+    perSystem = { pkgs, system, ... }: {
+      _module.args.pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    };
 
-              # --- Domain-Specific Overlays
-              inputs.nix-minecraft.overlay
-              inputs.fenix.overlays.default
-              inputs.universe-cli.overlays.default
-            ];
-          };
-          stable = { };
-          latest = { };
-          staging = { };
-          fork = { };
-        };
+    flake = {
+      lib = import ./lib { inherit (nixpkgs) lib; };
 
-        lib = import ./lib { lib = digga.lib // nixos.lib; };
+      users = self.lib.rakeLeaves ./users;
 
-        sharedOverlays = [
-          (final: prev: {
-            __dontExport = true;
-            lib = prev.lib.extend (lfinal: lprev: {
-              our = self.lib;
-              hlissner = inputs.hlissner-dotfiles.lib;
-              hm = home.lib.hm;
-            });
-          })
-        ];
+      nixosProfiles = self.lib.rakeLeaves ./profiles;
 
-        nixos = {
-          hostDefaults = {
-            system = "x86_64-linux";
-            channelName = "nixos";
-            imports = [ (digga.lib.importExportableModules ./modules) ];
-            modules = let users = digga.lib.rakeLeaves ./users; in [
-              # --- DevOS Modules ---
-              { lib.our = self.lib; }
-              digga.nixosModules.bootstrapIso
-              digga.nixosModules.nixConfig
-              home.nixosModules.home-manager
-              agenix.nixosModules.age
+      overlays = {
+        overrides = import ./overlays/overrides.nix inputs;
+        patches = import ./overlays/patches;
+      };
+
+      nixosConfigurations =
+        let
+          libOverlay = (lfinal: lprev: {
+            our = self.lib;
+            hlissner = inputs.hlissner-dotfiles.lib;
+            hm = inputs.home-manager.lib.hm;
+          });
+        in
+        lib.mapAttrs
+          (self.lib.mkHost {
+            specialArgs = {
+              profiles = self.nixosProfiles;
+              lib = nixpkgs.lib.extend libOverlay;
+              inherit private self inputs;
+            };
+
+            modules = [
+              self.users.root
+              self.users.infinidoge
+              {
+                nixpkgs.hostPlatform = "x86_64-linux";
+                system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+                nixpkgs.overlays = [
+                  (final: prev: {
+                    lib = prev.lib.extend libOverlay;
+                  })
+                  self.overlays.packages
+                  self.overlays.patches
+                  self.overlays.overrides
+
+                  inputs.agenix.overlays.default
+
+                  # --- Domain-Specific Overlays
+                  inputs.nix-minecraft.overlay
+                  inputs.fenix.overlays.default
+                  inputs.universe-cli.overlays.default
+                ];
+                home-manager =
+                  let
+                    profiles = self.lib.rakeLeaves ./users/profiles;
+                  in
+                  {
+                    useUserPackages = true;
+                    useGlobalPkgs = true;
+
+                    sharedModules = [
+                      inputs.impermanence.nixosModules.home-manager.impermanence
+                    ] ++ (with profiles; [
+                      # Base Configuration
+                      xdg
+
+                      # Programs
+                      direnv
+                      git
+                      emacs
+                      vim
+                      gpg
+                      ssh
+                      keychain
+
+                      # Terminal
+                      starship
+                      shells.all
+                      tmux
+
+                    ]) ++ (self.lib.leaves ./users/modules);
+
+                    extraSpecialArgs = {
+                      inherit profiles;
+                    };
+                  };
+              }
+
+              # --- Universe Modules ---
               ./secrets
-
               private.nixosModules.networking
 
               # --- Library Modules ---
               inputs.nixos-wsl.nixosModules.wsl
               inputs.impermanence.nixosModules.impermanence
               inputs.quick-nix-registry.nixosModules.local-registry
+              inputs.home-manager.nixosModules.home-manager
+              inputs.agenix.nixosModules.age
 
               # --- Domain-Specific Modules ---
               inputs.nix-minecraft.nixosModules.minecraft-servers
+            ] ++ (self.lib.leaves ./modules);
+          })
+          (self.lib.flattenLeaves ./hosts);
+    };
 
-              # --- Users ---
-              users.root
-              users.infinidoge
-            ];
-          };
-
-          imports = [ (digga.lib.importHosts ./hosts) ];
-          importables = {
-            inherit private;
-            profiles = digga.lib.rakeLeaves ./profiles;
-          };
-        };
-
-        home =
-          let
-            profiles = digga.lib.rakeLeaves ./users/profiles;
-          in
-          {
-            imports = [ (digga.lib.importExportableModules ./users/modules) ];
-            modules = with profiles; [
-              inputs.impermanence.nixosModules.home-manager.impermanence
-
-              # Base Configuration
-              xdg
-
-              # Programs
-              direnv
-              git
-              emacs
-              vim
-              gpg
-              ssh
-              keychain
-
-              # Terminal
-              starship
-              shells.all
-              tmux
-            ];
-            importables = {
-              inherit inputs profiles;
-            };
-          };
-
-        devshell = ./shell;
-
-        homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
-      }
-  ;
+    imports = [
+      ./pkgs
+      ./shell
+      inputs.devshell.flakeModule
+    ];
+  });
 }
