@@ -1111,11 +1111,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1690485748,
-        "narHash": "sha256-rHdGcc2R8onZsh4c5unYFjeS5YHShAu5rhe4TgpD7s4=",
+        "lastModified": 1690510733,
+        "narHash": "sha256-UjkJ4ilZuZeksv+hfQH5R+4/waWmI4m99YUqSJNdOCc=",
         "owner": "Infinidoge",
         "repo": "universe-cli",
-        "rev": "37165084de0c1a35ed446c41e54da3bfd6b53385",
+        "rev": "2784e5f24230d3eb4c6e055a1e722eef06e880ae",
         "type": "github"
       },
       "original": {
