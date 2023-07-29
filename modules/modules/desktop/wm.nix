@@ -37,7 +37,7 @@ in
 
       info.env.wm = "qtile";
 
-      fonts.fonts = with pkgs; [
+      fonts.packages = with pkgs; [
         powerline-fonts
         ubuntu_font_family
       ];
