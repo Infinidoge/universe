@@ -2,7 +2,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    private.nixosModules.wireless
   ];
 
   system.stateVersion = "21.11";

@@ -1,7 +1,5 @@
 { pkgs, lib, private, ... }: {
   imports = lib.lists.flatten [
-    private.nixosModules.wireless
-
     ./hardware-configuration.nix
     ./filesystems.nix
   ];

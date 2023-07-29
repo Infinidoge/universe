@@ -1,10 +1,12 @@
-{ config, lib, ... }:
+{ config, lib, private, ... }:
 with lib;
 with lib.hlissner;
 let
   cfg = config.modules.hardware.wireless;
 in
 {
+  imports = [ private.nixosModules.wireless ];
+
   options.modules.hardware.wireless = {
     enable = mkBoolOpt false;
     bluetooth = {
