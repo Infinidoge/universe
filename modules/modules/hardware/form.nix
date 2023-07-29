@@ -40,7 +40,7 @@ in
 
       environment = {
         variables.LAPTOP = "True";
-        systemPackages = with pkgs; [ acpi ];
+        systemPackages = with pkgs; [ acpi brightnessctl ];
       };
     })
 
