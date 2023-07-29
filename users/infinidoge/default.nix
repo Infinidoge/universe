@@ -48,8 +48,6 @@ in
       (ifGraphical [
         speedcrunch
 
-        brightnessctl
-
         mpv
 
         libreoffice-fresh
