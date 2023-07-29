@@ -6,17 +6,6 @@ let
 in
 {
   imports = flatten [
-    (with profiles.develop.programming; [
-      haskell
-      java
-      kotlin
-      lua
-      nim
-      python
-      racket
-      rust
-      zig
-    ])
   ];
 
   home = { config, main, profiles, ... }: {
