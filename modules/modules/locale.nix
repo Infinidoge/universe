@@ -30,7 +30,7 @@ in
     time.timeZone = cfg.timezone;
 
     fonts = {
-      fonts = cfg.fonts.fonts;
+      packages = cfg.fonts.fonts;
       fontconfig.defaultFonts = mkAliasDefinitions opt.fonts.defaults;
     };
 
