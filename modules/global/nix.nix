@@ -43,12 +43,6 @@ with lib;
       secret-key-files = ${config.secrets.binary-cache-private-key}
     '' else "");
 
-    # nixPath = [
-    #   "nixpkgs=${channel.input}"
-    #   "nixos-config=${../../lib/compat/nixos}"
-    #   "home-manager=${inputs.home}"
-    # ];
-
     localRegistry = {
       enable = true;
       cacheGlobalRegistry = true;
@@ -85,13 +79,10 @@ with lib;
       {
         # nix
         n = "nix";
-        np = "n profile";
-        ni = "np install";
-        nr = "np remove";
         ns = "n search --no-update-lock-file";
         nf = "n flake";
         nepl = "n repl '<nixpkgs>'";
-        srch = "ns nixos";
+        srch = "ns nixpkgs";
         nrb = ifSudo "sudo nixos-rebuild";
         mn = ''
           manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | sk --preview="manix '{}'" | xargs manix
