@@ -1,4 +1,4 @@
-{ pkgs, lib, private, ... }: {
+{ pkgs, lib, ... }: {
   imports = lib.lists.flatten [
     ./hardware-configuration.nix
     ./filesystems.nix

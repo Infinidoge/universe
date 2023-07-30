@@ -1,4 +1,4 @@
-{ pkgs, lib, private, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
