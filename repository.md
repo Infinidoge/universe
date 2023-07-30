@@ -34,3 +34,4 @@ A scope is an abstract type of location, such as:
 
 - `flake` for `flake.nix` or a flake-wide change
 - `bump` for `flake.lock` updates
+- `meta` for changes relating to the repository-related files (`readme.md`, `ideas.md`, `todo.md`, `repository.md`)
