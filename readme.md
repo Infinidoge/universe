@@ -13,8 +13,8 @@ Additionally, I WILL FORCE PUSH TO THIS REPOSITORY WITHOUT NOTICE.
 ### `flake.nix`
 
 The root of everything, the place where it all comes together.
-This configuration was based on the DevOS template, and is in turn built upon the Digga library.
-I have hopes to rewrite it without using Digga some day. Eventually. Maybe. Hopefully.
+This configuration was originally based on the DevOS template, but I have since rewritten it to use flake-parts instead!
+Some parts of Digga's library is replicated in [lib/digga.nix](./lib/digga.nix) as a stop-gap measure until I rewrite it to use something else.
 
 ### `/hosts`
 
@@ -33,20 +33,11 @@ Summary of what the scripts do
 
 ### `/lib`
 
-Nix library components. Also contains a somewhat vestigial flake-compat setup which is pending removal.
+Nix library components.
 
 ### `/modules`
 
 The real meat of the configuration, defines a bunch of NixOS modules that all get recursively imported;
-
-#### `/modules/devos`
-
-This is the somewhat-boilerplate part of the configuration that was mostly inherited from the DevOS template that I originally used.
-
-- Each file in the `cachix` folder is a definition for a binary cache.
-- `hm-system-defaults.nix` defines default home-manager configurations that apply to all users
-- `nix.nix` defines Nix settings, like allowed users, garbage collection, etc. Also installs some Nix-related packages
-- `options.nix` defines shortcut options used throughout the configuration.
 
 #### `/modules/functionality`
 
@@ -60,11 +51,25 @@ Modules that create some sort of new functionality.
 
 Definitions that apply globally across all devices.
 
+- Each file in the `caches` folder is a definition for a binary cache.
 - `general.nix`: Broad general things that apply globally.
+- `hm-system-defaults.nix` defines default home-manager configurations that apply to all users
 - `networking.nix`: Networking related settings, such as setting up tailscale, avahi, and DNS.
+- `nix.nix` defines Nix settings, like allowed users, garbage collection, etc. Also installs some Nix-related packages
+- `options.nix` defines shortcut options used throughout the configuration.
 - `packages.nix`: Packages that should be installed on everything.
 - `security.nix`: Various security related settings.
 - `shell.nix`: Shell-related settings like aliases.
+- `programming`: Packages/configuration for various programming languages.
+  - `haskell.nix`
+  - `java.nix`
+  - `kotlin.nix`
+  - `lua.nix`
+  - `nim.nix`
+  - `python.nix`
+  - `racket.nix`
+  - `rust.nix`
+  - `zig.nix`
 
 #### `/modules/modules`
 
@@ -80,7 +85,7 @@ Differs from `global` in that they are gated behind options rather than applying
 - `hardware`: Modules that setup hardware
   - `audio.nix`: Sets up audio by enabling sound and enabling pipewire and related software.
   - `form.nix`: Settings that are form-specific. Forms are desktop, laptop, portable, raspberry pi, and server.
-  - `gpu.nix`: GPU-specific settings, primarily with regards to setting up drivers and installing software necessary for hardware acceperation.
+  - `gpu.nix`: GPU-specific settings, primarily with regards to setting up drivers and installing software necessary for hardware acceleration.
   - `wireless.nix`: Sets up wireless communication, namely WiFi and Bluetooth.
   - `peripherals`: Modules that setup peripherals like mice or printers.
     - `fprint-sensor.nix`: Sets up a finger print sensor.
@@ -90,6 +95,7 @@ Differs from `global` in that they are gated behind options rather than applying
   - `apcupsd.nix`: Sets up apcupsd to manage my UPS.
   - `foldingathome.nix`: Sets up the Folding@Home service.
   - `nix-ssh-serve.nix`: Sets up Nix ssh serve for serving the Nix store over SSH.
+  - `proxy.nix`: Sets up a local Privoxy instance that routes through an SSH SOCKS5 tunnel.
 - `software`: Sets up software things
   - `console.nix`: Sets up the console, primarily using `kmscon`.
   - `minipro.nix`: Sets up the minipro tool for using MiniPro brand EEPROM writers. This module has been upstreamed to Nixpkgs, pending merge.
@@ -107,37 +113,20 @@ Overlays onto the main package set.
 Packages that I've packaged for myself for one reason or another.
 Some may be upstreamed in the future, however some don't generally belong in Nixpkgs.
 
-- `default.nix`: Collects the packages and applies `callPackage`. Acts as an overlay. These packages are also exported by digga
+- `default.nix`: Flake module that takes the packages from `all-packages.nix` and outputs them into `packages`/`legacyPackages`. Additionally, it creates an overlay called `packages` containing all of the packages.
+- `all-packages.nix`: Collects the packages and applies `callPackage`.
+- `patches`: Any patches necessary for packages go here. Doesn't necessarily exist.
+
+Packages themselves:
+
+- `hexagon.nix`: A runner/compiler for Hex Casting spells.
 - `mcaselector.nix`: A wrapper around the MCASelector jar so it runs on Nix.
+- `nix-modrinth-prefetch.nix`: A prefetcher for Modrinth mods.
 - `olympus.nix`: The olympus mod manager/installer for Celeste
-- `qtile.nix`: A clone from the Qtile package in Nixpkgs, which I repin to the latest git commit occasionally.
+- `setris.nix`: Tetris with Sand!
 - `sim65.nix`: The Sim65 65c02 simulator and debugger. Not well tested.
+- `substitute-subset.nix`: `substituteAll` for a limited subset of files.
 - `unbted.nix`: An NBT editor for Minecraft.
-- `sources.toml`: The nvfetcher sources, currently just for Qtile.
-- `patches`: Any patches necessary for packages go here.
-
-### `/profiles`
-
-'Optional' sets of definitions. This has broadly been replaced with the modules, and is somewhat pending being refactored out.
-I may use a similar concept for some broad-stroke setups, but likely not in this form.
-
-#### `/profiles/develop/programming`
-
-Defines what is necessary for using the respective programming language, such as installed packages
-
-- `haskell.nix`
-- `java.nix`
-- `nim.nix`
-- `python.nix`
-- `racket.nix`
-- `rust.nix`
-- `zig.nix`
-
-#### `/profiles/services`
-
-Profiles for running services.
-
-- `proxy.nix`: Sets up a local Privoxy instance that routes through an SSH SOCKS5 tunnel.
 
 ### `/secrets`
 
