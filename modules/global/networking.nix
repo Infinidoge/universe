@@ -1,5 +1,7 @@
-{ pkgs, config, ... }:
+{ pkgs, config, private, ... }:
 {
+  imports = [ private.nixosModules.networking ];
+
   networking = {
     useDHCP = true;
     firewall = {
