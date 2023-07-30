@@ -1,4 +1,4 @@
-{ lib, private, ... }:
+{ lib, ... }:
 {
   imports = lib.lists.flatten [
     ./hardware-configuration.nix
