@@ -148,7 +148,6 @@
 
               # --- Universe Modules ---
               ./secrets
-              private.nixosModules.networking
 
               # --- Library Modules ---
               inputs.nixos-wsl.nixosModules.wsl
