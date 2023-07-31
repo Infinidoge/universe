@@ -49,6 +49,7 @@
     tealdeer
     tree
     unixtools.whereis
+    unrar-wrapper
     unzip
     usbutils
     util-linux
