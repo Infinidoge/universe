@@ -9,5 +9,6 @@ in
   inherit (latest)
     ;
 
-
+  inherit (fork)
+    ;
 }
