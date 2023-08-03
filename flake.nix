@@ -38,6 +38,7 @@
     quick-nix-registry.url = "github:divnix/quick-nix-registry";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
     # --- Domain-Specific Flake Inputs
     # # --- Minecraft
