@@ -554,7 +554,9 @@
       "inputs": {
         "flake-compat": "flake-compat_2",
         "flake-utils": "flake-utils_3",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1690553050,
@@ -630,22 +632,6 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1690470004,
-        "narHash": "sha256-l57RmPhPz9r1LGDg/0v8bYgJO8R+GGTQZtkIxE7negU=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9462344318b376e157c94fa60c20a25b913b2381",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-23.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_5": {
-      "locked": {
         "lastModified": 1690881714,
         "narHash": "sha256-h/nXluEqdiQHs1oSgkOOWF+j8gcJMWhwnZ9PFabN6q0=",
         "owner": "NixOS",
@@ -708,7 +694,7 @@
         "nix-minecraft": "nix-minecraft",
         "nixos-hardware": "nixos-hardware_2",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_5",
+        "nixpkgs": "nixpkgs_4",
         "private": "private",
         "quick-nix-registry": "quick-nix-registry",
         "universe-cli": "universe-cli"
