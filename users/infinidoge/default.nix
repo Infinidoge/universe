@@ -33,14 +33,14 @@ in
     home.packages = with pkgs; flatten [
       ncdu
 
-      keepassxc
-
       unbted
       packwiz
 
       toot
 
       (ifGraphical [
+        keepassxc
+
         speedcrunch
 
         libreoffice-fresh
