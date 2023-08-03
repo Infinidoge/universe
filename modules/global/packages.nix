@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 {
   # Use the latest Linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -24,7 +24,6 @@
     exa
     exfat # Windows drives
     fd
-    ffmpeg
     frei
     git
     htop
@@ -58,7 +57,10 @@
     whois
     xxHash
     yq
-    yt-dlp
     zip
-  ];
+  ] ++ (lib.optionals config.info.graphical (with pkgs; [
+    ffmpeg
+    mpv
+    yt-dlp
+  ]));
 }

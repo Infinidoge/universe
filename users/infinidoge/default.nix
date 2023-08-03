@@ -48,8 +48,6 @@ in
       (ifGraphical [
         speedcrunch
 
-        mpv
-
         libreoffice-fresh
 
         krita
