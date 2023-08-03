@@ -104,9 +104,8 @@
                   self.overlays.patches
                   self.overlays.overrides
 
-                  inputs.agenix.overlays.default
-
                   # --- Domain-Specific Overlays
+                  inputs.agenix.overlays.default
                   inputs.nix-minecraft.overlay
                   inputs.fenix.overlays.default
                   inputs.universe-cli.overlays.default
