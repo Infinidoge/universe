@@ -75,6 +75,8 @@
     ];
   };
 
+  programs.ns-usbloader.enable = true;
+
   services.minecraft-servers = {
     enable = true;
 
