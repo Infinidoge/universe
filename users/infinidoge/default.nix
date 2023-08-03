@@ -10,16 +10,11 @@ in
 
   home = { config, main, profiles, ... }: {
     imports = flatten [
-      (with profiles; [
-        htop
-
-        (ifGraphical' [
-          kitty
-          rofi
-          themeing
-          flameshot
-        ])
-      ])
+      (ifGraphical' (with profiles; [
+        rofi
+        themeing
+        flameshot
+      ]))
 
       ./config
     ];

@@ -8,7 +8,11 @@
     };
 
     sharedModules = [
-      {
+      ({ profiles, ... }: {
+        imports = with profiles; [
+          htop
+        ];
+
         home = {
           stateVersion = config.system.stateVersion;
           sessionVariables = {
@@ -24,16 +28,20 @@
             };
           };
         };
-      }
+      })
       (lib.mkIf config.services.xserver.enable {
         xsession.enable = true;
       })
-      (lib.mkIf config.info.graphical {
+      (lib.mkIf config.info.graphical ({ profiles, ... }: {
+        imports = with profiles; [
+          kitty
+        ];
+
         xdg.systemDirs.data = [
           "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
           "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
         ];
-      })
+      }))
     ];
   };
 }
