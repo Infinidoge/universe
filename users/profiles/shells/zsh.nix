@@ -28,7 +28,7 @@
 
       dotDir = ".config/zsh";
 
-      history.path = "/home/infinidoge/${dotDir}/.zsh_history";
+      history.path = "$HOME/${dotDir}/.zsh_history";
 
       shellAliases = main.environment.shellAliases // config.home.shellAliases;
 
