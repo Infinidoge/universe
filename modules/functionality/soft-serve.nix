@@ -74,6 +74,10 @@ in
       };
       script = "${pkgs.soft-serve}/bin/soft serve";
       serviceConfig.Type = "exec";
+      path = with pkgs; [
+        coreutils
+        bash
+      ];
     };
 
     networking.firewall.allowedTCPPorts = [
