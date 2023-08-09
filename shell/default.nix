@@ -9,6 +9,8 @@
         ]));
       in
       {
+        name = "universe";
+
         devshell.packages = [
           pythonEnv
         ];
