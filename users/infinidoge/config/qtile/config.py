@@ -411,6 +411,11 @@ keys = [
         lazy.spawn("flameshot gui"),
         desc="Launch screenshot tool",
     ),
+    Key(
+        [Keys.SUPER, Keys.ALT], "m",
+        lazy.spawn("arandr"),
+        desc="Launch arandr",
+    ),
 ]
 # fmt: on
 
