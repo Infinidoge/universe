@@ -59,6 +59,7 @@
     yq
     zip
   ] ++ (lib.optionals config.info.graphical (with pkgs; [
+    arandr
     ffmpeg
     mpv
     yt-dlp
