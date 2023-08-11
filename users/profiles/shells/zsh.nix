@@ -19,11 +19,18 @@
       initExtra = ''
         ${pkgs.kitty}/bin/kitty + complete setup zsh | source /dev/stdin
         ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
-        if [[ -e ~/TODO.txt && ! -v __TODO_PRINTED ]] then
-          export __TODO_PRINTED=1
-          echo TODO:
-          \cat ~/TODO.txt
-        fi
+
+        functions -c precmd precmd_any_nix_shell
+
+        precmd() {
+          precmd_any_nix_shell
+
+          if [[ -e ~/TODO.txt && ! -v __TODO_PRINTED ]] then
+            export __TODO_PRINTED=1
+            echo TODO:
+            \cat ~/TODO.txt
+          fi
+        }
       '';
 
       dotDir = ".config/zsh";
