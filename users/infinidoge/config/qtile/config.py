@@ -11,7 +11,17 @@ import os
 from typing import List, Any  # noqa: F401
 
 from libqtile import bar, layout, widget, hook
-from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
+from libqtile.config import (
+    Click,
+    Drag,
+    DropDown,
+    Group,
+    Key,
+    KeyChord,
+    Match,
+    ScratchPad,
+    Screen,
+)
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
@@ -401,21 +411,21 @@ keys = [
         lazy.spawn("discordcanary"),
         desc="Launch Discord",
     ),
-    Key(
-        [Keys.SUPER, Keys.ALT], "c",
-        lazy.spawn("speedcrunch"),
-        desc="Launch Speedcrunch",
-    ),
+    # Key(
+    #     [Keys.SUPER, Keys.ALT], "c",
+    #     lazy.spawn("speedcrunch"),
+    #     desc="Launch Speedcrunch",
+    # ),
     Key(
         [Keys.SUPER, Keys.ALT], "s",
         lazy.spawn("flameshot gui"),
         desc="Launch screenshot tool",
     ),
-    Key(
-        [Keys.SUPER, Keys.ALT], "m",
-        lazy.spawn("arandr"),
-        desc="Launch arandr",
-    ),
+    # Key(
+    #     [Keys.SUPER, Keys.ALT], "m",
+    #     lazy.spawn("arandr"),
+    #     desc="Launch arandr",
+    # ),
 ]
 # fmt: on
 
@@ -447,6 +457,31 @@ for i in groups:
             ),
         ]
     )
+
+groups.append(
+    ScratchPad(
+        "scratchpad",
+        [
+            DropDown("calculator", "speedcrunch", x=0.2, y=0.2, width=0.6, height=0.6),  # type: ignore
+            DropDown("arandr", "arandr", x=0.3, y=0.1, width=0.6, height=0.4),  # type: ignore
+        ],
+    )
+)
+
+# fmt: off
+keys.extend(
+    [
+        Key(
+            [Keys.SUPER, Keys.ALT], "c",
+            lazy.group["scratchpad"].dropdown_toggle("calculator"),
+        ),
+        Key(
+            [Keys.SUPER, Keys.ALT], "m",
+            lazy.group["scratchpad"].dropdown_toggle("arandr"),
+        ),
+    ]
+)
+# fmt: on
 
 layouts = [
     layout.Columns(border_focus_stack="#d75f5f"),
