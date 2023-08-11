@@ -294,7 +294,7 @@ keys = [
     ),
     Key(
         [Keys.SUPER, Keys.SHIFT], "r",
-        lazy.spawncmd(prompt="shell", command=Apps.terminal_command(Apps.shell_command("%s", args=("-ic",)), args=("--hold",))),
+        lazy.spawncmd(prompt="shell", command=Apps.terminal_command(Apps.shell_command("%s; echo '\n---- Press enter to exit ----'; read", args=("-ic",))), shell=False),
         desc="Spawn a command in a shell using a prompt widget",
     ),
     Key(
