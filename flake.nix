@@ -46,8 +46,8 @@
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
 
     # # --- Rust
-    fenix.url = "github:nix-community/fenix";
-    fenix.inputs.nixpkgs.follows = "nixpkgs";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ flake-parts, nixpkgs, private, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ self, lib, ... }: {
@@ -107,7 +107,7 @@
                   # --- Domain-Specific Overlays
                   inputs.agenix.overlays.default
                   inputs.nix-minecraft.overlay
-                  inputs.fenix.overlays.default
+                  inputs.rust-overlay.overlays.default
                   inputs.universe-cli.overlays.default
                 ];
                 home-manager =
