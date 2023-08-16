@@ -1,13 +1,11 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    (fenix.complete.withComponents [
-      "cargo"
-      "clippy"
-      "rust-src"
-      "rustc"
-      "rustfmt"
-    ])
-    rust-analyzer-nightly
+    (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
+      extensions = [
+        "rust-src"
+        "rust-analyzer"
+      ];
+    }))
     gcc
   ];
 }
