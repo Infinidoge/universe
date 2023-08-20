@@ -28,6 +28,7 @@
     git
     htop
     hyfetch
+    imagemagick
     iputils
     jq
     lynx
