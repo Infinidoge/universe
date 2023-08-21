@@ -37,6 +37,7 @@ in
     # git
     g = "git";
     gcd = "cd $(git root || echo \".\")";
+    ucd = "cd $(uni cd || echo \".\")";
 
     # grep
     grep = "rg";
