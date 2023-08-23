@@ -8,7 +8,7 @@ in
   options.modules.services.proxy = {
     enable = mkBoolOpt false;
     port = mkOpt types.port 49494;
-    listen-address = mkOpt types.string "localhost:8118";
+    listen-address = mkOpt types.str "localhost:8118";
     ssh-connect-string = "infinidoge@server.doge-inc.net -S none -i /home/infinidoge/.ssh/id_ed25519 -v";
   };
 
