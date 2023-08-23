@@ -4,7 +4,7 @@
     ./filesystems.nix
   ];
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "23.05";
 
   environment.persistence."/persist" = {
     directories = [
