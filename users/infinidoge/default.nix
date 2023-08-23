@@ -30,6 +30,18 @@ in
       };
     };
 
+    services = {
+      mpd = {
+        enable = true;
+        extraConfig = ''
+          audio_output {
+            type "pipewire"
+            name "PipeWire Sound Server"
+          }
+        '';
+      };
+    };
+
     home.packages = with pkgs; flatten [
       ncdu
 
