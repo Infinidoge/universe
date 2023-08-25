@@ -48,5 +48,7 @@
       enable = true;
       useRoutingFeatures = if config.info.stationary then "both" else "client";
     };
+
+    zerotierone.enable = true;
   };
 }
