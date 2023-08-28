@@ -10,9 +10,6 @@
     sharedModules = [
       ({ profiles, ... }: {
         imports = with profiles; [
-          # Base configuration
-          xdg
-
           # Programs
           direnv
           emacs
@@ -42,6 +39,10 @@
             "nixpkgs/config.nix".text = lib.generators.toPretty { } {
               allowUnfree = true;
             };
+          };
+          userDirs = {
+            enable = true;
+            createDirectories = true;
           };
         };
       })
