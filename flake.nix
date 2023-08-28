@@ -120,25 +120,7 @@
 
                     sharedModules = [
                       inputs.impermanence.nixosModules.home-manager.impermanence
-                    ] ++ (with profiles; [
-                      # Base Configuration
-                      xdg
-
-                      # Programs
-                      direnv
-                      git
-                      emacs
-                      vim
-                      gpg
-                      ssh
-                      keychain
-
-                      # Terminal
-                      starship
-                      shells.all
-                      tmux
-
-                    ]) ++ (self.lib.leaves ./users/modules);
+                    ] ++ (self.lib.leaves ./users/modules);
 
                     extraSpecialArgs = {
                       inherit profiles;

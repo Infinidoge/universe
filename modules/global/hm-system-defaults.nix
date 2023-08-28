@@ -10,7 +10,23 @@
     sharedModules = [
       ({ profiles, ... }: {
         imports = with profiles; [
+          # Base configuration
+          xdg
+
+          # Programs
+          direnv
+          emacs
+          git
+          gpg
           htop
+          keychain
+          ssh
+          vim
+
+          # Terminal
+          shells.all
+          starship
+          tmux
         ];
 
         home = {
