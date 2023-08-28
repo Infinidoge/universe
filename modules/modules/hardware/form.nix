@@ -36,6 +36,13 @@ in
         };
 
         logind.lidSwitch = mkDefault "ignore";
+
+        tlp.enable = mkDefault true;
+      };
+
+      powerManagement = {
+        powertop.enable = true;
+        cpuFreqGovernor = mkDefault "powersave";
       };
 
       environment = {
