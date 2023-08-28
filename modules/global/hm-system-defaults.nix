@@ -17,6 +17,7 @@
           gpg
           htop
           keychain
+          mpd
           ssh
           vim
 
