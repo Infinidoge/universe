@@ -363,6 +363,23 @@ keys = [
         desc="Toggle mute",
     ),
 
+    # Playpack
+    Key(
+        [], "XF86AudioPlay",
+        lazy.spawn("playerctl play-pause"),
+        desc="Play/Pause current media",
+    ),
+    Key(
+        [], "XF86AudioPrev",
+        lazy.spawn("playerctl previous"),
+        desc="Skip to previous track",
+    ),
+    Key(
+        [], "XF86AudioNext",
+        lazy.spawn("playerctl next"),
+        desc="Skip to next track",
+    ),
+
     # Brightness
     *optional_list(
         LAPTOP,
