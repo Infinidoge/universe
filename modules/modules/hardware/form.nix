@@ -41,7 +41,6 @@ in
       };
 
       powerManagement = {
-        powertop.enable = true;
         cpuFreqGovernor = mkDefault "powersave";
       };
 
