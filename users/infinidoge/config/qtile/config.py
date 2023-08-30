@@ -428,6 +428,11 @@ keys = [
         lazy.spawn("discordcanary"),
         desc="Launch Discord",
     ),
+    Key(
+        [Keys.SUPER, Keys.ALT], "g",
+        lazy.spawn("schildichat-desktop"),
+        desc="Launch Schildichat",
+    ),
     # Key(
     #     [Keys.SUPER, Keys.ALT], "c",
     #     lazy.spawn("speedcrunch"),
