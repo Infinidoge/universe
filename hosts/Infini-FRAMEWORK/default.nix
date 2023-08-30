@@ -53,6 +53,8 @@
 
   programs.ns-usbloader.enable = true;
 
+  services.fwupd.enable = true;
+
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
 
   systemd.services.set-initial-backlight = {
