@@ -119,6 +119,12 @@
 
         PUSH_ENABLED = true;
         PUSH_RELAY_URI = "https://push.bitwarden.com";
+
+        SMTP_HOST = "live.smtp.mailtrap.io";
+        SMTP_FROM = "noreply@inx.moe";
+        SMTP_PORT = 587;
+        SMTP_SECURITY = "starttls";
+        SMTP_USERNAME = "api";
       };
     };
 
