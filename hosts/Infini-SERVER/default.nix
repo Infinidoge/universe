@@ -42,6 +42,7 @@
       "/var/log"
       "/var/lib/systemd/coredump"
       "/var/lib/tailscale"
+      "/var/lib/bitwarden_rs"
 
       "/srv"
     ];
@@ -61,6 +62,8 @@
   age.secrets."inx.moe.pem".group = "nginx";
   age.secrets."inx.moe.key".owner = "nginx";
   age.secrets."inx.moe.key".group = "nginx";
+  age.secrets."vaultwarden".owner = "vaultwarden";
+  age.secrets."vaultwarden".group = "vaultwarden";
 
   services = {
     nginx =
@@ -95,8 +98,29 @@
               proxyPass = "http://localhost:8000";
             };
           };
+          "bitwarden.inx.moe" = ssl // {
+            locations."/" = {
+              proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+            };
+          };
         };
       };
+
+    vaultwarden = {
+      enable = true;
+      environmentFile = config.secrets."vaultwarden";
+      config = {
+        DOMAIN = "https://bitwarden.inx.moe";
+        SIGNUPS_ALLOWED = false;
+
+        ROCKET_ADDRESS = "localhost";
+        ROCKET_PORT = 8222;
+        ROCKET_LOG = "critical";
+
+        PUSH_ENABLED = true;
+        PUSH_RELAY_URI = "https://push.bitwarden.com";
+      };
+    };
 
     nitter = rec {
       enable = true;

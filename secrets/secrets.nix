@@ -22,4 +22,5 @@ in
   "binary-cache-private-key.age".publicKeys = allKeys;
   "inx.moe.pem.age".publicKeys = allKeys;
   "inx.moe.key.age".publicKeys = allKeys;
+  "vaultwarden.age".publicKeys = allKeys;
 }
