@@ -883,11 +883,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1690510733,
-        "narHash": "sha256-UjkJ4ilZuZeksv+hfQH5R+4/waWmI4m99YUqSJNdOCc=",
+        "lastModified": 1693496358,
+        "narHash": "sha256-8gEyGkqUpXsivuEnC0NI5yk/GRUYYr6wpyNEIsiSLFk=",
         "owner": "Infinidoge",
         "repo": "universe-cli",
-        "rev": "2784e5f24230d3eb4c6e055a1e722eef06e880ae",
+        "rev": "653365e98455f5ac885cdc7a50eec4b5afd34749",
         "type": "github"
       },
       "original": {
