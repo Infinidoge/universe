@@ -3,7 +3,7 @@
 let
   uuid = uuid: "/dev/disk/by-uuid/${uuid}";
   main = uuid "a44af0ff-5667-465d-b80a-1934d1aab8d9";
-  commonOptions = [ "autodefrag" "noatime" "ssd" ];
+  commonOptions = [ "autodefrag" "noatime" "ssd" "compress=zstd:1" ];
 in
 {
   fileSystems = {
