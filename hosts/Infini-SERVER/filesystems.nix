@@ -53,6 +53,12 @@ in
       neededForBoot = true;
     };
 
+    "/persist/var/lib/bitwarden_rs" = lib.mkIf (data != null) {
+      device = data;
+      fsType = "btrfs";
+      options = [ "subvol=root/var/lib/bitwarden_rs" ] ++ commonOptions;
+    };
+
     "/nix" = {
       device = main;
       fsType = "btrfs";
