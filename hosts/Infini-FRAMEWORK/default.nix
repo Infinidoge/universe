@@ -53,7 +53,15 @@
 
   programs.ns-usbloader.enable = true;
 
-  services.fwupd.enable = true;
+  services.fwupd = {
+    enable = true;
+    extraRemotes = [
+      "lvfs-testing"
+    ];
+    uefiCapsuleSettings = {
+      DisableCapsuleUpdateOnDisk = "true";
+    };
+  };
 
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
 
