@@ -100,7 +100,7 @@
           };
           "bitwarden.inx.moe" = ssl // {
             locations."/" = {
-              proxyPass = "http://localhost:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+              proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
             };
           };
         };
@@ -113,7 +113,7 @@
         DOMAIN = "https://bitwarden.inx.moe";
         SIGNUPS_ALLOWED = false;
 
-        ROCKET_ADDRESS = "localhost";
+        ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = 8222;
         ROCKET_LOG = "critical";
 
