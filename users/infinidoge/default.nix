@@ -38,8 +38,10 @@ in
 
       toot
 
+      bitwarden-cli
+
       (ifGraphical [
-        keepassxc
+        bitwarden
 
         speedcrunch
 
