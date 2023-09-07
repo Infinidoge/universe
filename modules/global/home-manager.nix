@@ -25,7 +25,7 @@
           shells.all
           starship
           tmux
-        ];
+        ] ++ builtins.attrValues profiles.programming;
 
         home = {
           stateVersion = config.system.stateVersion;

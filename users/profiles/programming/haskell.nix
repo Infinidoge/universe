@@ -1,5 +1,5 @@
 { pkgs, lib, ... }: {
-  environment.systemPackages = with pkgs; lib.lists.flatten [
+  home.packages = with pkgs; lib.lists.flatten [
     haskell-language-server
     ghc
     cabal-install
