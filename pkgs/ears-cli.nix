@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     homepage = "https://git.sleeping.town/feline/ears-cli";
     description = "A tool to manipulate Ears skins on the command line";
-    platforms = platforms.unix;
+    inherit (jdk.meta) platforms;
     maintainers = with maintainers; [ infinidoge ];
   };
 }
