@@ -6,14 +6,14 @@
 }:
 stdenv.mkDerivation rec {
   pname = "ears-cli";
-  version = "unstable-2023-04-24";
+  version = "unstable-2023-08-24";
 
   src = fetchFromGitea {
     domain = "git.sleeping.town";
     owner = "feline";
     repo = "ears-cli";
-    rev = "deb1a0da3377a5ff2da8e7e325eb6ba783b28137";
-    sha256 = "sha256-Xn+RbgTn2Qvx1ztorUuoOMnvrlVmfg0ELmEDyFGv/3c=";
+    rev = "c54eac4f6a980908d6cde1abf9d9228615c1d71b";
+    sha256 = "sha256-3ov7wjw8nxjwrNRH0wHICbZjXR4j2DPkUl5WlxJZsLA=";
   };
 
   nativeBuildInputs = [ jdk makeWrapper ];
