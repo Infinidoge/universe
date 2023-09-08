@@ -112,9 +112,6 @@
                     profiles = self.lib.rakeLeaves ./users/profiles;
                   in
                   {
-                    useUserPackages = true;
-                    useGlobalPkgs = true;
-
                     sharedModules = [
                       inputs.impermanence.nixosModules.home-manager.impermanence
                     ] ++ (self.lib.leaves ./users/modules);
