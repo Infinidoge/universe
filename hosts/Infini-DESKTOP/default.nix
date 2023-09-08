@@ -65,6 +65,7 @@
       gaming.enableAll = true;
     };
     virtualization.enable = true;
+    software.minipro.enable = true;
   };
 
   home = { profiles, pkgs, ... }: {

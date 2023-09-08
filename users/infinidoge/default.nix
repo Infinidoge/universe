@@ -83,8 +83,6 @@ in
     };
 
     desktop.wm.qtile.enable = true;
-
-    software.minipro.enable = true;
   };
 
   programs = {
