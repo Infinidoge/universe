@@ -67,8 +67,6 @@
 
       users = self.lib.rakeLeaves ./users;
 
-      nixosProfiles = self.lib.rakeLeaves ./profiles;
-
       overlays = {
         overrides = import ./overlays/overrides.nix inputs;
         patches = import ./overlays/patches;
@@ -85,7 +83,6 @@
         lib.mapAttrs
           (self.lib.mkHost {
             specialArgs = {
-              profiles = self.nixosProfiles;
               lib = nixpkgs.lib.extend libOverlay;
               inherit private self inputs;
             };
