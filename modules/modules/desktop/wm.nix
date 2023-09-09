@@ -38,6 +38,7 @@ in
     }
     (mkIf cfg.qtile.enable {
       services.xserver.windowManager.qtile.enable = true;
+      services.xserver.windowManager.qtile.package = pkgs.qtile;
 
       info.env.wm = "qtile";
 
