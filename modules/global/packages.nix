@@ -21,7 +21,7 @@
     dnsutils
     dosfstools
     erdtree
-    exa
+    eza
     exfat # Windows drives
     fd
     frei

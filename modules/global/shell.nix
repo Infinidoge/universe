@@ -17,7 +17,7 @@ in
     "....." = "cd ../../../..";
 
     # ls
-    ls = "${lib.getExe pkgs.exa}"; # HACK: Bypasses PATH so it works in nix develop shell
+    ls = "${lib.getExe pkgs.eza}"; # HACK: Bypasses PATH so it works in nix develop shell
     la = "ls --long --no-filesize --no-permissions --no-user --git --icons";
     lat = "la --tree -I .git";
     l = "la --all";
