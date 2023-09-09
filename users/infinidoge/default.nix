@@ -10,12 +10,6 @@ in
 
   home = { config, main, profiles, ... }: {
     imports = flatten [
-      (ifGraphical' (with profiles; [
-        rofi
-        themeing
-        flameshot
-      ]))
-
       ./config
     ];
 

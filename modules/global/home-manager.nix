@@ -8,25 +8,7 @@
     };
 
     sharedModules = [
-      ({ profiles, ... }: {
-        imports = with profiles; [
-          # Programs
-          direnv
-          emacs
-          git
-          gpg
-          htop
-          keychain
-          mpd
-          ssh
-          vim
-
-          # Terminal
-          shells.all
-          starship
-          tmux
-        ] ++ builtins.attrValues profiles.programming;
-
+      {
         home = {
           stateVersion = config.system.stateVersion;
           sessionVariables = {
@@ -46,20 +28,16 @@
             createDirectories = true;
           };
         };
-      })
       (lib.mkIf config.services.xserver.enable {
         xsession.enable = true;
       })
-      (lib.mkIf config.info.graphical ({ profiles, ... }: {
-        imports = with profiles; [
-          kitty
-        ];
-
+      }
+      (lib.mkIf config.info.graphical {
         xdg.systemDirs.data = [
           "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
           "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}"
         ];
-      }))
+      })
     ];
   };
 }
