@@ -20,6 +20,8 @@
         home-manager
       ];
 
+      file.".profile".target = ".profile-hm";
+
       homeDirectory = lib.mkForce "/homes/${config.user.name}";
     };
   };
