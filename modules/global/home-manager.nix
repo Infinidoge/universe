@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }: {
   home-manager = {
-    useUserPackages = true;
+    useUserPackages = lib.mkDefault true;
     useGlobalPkgs = true;
 
     extraSpecialArgs = {
