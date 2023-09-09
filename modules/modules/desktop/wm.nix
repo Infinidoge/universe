@@ -22,6 +22,10 @@ in
         displayManager.lightdm.enable = true;
       };
 
+      home-manager.sharedModules = [{
+        xsession.enable = true;
+      }];
+
       environment.systemPackages = with pkgs; flatten [
         (with xorg; [
           xwininfo
