@@ -84,7 +84,7 @@ in
   };
 
   user = {
-    name = "infinidoge";
+    name = lib.mkDefault "infinidoge";
     uid = 1000;
     passwordFile = mkIf config.modules.secrets.enable config.secrets.infinidoge-password;
     description = "Infinidoge, primary user of the system";
