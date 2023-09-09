@@ -3,6 +3,8 @@
 {
   modules.hardware.form.server = true;
 
+  system.stateVersion = "23.11";
+
   networking = {
     domain = "cs.purdue.edu";
     hostName = "data";
