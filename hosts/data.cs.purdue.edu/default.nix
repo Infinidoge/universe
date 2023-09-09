@@ -10,6 +10,8 @@
     hostName = "data";
   };
 
+  home-manager.useUserPackages = false;
+
   user.name = lib.mkForce private.variables.purdue-username;
 
   home = { ... }: {
