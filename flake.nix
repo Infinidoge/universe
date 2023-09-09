@@ -6,6 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
     fork.url = "github:Infinidoge/nixpkgs/combined/all";
+    stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
     # configuration components
     private.url = "git+ssh://git@github.com/Infinidoge/universe-private";
