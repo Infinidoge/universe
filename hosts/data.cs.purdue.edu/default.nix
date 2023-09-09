@@ -13,8 +13,12 @@
   user.name = private.variables.purdue-username;
 
   home = { ... }: {
-    home.packages = with pkgs; [
-      home-manager
-    ];
+    home = {
+      packages = with pkgs; [
+        home-manager
+      ];
+
+      homeDirectory = lib.mkForce "/homes/${config.user.name}";
+    };
   };
 }
