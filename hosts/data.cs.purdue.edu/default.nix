@@ -10,7 +10,7 @@
     hostName = "data";
   };
 
-  user.name = private.variables.purdue-username;
+  user.name = lib.mkForce private.variables.purdue-username;
 
   home = { ... }: {
     home = {
