@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] Move programming languages to home-manager
+- [x] Move programming languages to home-manager
 - [ ] Import modules with haumea instead of digga lib
 - [ ] Reorganize modules to separate ones defining options and ones providing config
   - Move config into global, move global into root?
@@ -8,6 +8,7 @@
 - [ ] Add Nix-on-Droid config
 - [ ] Declare Hydrus Companion extension in Firefox config
 - [ ] Add tool for `universe-cli cd`
+- [ ] Move `$EDITOR` script to a home-manager session variable
 
 # Issues pending fixes
 
