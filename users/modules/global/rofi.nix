@@ -1,6 +1,6 @@
-{ pkgs, ... }: {
+{ main, pkgs, ... }: {
   programs.rofi = {
-    enable = true;
+    enable = main.info.graphical;
     extraConfig = {
       modi = builtins.concatStringsSep "," [
         "window"

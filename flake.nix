@@ -107,19 +107,11 @@
                   inputs.rust-overlay.overlays.default
                   inputs.universe-cli.overlays.default
                 ];
-                home-manager =
-                  let
-                    profiles = self.lib.rakeLeaves ./users/profiles;
-                  in
-                  {
-                    sharedModules = [
-                      inputs.impermanence.nixosModules.home-manager.impermanence
-                    ] ++ (self.lib.leaves ./users/modules);
-
-                    extraSpecialArgs = {
-                      inherit profiles;
-                    };
-                  };
+                home-manager = {
+                  sharedModules = [
+                    inputs.impermanence.nixosModules.home-manager.impermanence
+                  ] ++ (self.lib.leaves ./users/modules);
+                };
               }
 
               # --- Universe Modules ---
