@@ -14,5 +14,7 @@ in
     ;
 
   inherit (stable)
+    # https://github.com/NixOS/nixpkgs/issues/252769
+    qtile
     ;
 }
