@@ -12,17 +12,17 @@
 
   home-manager.useUserPackages = false;
 
-  user.name = lib.mkForce private.variables.purdue-username;
-
-  home = { ... }: {
+  home = { main, config, ... }: {
     home = {
+      username = lib.mkForce private.variables.purdue-username;
+
       packages = with pkgs; [
         home-manager
       ];
 
       file.".profile".target = ".profile-hm";
 
-      homeDirectory = lib.mkForce "/homes/${config.user.name}";
+      homeDirectory = lib.mkForce "/homes/${config.home.username}";
     };
   };
 }
