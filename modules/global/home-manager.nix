@@ -28,9 +28,6 @@
             createDirectories = true;
           };
         };
-      (lib.mkIf config.services.xserver.enable {
-        xsession.enable = true;
-      })
       }
       (lib.mkIf config.info.graphical {
         xdg.systemDirs.data = [
