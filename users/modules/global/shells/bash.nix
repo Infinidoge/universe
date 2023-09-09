@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [ ./common.nix ];
 
   programs = {
@@ -6,7 +6,7 @@
       enable = true;
       enableVteIntegration = true;
       initExtra = ''
-        source <(kitty + complete setup bash)
+        source <(${lib.getExe config.programs.kitty.package} + complete setup bash)
       '';
     };
 
