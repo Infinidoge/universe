@@ -60,6 +60,10 @@
       _module.args.pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        overlays = [
+          self.overlays.overrides
+          self.overlays.patches
+        ];
       };
     };
 
