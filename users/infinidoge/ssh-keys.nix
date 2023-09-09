@@ -3,4 +3,5 @@
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwo8TGBe91mmkc/QonsXtTBKCJtsAGz3YzphDZlzmaO infinidoge@Infini-FRAMEWORK"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbNOMgVDM/hJQgzd1ff5uuouDtTLOAgmTt57cNNySif infinidoge@Infini-SERVER"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBE2YScxTK7JOCXBn4KjFWp9Lwcp4OovesYXrPCpRP4X Project Infinity"
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIltuTbxiBxOox2DAW5LACjGjJ9UFvJOAcrFYK7WMHkV [redacted-infinidoge]@data.cs.purdue.edu"
 ]
