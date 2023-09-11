@@ -16,7 +16,59 @@ in
     ;
 
   inherit (stable)
-    # https://github.com/NixOS/nixpkgs/issues/252769
-    qtile
     ;
+
+  # https://github.com/NixOS/nixpkgs/issues/252769
+  # https://github.com/NixOS/nixpkgs/issues/252320#issuecomment-1706262385
+  python3 = prev.python3.override {
+    packageOverrides = pythonFinal: pythonPrev: {
+      qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
+        version = "unstable-2023-09-04";
+        src = oldAttrs.src.override {
+          rev = "f45dc910ada928dae63b9db7ae89bf4c285909a8";
+          hash = "sha256-8hUW3TRwja+K0PAzKPo2UWCk8AbVy1f+8zfH3OOoSo8=";
+        };
+
+        propagatedBuildInputs =
+          let
+            xcffib = pythonFinal.xcffib.overrideAttrs (oldAttrs: rec {
+              version = "1.5.0";
+              patches = [ ];
+              src = oldAttrs.src.override {
+                inherit version;
+                hash = "sha256-qVyUZfL5e0/O3mBr0eCEB6Mt9xy3YP1Xv+U2d9tpGsw=";
+              };
+            });
+          in
+          with final; with pythonFinal; [
+            (pywlroots.overridePythonAttrs (oldAttrs: rec {
+              version = "0.16.4";
+              src = oldAttrs.src.override {
+                inherit version;
+                hash = "sha256-+1PILk14XoA/dINfoOQeeMSGBrfYX3pLA6eNdwtJkZE=";
+              };
+              buildInputs = [ wlroots_0_16 ] ++ lib.remove wlroots oldAttrs.buildInputs;
+            }))
+            xcffib
+            (cairocffi.override { withXcffib = true; inherit xcffib; })
+          ] ++ lib.remove
+            (cairocffi.override { withXcffib = true; })
+            (lib.remove pywlroots oldAttrs.propagatedBuildInputs);
+
+        buildInputs = with final; [
+          wlroots_0_16
+          libdrm
+        ] ++ lib.remove wlroots oldAttrs.buildInputs;
+
+        postPatch = with final; oldAttrs.postPatch + ''
+          substituteInPlace libqtile/backend/wayland/cffi/cairo_buffer.py \
+            --replace drm_fourcc.h libdrm/drm_fourcc.h
+
+          substituteInPlace libqtile/backend/wayland/cffi/build.py \
+            --replace /usr/include/pixman-1 ${pixman.outPath}/include \
+            --replace /usr/include/libdrm ${libdrm.dev.outPath}/include/libdrm
+        '';
+      });
+    };
+  };
 }
