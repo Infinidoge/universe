@@ -7,24 +7,19 @@
   environment.defaultPackages = lib.mkForce [ ];
 
   # Packages wanted everywhere
-  environment.systemPackages = with pkgs; [
+  universe.packages = with pkgs; [
     universe-cli
 
     agenix
     bat
-    binutils
-    btrfs-progs
     cloc
     coreutils-doge
     curl
     direnv
     dnsutils
-    dosfstools
     erdtree
     eza
-    exfat # Windows drives
     fd
-    frei
     git
     htop
     hyfetch
@@ -37,7 +32,6 @@
     manix
     moreutils
     nmap
-    ntfs3g # Windows drives
     parted
     perl
     rhash
@@ -51,7 +45,6 @@
     unixtools.whereis
     unrar-wrapper
     unzip
-    usbutils
     util-linux
     vim
     wget
@@ -60,9 +53,20 @@
     yq
     zip
   ] ++ (lib.optionals config.info.graphical (with pkgs; [
+    yt-dlp
+  ]));
+
+  environment.systemPackages = config.universe.packages ++ (with pkgs; [
+    binutils
+    btrfs-progs
+    dosfstools
+    exfat # Windows drives
+    frei
+    ntfs3g # Windows drives
+    usbutils
+  ]) ++ (lib.optionals config.info.graphical (with pkgs; [
     arandr
     ffmpeg
     mpv
-    yt-dlp
   ]));
 }
