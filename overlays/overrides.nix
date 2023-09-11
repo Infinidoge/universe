@@ -7,6 +7,8 @@ let
   stable = mkPkgs inputs.stable;
 in
 {
+  inherit latest fork stable;
+
   inherit (latest)
     ;
 
