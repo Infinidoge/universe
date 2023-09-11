@@ -34,6 +34,10 @@ in
     };
 
     secrets = mkOpt (attrsOf path) { };
+
+    universe = {
+      packages = mkOpt (listOf package) [ ];
+    };
   };
 
   config = {
