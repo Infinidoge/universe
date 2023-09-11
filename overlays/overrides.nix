@@ -23,10 +23,10 @@ in
   python3 = prev.python3.override {
     packageOverrides = pythonFinal: pythonPrev: {
       qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
-        version = "unstable-2023-09-04";
+        version = "unstable-2023-09-08";
         src = oldAttrs.src.override {
-          rev = "f45dc910ada928dae63b9db7ae89bf4c285909a8";
-          hash = "sha256-8hUW3TRwja+K0PAzKPo2UWCk8AbVy1f+8zfH3OOoSo8=";
+          rev = "133c4119e34635296c1db62346325152f89d6df9";
+          hash = "sha256-JtPN0FMRZMc89AzQfe0JiB9OMR+tmMq+pLye5nAOQ7Y=";
         };
 
         propagatedBuildInputs =
