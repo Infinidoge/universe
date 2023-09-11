@@ -62,7 +62,15 @@
   (setq flyspell-lazy-idle-seconds 1))
 
 ;; --- Emms ---
-(setq emms-volume-change-function 'emms-volume-pulse-change)
+;; (setq
+;;  emms-volume-change-function 'emms-volume-mpd-change
+;;  emms-player-mpd-server-name "localhost"
+;;  emms-player-mpd-server-port "6600"
+;;  emms-player-mpd-music-directory "~/Music"
+;;  )
+
+;; (add-to-list 'emms-info-functions 'emms-info-mpd)
+;; (add-to-list 'emms-player-list 'emms-player-mpd)
 
 ;; --- GnuPG ---
 (setq epg-pinentry-mode 'loopback)
