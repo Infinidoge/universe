@@ -6,7 +6,7 @@ with lib;
       source = ./doom;
       onChange = ''
         echo "[doom] applying doom configuration"
-        ${config.xdg.configHome}/emacs/bin/doom sync -p
+        PATH="${config.home.path}/bin:$PATH" ${config.xdg.configHome}/emacs/bin/doom sync -p
       '';
     };
 
