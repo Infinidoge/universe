@@ -18,7 +18,7 @@
 
       packages = with pkgs; [
         home-manager
-      ];
+      ] ++ main.universe.packages;
 
       file.".profile".target = ".profile-hm";
 
