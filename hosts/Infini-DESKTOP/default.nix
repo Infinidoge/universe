@@ -68,8 +68,7 @@
     software.minipro.enable = true;
   };
 
-  home = { profiles, pkgs, ... }: {
-    imports = with profiles; [ stretchly ];
+  home = { pkgs, ... }: {
     home.packages = with pkgs; [
       arduino
       hydrus

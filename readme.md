@@ -166,7 +166,6 @@ Most of the modules are self-explanatory from their names.
 - `rofi.nix`
 - `ssh.nix`
 - `starship.nix`
-- `stretchly.nix`
 - `theming.nix`
 - `tmux.nix`
 - `vim.nix`
@@ -199,4 +198,3 @@ My setup is pretty extensive, but reading it isn't too particularly difficult.
   - `doom`: My Doom Emacs configuration. Doom Emacs is my editor and home, and I use it extensively.
   - `qtile`: My Qtile configuration. Qtile is my home of homes, the environment I am pretty literally always in while on my computers.
   - `bluegon`: Changes screen color temperature for the benefit of my eyes. Pretty sure my setup is currently broken.
-  - `stretchly.json`: Configuration for stretchly, which is supposed to remind me to stretch. Not currently in use

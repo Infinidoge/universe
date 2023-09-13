@@ -4,7 +4,6 @@
 - Setup IRC (Possibly with ZNC)
 - Add Speedcrunch configuration
 - Add Polychromatic
-- Reimplement Stretchly
 - Add a rofi menu for running commands (Plus modifier key to open in shell)
 - Declarative partition creation
   - [Disko](https://github.com/nix-community/disko) could be used
