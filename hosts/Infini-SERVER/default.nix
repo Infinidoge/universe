@@ -43,6 +43,7 @@
       "/var/lib/systemd/coredump"
       "/var/lib/tailscale"
       "/var/lib/bitwarden_rs"
+      "/var/lib/thelounge"
 
       "/srv"
     ];
@@ -103,6 +104,11 @@
               proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
             };
           };
+          "thelounge.inx.moe" = ssl // {
+            locations."/" = {
+              proxyPass = "http://localhost:${toString config.services.thelounge.port}";
+            };
+          };
         };
       };
 
@@ -143,6 +149,17 @@
         proxyVideos = true;
         replaceTwitter = server.hostname;
         theme = "Black";
+      };
+    };
+
+    thelounge = {
+      enable = true;
+      plugins = with pkgs.theLoungePlugins; [
+        themes.zenburn-monospace
+      ];
+      port = 9786;
+      extraConfig = {
+        reverseProxy = true;
       };
     };
   };
