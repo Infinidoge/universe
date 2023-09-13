@@ -63,7 +63,6 @@ Definitions that apply globally across all devices.
 - `programming`: Packages/configuration for various programming languages.
   - `haskell.nix`
   - `java.nix`
-  - `kotlin.nix`
   - `lua.nix`
   - `nim.nix`
   - `python.nix`
