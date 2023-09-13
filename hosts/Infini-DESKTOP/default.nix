@@ -71,6 +71,7 @@
   home = { profiles, pkgs, ... }: {
     imports = with profiles; [ stretchly ];
     home.packages = with pkgs; [
+      arduino
       hydrus
       sidequest
     ];
