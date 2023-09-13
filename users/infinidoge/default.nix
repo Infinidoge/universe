@@ -34,6 +34,8 @@ in
 
       bitwarden-cli
 
+      jmtpfs
+
       (ifGraphical [
         bitwarden
 
