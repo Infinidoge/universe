@@ -156,3 +156,4 @@
 ;; Other configuration files
 (load! "config/org")
 (load! "config/keybindings")
+(load! "misc/list-mode")
