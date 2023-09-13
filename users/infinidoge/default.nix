@@ -1,4 +1,4 @@
-{ config, self, lib, pkgs, profiles, inputs, ... }:
+{ config, self, lib, pkgs, inputs, ... }:
 let
   inherit (lib) flatten optional mkIf;
   ifGraphical = lib.optionals config.info.graphical;
@@ -8,7 +8,7 @@ in
   imports = flatten [
   ];
 
-  home = { config, main, profiles, ... }: {
+  home = { config, main, ... }: {
     imports = flatten [
       ./config
     ];
