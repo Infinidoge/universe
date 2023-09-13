@@ -48,8 +48,6 @@ in
 
         (optional main.modules.hardware.form.desktop qbittorrent)
       ])
-
-      arduino
     ];
   };
 
