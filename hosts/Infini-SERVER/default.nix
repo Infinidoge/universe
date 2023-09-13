@@ -156,6 +156,8 @@
       enable = true;
       plugins = with pkgs.theLoungePlugins; [
         themes.zenburn-monospace
+        themes.dracula
+        themes.discordapp
       ];
       port = 9786;
       extraConfig = {
