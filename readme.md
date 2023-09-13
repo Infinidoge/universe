@@ -60,15 +60,6 @@ Definitions that apply globally across all devices.
 - `packages.nix`: Packages that should be installed on everything.
 - `security.nix`: Various security related settings.
 - `shell.nix`: Shell-related settings like aliases.
-- `programming`: Packages/configuration for various programming languages.
-  - `haskell.nix`
-  - `java.nix`
-  - `lua.nix`
-  - `nim.nix`
-  - `python.nix`
-  - `racket.nix`
-  - `rust.nix`
-  - `zig.nix`
 
 #### `/modules/modules`
 
@@ -145,13 +136,15 @@ The real meat behind my personal configuration. Defines users of the system, inc
 
 Mirrors `/modules` in that it defines modules for use with home-manager.
 
+##### `/users/modules/functionality`
+
+Modules that add new home manager functionality.
+
 - `bindmounts.nix`: A home-manager module modified from `impermanence`'s home manager module to setup bind mounts.
 
-#### `/users/profiles`
+##### `/users/modules/global`
 
-Mirrors `/profiles`.
-Should really be refactored since broadly, all of the things here will be universally included.
-Most of the modules are self-explanatory from their names.
+Home Manager gettings that are set globally.
 
 - `direnv.nix`
 - `emacs.nix`
@@ -161,8 +154,6 @@ Most of the modules are self-explanatory from their names.
 - `htop.nix`
 - `keychain.nix`
 - `kitty.nix`
-- `nnn.nix`
-- `pass.nix`
 - `rofi.nix`
 - `ssh.nix`
 - `starship.nix`
@@ -178,6 +169,15 @@ Most of the modules are self-explanatory from their names.
   - `ion.nix`
   - `nushell.nix`
   - `zsh.nix`
+- `programming`: Packages/configuration for various programming languages.
+  - `haskell.nix`
+  - `java.nix`
+  - `lua.nix`
+  - `nim.nix`
+  - `python.nix`
+  - `racket.nix`
+  - `rust.nix`
+  - `zig.nix`
 
 #### `/users/root`
 
