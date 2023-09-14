@@ -51,6 +51,7 @@ in
             }))
             xcffib
             (cairocffi.override { withXcffib = true; inherit xcffib; })
+            iwlib
           ] ++ lib.remove
             (cairocffi.override { withXcffib = true; })
             (lib.remove pywlroots oldAttrs.propagatedBuildInputs);

@@ -10,7 +10,7 @@ import os
 
 from typing import List, Any  # noqa: F401
 
-from libqtile import bar, layout, widget, hook
+from libqtile import bar, layout, widget
 from libqtile.config import (
     Click,
     Drag,
@@ -570,6 +570,93 @@ def init_widget_list(main=True, laptop=False):
     Returns a list of widgets suitable for a qtile bar
     """
 
+    interfaces = run_command(
+        "ifconfig -s"
+        " | awk {'print $1'}"
+        " | grep -Ev -e Iface -e lo -e vir.+ -e docker.+ -e tailscale.+"
+        " | tac"
+    ).splitlines()
+
+    wireless_interfaces = list(filter(lambda x: x.startswith("w"), interfaces))
+
+    network_widgets = sum(
+        [
+            [
+                *optional_list(
+                    i != 0,
+                    [
+                        widget.Sep(linewidth=2, padding=3),
+                    ],
+                ),
+                widget.TextBox(text=f"{interface}:", padding=2),
+                widget.Net(
+                    interface=interface,
+                    format="{down} ↓↑ {up}",
+                    padding=5,
+                ),
+            ]
+            for i, interface in enumerate(interfaces)
+        ],
+        [],
+    )
+
+    main_widgets = [
+        [
+            widget.Wlan(
+                format=" {essid} {percent:2.0%}", interface=wireless_interfaces[0]
+            ),
+        ],
+        network_widgets,
+        [
+            widget.TextBox(text="󰍛", padding=1, fontsize=18),
+            widget.Memory(padding=5),
+        ],
+        [
+            widget.TextBox(text=" Vol:", padding=0),
+            widget.Volume(padding=5),
+        ],
+    ]
+
+    laptop_widgets = [
+        (
+            [
+                widget.TextBox(text=" 🔆", padding=0, fontsize=14),
+                widget.Backlight(
+                    backlight_name=(backlight.splitlines()[0].split(",")[0]),
+                    change_command="brightnessctl set {0}%",
+                    step=5,
+                    padding=5,
+                ),
+            ]
+            if (backlight := run_command("brightnessctl -lm --class=backlight"))
+            else []
+        ),
+        [  # TODO: Create battery icon widget using NerdFont icons
+            widget.Battery(
+                format="{char} {percent:2.1%} {hour:d}h:{min:02d}m",
+                update_interval=10,
+                padding=5,
+                charge_char="",
+                discharge_char="",
+            ),
+        ],
+    ]
+
+    powerline_widgets = [
+        # Widgets only found on the main screen's powerline
+        *optional_list(main, main_widgets + optional_list(laptop, laptop_widgets)),
+        # Widgets found on the powerline of all screens
+        [
+            widget.CurrentLayoutIcon(padding=0, scale=0.7),
+            widget.CurrentLayout(padding=5),
+        ],
+        [
+            widget.Clock(
+                format="%A, %B %d, %Y - %H:%M:%S ",
+            ),
+        ],
+    ]
+
     widget_list = [
         widget.Sep(linewidth=0, padding=6, foreground=colors[2], background=colors[0]),
         widget.GroupBox(
@@ -619,96 +706,7 @@ def init_widget_list(main=True, laptop=False):
         ),
         widget.Sep(linewidth=0, padding=6, foreground=colors[0], background=colors[0]),
         *create_powerline(
-            [
-                # Widgets only found on the main screen's powerline
-                *optional_list(
-                    main,
-                    [
-                        [
-                            *sum(
-                                [
-                                    [
-                                        *optional_list(
-                                            i != 0,
-                                            [
-                                                widget.Sep(linewidth=2, padding=3),
-                                            ],
-                                        ),
-                                        widget.TextBox(text=f"{interface}:", padding=2),
-                                        widget.Net(
-                                            interface=interface,
-                                            format="{down} ↓↑ {up}",
-                                            padding=5,
-                                        ),
-                                    ]
-                                    for i, interface in enumerate(
-                                        run_command(
-                                            "ifconfig -s"
-                                            " | awk {'print $1'}"
-                                            " | grep -Ev -e Iface -e lo -e vir.+ -e docker.+ -e tailscale.+"
-                                            " | tac"
-                                        ).splitlines()
-                                    )
-                                ],
-                                [],
-                            )
-                        ],
-                        [
-                            widget.TextBox(text="󰍛", padding=1, fontsize=18),
-                            widget.Memory(padding=5),
-                        ],
-                        [
-                            widget.TextBox(text=" Vol:", padding=0),
-                            widget.Volume(padding=5),
-                        ],
-                        *optional_list(
-                            laptop,
-                            [
-                                (
-                                    [
-                                        widget.TextBox(
-                                            text=" 🔆", padding=0, fontsize=14
-                                        ),
-                                        widget.Backlight(
-                                            backlight_name=(
-                                                backlight.splitlines()[0].split(",")[0]
-                                            ),
-                                            change_command="brightnessctl set {0}%",
-                                            step=5,
-                                            padding=5,
-                                        ),
-                                    ]
-                                    if (
-                                        backlight := run_command(
-                                            "brightnessctl -lm --class=backlight"
-                                        )
-                                    )
-                                    else []
-                                ),
-                                [  # TODO: Create battery icon widget using NerdFont icons
-                                    widget.Battery(
-                                        format="{char} {percent:2.1%} {hour:d}h:{min:02d}m",
-                                        update_interval=10,
-                                        padding=5,
-                                        charge_char="",
-                                        discharge_char="",
-                                    ),
-                                ],
-                            ],
-                        ),
-                    ],
-                ),
-                # Widgets found on the powerline of all screens
-                [
-                    widget.CurrentLayoutIcon(padding=0, scale=0.7),
-                    widget.CurrentLayout(padding=5),
-                ],
-                [
-                    widget.Clock(
-                        format="%A, %B %d, %Y - %H:%M:%S ",
-                    ),
-                ],
-            ],
+            powerline_widgets,
             base=colors[0],
             foreground=colors[2],
             backgrounds=[
