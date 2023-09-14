@@ -9,6 +9,7 @@
 - [ ] Declare Hydrus Companion extension in Firefox config
 - [ ] Add tool for `universe-cli cd`
 - [ ] Move `$EDITOR` script to a home-manager session variable
+- [ ] Fix https://github.com/NixOS/nixpkgs/issues/45039
 
 # Issues pending fixes
 
