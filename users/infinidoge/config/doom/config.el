@@ -17,6 +17,7 @@
  doom-theme 'doom-one
  display-line-numbers-type 'relative
  doom-modeline-enable-word-count t
+ nerd-icons-font-family "Symbols Nerd Fonts Mono"
  )
 
 ;; --- Projectile ----
