@@ -102,7 +102,7 @@
 
 ;; --- Nix ---
 ;; Replace nixfmt in format-all with nixpkgs-fmt
-(set-formatter! 'nixfmt "nixpkgs-fmt" :modes '(nix-mode))
+(set-formatter! 'nixfmt (list "nixpkgs-fmt") :modes '(nix-mode))
 
 ;; --- JSON ---
 (setq js-indent-level 2)
