@@ -79,15 +79,11 @@ class Apps:
         return lazy.spawn(cls.terminal_command(program, args=args, terminal=terminal))
 
     @classmethod
-    def shell_in_terminal(
-        cls, command, sargs=tuple(), targs=tuple(), *, shell=None, terminal=None
-    ):
+    def shell_in_terminal(cls, command, sargs=tuple(), targs=tuple(), *, shell=None, terminal=None):
         """
         Opens a program in the terminal using the shell, with the given shell and terminal arguments.
         """
-        return cls.open_in_terminal(
-            cls.shell_command(command, sargs, shell=shell), targs, terminal=terminal
-        )
+        return cls.open_in_terminal(cls.shell_command(command, sargs, shell=shell), targs, terminal=terminal)
 
     @classmethod
     def open_in_editor(cls, file_, args=tuple()):
@@ -549,9 +545,7 @@ def create_powerline(
             widget.TextBox(
                 text=sep,
                 foreground=backgrounds[bg_index],
-                background=base
-                if i == 0
-                else backgrounds[bg_index - (len(backgrounds) - 1)],
+                background=base if i == 0 else backgrounds[bg_index - (len(backgrounds) - 1)],
                 fontsize=fontsize,
                 padding=padding,
             )
@@ -571,10 +565,12 @@ def init_widget_list(main=True, laptop=False):
     """
 
     interfaces = run_command(
+        # fmt:off
         "ifconfig -s"
         " | awk {'print $1'}"
         " | grep -Ev -e Iface -e lo -e vir.+ -e docker.+ -e tailscale.+"
         " | tac"
+        # fmt:on
     ).splitlines()
 
     wireless_interfaces = list(filter(lambda x: x.startswith("w"), interfaces))
@@ -602,9 +598,7 @@ def init_widget_list(main=True, laptop=False):
 
     main_widgets = [
         [
-            widget.Wlan(
-                format=" {essid} {percent:2.0%}", interface=wireless_interfaces[0]
-            ),
+            widget.Wlan(format=" {essid} {percent:2.0%}", interface=wireless_interfaces[0]),
         ],
         network_widgets,
         [
@@ -729,9 +723,7 @@ screens = [
         wallpaper="@wallpaper@",
         wallpaper_mode="@wallpaper_mode@",
     )
-    for i in range(
-        int(run_command("xrandr --listmonitors | grep 'Monitors:' | awk {'print $2'}"))
-    )
+    for i in range(int(run_command("xrandr --listmonitors | grep 'Monitors:' | awk {'print $2'}")))
 ]
 
 # Drag floating layouts.
