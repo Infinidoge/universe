@@ -20,6 +20,12 @@
  nerd-icons-font-family "Symbols Nerd Fonts Mono"
  )
 
+;; --- Formatting ---
+(setq
+ fill-column 120
+ apheleia-formatters-respect-fill-column t
+ )
+
 ;; --- Projectile ----
 (setq
  projectile-indexing-method 'hybrid
