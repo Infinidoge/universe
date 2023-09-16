@@ -42,6 +42,7 @@ in
 
       powerManagement = {
         cpuFreqGovernor = mkDefault "powersave";
+        powertop.enable = mkDefault true;
       };
 
       environment = {
