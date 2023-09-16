@@ -482,6 +482,7 @@ groups.append(
         [
             DropDown("calculator", "speedcrunch", x=0.2, y=0.2, width=0.6, height=0.6),
             DropDown("arandr", "arandr", x=0.2, y=0.1, width=0.6, height=0.4),
+            DropDown("bluetooth", "blueman-manager", x=0.2, y=0.2, width=0.6, height=0.6),
         ],
     )
 )
@@ -496,6 +497,10 @@ keys.extend(
         Key(
             [Keys.SUPER, Keys.ALT], "m",
             lazy.group["scratchpad"].dropdown_toggle("arandr"),
+        ),
+        Key(
+            [Keys.SUPER, Keys.ALT], "b",
+            lazy.group["scratchpad"].dropdown_toggle("bluetooth"),
         ),
     ]
 )
