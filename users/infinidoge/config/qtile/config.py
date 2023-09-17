@@ -447,6 +447,12 @@ keys = [
 ]
 # fmt: on
 
+layouts = [
+    layout.Columns(border_focus_stack="#d75f5f"),
+    layout.Max(),
+    layout.TreeTab(),
+]
+
 groups = [
     *[Group(i) for i in "123456789"],
     Group("0", layouts=[layout.TreeTab()]),
@@ -505,21 +511,6 @@ keys.extend(
     ]
 )
 # fmt: on
-
-layouts = [
-    layout.Columns(border_focus_stack="#d75f5f"),
-    layout.Max(),
-    layout.TreeTab(),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.VerticalTile(),
-]
 
 widget_defaults = dict(font="sans", fontsize=12, padding=2, background=colors[0])
 extension_defaults = widget_defaults.copy()
