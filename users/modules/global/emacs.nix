@@ -61,6 +61,9 @@ in
       dotnetCorePackages.sdk_6_0
       omnisharp-roslyn
 
+      # :lang docker
+      dockfmt
+
       # :lang latex
       (ifGraphical [
         (texlive.combine {
@@ -88,9 +91,14 @@ in
 
       # :lang sh
       shellcheck
+      shfmt
 
       # :lang json
       jq
+
+      # :lang web
+      html-tidy
+      stylelint
 
       # --- :checkers ---
       # :checkers spell
