@@ -86,7 +86,7 @@ in
   user = {
     name = "infinidoge";
     uid = 1000;
-    passwordFile = mkIf config.modules.secrets.enable config.secrets.infinidoge-password;
+    hashedPasswordFile = mkIf config.modules.secrets.enable config.secrets.infinidoge-password;
     description = "Infinidoge, primary user of the system";
     group = "users";
     isNormalUser = true;
