@@ -237,6 +237,11 @@ keys = [
         lazy.layout.maximize(),
         desc="Maximize the selected window",
     ),
+    Key(
+        [Keys.SUPER, Keys.CONTROL, Keys.SHIFT], "m",
+        lazy.layout.move_to_slice(),
+        desc="Move window to slice",
+    ),
 
     # Toggle between different layouts as defined below
     Key(
@@ -454,7 +459,15 @@ layouts = [
 ]
 
 groups = [
-    *[Group(i) for i in "123456789"],
+    *[Group(i) for i in "12345678"],
+    Group(
+        "9",
+        layouts=[
+            *layouts,
+            layout.Slice(name="left slice", width=1000, fallback=layouts[0], side="left"),
+            layout.Slice(name="top slice", width=800, fallback=layouts[0], side="top"),
+        ],
+    ),
     Group("0", layouts=[layout.TreeTab()]),
 ]
 
