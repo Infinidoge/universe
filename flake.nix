@@ -18,8 +18,8 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
-    haumea.url = "github:nix-community/haumea/v0.2.2";
-    haumea.inputs.nixpkgs.follows = "nixpkgs";
+    # haumea.url = "github:nix-community/haumea/v0.2.2";
+    # haumea.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
