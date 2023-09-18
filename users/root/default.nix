@@ -1,6 +1,6 @@
 { lib, config, self, ... }: {
   users.users.root = {
-    passwordFile = lib.mkIf config.modules.secrets.enable config.secrets.root-password;
+    hashedPasswordFile = lib.mkIf config.modules.secrets.enable config.secrets.root-password;
     openssh.authorizedKeys.keys = import ./ssh-keys.nix;
   };
 
