@@ -55,9 +55,9 @@ with lib;
       keep-outputs = true
       keep-derivations = true
       fallback = true
-    '' + (if config.modules.secrets.enable then ''
+    '' + (optionalString config.modules.secrets.enable ''
       secret-key-files = ${config.secrets.binary-cache-private-key}
-    '' else "");
+    '');
   };
 
   nixpkgs.config = {
