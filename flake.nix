@@ -36,7 +36,8 @@
 
     hlissner-dotfiles.url = "github:hlissner/dotfiles";
 
-    quick-nix-registry.url = "github:divnix/quick-nix-registry";
+    flake-registry.url = "github:NixOS/flake-registry";
+    flake-registry.flake = false;
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
@@ -125,7 +126,6 @@
               # --- Library Modules ---
               inputs.nixos-wsl.nixosModules.wsl
               inputs.impermanence.nixosModules.impermanence
-              inputs.quick-nix-registry.nixosModules.local-registry
               inputs.home-manager.nixosModules.home-manager
               inputs.agenix.nixosModules.age
 
