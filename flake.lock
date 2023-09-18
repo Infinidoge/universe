@@ -240,6 +240,22 @@
         "type": "github"
       }
     },
+    "flake-registry": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1692779116,
+        "narHash": "sha256-erTXdDToRA8whxURoEgBGWj550vcUirO6adEFIjQ0M0=",
+        "owner": "NixOS",
+        "repo": "flake-registry",
+        "rev": "3f641cbae15d3c74370aa9b97fd0ac478a114305",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "flake-registry",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1659877975,
@@ -358,22 +374,6 @@
         "owner": "Infinidoge",
         "ref": "combined/all",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "globalRegistry": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1692779116,
-        "narHash": "sha256-erTXdDToRA8whxURoEgBGWj550vcUirO6adEFIjQ0M0=",
-        "owner": "NixOS",
-        "repo": "flake-registry",
-        "rev": "3f641cbae15d3c74370aa9b97fd0ac478a114305",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "flake-registry",
         "type": "github"
       }
     },
@@ -658,29 +658,12 @@
         "url": "ssh://git@github.com/Infinidoge/universe-private"
       }
     },
-    "quick-nix-registry": {
-      "inputs": {
-        "globalRegistry": "globalRegistry"
-      },
-      "locked": {
-        "lastModified": 1627589359,
-        "narHash": "sha256-h0UhOgGtHwEcb2looQXIFPNmRwiFtXo4bEuBboPJzJo=",
-        "owner": "divnix",
-        "repo": "quick-nix-registry",
-        "rev": "9f1beb3e4de2e538b14ed8ddc71b706fd33b08dd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "divnix",
-        "repo": "quick-nix-registry",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
         "devshell": "devshell",
         "flake-parts": "flake-parts",
+        "flake-registry": "flake-registry",
         "fork": "fork",
         "haumea": "haumea",
         "hlissner-dotfiles": "hlissner-dotfiles",
@@ -692,7 +675,6 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_4",
         "private": "private",
-        "quick-nix-registry": "quick-nix-registry",
         "rust-overlay": "rust-overlay",
         "stable": "stable",
         "universe-cli": "universe-cli"

@@ -28,9 +28,25 @@ with lib;
       let
         flakes = filterAttrs (n: v: v ? outputs) inputs;
       in
-      builtins.mapAttrs (_n: v: { flake = v; }) flakes;
+      (builtins.mapAttrs (_n: v: { flake = v; }) flakes)
+      // {
+        nixpkgs-git = {
+          exact = false;
+          from.id = "local";
+          from.type = "indirect";
+          to.url = "file:///nix/nixpkgs";
+          to.type = "git";
+        };
+      };
+
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs}"
+      "home-manager=${inputs.home-manager}"
+    ];
 
     extraOptions = ''
+      flake-registry = ${inputs.flake-registry}/flake-registry.json
+
       extra-experimental-features = flakes nix-command
       extra-substituters = https://nrdxp.cachix.org https://nix-community.cachix.org
       extra-trusted-public-keys = nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
@@ -42,11 +58,6 @@ with lib;
     '' + (if config.modules.secrets.enable then ''
       secret-key-files = ${config.secrets.binary-cache-private-key}
     '' else "");
-
-    localRegistry = {
-      enable = true;
-      cacheGlobalRegistry = true;
-    };
   };
 
   nixpkgs.config = {
