@@ -23,8 +23,12 @@
 ;; --- Formatting ---
 (setq
  fill-column 120
- apheleia-formatters-respect-fill-column t
  )
+
+(after! apheleia
+  (setq apheleia-formatters-respect-fill-column t)
+  )
+
 
 ;; --- Projectile ----
 (setq
