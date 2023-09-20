@@ -80,6 +80,7 @@ in
             upquote
             wrapfig
             xstring
+            mleftright
             ;
         })
         biber
