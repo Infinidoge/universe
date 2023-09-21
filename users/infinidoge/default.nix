@@ -45,6 +45,8 @@ in
 
         krita
 
+        vimpc
+
         (discord-canary.override { withVencord = true; })
         schildichat-desktop
 
