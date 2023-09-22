@@ -47,6 +47,7 @@ in
 
         vimpc
         id3v2
+        picard
 
         (discord-canary.override { withVencord = true; })
         schildichat-desktop
