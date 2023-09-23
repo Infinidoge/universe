@@ -612,7 +612,7 @@ def init_widget_list(main=True, laptop=False):
         network_widgets,
         [
             widget.TextBox(text="󰍛", padding=1, fontsize=18),
-            widget.Memory(padding=5),
+            widget.Memory(padding=5, measure_mem="G", format="{MemUsed:.1f}{mm}/{MemTotal:.1f}{mm}"),
         ],
         [
             widget.TextBox(text=" Vol:", padding=0),
