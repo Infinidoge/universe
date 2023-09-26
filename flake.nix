@@ -34,8 +34,6 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    hlissner-dotfiles.url = "github:hlissner/dotfiles";
-
     flake-registry.url = "github:NixOS/flake-registry";
     flake-registry.flake = false;
 
@@ -82,7 +80,6 @@
         let
           libOverlay = (lfinal: lprev: {
             our = self.lib;
-            hlissner = inputs.hlissner-dotfiles.lib;
             hm = inputs.home-manager.lib.hm;
           });
         in

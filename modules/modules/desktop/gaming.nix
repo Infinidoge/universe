@@ -1,6 +1,6 @@
 { config, options, lib, pkgs, ... }:
 with lib;
-with lib.hlissner;
+with lib.our;
 let
   cfg = config.modules.desktop.gaming;
   opt = options.modules.desktop.gaming;

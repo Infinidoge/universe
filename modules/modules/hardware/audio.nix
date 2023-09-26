@@ -2,7 +2,7 @@
 { options, config, lib, pkgs, ... }:
 
 with lib;
-with lib.hlissner;
+with lib.our;
 let
   cfg = config.modules.hardware.audio;
 in

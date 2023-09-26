@@ -1,7 +1,7 @@
 # Heavily inspired by hlissner: https://github.com/hlissner/dotfiles/blob/master/modules/options.nix
 { config, options, lib, home-manager, ... }:
 with lib;
-with lib.hlissner;
+with lib.our;
 let
   mkAliasOpt = mkOpt types.attrs { };
   mkInfoOpt = mkOpt types.str "";

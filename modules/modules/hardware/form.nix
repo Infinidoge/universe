@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 with lib;
-with lib.hlissner;
+with lib.our;
 let
   cfg = config.modules.hardware.form;
 in
