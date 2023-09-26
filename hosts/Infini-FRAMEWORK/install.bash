@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 # [[file:readme.org::install][install]]
-# [[[[file:/etc/nixos/hosts/Infini-FRAMEWORK/readme.org::mount][mount]]][mount]]
-# [[[[file:/etc/nixos/hosts/Infini-FRAMEWORK/readme.org::boilerplate][boilerplate]]][boilerplate]]
+# [[file:readme.org::mount][mount]]
+# [[file:readme.org::mount][boilerplate]]
 DISK=$1
 PART=$DISK$2
 
 sudo mkdir -p /mnt
 # boilerplate ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-FRAMEWORK/readme.org::mount_check][mount_check]]][mount_check]]
+# [[file:readme.org::mount][mount_check]]
 if mountpoint -q -- "/mnt"; then
     echo "ERROR: /mnt is a mounted filesystem, aborting"
     exit 1
 fi
 # mount_check ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-FRAMEWORK/readme.org::mounting][mounting]]][mounting]]
+# [[file:readme.org::mounting][mounting]]
 echo "LOG: Mounting tmpfs"
 sudo mount -t tmpfs root /mnt
 
@@ -35,12 +35,12 @@ sudo mount "${PART}1" /mnt/boot/efi
 # mounting ends here
 # mount ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-FRAMEWORK/readme.org::installing][installing]]][installing]]
+# [[file:readme.org::installing][installing]]
 echo "LOG: Installing NixOS"
 sudo nixos-install --flake /etc/nixos#Infini-FRAMEWORK --no-root-password
 # installing ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-FRAMEWORK/readme.org::install_extra][install_extra]]][install_extra]]
+# [[file:readme.org::install_extra][install_extra]]
 echo "LOG: Cloning configuration"
 sudo chown -R infinidoge /mnt/persist/etc/nixos
 git clone --no-hardlinks --progress https://gitlab.com/infinidoge/universe.git /mnt/persist/etc/nixos
@@ -51,7 +51,7 @@ git clone --no-hardlinks --progress --depth 1 https://github.com/doomemacs/doome
 HOME=/mnt/persist/home/infinidoge /mnt/persist/home/infinidoge/.config/emacs/bin/doom -y install --no-config
 # install_extra ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-FRAMEWORK/readme.org::cleanup][cleanup]]][cleanup]]
+# [[file:readme.org::cleanup][cleanup]]
 echo "LOG: Unmounting all"
 sudo umount -R /mnt
 # cleanup ends here

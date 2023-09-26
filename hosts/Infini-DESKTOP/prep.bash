@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # [[file:readme.org::preparation][preparation]]
-# [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::boilerplate][boilerplate]]][boilerplate]]
+# [[file:readme.org::boilerplate][boilerplate]]
 DISK=$1
 PART=$DISK$2
 
 sudo mkdir -p /mnt
 # boilerplate ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::mount_check][mount_check]]][mount_check]]
+# [[file:readme.org::mount_check][mount_check]]
 if mountpoint -q -- "/mnt"; then
     echo "ERROR: /mnt is a mounted filesystem, aborting"
     exit 1
 fi
 # mount_check ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::partitioning][partitioning]]][partitioning]]
+# [[file:readme.org::partitioning][partitioning]]
 echo "LOG: Partitioning $DISK"
 sudo parted $DISK -- mktable gpt
 sudo parted $DISK -s -- mkpart ESP fat32 1MiB 512MiB
@@ -23,7 +23,7 @@ sudo parted $DISK -s -- mkpart primary linux-swap -48GiB 100%
 sudo parted $DISK -s -- set 1 esp on
 # partitioning ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::filesystems][filesystems]]][filesystems]]
+# [[file:readme.org::filesystems][filesystems]]
 echo "LOG: Making filesystems"
 echo "- Making fat32 filesystem on ${PART}1"
 sudo mkfs.fat -F 32 -n boot "${PART}1"
@@ -33,7 +33,7 @@ echo "- Making swap space on ${PART}3"
 sudo mkswap -L swap "${PART}3"
 # filesystems ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::subvolumes][subvolumes]]][subvolumes]]
+# [[file:readme.org::subvolumes][subvolumes]]
 echo "LOG: Making subvolumes on ${PART}2"
 sudo mount "${PART}2" /mnt
 sudo btrfs subvolume create /mnt/root
