@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # [[file:readme.org::mount][mount]]
-# [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::boilerplate][boilerplate]]][boilerplate]]
+# [[file:readme.org::mount][boilerplate]]
 DISK=$1
 PART=$DISK$2
 
 sudo mkdir -p /mnt
 # boilerplate ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::mount_check][mount_check]]][mount_check]]
+# [[file:readme.org::mount][mount_check]]
 if mountpoint -q -- "/mnt"; then
     echo "ERROR: /mnt is a mounted filesystem, aborting"
     exit 1
 fi
 # mount_check ends here
 
-# [[[[file:/etc/nixos/hosts/Infini-DESKTOP/readme.org::mounting][mounting]]][mounting]]
+# [[file:readme.org::mount][mounting]]
 echo "LOG: Mounting tmpfs"
 sudo mount -t tmpfs root /mnt
 
