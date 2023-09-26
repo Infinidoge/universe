@@ -1,6 +1,6 @@
 { config, lib, private, ... }:
 with lib;
-with lib.hlissner;
+with lib.our;
 let
   cfg = config.modules.hardware.wireless;
 in

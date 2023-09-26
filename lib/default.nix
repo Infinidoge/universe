@@ -36,4 +36,6 @@ rec {
   import ./digga.nix { inherit lib; }
 ) // (
   import ./hosts.nix { inherit lib; }
+) // (
+  import ./options.nix { inherit lib; }
 ))

@@ -1,6 +1,6 @@
 { config, options, lib, ... }:
 with lib;
-with lib.hlissner;
+with lib.our;
 let
   cfg = config.modules.locale;
   opt = options.modules.locale;

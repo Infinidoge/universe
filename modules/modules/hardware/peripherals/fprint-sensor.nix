@@ -1,6 +1,6 @@
 { config, options, lib, pkgs, ... }:
 with lib;
-with lib.hlissner;
+with lib.our;
 let
   cfg = config.modules.hardware.peripherals.fprint-sensor;
 in

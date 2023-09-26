@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }:
 with lib;
-with lib.hlissner;
+with lib.our;
 let
   cfg = config.modules.desktop.wm;
 in
