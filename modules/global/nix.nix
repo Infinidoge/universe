@@ -28,7 +28,7 @@ with lib;
       let
         flakes = filterAttrs (n: v: v ? outputs) inputs;
       in
-      (builtins.mapAttrs (_n: v: { flake = v; }) flakes)
+      (mapAttrs' (n: v: { name = if n == "self" then "universe" else n; value = { flake = v; }; }) flakes)
       // {
         nixpkgs-git = {
           exact = false;
