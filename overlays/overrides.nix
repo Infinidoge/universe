@@ -29,6 +29,15 @@ in
           hash = "sha256-JtPN0FMRZMc89AzQfe0JiB9OMR+tmMq+pLye5nAOQ7Y=";
         };
 
+        patches = oldAttrs.patches ++ [
+          # https://github.com/qtile/qtile/pull/4473
+          (final.fetchpatch {
+            name = "qtile-load-icons-for-group-specific-layouts.patch";
+            url = "https://github.com/qtile/qtile/commit/56b0519d74a090e25f4f930c7f49ab5704e1cc21.patch";
+            sha256 = "sha256-Na525vpHKOdQHS6lkbs2roCbalfIiYakakrH9XqPf5Q=";
+          })
+        ];
+
         propagatedBuildInputs =
           let
             xcffib = pythonFinal.xcffib.overrideAttrs (oldAttrs: rec {
