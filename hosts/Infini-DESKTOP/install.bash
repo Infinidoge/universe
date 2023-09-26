@@ -47,7 +47,7 @@ git clone --no-hardlinks --progress https://gitlab.com/infinidoge/universe.git /
 
 echo "LOG: Installing Doom Emacs"
 sudo mkdir -p /mnt/persist/home/infinidoge/.config/emacs
-git clone --no-hardlinks --progress --depth 1 https://github.com/hlissner/doom-emacs /mnt/persist/home/infinidoge/.config/emacs
+git clone --no-hardlinks --progress --depth 1 https://github.com/doomemacs/doomemacs /mnt/persist/home/infinidoge/.config/emacs
 HOME=/mnt/persist/home/infinidoge /mnt/persist/home/infinidoge/.config/emacs/bin/doom -y install --no-config
 # install_extra ends here
 
