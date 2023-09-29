@@ -7,7 +7,7 @@ in
 {
   options.services.ensure = with types; {
     enable = mkBoolOpt true;
-    directories = mkOpt (listOf string) [ ];
+    directories = mkOpt (listOf str) [ ];
   };
 
   config.systemd.services = {
