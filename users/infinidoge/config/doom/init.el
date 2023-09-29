@@ -19,7 +19,7 @@
  company                        ; the ultimate code completion backend TODO: Consider +childframe
  ;;helm                         ; the *other* search engine for love and life
  ;;ido                          ; the other *other* search engine...
- (ivy +icons)                   ; a search engine for love and life TODO: Consider +childrame, +fuzzy, +prescient
+ ;; (ivy +icons)                   ; a search engine for love and life TODO: Consider +childrame, +fuzzy, +prescient
  (vertico +icons)
 
  :ui
