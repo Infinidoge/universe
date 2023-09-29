@@ -8,13 +8,13 @@ in
     enable = mkEnableOption "SSH tunneling service";
 
     server = mkOption {
-      type = with types; uniq string;
+      type = with types; uniq str;
       default = null;
       description = "The SSH server to connect for port forwarding";
     };
 
     requiredBy = mkOption {
-      type = with types; listOf string;
+      type = with types; listOf str;
       default = [ ];
       description = "List of systemd services that require the SSH tunnels";
     };
@@ -23,17 +23,17 @@ in
       type = types.submodule {
         options = {
           dynamic = mkOption {
-            type = with types; listOf (either port string);
+            type = with types; listOf (either port str);
             default = [ ];
             description = "List of dynamic ports to open through the ssh tunnel. See ssh(1) for ``-D``";
           };
           local = mkOption {
-            type = with types; listOf (either port string);
+            type = with types; listOf (either port str);
             default = [ ];
             description = "List of local ports to open through the ssh tunnel. See ssh(1) for ``-L``";
           };
           remote = mkOption {
-            type = with types; listOf (either port string);
+            type = with types; listOf (either port str);
             default = [ ];
             description = "List of remote ports to open through the ssh tunnel. See ssh(1) for ``-R``";
           };
