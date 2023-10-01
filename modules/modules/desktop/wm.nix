@@ -17,6 +17,13 @@ in
         monitors = mkDefault 1;
       };
 
+      # Compositor to prevent screen tearing
+      services.picom = {
+        enable = true;
+        backend = "glx";
+        vSync = true;
+      };
+
       # Automatically attach/detatch connected/disconnected monitors
       services.autorandr = {
         enable = config.info.graphical;
