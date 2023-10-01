@@ -17,6 +17,13 @@ in
         monitors = mkDefault 1;
       };
 
+      # Automatically attach/detatch connected/disconnected monitors
+      services.autorandr = {
+        enable = config.info.graphical;
+        ignoreLid = true;
+        defaultTarget = "horizontal";
+      };
+
       services.xserver = {
         enable = true;
         displayManager.lightdm.enable = true;
