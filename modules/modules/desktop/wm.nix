@@ -31,9 +31,13 @@ in
         defaultTarget = "horizontal";
       };
 
-      services.xserver = {
-        enable = true;
-        displayManager.lightdm.enable = true;
+      services.xserver.enable = true;
+
+      services.xserver.displayManager = {
+        lightdm.enable = true;
+        setupCommands = ''
+          ${lib.getExe pkgs.autorandr} -c
+        '';
       };
 
       home-manager.sharedModules = [{
