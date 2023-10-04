@@ -84,7 +84,7 @@ in
 
     edit = "$EDITOR";
 
-    path = "tr ':' '\n' <<< \"$PATH\"";
+    lpath = "echo \"$PATH\" | tr \":\" \"\n\"";
     timestamp = "date +%s -d";
 
     neofetch = "neowofetch";
