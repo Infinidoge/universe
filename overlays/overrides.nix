@@ -31,4 +31,9 @@ in
       });
     };
   };
+
+  # https://nixpk.gs/pr-tracker.html?pr=259424
+  autorandr = prev.autorandr.overrideAttrs (old: {
+    meta = old.meta // { mainProgram = "autorandr"; };
+  });
 }
