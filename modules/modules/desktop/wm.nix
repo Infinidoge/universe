@@ -26,7 +26,7 @@ in
 
       # Automatically attach/detatch connected/disconnected monitors
       services.autorandr = {
-        enable = config.info.graphical;
+        enable = config.info.graphical && !config.info.stationary;
         ignoreLid = true;
         defaultTarget = "horizontal";
         hooks.postswitch = {
