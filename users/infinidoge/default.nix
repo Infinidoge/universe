@@ -51,6 +51,7 @@ in
 
         (discord-canary.override { withVencord = true; })
         schildichat-desktop
+        thunderbird
 
         (optional main.modules.hardware.form.desktop qbittorrent)
       ])
