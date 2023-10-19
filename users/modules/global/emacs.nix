@@ -25,6 +25,7 @@ in
       fd
       ripgrep
       fzf
+      mlocate
 
       gnumake
 
