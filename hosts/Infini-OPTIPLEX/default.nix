@@ -17,6 +17,8 @@
     };
   };
 
+  info.loc.home = false;
+
   environment.persistence."/persist" = {
     directories = [
       "/home"
