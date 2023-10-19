@@ -97,6 +97,9 @@ in
       # :lang json
       jq
 
+      # :lang data
+      libxml2
+
       # :lang web
       html-tidy
       stylelint
