@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.initrd.availableKernelModules = [ "nvme" "usb_storage" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "ahci" "nvme" "sd_mod" "usb_storage" "usbhid" "xhci_pci" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
