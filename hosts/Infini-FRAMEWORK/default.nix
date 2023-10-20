@@ -53,6 +53,8 @@
 
   programs.ns-usbloader.enable = true;
 
+  services.xserver.videoDrivers = [ "displaylink" ];
+
   services.fwupd = {
     enable = true;
     extraRemotes = [
