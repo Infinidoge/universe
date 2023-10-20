@@ -10,3 +10,4 @@
   - UUIDs can be generated using `uuidgen`. `uuidgen --md5 --namespace <UUID> --name <NAME>` is useful for deterministically generating UUIDs. Use the namespace to represent the computer itself, and the name to represent the partitions.
 - Reconsider Avahi. Mostly redundant with tailscale handling most things, except when internet is down.
 - Setup Nix LSP with [nil](https://github.com/oxalica/nil)
+- Replace CloudFlare SSL certificate with Let's Encrypt via [ACME](https://nixos.wiki/wiki/ACME)
