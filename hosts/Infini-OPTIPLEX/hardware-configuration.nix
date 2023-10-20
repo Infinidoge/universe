@@ -7,4 +7,6 @@
   boot.extraModulePackages = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+
+  info.model = "OptiPlex 5050";
 }
