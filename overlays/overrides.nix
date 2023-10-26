@@ -18,6 +18,8 @@ in
   inherit (stable)
     ;
 
+  schildichat-desktop = prev.schildichat-desktop.override { electron = final.electron_25; };
+
   python3 = prev.python3.override {
     packageOverrides = pythonFinal: pythonPrev: {
       qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
