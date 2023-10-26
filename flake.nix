@@ -2,52 +2,71 @@
   description = "Infinidoge's NixOS configuration";
 
   inputs = {
-    # nixpkgs
+    ### Nixpkgs ###
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs";
     fork.url = "github:Infinidoge/nixpkgs/combined/all";
     stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
-    # configuration components
+    ### Configuration Components ###
     private.url = "git+ssh://git@github.com/Infinidoge/universe-private";
-
     universe-cli.url = "github:Infinidoge/universe-cli";
+
+    ### Nix Libraries
+    agenix.url = "github:ryantm/agenix";
+    devshell.url = "github:numtide/devshell";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-registry = { url = "github:NixOS/flake-registry"; flake = false; };
+    home-manager.url = "github:nix-community/home-manager";
+    impermanence.url = "github:nix-community/impermanence";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+
+    ### Domain-Specific Flake Inputs ###
+    ## Minecraft
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft/develop";
+
+    ## Rust
+    rust-overlay.url = "github:oxalica/rust-overlay";
+
+    ### Cleanup ###
+    ## Follow nixpkgs
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    devshell.inputs.nixpkgs.follows = "nixpkgs";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     universe-cli.inputs.nixpkgs.follows = "nixpkgs";
 
-    # nix libraries
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+    ## Blank out
+    blank.url = "github:divnix/blank";
+    agenix.inputs.darwin.follows = "blank";
+    nix-minecraft.inputs.flake-compat.follows = "blank";
+    nixos-wsl.inputs.flake-compat.follows = "blank";
+    universe-cli.inputs.blank.follows = "blank";
 
-    # haumea.url = "github:nix-community/haumea/v0.2.2";
-    # haumea.inputs.nixpkgs.follows = "nixpkgs";
+    ## Follow flake-utils
+    flake-utils.url = "github:numtide/flake-utils";
+    nix-minecraft.inputs.flake-utils.follows = "flake-utils";
+    nixos-wsl.inputs.flake-utils.follows = "flake-utils";
+    rust-overlay.inputs.flake-utils.follows = "flake-utils";
+    universe-cli.inputs.flake-utils.follows = "flake-utils";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    ## Follow systems
+    systems.url = "github:nix-systems/default";
+    devshell.inputs.systems.follows = "systems";
+    flake-utils.inputs.systems.follows = "systems";
+    universe-cli.inputs.systems.follows = "systems";
 
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    ## Misc
     agenix.inputs.home-manager.follows = "home-manager";
-
-    devshell.url = "github:numtide/devshell";
-
-    nixos-hardware.url = "github:nixos/nixos-hardware";
-
-    impermanence.url = "github:nix-community/impermanence";
-
-    flake-registry.url = "github:NixOS/flake-registry";
-    flake-registry.flake = false;
-
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
-
-    # --- Domain-Specific Flake Inputs
-    # # --- Minecraft
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft/develop";
-    nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
-
-    # # --- Rust
-    rust-overlay.url = "github:oxalica/rust-overlay";
-    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    universe-cli.inputs = {
+      devshell.follows = "devshell";
+      flake-parts.follows = "flake-parts";
+      rust-overlay.follows = "rust-overlay";
+    };
   };
 
   outputs = inputs@{ flake-parts, nixpkgs, private, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ self, lib, ... }: {
