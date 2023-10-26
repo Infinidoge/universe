@@ -29,7 +29,7 @@
   services = {
     avahi.reflector = true;
 
-    soft-serve.enable = true;
+    soft-serve-ng.enable = true;
   };
 
   environment.persistence."/persist" = {
