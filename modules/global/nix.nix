@@ -2,7 +2,7 @@
 with lib;
 {
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.nix_2_17;
 
     settings = {
       allowed-users = [ "@wheel" ];
