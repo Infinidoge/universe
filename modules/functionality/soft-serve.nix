@@ -2,11 +2,11 @@
 with lib;
 with lib.our;
 let
-  cfg = config.services.soft-serve;
+  cfg = config.services.soft-serve-ng;
   mkIfNotNull = v: mkIf (v != null) v;
 in
 {
-  options.services.soft-serve = with types; {
+  options.services.soft-serve-ng = with types; {
     enable = mkBoolOpt false;
 
     host = mkOpt str "";
