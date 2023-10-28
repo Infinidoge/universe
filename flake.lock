@@ -232,11 +232,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1684735682,
-        "narHash": "sha256-Kcm2fF5/tby/OGbu4LxQ6vGGgIUKYMGp+GIct8S+nwg=",
+        "lastModified": 1698471506,
+        "narHash": "sha256-2YBJc0TqZ/RHmweE5SBZjpYq0iaBeUsLkKgKiWwHqm0=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "rev": "e84dffc42c3d0d05b2d7ee4405bd6ea89ec336fe",
+        "rev": "2d96041674417ca3a55f7df3806ce3fc95b4f70a",
         "type": "github"
       },
       "original": {
