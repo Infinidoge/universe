@@ -23,13 +23,11 @@ in
   python3 = prev.python3.override {
     packageOverrides = pythonFinal: pythonPrev: {
       qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
-        version = "unstable-2023-09-30";
+        version = "unstable-2023-10-29";
         src = oldAttrs.src.override {
-          rev = "65693447ba6020919eed7c519efe76257161e80b";
-          hash = "sha256-0JuJi1DyptChMyHWWDahK+oEqYYDHOdV3/bVtMr83CI=";
+          rev = "01ebe18db896dd0aef05f06b0dedf0141a2b50cf";
+          hash = "sha256-P/3Kby5W2hKQ4mmR7mgsT8twhJc3QfI231tIlJWmNAo=";
         };
-
-        propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ (with pythonFinal; [ iwlib ]);
       });
     };
   };
