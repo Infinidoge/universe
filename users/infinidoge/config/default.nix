@@ -20,6 +20,12 @@ with lib;
       inherit (main.info) model;
       inherit (main.info.env) wm;
     };
+
+    "black".text = ''
+      [tool.black]
+      line-length = 120
+      target-version = ["py310"]
+    '';
   } // optionalAttrs main.info.graphical {
     "qtile".source = pkgs.substituteSubset {
       src = ./qtile;
