@@ -1,6 +1,10 @@
 inputs: final: prev:
 let
   mkPkgs = channel: channel.legacyPackages.${final.system};
+  mkPkgsUnfree = channel: import channel {
+    inherit (final) system;
+    config.allowUnfree = true;
+  };
 
   latest = mkPkgs inputs.latest;
   fork = mkPkgs inputs.fork;
