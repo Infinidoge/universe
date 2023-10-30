@@ -449,6 +449,11 @@ keys = [
     #     lazy.spawn("arandr"),
     #     desc="Launch arandr",
     # ),
+    Key(
+        [Keys.SUPER, Keys.ALT], "t",
+        lazy.spawn("thunderbird"),
+        desc="Launch thunderbird",
+    ),
 ]
 # fmt: on
 
