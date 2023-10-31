@@ -25,10 +25,12 @@
         precmd() {
           precmd_any_nix_shell
 
-          if [[ -e ~/TODO.txt && ! -v __TODO_PRINTED ]] then
+          if [[ -s ~/TODO.txt && ! -v __TODO_PRINTED ]] then
             export __TODO_PRINTED=1
-            echo TODO:
-            \cat ~/TODO.txt
+            if [[ "$(cat ~/TODO.txt)" != "" ]] then
+              echo TODO:
+              \cat ~/TODO.txt
+            fi
           fi
         }
 
