@@ -47,7 +47,7 @@ in
 
       environment = {
         variables.LAPTOP = "True";
-        systemPackages = with pkgs; [ acpi brightnessctl ];
+        systemPackages = with pkgs; [ acpi brightnessctl ] ++ optional config.powerManagement.powertop.enable pkgs.powertop;
       };
     })
 
