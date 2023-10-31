@@ -628,15 +628,17 @@ def init_widget_list(main=True, laptop=False):
     ]
 
     laptop_widgets = [
-        (
+        *(
             [
-                widget.TextBox(text=" 🔆", padding=0, fontsize=14),
-                widget.Backlight(
-                    backlight_name=(backlight.splitlines()[0].split(",")[0]),
-                    change_command="brightnessctl set {0}%",
-                    step=5,
-                    padding=5,
-                ),
+                [
+                    widget.TextBox(text=" 🔆", padding=0, fontsize=14),
+                    widget.Backlight(
+                        backlight_name=(backlight.splitlines()[0].split(",")[0]),
+                        change_command="brightnessctl set {0}%",
+                        step=5,
+                        padding=5,
+                    ),
+                ]
             ]
             if (backlight := run_command("brightnessctl -lm --class=backlight"))
             else []
