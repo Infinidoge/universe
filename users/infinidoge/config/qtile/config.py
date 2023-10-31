@@ -611,10 +611,12 @@ def init_widget_list(main=True, laptop=False):
     )
 
     main_widgets = [
-        [
-            widget.Wlan(format=" {essid} {percent:2.0%}", interface=wireless_interfaces[0]),
-        ],
-        network_widgets,
+        *(
+            [[widget.Wlan(format=" {essid} {percent:2.0%}", interface=wireless_interfaces[0], padding=1)]]
+            if len(wireless_interfaces)
+            else []
+        ),
+        *([network_widgets] if len(network_widgets) else []),
         [
             widget.TextBox(text="󰍛", padding=1, fontsize=18),
             widget.Memory(padding=5, measure_mem="G", format="{MemUsed:.1f}{mm}/{MemTotal:.1f}{mm}"),
