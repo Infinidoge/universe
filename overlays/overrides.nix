@@ -20,6 +20,7 @@ in
     ;
 
   inherit (stable)
+    linux-firmware
     ;
 
   schildichat-desktop = prev.schildichat-desktop.override { electron = final.electron_25; };
