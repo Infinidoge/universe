@@ -65,6 +65,8 @@ with lib;
       nixpkgs-fmt
       nix-du
       comma
+      nix-diff
+      nix-tree
 
       (writeScriptBin "wherenix" ''
         #!/usr/bin/env bash
