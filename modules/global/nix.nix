@@ -10,10 +10,19 @@ with lib;
       trusted-users = [ "root" "@wheel" ];
 
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      experimental-features = [ "flakes" "nix-command" "impure-derivations" "no-url-literals" "repl-flake" ];
 
       auto-optimise-store = true;
 
       sandbox = true;
+      keep-outputs = true;
+      keep-derivations = true;
+      fallback = true;
+
+      flake-registry = "${inputs.flake-registry}/flake-registry.json";
+      secret-key-files = mkIf config.modules.secrets.enable config.secrets.binary-cache-private-key;
+
+      min-free = 536870912; # 0.5 gibi bytes
     };
 
     gc = {
@@ -43,21 +52,6 @@ with lib;
       "nixpkgs=${inputs.nixpkgs}"
       "home-manager=${inputs.home-manager}"
     ];
-
-    extraOptions = ''
-      flake-registry = ${inputs.flake-registry}/flake-registry.json
-
-      extra-experimental-features = flakes nix-command
-      extra-substituters = https://nrdxp.cachix.org https://nix-community.cachix.org
-      extra-trusted-public-keys = nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-
-      min-free = 536870912
-      keep-outputs = true
-      keep-derivations = true
-      fallback = true
-    '' + (optionalString config.modules.secrets.enable ''
-      secret-key-files = ${config.secrets.binary-cache-private-key}
-    '');
   };
 
   nixpkgs.config = {
