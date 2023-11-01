@@ -5,8 +5,7 @@ with lib;
     package = pkgs.nixVersions.nix_2_17;
 
     settings = {
-      allowed-users = [ "@wheel" ];
-
+      allowed-users = [ "*" ];
       trusted-users = [ "root" "@wheel" ];
 
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
