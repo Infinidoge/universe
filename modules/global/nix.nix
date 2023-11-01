@@ -68,7 +68,6 @@ with lib;
   environment = {
     systemPackages = with pkgs; [
       nix-index
-      nixos-option
       nixfmt
       nixpkgs-fmt
       nix-du
@@ -98,9 +97,6 @@ with lib;
         mn = ''
           manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | sk --preview="manix '{}'" | xargs manix
         '';
-
-        # fix nixos-option
-        # nixos-option = "nixos-option -I nixpkgs=${self}/lib/compat";
       };
   };
 }
