@@ -14,13 +14,13 @@ in
   inherit latest fork stable;
 
   inherit (latest)
+    linux-firmware
     ;
 
   inherit (fork)
     ;
 
   inherit (stable)
-    linux-firmware
     ;
 
   schildichat-desktop = prev.schildichat-desktop.override { electron = final.electron_25; };
