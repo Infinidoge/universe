@@ -12,12 +12,11 @@ with lib;
       experimental-features = [ "flakes" "nix-command" "impure-derivations" "no-url-literals" "repl-flake" ];
 
       auto-optimise-store = true;
-
+      fallback = true;
+      keep-derivations = true;
+      keep-outputs = true;
       sandbox = true;
       use-xdg-base-directories = true;
-      keep-outputs = true;
-      keep-derivations = true;
-      fallback = true;
 
       flake-registry = "${inputs.flake-registry}/flake-registry.json";
       secret-key-files = mkIf config.modules.secrets.enable config.secrets.binary-cache-private-key;
