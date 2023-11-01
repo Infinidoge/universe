@@ -87,7 +87,6 @@ with lib;
         nf = "n flake";
         nepl = "n repl '<nixpkgs>'";
         srch = "ns nixpkgs";
-        nrb = ifSudo "sudo nixos-rebuild";
         mn = ''
           manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | sk --preview="manix '{}'" | xargs manix
         '';
