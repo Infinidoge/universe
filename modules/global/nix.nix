@@ -14,6 +14,7 @@ with lib;
       auto-optimise-store = true;
 
       sandbox = true;
+      use-xdg-base-directories = true;
       keep-outputs = true;
       keep-derivations = true;
       fallback = true;
