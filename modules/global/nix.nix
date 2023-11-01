@@ -60,13 +60,13 @@ with lib;
 
   environment = {
     systemPackages = with pkgs; [
-      nix-index
-      nixfmt
-      nixpkgs-fmt
-      nix-du
       comma
       nix-diff
+      nix-du
+      nix-index
       nix-tree
+      nixfmt
+      nixpkgs-fmt
 
       (writeScriptBin "wherenix" ''
         #!/usr/bin/env bash
