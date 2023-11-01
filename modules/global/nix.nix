@@ -26,7 +26,7 @@ with lib;
 
     gc = {
       automatic = true;
-      options = "--delete-older-than 3d";
+      options = "--delete-older-than 7d";
       dates = "weekly";
     };
 
