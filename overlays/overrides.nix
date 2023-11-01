@@ -14,6 +14,7 @@ in
   inherit latest fork stable;
 
   inherit (latest)
+    # https://nixpk.gs/pr-tracker.html?pr=264420
     linux-firmware
     ;
 
