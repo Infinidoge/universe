@@ -6,7 +6,7 @@ let
     config.allowUnfree = true;
   };
 
-  latest = mkPkgsUnfree inputs.latest;
+  latest = mkPkgs inputs.latest;
   fork = mkPkgs inputs.fork;
   stable = mkPkgs inputs.stable;
 in
@@ -14,11 +14,6 @@ in
   inherit latest fork stable;
 
   inherit (latest)
-    # https://nixpk.gs/pr-tracker.html?pr=264420
-    linux-firmware
-    # https://github.com/NixOS/nixpkgs/issues/264888
-    # https://nixpk.gs/pr-tracker.html?pr=264897
-    discord-canary
     ;
 
   inherit (fork)
