@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 {
   # Use the latest Linux kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_5;
 
   # Remove all default packages
   environment.defaultPackages = lib.mkForce [ ];
