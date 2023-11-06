@@ -17,6 +17,11 @@ in
       git = {
         userEmail = "infinidoge@inx.moe";
         userName = "Infinidoge";
+        extraConfig = {
+          gpg.format = "ssh";
+          commit.gpgsign = true;
+          user.signingkey = "/home/infinidoge/.ssh/id_ed25519.pub";
+        };
       };
       firefox = {
         enable = main.info.graphical;
