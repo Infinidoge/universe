@@ -53,7 +53,8 @@
 
   programs.ns-usbloader.enable = true;
 
-  services.xserver.videoDrivers = [ "displaylink" ];
+  # Broken on kernel >= 6.6
+  # services.xserver.videoDrivers = [ "displaylink" ];
 
   services.fwupd = {
     enable = true;
