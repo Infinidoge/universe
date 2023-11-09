@@ -114,6 +114,7 @@
 (setq lsp-clients-lua-language-server-bin (executable-find "lua-language-server"))
 (setq lsp-haskell-formatting-provider "ormolu")
 (setq lsp-java-format-settings-url (concat doom-user-dir "misc/java_formatting.xml"))
+(setq lsp-java-completion-filtered-types [ "java.awt.List" "com.sun.*" "org.w3c.*" "jdk.*" ])
 
 (after! lsp-mode
   (add-to-list 'lsp-disabled-clients 'ccls)
