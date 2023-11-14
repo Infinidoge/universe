@@ -38,6 +38,11 @@ in
         logind.lidSwitch = mkDefault "ignore";
 
         tlp.enable = mkDefault true;
+
+        upower = {
+          enable = true;
+          criticalPowerAction = "Hibernate";
+        };
       };
 
       powerManagement = {
