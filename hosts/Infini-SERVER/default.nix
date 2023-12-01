@@ -59,13 +59,6 @@
     ];
   };
 
-  age.secrets."inx.moe.pem".owner = "nginx";
-  age.secrets."inx.moe.pem".group = "nginx";
-  age.secrets."inx.moe.key".owner = "nginx";
-  age.secrets."inx.moe.key".group = "nginx";
-  age.secrets."vaultwarden".owner = "vaultwarden";
-  age.secrets."vaultwarden".group = "vaultwarden";
-
   services = {
     nginx =
       let
