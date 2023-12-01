@@ -12,7 +12,7 @@
     };
   };
 
-  environment.persistence."/persist" = {
+  persist = {
     directories = [
       "/home"
       "/etc/nixos"
