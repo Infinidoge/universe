@@ -35,8 +35,6 @@ in
       };
     };
 
-    secrets = mkOpt (attrsOf path) { };
-
     universe = {
       packages = mkOpt (listOf package) [ ];
     };
@@ -57,7 +55,5 @@ in
     environment.variables = mkAliasDefinitions options.env;
 
     environment.persistence."/persist" = mkAliasDefinitions options.persist;
-
-    secrets = mapAttrs (n: v: v.path) config.age.secrets;
   };
 }
