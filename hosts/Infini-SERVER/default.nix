@@ -32,7 +32,7 @@
     soft-serve-ng.enable = true;
   };
 
-  environment.persistence."/persist" = {
+  persist = {
     directories = [
       "/home"
       "/etc/nixos"

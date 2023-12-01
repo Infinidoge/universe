@@ -6,7 +6,7 @@
 
   system.stateVersion = "21.11";
 
-  environment.persistence."/persist" = {
+  persist = {
     directories = [
       "/home"
       "/etc/nixos"

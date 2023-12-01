@@ -20,6 +20,8 @@ in
 
     env = mkAliasOpt;
 
+    persist = mkAliasOpt;
+
     info = {
       monitors = mkOpt int 1;
       graphical = mkBoolOpt config.services.xserver.enable;
@@ -53,6 +55,8 @@ in
     };
 
     environment.variables = mkAliasDefinitions options.env;
+
+    environment.persistence."/persist" = mkAliasDefinitions options.persist;
 
     secrets = mapAttrs (n: v: v.path) config.age.secrets;
   };
