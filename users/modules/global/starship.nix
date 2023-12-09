@@ -48,7 +48,7 @@
 
         directory = {
           style = "cyan";
-          read_only = " ";
+          read_only = " ";
           format = "[$read_only]($read_only_style)[$path]($style)";
         };
 
