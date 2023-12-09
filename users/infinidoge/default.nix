@@ -41,6 +41,9 @@ in
 
       jmtpfs
 
+      bsd-finger
+      sgt-puzzles
+
       (ifGraphical [
         bitwarden
 
