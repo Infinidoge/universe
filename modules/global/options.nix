@@ -38,6 +38,8 @@ in
     universe = {
       packages = mkOpt (listOf package) [ ];
     };
+
+    common = mkOpt (attrsOf anything) { };
   };
 
   config = {
