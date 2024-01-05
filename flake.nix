@@ -24,7 +24,7 @@
 
     ### Domain-Specific Flake Inputs ###
     ## Minecraft
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft/develop";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 
     ## Rust
     rust-overlay.url = "github:oxalica/rust-overlay";
