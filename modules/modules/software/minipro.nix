@@ -7,7 +7,6 @@ in
 {
   options.modules.software.minipro = {
     enable = mkBoolOpt false;
-    udev = mkBoolOpt true;
   };
   config = mkIf cfg.enable {
     home.home.packages = [ pkgs.minipro ];
