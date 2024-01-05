@@ -2,6 +2,9 @@
   programs.gpg = {
     enable = true;
     homedir = "${config.xdg.dataHome}/gnupg";
+    scdaemonSettings = {
+      disable-ccid = true;
+    };
   };
 
   services.gpg-agent = {

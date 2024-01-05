@@ -16,6 +16,7 @@ in
   config = mkMerge [
     (mkIf cfg.desktop {
       modules.hardware.audio.enable = mkDefault true;
+      modules.hardware.peripherals.yubikey.enable = true;
       info.stationary = mkDefault true;
     })
 
@@ -23,6 +24,7 @@ in
       modules.hardware = {
         wireless.enable = mkDefault true;
         audio.enable = mkDefault true;
+        peripherals.yubikey.enable = true;
       };
 
       hardware = {
@@ -64,6 +66,7 @@ in
           amdgpu = mkDefault true;
         };
         wireless.wifi.enable = true;
+        peripherals.yubikey.enable = true;
       };
 
       hardware.nvidia.powerManagement.enable = false;
