@@ -10,4 +10,5 @@
   sim65 = pkgs.callPackage ./sim65.nix { };
   substituteSubset = pkgs.callPackage ./substitute-subset.nix { };
   unbted = pkgs.callPackage ./unbted.nix { };
+  bytecode-viewer = pkgs.callPackage ./bytecode-viewer.nix { };
 }
