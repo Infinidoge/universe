@@ -1,10 +1,10 @@
 { lib
-, stdenv
+, stdenvNoCC
 , fetchFromGitea
 , makeWrapper
 , jdk
 }:
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation rec {
   pname = "ears-cli";
   version = "unstable-2023-08-24";
 
