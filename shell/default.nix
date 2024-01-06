@@ -9,17 +9,15 @@
         ]));
       in
       {
-        name = "universe";
+        devshell.name = "universe";
+        devshell.motd = "";
 
         devshell.packages = [
           pythonEnv
         ];
 
         env = [
-          {
-            name = "PYTHONPATH";
-            value = "${pythonEnv}/${pythonEnv.sitePackages}";
-          }
+          { name = "PYTHONPATH"; value = "${pythonEnv}/${pythonEnv.sitePackages}"; }
         ];
       };
   };
