@@ -60,6 +60,7 @@ in
         (discord-canary.override { withVencord = true; })
         schildichat-desktop
         thunderbird
+        tor-browser
 
         (optional main.modules.hardware.form.desktop qbittorrent)
       ])
