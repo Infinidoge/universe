@@ -4,6 +4,8 @@
     private.nixosModules.nitter
     ./hardware-configuration.nix
     ./filesystems.nix
+
+    ./vaultwarden.nix
   ];
 
   system.stateVersion = "22.05";
@@ -44,7 +46,6 @@
       "/var/log"
       "/var/lib/systemd/coredump"
       "/var/lib/tailscale"
-      "/var/lib/bitwarden_rs"
       "/var/lib/thelounge"
 
       "/srv"
@@ -65,7 +66,7 @@
     nginx =
       let
         cfg = config.services.nginx;
-        ssl = { sslCertificate = config.secrets."inx.moe.pem"; sslCertificateKey = config.secrets."inx.moe.key"; forceSSL = true; };
+        inherit (config.common.nginx) ssl;
       in
       {
         enable = true;
@@ -94,11 +95,6 @@
               proxyPass = "http://localhost:8000";
             };
           };
-          "bitwarden.inx.moe" = ssl // {
-            locations."/" = {
-              proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
-            };
-          };
           "thelounge.inx.moe" = ssl // {
             locations."/" = {
               proxyPass = "http://localhost:${toString config.services.thelounge.port}";
@@ -106,28 +102,6 @@
           };
         };
       };
-
-    vaultwarden = {
-      enable = true;
-      environmentFile = config.secrets."vaultwarden";
-      config = {
-        DOMAIN = "https://bitwarden.inx.moe";
-        SIGNUPS_ALLOWED = false;
-
-        ROCKET_ADDRESS = "127.0.0.1";
-        ROCKET_PORT = 8222;
-        ROCKET_LOG = "critical";
-
-        PUSH_ENABLED = true;
-        PUSH_RELAY_URI = "https://push.bitwarden.com";
-
-        SMTP_HOST = "live.smtp.mailtrap.io";
-        SMTP_FROM = "noreply@inx.moe";
-        SMTP_PORT = 587;
-        SMTP_SECURITY = "starttls";
-        SMTP_USERNAME = "api";
-      };
-    };
 
     nitter = rec {
       enable = true;
