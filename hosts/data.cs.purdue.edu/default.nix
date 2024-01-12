@@ -22,6 +22,10 @@
 
       inherit (main.universe) shellAliases;
 
+      sessionVariables = {
+        TMPDIR = "${config.home.homeDirectory}/scratch/tmp";
+      };
+
       file.".profile".target = ".profile-hm";
 
       homeDirectory = lib.mkForce "/homes/${config.home.username}";
