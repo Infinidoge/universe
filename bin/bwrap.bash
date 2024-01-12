@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ "$(uname)" != "Linux" ]; then
+  exit 0
+fi
+
 if [ -z ${NIXDIR+x} ]; then 
     echo "NIXDIR is unset! It needs to be set in the code. Edit this shell file and read the instructions."
     echo "Executing bash without Bubblewrap…"
@@ -57,5 +61,7 @@ devbind \
     /media \
     /usr \
     /var
+
+[[ -f "$HOME/.bwrap-extra.bash" ]] && source "$HOME/.bwrap-extra.bash"
 
 exec bwrap "${args[@]}" "$@"
