@@ -20,6 +20,8 @@
         home-manager
       ] ++ main.universe.packages;
 
+      inherit (main.universe) shellAliases;
+
       file.".profile".target = ".profile-hm";
 
       homeDirectory = lib.mkForce "/homes/${config.home.username}";
