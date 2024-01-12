@@ -8,10 +8,11 @@ in
     zsh.enable = true;
   };
 
-  environment.shellAliases = {
+  universe.shellAliases = {
     uni = "universe-cli";
 
     # quick cd
+    ".." = "cd ..";
     "..." = "cd ../..";
     "...." = "cd ../../..";
     "....." = "cd ../../../..";
@@ -39,6 +40,7 @@ in
     gcd = "cd $(git root || echo \".\")";
     ucd = "cd $(uni cd || echo \".\")";
 
+
     # grep
     grep = "rg";
     gi = "grep -i";
@@ -50,6 +52,24 @@ in
     # internet ip
     myip = "echo $(curl -s ipecho.net/plain)";
 
+    # Miscellaneous
+    dd = "dd status=progress";
+
+    cat = "bat --paging=never";
+    catp = "bat --paging=always";
+
+    mktmp = "cd $(mktemp -d)";
+
+    edit = "$EDITOR";
+
+    lpath = "echo \"$PATH\" | tr \":\" \"\n\"";
+    timestamp = "date +%s -d";
+
+    neofetch = "neowofetch";
+
+  };
+
+  environment.shellAliases = config.universe.shellAliases // {
     # sudo
     s = ifSudo "sudo -E ";
     si = ifSudo "sudo -i";
@@ -68,10 +88,6 @@ in
     jtl = "journalctl";
 
     # Miscellaneous
-    dd = "dd status=progress";
-
-    cat = "bat --paging=never";
-    catp = "bat --paging=always";
     acat = "mpv --no-audio-display";
     vcat = "mpv";
 
@@ -79,15 +95,6 @@ in
 
     mnt = ifSudo "s mount";
     umnt = ifSudo "s umount";
-
-    mktmp = "cd $(mktemp -d)";
-
-    edit = "$EDITOR";
-
-    lpath = "echo \"$PATH\" | tr \":\" \"\n\"";
-    timestamp = "date +%s -d";
-
-    neofetch = "neowofetch";
 
     # yt-dlp
     yt-m4a = ''yt-dlp -f "bestaudio[ext=m4a]" -o "%(title)s.%(ext)s"'';
