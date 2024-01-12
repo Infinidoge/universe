@@ -96,7 +96,7 @@
  lsp
  (magit +forge)                 ; a git porcelain for Emacs
  make                           ; run make tasks from Emacs
- (pass +auth)                   ; password manager for nerds
+ ;; (pass +auth)                ; password manager for nerds
  pdf                            ; pdf enhancements
  ;;prodigy                      ; FIXME managing external services & code builders
  rgb                            ; creating color strings
