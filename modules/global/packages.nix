@@ -20,7 +20,6 @@
     erdtree
     eza
     fd
-    git
     htop
     hyfetch
     imagemagick
@@ -46,7 +45,6 @@
     unrar-wrapper
     unzip
     util-linux
-    vim
     wget
     whois
     xxHash
@@ -64,6 +62,10 @@
     frei
     ntfs3g # Windows drives
     usbutils
+
+    # covered by home manager
+    git
+    vim
   ]) ++ (lib.optionals config.info.graphical (with pkgs; [
     arandr
     ffmpeg
