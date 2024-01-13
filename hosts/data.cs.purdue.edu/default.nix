@@ -32,5 +32,9 @@
 
       homeDirectory = lib.mkForce "/homes/${config.home.username}";
     };
+
+    nix.settings = {
+      inherit (main.nix.settings) use-xdg-base-directories;
+    };
   };
 }
