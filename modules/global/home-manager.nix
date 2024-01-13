@@ -28,6 +28,7 @@
             createDirectories = true;
           };
         };
+        news.display = "silent";
       }
       (lib.mkIf config.info.graphical {
         xdg.systemDirs.data = [
