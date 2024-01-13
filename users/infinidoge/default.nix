@@ -20,7 +20,7 @@ in
         extraConfig = {
           gpg.format = "ssh";
           commit.gpgsign = true;
-          user.signingkey = "/home/${config.home.username}/.ssh/id_ed25519.pub";
+          user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
         };
       };
       firefox = {
