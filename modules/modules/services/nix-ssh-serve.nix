@@ -3,7 +3,7 @@ with lib;
 {
   nix = {
     sshServe = {
-      enable = mkDefault config.info.stationary;
+      enable = mkDefault true;
       write = true;
       keys = config.user.openssh.authorizedKeys.keys;
     };
