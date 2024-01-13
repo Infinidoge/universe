@@ -24,6 +24,8 @@
 
       sessionVariables = {
         TMPDIR = "${config.home.homeDirectory}/scratch/tmp";
+        UNIVERSE_FLAKE_ROOT = "${config.home.homeDirectory}/universe";
+        UNIVERSE_USERNAME = config.home.username;
       };
 
       file.".profile".target = ".profile-hm";
