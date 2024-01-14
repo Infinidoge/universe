@@ -2,6 +2,7 @@
 
 {
   modules.hardware.form.server = true;
+  modules.secrets.enable = false;
 
   system.stateVersion = "23.11";
 
