@@ -35,6 +35,18 @@
       homeDirectory = lib.mkForce "/homes/${config.home.username}";
     };
 
-    nix = { inherit (main.nix) settings; };
+    nix.settings = {
+      inherit (main.nix.settings)
+        auto-optimise-store
+        experimental-features
+        fallback
+        flake-registry
+        keep-derivations
+        keep-outputs
+        min-free
+        sandbox
+        use-xdg-base-directories
+        ;
+    };
   };
 }
