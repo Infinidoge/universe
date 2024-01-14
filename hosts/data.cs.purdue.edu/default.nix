@@ -3,6 +3,7 @@
 {
   modules.hardware.form.server = true;
   modules.secrets.enable = false;
+  info.loc.home = false;
 
   system.stateVersion = "23.11";
 
