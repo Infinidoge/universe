@@ -52,6 +52,7 @@ in
         libreoffice-fresh
 
         krita
+        inkscape
 
         vimpc
         id3v2
