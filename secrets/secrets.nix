@@ -7,6 +7,7 @@ let
     Infini-FRAMEWORK = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7PmPq/7e+YIVAvIcs6EOJ3pZVJhinwus6ZauJ3aVp0 root@Infini-FRAMEWORK";
     Infini-SERVER = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8ptHWTesaUzglq01O8OVqeAGxFhXutUZpkgPpBFqzY root@Infini-SERVER";
     Infini-OPTIPLEX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG8fY684SPKeOUsJqaV6LJwwztWxztaU9nAHPBxBtyU root@Infini-OPTIPLEX";
+    Infini-STICK = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMCg81G/oysjFkHXo1E9XPGoULpv9rR0HyWoR2wIcl6C root@Infini-STICK";
   };
   users = {
     infinidoge = import ../users/infinidoge/ssh-keys.nix;
