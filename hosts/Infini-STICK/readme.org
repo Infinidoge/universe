@@ -6,14 +6,18 @@
 
 * Partition Scheme
 
-| Position | Label          | FS Type | Size  | Type                 |
-|----------+----------------+---------+-------+----------------------|
-|        0 | =Infini-STICK= | =btrfs= | 29.3G | Root Partition       |
-|        1 | =boot=         | =vfat=  | 511M  | EFI System Partition |
+| Position | Label          | FS Type     | Size   | Type                        |
+|----------+----------------+-------------+--------+-----------------------------|
+|        0 | =storage=      | =exfat=     | 24.6GB | Generic Storage Partition   |
+|        1 | =vault=        | =LUKS/ext4= | 3GB    | Encrypted Storage Partition |
+|        2 | =Infini-STICK= | =btrfs=     | 33.3GB | Root Partition              |
+|        3 | =boot=         | =vfat=      | 511MB  | EFI System Partition        |
 
 * Configuration
 
 Setup with a wide array of hardware compatibility, specifically using the =portable= form defined in the =hardware/form= module.
+
+=Infini-STICK= currently lives on my SanDisk 3.2Gen1 64GB USB C/USB A flashdrive.
 
 * Setup Scripts
 
@@ -90,9 +94,11 @@ fi
 #+BEGIN_SRC bash
 echo "LOG: Partitioning $DISK"
 sudo parted $DISK -- mktable gpt
-sudo parted $DISK -s -- mkpart primary btrfs 512MiB 100%
-sudo parted $DISK -s -- mkpart ESP fat32 1MiB 512MiB
-sudo parted $DISK -s -- set 2 esp on
+sudo parted $DISK -s -- mkpart primary 0% 100%
+sudo parted $DISK -s -- mkpart primary 40% 100%
+sudo parted $DISK -s -- mkpart primary btrfs 45% 100%
+sudo parted $DISK -s -- mkpart ESP fat32 -512MiB 100%
+sudo parted $DISK -s -- set 4 esp on
 #+END_SRC
 
 ** Making Filesystems
@@ -131,17 +137,18 @@ sudo mount -t tmpfs root /mnt
 
 echo "LOG: - Mounting persistent directories"
 sudo mkdir -p /mnt/persist /mnt/nix /mnt/boot
-sudo mount -o subvol=root,autodefrag,noatime "${DISK}1" /mnt/persist
-sudo mount -o subvol=nix,autodefrag,noatime "${DISK}1" /mnt/nix
-sudo mount -o subvol=boot,autodefrag,noatime "${DISK}1" /mnt/boot
+sudo mount -o subvol=root,autodefrag,noatime "${DISK}3" /mnt/persist
+sudo mount -o subvol=nix,autodefrag,noatime "${DISK}3" /mnt/nix
+sudo mount -o subvol=boot,autodefrag,noatime "${DISK}3" /mnt/boot
 
 echo "LOG: - - Mounting persistent subdirectories"
-sudo mkdir -p /mnt/home
+sudo mkdir -p /mnt/home /mnt/etc/ssh
 sudo mount --bind /mnt/persist/home /mnt/home
+sudo mount --bind /mnt/persist/etc/ssh /mnt/etc/ssh
 
 echo "LOG: - Mounting EFI System Partition"
 sudo mkdir -p /mnt/boot/efi
-sudo mount "${DISK}2" /mnt/boot/efi
+sudo mount "${DISK}4" /mnt/boot/efi
 #+END_SRC
 
 ** Installing
@@ -157,7 +164,8 @@ sudo nixos-install --flake /etc/nixos#Infini-STICK --no-root-password
 #+NAME: full_extra
 #+BEGIN_SRC bash
 echo "LOG: Cloning configuration"
-sudo git clone --no-hardlinks --progress https://gitlab.com/infinidoge/universe.git /mnt/persist/etc/nixos
+sudo git clone --no-hardlinks --progress ssh://git@github.com/Infinidoge/universe.git /mnt/persist/etc/nixos
+sudo git clone --no-hardlinks --progress https://git@github.com/Infinidoge/universe.git /mnt/persist/etc/nixos-private
 #+END_SRC
 
 ** Extra (Reinstall)
