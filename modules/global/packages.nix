@@ -14,6 +14,7 @@
     bat
     cloc
     coreutils-doge
+    cryptsetup
     curl
     direnv
     dnsutils
