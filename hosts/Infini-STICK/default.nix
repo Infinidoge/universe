@@ -1,7 +1,7 @@
-{ lib, ... }:
-{
-  imports = lib.lists.flatten [
+{ lib, ... }: {
+  imports = [
     ./hardware-configuration.nix
+    ./filesystems.nix
   ];
 
   modules = {
@@ -16,6 +16,10 @@
     directories = [
       "/home"
       "/etc/nixos"
+      "/etc/nixos-private"
+
+      "/root/.local/share/nix"
+      "/root/.ssh"
 
       # /var directories
       "/var/log"
@@ -25,16 +29,8 @@
 
     files = [
       "/etc/machine-id"
-
-      "/etc/ssh/ssh_host_rsa_key"
-      "/etc/ssh/ssh_host_rsa_key.pub"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-
-      "/root/.local/share/nix/trusted-settings.json"
-      "/root/.ssh/known_hosts"
     ];
   };
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "23.11";
 }
