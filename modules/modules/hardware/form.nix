@@ -60,16 +60,9 @@ in
 
     (mkIf cfg.portable {
       modules.hardware = {
-        gpu = {
-          nvidia = mkDefault true;
-          intel = mkDefault true;
-          amdgpu = mkDefault true;
-        };
         wireless.wifi.enable = true;
         peripherals.yubikey.enable = true;
       };
-
-      hardware.nvidia.powerManagement.enable = false;
     })
 
     (mkIf cfg.raspi {
