@@ -1,22 +1,24 @@
-{ config, lib, pkgs, ... }:
+{ main, config, lib, pkgs, ... }:
 
 {
-  services = {
-    mpd = {
-      enable = true;
-      extraConfig = ''
-        audio_output {
-          type "pipewire"
-          name "PipeWire Sound Server"
-        }
-      '';
+  config = lib.mkIf main.info.graphical {
+    services = {
+      mpd = {
+        enable = true;
+        extraConfig = ''
+          audio_output {
+            type "pipewire"
+            name "PipeWire Sound Server"
+          }
+        '';
+      };
+      mpd-mpris.enable = true;
+      mpris-proxy.enable = true;
+      playerctld.enable = true;
     };
-    mpd-mpris.enable = true;
-    mpris-proxy.enable = true;
-    playerctld.enable = true;
-  };
 
-  home.packages = with pkgs; [
-    playerctl
-  ];
+    home.packages = with pkgs; [
+      playerctl
+    ];
+  };
 }
