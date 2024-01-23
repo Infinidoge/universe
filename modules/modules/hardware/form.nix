@@ -60,7 +60,7 @@ in
 
     (mkIf cfg.portable {
       modules.hardware = {
-        wireless.wifi.enable = true;
+        wireless.enable = true;
         peripherals.yubikey.enable = true;
       };
     })
