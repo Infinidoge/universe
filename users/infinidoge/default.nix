@@ -29,6 +29,8 @@ in
       };
     };
 
+    home.sessionVariables.KEYID = "0x30E7A4C03348641E";
+
     home.packages = with pkgs; flatten [
       ncdu
 
