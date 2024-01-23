@@ -58,6 +58,7 @@
   environment.systemPackages = config.universe.packages ++ (with pkgs; [
     binutils
     btrfs-progs
+    compsize
     dosfstools
     exfat # Windows drives
     frei
