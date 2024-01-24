@@ -10,7 +10,7 @@ let
   filtered = (filterAttrs filterSecrets (builtins.readDir folder));
   secrets = mapAttrs' (n: v: nameValuePair (removeSuffix ".age" n) { file = toFile n; }) filtered;
 
-  setOwner = name: { owner = name; group = name; };
+  withOwner = name: secret: secret // { owner = name; group = name; };
 in
 {
   options = {
@@ -18,19 +18,17 @@ in
     secrets = mkOpt (attrsOf path) { };
   };
 
-  config = mkMerge [
-    {
-      age.secrets = mkIf config.modules.secrets.enable secrets;
-      secrets = mapAttrs (n: v: v.path) config.age.secrets;
-    }
-
-    # Set ownership of keys
-    (mkIf config.services.nginx.enable {
-      age.secrets."inx.moe.pem" = setOwner "nginx";
-      age.secrets."inx.moe.key" = setOwner "nginx";
-    })
-    (mkIf config.services.vaultwarden.enable {
-      age.secrets."vaultwarden" = setOwner "vaultwarden";
-    })
-  ];
+  config = mkIf config.modules.secrets.enable {
+    secrets = mapAttrs (n: v: v.path) config.age.secrets;
+    age.secrets = mkMerge [
+      { inherit (secrets) "infinidoge-password" "root-password" "binary-cache-private-key"; }
+      (mkIf config.services.nginx.enable {
+        "inx.moe.pem" = withOwner "nginx" secrets."inx.moe.pem";
+        "inx.moe.key" = withOwner "nginx" secrets."inx.moe.key";
+      })
+      (mkIf config.services.vaultwarden.enable {
+        "vaultwarden" = withOwner "vaultwarden" secrets."vaultwarden";
+      })
+    ];
+  };
 }
