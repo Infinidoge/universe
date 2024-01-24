@@ -118,6 +118,8 @@
                 nixpkgs.overlays = [
                   (final: prev: {
                     lib = prev.lib.extend libOverlay;
+
+                    inherit (inputs.home-manager.${prev.system}) home-manager;
                   })
                   self.overlays.packages
                   self.overlays.patches
