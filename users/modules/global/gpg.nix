@@ -29,4 +29,8 @@
       allow-loopback-pinentry
     '';
   };
+
+  home.packages = with pkgs; [
+    gpgme
+  ];
 }
