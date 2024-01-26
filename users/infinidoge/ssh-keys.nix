@@ -1,5 +1,6 @@
 [
   "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPVs2Acpv3mHdBZElauxgoqr9Sd9D/q/EazCGg1uSgdPAAAAHnNzaDppbmZpbmlkb2dlLXJvYW1pbmctcHJpbWFyeQ== ssh:infinidoge-roaming-primary"
+  "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPXdbTlUzbTz8JOghcwHvnGvrvVkwVhXw6fNMIpYm3wkAAAAHXNzaDppbmZpbmlkb2dlLXJvYW1pbmctYmFja3Vw ssh:infinidoge-roaming-backup"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAn6zCdIucse6eGvT3hFm7Unw9Qg6E37mAUE7HHL2d58 infinidoge@Infini-DESKTOP"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwo8TGBe91mmkc/QonsXtTBKCJtsAGz3YzphDZlzmaO infinidoge@Infini-FRAMEWORK"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbNOMgVDM/hJQgzd1ff5uuouDtTLOAgmTt57cNNySif infinidoge@Infini-SERVER"
