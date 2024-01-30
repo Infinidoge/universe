@@ -32,6 +32,8 @@
     soft-serve-ng.enable = true;
   };
 
+  services.minecraft-servers.servers.emd-server.autoStart = false;
+
   persist = {
     directories = [
       "/home"
