@@ -4,8 +4,6 @@
     private.nixosModules.nitter
     ./hardware-configuration.nix
     ./filesystems.nix
-
-    ./vaultwarden.nix
   ];
 
   system.stateVersion = "22.05";

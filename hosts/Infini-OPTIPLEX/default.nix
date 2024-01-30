@@ -2,6 +2,8 @@
   imports = [
     ./hardware-configuration.nix
     ./filesystems.nix
+
+    ./vaultwarden.nix
   ];
 
   system.stateVersion = "23.05";
