@@ -1,5 +1,5 @@
 { config, pkgs, lib, private, ... }: {
-  imports = lib.flatten [
+  imports = [
     private.nixosModules.minecraft-servers
     private.nixosModules.nitter
     ./hardware-configuration.nix
