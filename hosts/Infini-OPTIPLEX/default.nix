@@ -34,6 +34,10 @@
       address = "128.210.6.97";
       interface = "enp0s31f6";
     };
+    firewall = {
+      allowedUDPPorts = [ 80 443 ];
+      allowedTCPPorts = [ 80 443 ];
+    };
   };
 
   persist = {
@@ -59,5 +63,16 @@
       "/root/.ssh/id_ed25519.pub"
       "/root/.ssh/immutable_files.txt"
     ];
+  };
+
+  services.nginx = {
+    enable = true;
+
+    statusPage = true;
+
+    recommendedTlsSettings = true;
+    recommendedOptimisation = true;
+    recommendedGzipSettings = true;
+    recommendedProxySettings = true;
   };
 }
