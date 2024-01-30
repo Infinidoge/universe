@@ -1,5 +1,5 @@
 { pkgs, lib, ... }: {
-  imports = lib.lists.flatten [
+  imports = [
     ./hardware-configuration.nix
     ./filesystems.nix
   ];

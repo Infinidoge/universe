@@ -5,11 +5,11 @@ let
   ifGraphical' = lib.optional config.info.graphical;
 in
 {
-  imports = flatten [
+  imports = [
   ];
 
   home = { config, main, ... }: {
-    imports = flatten [
+    imports = [
       ./config
     ];
 
