@@ -65,6 +65,7 @@ with lib;
     nix-tree
     nixfmt
     nixpkgs-fmt
+    nvd
 
     (writeScriptBin "wherenix" ''
       #!/usr/bin/env bash
