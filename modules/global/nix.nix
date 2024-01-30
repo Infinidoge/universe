@@ -57,27 +57,26 @@ with lib;
     allowUnfree = true;
   };
 
+  universe.packages = with pkgs; [
+    comma
+    nix-diff
+    nix-du
+    nix-index
+    nix-tree
+    nixfmt
+    nixpkgs-fmt
+
+    (writeScriptBin "wherenix" ''
+      #!/usr/bin/env bash
+      ${unixtools.whereis}/bin/whereis "''${@}" \
+      | ${gawk}/bin/awk '{ print substr($0, length($1)+2) }' \
+      | ${findutils}/bin/xargs -r ${coreutils}/bin/readlink -f \
+      | ${coreutils}/bin/sort \
+      | ${coreutils}/bin/uniq
+    '')
+  ];
 
   environment = {
-    systemPackages = with pkgs; [
-      comma
-      nix-diff
-      nix-du
-      nix-index
-      nix-tree
-      nixfmt
-      nixpkgs-fmt
-
-      (writeScriptBin "wherenix" ''
-        #!/usr/bin/env bash
-        ${unixtools.whereis}/bin/whereis "''${@}" \
-        | ${gawk}/bin/awk '{ print substr($0, length($1)+2) }' \
-        | ${findutils}/bin/xargs -r ${coreutils}/bin/readlink -f \
-        | ${coreutils}/bin/sort \
-        | ${coreutils}/bin/uniq
-      '')
-    ];
-
     shellAliases =
       let ifSudo = mkIf config.security.sudo.enable;
       in
