@@ -16,7 +16,7 @@
       DOMAIN = "https://bitwarden.inx.moe";
       SIGNUPS_ALLOWED = false;
 
-      DATA_FOLDER = "/var/lib/bitwarden_rs";
+      DATA_FOLDER = "/srv/vaultwarden";
 
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8222;
