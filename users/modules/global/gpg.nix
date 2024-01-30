@@ -17,7 +17,7 @@
     };
 
     publicKeys = [
-      { source = pkgs.fetchurl { url = "https://inx.moe/pub.txt"; sha256 = "sha256-QLxmqS5fbR3zqKNvFV+K22XeLuNfrSp2JxBDQtqgTiE="; }; trust = "ultimate"; }
+      { source = pkgs.fetchurl { url = "https://inx.moe/pub.txt"; sha256 = "sha256-Eocb+3TbeWmwkxQNQ3XKmRi5N9vz7QoLni0b8b0zw2k="; }; trust = "ultimate"; }
     ];
   };
 
