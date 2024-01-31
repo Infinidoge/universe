@@ -43,7 +43,6 @@ The real meat of the configuration, defines a bunch of NixOS modules that all ge
 
 Modules that create some sort of new functionality.
 
-- `ensure.nix`: Takes a list of directories, and ensures they exist after boot.
 - `soft-serve.nix`: Runs the `soft-serve` git server.
 - `ssh-tunnel.nix`: Runs an SSH session for opening ports.
 
