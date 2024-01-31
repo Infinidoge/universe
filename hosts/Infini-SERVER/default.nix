@@ -8,6 +8,8 @@
 
   system.stateVersion = "22.05";
 
+  info.loc.home = true;
+
   modules = {
     boot = {
       grub.enable = true;

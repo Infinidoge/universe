@@ -6,6 +6,8 @@
 
   system.stateVersion = "23.05";
 
+  info.loc.purdue = true;
+
   persist = {
     directories = [
       "/home"

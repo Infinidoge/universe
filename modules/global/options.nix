@@ -31,7 +31,8 @@ in
       };
       stationary = mkBoolOpt false;
       loc = {
-        home = mkBoolOpt config.info.stationary;
+        home = mkBoolOpt false;
+        purdue = mkBoolOpt false;
       };
     };
 

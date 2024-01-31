@@ -8,6 +8,8 @@
 
   system.stateVersion = "23.05";
 
+  info.loc.purdue = true;
+
   modules = {
     boot = {
       grub.enable = true;
