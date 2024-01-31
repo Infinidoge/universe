@@ -1,7 +1,6 @@
 { config, pkgs, lib, private, ... }: {
   imports = [
     private.nixosModules.minecraft-servers
-    private.nixosModules.nitter
     ./hardware-configuration.nix
     ./filesystems.nix
   ];
@@ -91,9 +90,7 @@
             globalRedirect = "inx.moe";
           };
           "nitter.inx.moe" = ssl // {
-            locations."/" = {
-              proxyPass = "http://localhost:8000";
-            };
+            globalRedirect = "twitter.com";
           };
           "thelounge.inx.moe" = ssl // {
             locations."/" = {
@@ -102,24 +99,6 @@
           };
         };
       };
-
-    nitter = rec {
-      enable = true;
-      server = {
-        title = "Nitter | inx.moe";
-        port = 8000;
-        hostname = "nitter.inx.moe";
-      };
-      openFirewall = true;
-      preferences = {
-        hideTweetStats = true;
-        hlsPlayback = true;
-        infiniteScroll = true;
-        proxyVideos = true;
-        replaceTwitter = server.hostname;
-        theme = "Black";
-      };
-    };
 
     thelounge = {
       enable = true;
