@@ -57,6 +57,8 @@ with lib;
     allowUnfree = true;
   };
 
+  programs.nix-ld.enable = mkDefault true;
+
   universe.packages = with pkgs; [
     comma
     nix-diff
