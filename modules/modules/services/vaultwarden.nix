@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.services.vaultwarden-test;
+  cfg = config.services.vaultwarden;
   user = config.users.users.vaultwarden.name;
   group = config.users.groups.vaultwarden.name;
 
@@ -42,11 +42,13 @@ let
 
 in
 {
+  disabledModules = [ "services/security/vaultwarden/default.nix" ];
+
   imports = [
-    # (mkRenamedOptionModule [ "services" "bitwarden_rs" ] [ "services" "vaultwarden" ])
+    (mkRenamedOptionModule [ "services" "bitwarden_rs" ] [ "services" "vaultwarden" ])
   ];
 
-  options.services.vaultwarden-test = with types; {
+  options.services.vaultwarden = with types; {
     enable = mkEnableOption (lib.mdDoc "vaultwarden");
 
     dbBackend = mkOption {

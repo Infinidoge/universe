@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  persist.directories = [ config.services.vaultwarden-test.dataDir ];
+  persist.directories = [ config.services.vaultwarden.dataDir ];
 
   services.nginx.virtualHosts."bitwarden.inx.moe" = config.common.nginx.ssl // {
     locations."/" = {
@@ -9,7 +9,7 @@
     };
   };
 
-  services.vaultwarden-test = {
+  services.vaultwarden = {
     enable = true;
     environmentFile = config.secrets."vaultwarden";
     dataDir = "/srv/vaultwarden";
