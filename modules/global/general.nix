@@ -13,12 +13,14 @@
     # Enable Early Out of Memory service
     earlyoom.enable = true;
 
-    # Ensure certain necessary directories always exist
-    ensure.directories = [ "/mnt" ];
-
     # Accept EULA for all minecraft servers
     minecraft-servers.eula = true;
   };
+
+  # Ensure certain necessary directories always exist
+  systemd.tmpfiles.rules = [
+    "d /mnt 0777 root root - -"
+  ];
 
   system.activationScripts = {
     # FIX: command-not-found database doesn't exist normally
