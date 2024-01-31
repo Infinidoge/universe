@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, private, ... }:
 with lib;
 with lib.our;
 let
@@ -7,13 +7,42 @@ in
 {
   options.modules.hardware.peripherals.printing = with types; {
     enable = mkBoolOpt false;
-    drivers = mkOpt (functionTo listOf package) (pkgs: [ ]);
+    drivers = mkOpt (listOf path) [ ];
   };
 
-  config = mkIf cfg.enable {
-    services.printing = {
-      enable = true;
-      drivers = cfg.drivers pkgs;
-    };
-  };
+  config = mkIf cfg.enable (mkMerge [
+    {
+      services.printing = {
+        enable = true;
+        inherit (cfg) drivers;
+      };
+    }
+
+    (mkIf config.info.loc.purdue {
+      hardware.printers = {
+        ensureDefaultPrinter = "printing";
+
+        ensurePrinters =
+          let
+            itap = name: {
+              inherit name;
+              deviceUri = "lpd://${private.variables.purdue-username}@wpvapppcprt02.itap.purdue.edu:515/itap-${name}";
+              model = "drv:///sample.drv/generic.ppd";
+              ppdOptions = {
+                Duplex = "DuplexNoTumble";
+                Option1 = "True"; # Duplexer
+              };
+            };
+          in
+          [
+            (itap "printing")
+            (itap "colorprinting")
+          ];
+      };
+
+      services.printing.browsedConf = ''
+        BrowseRemoteProtocols none
+      '';
+    })
+  ]);
 }
