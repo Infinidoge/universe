@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  persist.directories = [ config.services.vaultwarden.config.DATA_FOLDER ];
+  persist.directories = [ config.services.vaultwarden-test.dataDir ];
 
   services.nginx.virtualHosts."bitwarden.inx.moe" = config.common.nginx.ssl // {
     locations."/" = {
@@ -9,14 +9,13 @@
     };
   };
 
-  services.vaultwarden = {
+  services.vaultwarden-test = {
     enable = true;
     environmentFile = config.secrets."vaultwarden";
+    dataDir = "/srv/vaultwarden";
     config = {
       DOMAIN = "https://bitwarden.inx.moe";
       SIGNUPS_ALLOWED = false;
-
-      DATA_FOLDER = "/srv/vaultwarden";
 
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8222;

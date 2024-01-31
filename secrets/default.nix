@@ -26,7 +26,7 @@ in
         "inx.moe.pem" = withOwner "nginx" secrets."inx.moe.pem";
         "inx.moe.key" = withOwner "nginx" secrets."inx.moe.key";
       })
-      (mkIf config.services.vaultwarden.enable {
+      (mkIf config.services.vaultwarden-test.enable {
         "vaultwarden" = withOwner "vaultwarden" secrets."vaultwarden";
       })
     ];
