@@ -41,6 +41,7 @@
 
       peripherals = {
         fprint-sensor.enable = true;
+        printing.enable = true;
       };
     };
     desktop = {
