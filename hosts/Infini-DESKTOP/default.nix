@@ -6,6 +6,8 @@
 
   system.stateVersion = "21.11";
 
+  info.loc.home = true;
+
   persist = {
     directories = [
       "/home"
