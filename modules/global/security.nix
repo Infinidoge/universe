@@ -52,6 +52,14 @@ with lib;
     ];
   };
 
+  services.nginx = {
+    statusPage = true;
+    recommendedTlsSettings = true;
+    recommendedOptimisation = true;
+    recommendedGzipSettings = true;
+    recommendedProxySettings = true;
+  };
+
   common = {
     nginx.ssl = { sslCertificate = config.secrets."inx.moe.pem"; sslCertificateKey = config.secrets."inx.moe.key"; forceSSL = true; };
   };
