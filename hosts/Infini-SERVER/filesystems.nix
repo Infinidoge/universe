@@ -53,12 +53,6 @@ in
       neededForBoot = true;
     };
 
-    "/persist/var/lib/thelounge" = lib.mkIf (data != null) {
-      device = data;
-      fsType = "btrfs";
-      options = [ "subvol=root/var/lib/thelounge" ] ++ commonOptions;
-    };
-
     "/nix" = {
       device = main;
       fsType = "btrfs";
