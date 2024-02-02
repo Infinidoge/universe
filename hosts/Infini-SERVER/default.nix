@@ -70,13 +70,6 @@
       {
         enable = true;
 
-        statusPage = true;
-
-        recommendedTlsSettings = true;
-        recommendedOptimisation = true;
-        recommendedGzipSettings = true;
-        recommendedProxySettings = true;
-
         virtualHosts = {
           "*.inx.moe" = ssl // {
             listen = lib.flatten
