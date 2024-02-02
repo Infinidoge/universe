@@ -69,5 +69,26 @@
 
   services.nginx = {
     enable = true;
+
+    virtualHosts =
+      let
+        cfg = config.services.nginx;
+        inherit (config.common.nginx) ssl;
+      in
+      {
+        "*.inx.moe" = ssl // {
+          listen = lib.flatten
+            (map
+              (addr: [
+                { inherit addr; port = 443; ssl = true; }
+                { inherit addr; port = 80; ssl = false; }
+              ])
+              cfg.defaultListenAddresses);
+          globalRedirect = "inx.moe";
+        };
+        "nitter.inx.moe" = ssl // {
+          globalRedirect = "twitter.com";
+        };
+      };
   };
 }
