@@ -121,7 +121,7 @@ in
       "${cfg.dataDir}/config.js"."L+" = {
         user = "thelounge";
         group = "thelounge";
-        argument = pkgs.writeText "config.js" configJsData;
+        argument = "${pkgs.writeText "config.js" configJsData}";
       };
     };
 

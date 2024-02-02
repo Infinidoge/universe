@@ -85,26 +85,8 @@
           "nitter.inx.moe" = ssl // {
             globalRedirect = "twitter.com";
           };
-          "thelounge.inx.moe" = ssl // {
-            locations."/" = {
-              proxyPass = "http://localhost:${toString config.services.thelounge.port}";
-            };
-          };
         };
       };
-
-    thelounge = {
-      enable = true;
-      plugins = with pkgs.theLoungePlugins; [
-        themes.zenburn-monospace
-        themes.dracula
-        themes.discordapp
-      ];
-      port = 9786;
-      extraConfig = {
-        reverseProxy = true;
-      };
-    };
   };
 
   networking.firewall = {

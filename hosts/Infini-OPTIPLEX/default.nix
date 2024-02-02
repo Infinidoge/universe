@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ./filesystems.nix
 
+    ./thelounge.nix
     ./vaultwarden.nix
   ];
 
