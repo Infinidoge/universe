@@ -22,8 +22,6 @@
     };
   };
 
-  info.loc.home = false;
-
   networking = {
     interfaces = {
       enp0s31f6 = {
