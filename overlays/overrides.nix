@@ -6,7 +6,7 @@ let
     config.allowUnfree = true;
   };
 
-  latest = mkPkgs inputs.latest;
+  latest = mkPkgsUnfree inputs.latest;
   fork = mkPkgs inputs.fork;
   stable = mkPkgs inputs.stable;
 in
@@ -35,4 +35,8 @@ in
       });
     };
   };
+
+  factorio-headless = latest.factorio-headless.overrideAttrs (old: {
+    meta = old.meta // { mainProgram = "factorio"; };
+  });
 }
