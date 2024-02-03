@@ -16,6 +16,7 @@
     coreutils-doge
     cryptsetup
     curl
+    difftastic
     direnv
     dnsutils
     erdtree
