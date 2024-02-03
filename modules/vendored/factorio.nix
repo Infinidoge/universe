@@ -74,12 +74,12 @@ in
       };
 
       user = mkOption {
-        type = types.string;
+        type = types.str;
         default = "factorio";
       };
 
       group = mkOption {
-        type = types.string;
+        type = types.str;
         default = "factorio";
       };
 

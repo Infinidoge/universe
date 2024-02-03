@@ -29,7 +29,7 @@ in
     package = mkPackageOption pkgs "thelounge" { };
 
     dataDir = mkOption {
-      type = types.string;
+      type = types.str;
       default = "/var/lib/thelounge";
     };
 
