@@ -1,12 +1,12 @@
 { config, private, ... }:
 
 {
-  persist.directories = [ "/var/lib/factorio" ];
-
   services.factorio = {
     enable = true;
     openFirewall = true;
     loadLatestSave = true;
+
+    stateDir = "/srv/factorio";
 
     admins = [ "Infinidoge" ];
 
