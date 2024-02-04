@@ -84,4 +84,14 @@
     serviceConfig.Type = "oneshot";
     script = "${lib.getExe pkgs.acpilight} -set 50";
   };
+
+  nix.buildMachines = [{
+    hostName = "infini-desktop";
+    system = "x86_64-linux";
+    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    protocol = "ssh-ng";
+    maxJobs = 16;
+    speedFactor = 8;
+    sshUser = "remotebuild";
+  }];
 }
