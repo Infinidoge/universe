@@ -56,9 +56,6 @@
 
   programs.ns-usbloader.enable = true;
 
-  # Broken on kernel >= 6.6
-  # services.xserver.videoDrivers = [ "displaylink" ];
-
   services.fwupd = {
     enable = true;
     extraRemotes = [
