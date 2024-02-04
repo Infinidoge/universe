@@ -6,7 +6,7 @@ with lib;
 
     settings = {
       allowed-users = [ "*" ];
-      trusted-users = [ "root" "@wheel" ];
+      trusted-users = [ "root" "@wheel" "remotebuild" ];
 
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       experimental-features = [ "flakes" "nix-command" "impure-derivations" "no-url-literals" "repl-flake" ];
@@ -51,6 +51,11 @@ with lib;
       "nixpkgs=${inputs.nixpkgs}"
       "home-manager=${inputs.home-manager}"
     ];
+
+    distributedBuilds = true;
+    extraOptions = ''
+      builders-use-substitutes = true
+    '';
   };
 
   nixpkgs.config = {
@@ -95,4 +100,12 @@ with lib;
         '';
       };
   };
+
+  users.users.remotebuild = {
+    description = "Unprivledged user for Nix remote builds";
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
+    group = "remotebuild";
+  };
+  users.groups.remotebuild = { };
 }
