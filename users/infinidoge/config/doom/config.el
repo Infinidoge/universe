@@ -4,8 +4,6 @@
 ;; sync' after modifying this file!
 
 
-(setq server-socket-dir "/run/user/1000/emacs/")
-
 ;; --- Identity ---
 (setq
  user-full-name "Infinidoge"
