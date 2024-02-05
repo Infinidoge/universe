@@ -119,7 +119,7 @@
                   (final: prev: {
                     lib = prev.lib.extend libOverlay;
 
-                    inherit (inputs.home-manager.${prev.system}) home-manager;
+                    inherit (inputs.home-manager.packages.${prev.system}) home-manager;
                   })
                   self.overlays.packages
                   self.overlays.patches
