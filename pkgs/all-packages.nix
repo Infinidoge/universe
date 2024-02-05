@@ -6,6 +6,7 @@
   neocities = pkgs.callPackage ./neocities { };
   nix-modrinth-prefetch = pkgs.callPackage ./nix-modrinth-prefetch.nix { };
   olympus = pkgs.callPackage ./olympus.nix { };
+  ponder = pkgs.callPackage ./ponder { };
   setris = pkgs.callPackage ./setris.nix { };
   sim65 = pkgs.callPackage ./sim65.nix { };
   substituteSubset = pkgs.callPackage ./substitute-subset.nix { };
