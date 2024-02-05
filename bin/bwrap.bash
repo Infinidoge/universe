@@ -1,49 +1,60 @@
 #!/usr/bin/env bash
+# Modified from https://git.sr.ht/~fd/nix-configs/tree/19a4ffaa09b8bf65eae2962b1efead86c19ea54f/item/ssh-wrap.sh
 
-if [ "$(uname)" != "Linux" ]; then
-  exit 0
-fi
-
-if [ -z ${NIXDIR+x} ]; then 
-    echo "NIXDIR is unset! It needs to be set in the code. Edit this shell file and read the instructions."
-    echo "Executing bash without Bubblewrap…"
-    exec bash
-fi
-
-if [ ! -e $NIXDIR ]; then
-    echo "NIXDIR doesn't point to a valid location! Falling back to Bash"
-    exec bash
-fi
+DEFAULT_COMMAND=zsh
+FALLBACK_COMMAND=bash
+SAFEWORD=nonix
+NIXDIR=${NIXDIR-$HOME/scratch/nix}
 
 _bind() {
-    _bind_arg=$1
-    shift
-    for _path in "$@"; do
-        args+=("$_bind_arg" "$_path" "$_path")
-    done
+  _bind_arg=$1
+  shift
+  for _path in "$@"; do
+    args+=("$_bind_arg" "$_path" "$_path")
+  done
 }
 
 bind() {
-    _bind --bind-try "$@"
+  _bind --bind-try "$@"
 }
 
 robind() {
-    _bind --ro-bind-try "$@"
+  _bind --ro-bind-try "$@"
 }
 
 devbind() {
-    _bind --dev-bind-try "$@"
+  _bind --dev-bind-try "$@"
 }
 
-args=(
-    --bind $NIXDIR /nix
-    --chdir $HOME
-)
+if [[ "$SSH_ORIGINAL_COMMAND" == "" ]]; then
+  SSH_ORIGINAL_COMMAND=$DEFAULT_COMMAND
+fi
 
-bind \
-    $HOME
+if [[ "$SSH_ORIGINAL_COMMAND" == "$SAFEWORD" ]]; then
+  exec $FALLBACK_COMMAND
+fi
 
-devbind \
+if type bwrap &>/dev/null; then
+  if [ -z ${NIXDIR+x} ]; then
+    echo "NIXDIR is unset! It needs to be set in the code. Edit this shell file and read the instructions."
+    echo "Executing fallback without Bubblewrap…"
+    exec $FALLBACK_COMMAND
+  fi
+
+  if [ ! -e "$NIXDIR" ]; then
+    echo "NIXDIR doesn't point to a valid location! Falling back"
+    exec $FALLBACK_COMMAND
+  fi
+
+  args=(
+    --bind "$NIXDIR" /nix
+    # --chdir $HOME
+  )
+
+  bind \
+    "$HOME"
+
+  devbind \
     /dev \
     /proc \
     /tmp \
@@ -54,6 +65,7 @@ devbind \
     /boot \
     /etc \
     /home \
+    /homes \
     /lib \
     /lib32 \
     /lib64 \
@@ -62,6 +74,18 @@ devbind \
     /usr \
     /var
 
-[[ -f "$HOME/.bwrap-extra.bash" ]] && source "$HOME/.bwrap-extra.bash"
+  [[ -f "$HOME/.bwrap-extra.bash" ]] && source "$HOME/.bwrap-extra.bash"
 
-exec bwrap "${args[@]}" "$@"
+  bwrap "${args[@]}" $FALLBACK_COMMAND -c "
+		. ${XDG_STATE_HOME-$HOME/.local/state}/nix/profile/etc/profile.d/nix.sh
+		exec ${SSH_ORIGINAL_COMMAND}
+	"
+
+  status=$?
+  if [[ $status != 0 ]]; then
+    echo "bwrap exited uncleanly, falling back"
+    exec ${FALLBACK_COMMAND}
+  fi
+else
+  exec ${SSH_ORIGINAL_COMMAND}
+fi
