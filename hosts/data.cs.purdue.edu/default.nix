@@ -28,6 +28,7 @@
         TMPDIR = "${config.home.homeDirectory}/scratch/tmp";
         UNIVERSE_FLAKE_ROOT = "${config.home.homeDirectory}/universe";
         UNIVERSE_USERNAME = main.user.name;
+        SHELL = "zsh";
       };
 
       file.".profile".target = ".profile-hm";
