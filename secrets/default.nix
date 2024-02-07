@@ -26,6 +26,9 @@ in
       (mkIf config.services.vaultwarden.enable {
         "vaultwarden" = withOwner "vaultwarden" secrets."vaultwarden";
       })
+      (mkIf config.services.freshrss.enable {
+        "freshrss" = withOwner "freshrss" secrets."freshrss";
+      })
     ];
   };
 }

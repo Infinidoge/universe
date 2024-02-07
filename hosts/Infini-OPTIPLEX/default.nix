@@ -4,6 +4,7 @@
     ./filesystems.nix
 
     ./factorio.nix
+    ./freshrss.nix
     ./thelounge.nix
     ./vaultwarden.nix
   ];
