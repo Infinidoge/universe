@@ -29,4 +29,5 @@ in
   "inx.moe.pem.age".publicKeys = allKeys;
   "inx.moe.key.age".publicKeys = allKeys;
   "vaultwarden.age".publicKeys = allKeys;
+  "freshrss.age".publicKeys = allKeys;
 }
