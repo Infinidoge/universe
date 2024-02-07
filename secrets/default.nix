@@ -1,14 +1,11 @@
 { lib, self, config, ... }:
+with lib;
 let
-  inherit (lib) filterAttrs nameValuePair hasSuffix removeSuffix mapAttrs mapAttrs' hasAttr mkIf mkMerge optionalAttrs;
   inherit (lib.our) mkOpt;
   inherit (lib.types) bool attrsOf path;
 
-  folder = ./.;
-  toFile = name: "${folder}/${name}";
-  filterSecrets = key: value: value == "regular" && hasSuffix ".age" key;
-  filtered = (filterAttrs filterSecrets (builtins.readDir folder));
-  secrets = mapAttrs' (n: v: nameValuePair (removeSuffix ".age" n) { file = toFile n; }) filtered;
+  mkSecret = name: nameValuePair (removeSuffix ".age" name) { file = "${./.}/${name}"; };
+  secrets = listToAttrs (map mkSecret (attrNames (import ./secrets.nix)));
 
   withOwner = name: secret: secret // { owner = name; group = name; };
 in
