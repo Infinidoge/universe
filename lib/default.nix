@@ -32,6 +32,22 @@ rec {
     lib.genAttrs list (name: func (if builtins.typeOf attrs == "lambda" then attrs name else attrs));
 
   dirsOf = dir: lib.attrNames (lib.filterAttrs (file: type: type == "directory") (builtins.readDir dir));
+
+  # Only useful for functors
+  recMap = f: list:
+    if list == [ ] then f
+    else recMap (f (head list)) (tail list)
+  ;
+
+  chain = {
+    func = id;
+    __functor = self: input:
+      if (typeOf input) == "lambda"
+      then self // { func = e: input (self.func e); }
+      else self.func input;
+  };
+
+  spread = function: list: if list == [ ] then function else spread (function (head list)) (tail list);
 } // (
   import ./digga.nix { inherit lib; }
 ) // (
