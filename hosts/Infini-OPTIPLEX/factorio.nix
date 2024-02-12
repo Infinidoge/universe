@@ -12,5 +12,9 @@
 
     game-name = "Hacktorio";
     game-password = private.variables.factorio-password;
+
+    mapGenSettings = {
+      seed = "2239686687";
+    };
   };
 }
