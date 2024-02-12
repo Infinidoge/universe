@@ -115,6 +115,7 @@ in
       "docker"
       "libvirtd"
       "minecraft"
+      "factorio"
       "plugdev"
       "video"
       "wheel"
