@@ -12,6 +12,7 @@
 
     agenix
     bat
+    browsh
     cloc
     coreutils-doge
     cryptsetup
