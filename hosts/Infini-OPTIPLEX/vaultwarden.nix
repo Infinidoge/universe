@@ -25,7 +25,7 @@
       PUSH_RELAY_URI = "https://push.bitwarden.com";
 
       SMTP_HOST = "smtp.purelymail.com";
-      SMTP_FROM = "noreply@inx.moe";
+      SMTP_FROM = "noreply+vaultwarden@inx.moe";
       SMTP_PORT = 465;
       SMTP_SECURITY = "force_tls";
       SMTP_USERNAME = "noreply@inx.moe";
