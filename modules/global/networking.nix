@@ -4,9 +4,6 @@
 
   networking = {
     useDHCP = true;
-    firewall = {
-      trustedInterfaces = [ "tailscale0" ];
-    };
     search = [
       # Tailscale
       "tail4c593.ts.net"
