@@ -406,12 +406,12 @@ keys = [
     ),
     Key(
         [Keys.SUPER, Keys.ALT], "f",
-        lazy.spawn("firefox --new-window"),
+        lazy.spawn("@firefox@ --new-window"),
         desc="Start Firefox (New Window)",
     ),
     Key(
         [Keys.SUPER, Keys.ALT, Keys.CONTROL], "f",
-        lazy.spawn("firefox --private-window"),
+        lazy.spawn("@firefox@ --private-window"),
         desc="Start Firefox (New Private Window)",
     ),
     Key(

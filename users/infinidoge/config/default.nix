@@ -38,6 +38,7 @@ with lib;
         sha256 = "sha256-3oVx9k+IN8GI8EWx3kPiQWdPGSO645abrEIL8C6sNq8=";
       };
       wallpaper_mode = "fill";
+      firefox = config.programs.firefox.package.meta.mainProgram;
     };
 
     "blugon".source = ./blugon;
