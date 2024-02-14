@@ -6,7 +6,6 @@
     useDHCP = true;
     firewall = {
       trustedInterfaces = [ "tailscale0" ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
     };
     search = [
       # Tailscale
@@ -34,6 +33,7 @@
   services = {
     tailscale = {
       enable = true;
+      openFirewall = true;
       useRoutingFeatures = if config.info.stationary then "both" else "client";
     };
 
