@@ -20,8 +20,10 @@ in
   config = {
     console.keyMap = mkDefault cfg.keymap;
     services.xserver = {
-      layout = mkDefault cfg.keymap;
-      xkbOptions = "compose:ralt";
+      xkb = {
+        layout = mkDefault cfg.keymap;
+        options = "compose:ralt";
+      };
       libinput.enable = true;
     };
 
