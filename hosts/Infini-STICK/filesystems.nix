@@ -3,7 +3,7 @@
 let
   uuid = uuid: "/dev/disk/by-uuid/${uuid}";
   main = uuid "ae3f3d98-1d87-47b4-a4ed-d69a896eee69";
-  commonOptions = [ "autodefrag" "noatime" "compress-force=zstd:7" ];
+  commonOptions = [ "autodefrag" "noatime" "compress-force=zstd:4" ];
 
   mkMain' = options: {
     device = main;
