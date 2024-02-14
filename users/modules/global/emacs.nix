@@ -46,7 +46,7 @@ in
 
       # --- :lang ---
       # :lang org
-      python310Packages.pygments
+      python3Packages.pygments
       ## +gnuplot
       gnuplot
       ## +roam2
@@ -89,7 +89,7 @@ in
 
       # :lang markdown
       pandoc
-      python310Packages.grip
+      python3Packages.grip
 
       # :lang sh
       shellcheck

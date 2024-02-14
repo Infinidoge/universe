@@ -1,7 +1,7 @@
 { pkgs, lib, ... }: {
   home.packages = with pkgs; lib.lists.flatten [
-    python310
-    (with python310Packages; [
+    python311
+    (with python311Packages; [
       black
       isort
       jupyter
