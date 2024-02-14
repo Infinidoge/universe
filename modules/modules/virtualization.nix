@@ -15,6 +15,6 @@ in
       docker.enable = true;
     };
     programs.dconf.enable = true;
-    environment.systemPackages = with pkgs; [ virt-manager docker-compose docker-machine ];
+    environment.systemPackages = with pkgs; [ virt-manager docker-compose ];
   };
 }
