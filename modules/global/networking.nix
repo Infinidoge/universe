@@ -25,6 +25,10 @@
       "2696:4700:4700::1111"
       "2696:4700:4700::1111"
     ];
+
+    nftables = {
+      enable = true;
+    };
   };
 
   services = {
@@ -36,4 +40,8 @@
 
     zerotierone.enable = false;
   };
+
+  systemd.services.tailscaled.serviceConfig.Environment = [
+    "TS_DEBUG_FIREWALL_MODE=nftables"
+  ];
 }
