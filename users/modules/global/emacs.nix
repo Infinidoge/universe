@@ -89,7 +89,8 @@ in
 
       # :lang markdown
       pandoc
-      python3Packages.grip
+      # python3Packages.grip
+      python-grip
 
       # :lang sh
       shellcheck

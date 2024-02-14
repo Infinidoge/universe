@@ -36,6 +36,8 @@ in
     };
   };
 
+  python-grip = fork.python3Packages.grip;
+
   factorio-headless = latest.factorio-headless.overrideAttrs (old: {
     meta = old.meta // { mainProgram = "factorio"; };
   });
