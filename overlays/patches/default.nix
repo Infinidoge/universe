@@ -7,4 +7,6 @@ let
 in
 {
   coreutils-doge = addPatches prev.coreutils [ ./coreutils.patch ];
+
+  tailscale-doge = addPatches prev.tailscale [ ./tailscale-cgnat.patch ];
 }

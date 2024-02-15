@@ -1,0 +1,25 @@
+From cc086f9c78aa4aba67e13494e1853f23acb93b12 Mon Sep 17 00:00:00 2001
+From: Infinidoge <infinidoge@inx.moe>
+Date: Thu, 15 Feb 2024 00:52:10 -0500
+Subject: [PATCH] override CGNAT range
+
+---
+ net/tsaddr/tsaddr.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/tsaddr/tsaddr.go b/net/tsaddr/tsaddr.go
+index 93a720b0..f374de05 100644
+--- a/net/tsaddr/tsaddr.go
++++ b/net/tsaddr/tsaddr.go
+@@ -31,7 +31,7 @@ func ChromeOSVMRange() netip.Prefix {
+ // See https://tailscale.com/s/cgnat
+ // Note that Tailscale does not assign out of the ChromeOSVMRange.
+ func CGNATRange() netip.Prefix {
+-	cgnatRange.Do(func() { mustPrefix(&cgnatRange.v, "100.64.0.0/10") })
++	cgnatRange.Do(func() { mustPrefix(&cgnatRange.v, "100.100.0.0/14") })
+ 	return cgnatRange.v
+ }
+ 
+-- 
+2.43.0
+
