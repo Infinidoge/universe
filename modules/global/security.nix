@@ -11,7 +11,10 @@ with lib;
       defaults.email = "infinidoge@inx.moe";
     };
 
-    pam.enableSSHAgentAuth = true;
+    pam.sshAgentAuth = {
+      enable = true;
+      authorizedKeysFiles = lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
+    };
   };
 
   hardware = {
