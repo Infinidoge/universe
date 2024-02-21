@@ -8,6 +8,8 @@ This repository is not a general purpose configuration.
 It is tailored specifically to my uses, and while you may find inspiration from it, do not expect it to be your productivity silver bullet.
 Additionally, I WILL FORCE PUSH TO THIS REPOSITORY WITHOUT NOTICE.
 
+This readme is not actively kept up to date with every single change, so take the exact wording with a grain of salt, and you may need to double check the directories.
+
 ## Structure
 
 ### `flake.nix`
