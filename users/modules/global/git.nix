@@ -13,6 +13,7 @@
       init.defaultBranch = "master";
       status.showUntrackedFiles = "all";
       push.autoSetupRemote = true;
+      branch.sort = "-committerdate";
     };
 
     aliases = {
