@@ -15,6 +15,7 @@ in
       yubikey-personalization
       yubikey-personalization-gui
       yubico-piv-tool
+      yubioath-flutter
     ];
     services.udev.packages = [ pkgs.yubikey-personalization ];
     services.pcscd.enable = true;
