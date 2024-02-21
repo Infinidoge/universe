@@ -60,7 +60,7 @@ in
         id3v2
         picard
 
-        (discord-canary.override { withVencord = true; })
+        (discord-canary.override { withVencord = true; withOpenASAR = true; })
         schildichat-desktop
         thunderbird
         tor-browser
