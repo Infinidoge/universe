@@ -37,6 +37,16 @@
         if [[ "$(basename "$(readlink "/proc/$PPID/exe")")" == ".kitty-wrapped" ]]; then
             PATH=$(echo "$PATH" | sed 's/\/nix\/store\/[a-zA-Z._0-9-]\+\/bin:\?//g' | sed 's/:$//')
         fi
+
+        j() {
+          if [[ $# -eq 0 ]] then
+            \builtin cd -- "$(fd -H -t d | fzf)"
+          else
+            \builtin cd -- "$(fd -H -t d | fzf -1 -q "$@")"
+          fi
+        }
+
+        alias "jh"="cd ~ && j"
       '';
 
       dotDir = ".config/zsh";
