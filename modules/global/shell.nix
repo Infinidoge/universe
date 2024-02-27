@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   ifSudo = lib.mkIf config.security.sudo.enable;
+  ifSudo' = text: if config.security.sudo.enable then "sudo ${text}" else text;
 in
 {
   programs = {
@@ -52,7 +53,22 @@ in
     # internet ip
     myip = "echo $(curl -s ipecho.net/plain)";
 
+    # systemd
+    ctl = "systemctl";
+    stl = ifSudo' "systemctl";
+    utl = "systemctl --user";
+    ut = "utl start";
+    un = "utl stop";
+    ur = "utl restart";
+    up = "stl start";
+    dn = "stl stop";
+    rt = "stl restart";
+    jtl = "journalctl";
+
     # Miscellaneous
+    mnt = ifSudo' "mount";
+    umnt = ifSudo' "umount";
+
     dd = "dd status=progress";
 
     cat = "bat --paging=never";
@@ -75,27 +91,12 @@ in
     si = ifSudo "sudo -i";
     se = ifSudo "sudoedit";
 
-    # systemd
-    ctl = "systemctl";
-    stl = ifSudo "s systemctl";
-    utl = "systemctl --user";
-    ut = "utl start";
-    un = "utl stop";
-    ur = "utl restart";
-    up = ifSudo "stl start";
-    dn = ifSudo "stl stop";
-    rt = ifSudo "stl restart";
-    jtl = "journalctl";
-
     # Miscellaneous
     acat = "mpv --no-audio-display";
     vcat = "mpv";
 
     lsdisk = "lsblk -o name,size,mountpoints,fstype,label,uuid,fsavail,fsuse%";
     lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
-
-    mnt = ifSudo "s mount";
-    umnt = ifSudo "s umount";
 
     # yt-dlp
     yt-m4a = ''yt-dlp -f "bestaudio[ext=m4a]" -o "%(title)s.%(ext)s"'';
