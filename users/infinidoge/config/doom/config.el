@@ -16,6 +16,7 @@
  display-line-numbers-type 'relative
  doom-modeline-enable-word-count t
  nerd-icons-font-family "Symbols Nerd Fonts Mono"
+ nerd-icons-font-names '("SymbolsNerdFontMono-Regular.ttf")
  )
 
 ;; --- Projectile ----
