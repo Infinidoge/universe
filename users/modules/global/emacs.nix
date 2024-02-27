@@ -7,7 +7,7 @@ in
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: with epkgs; [ vterm pdf-tools emacsql-sqlite ];
-    package = pkgs.emacsNativeComp;
+    package = pkgs.emacs29;
   };
 
   services.emacs = {
