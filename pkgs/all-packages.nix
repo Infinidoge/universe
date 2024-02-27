@@ -1,6 +1,7 @@
 { pkgs }:
 {
   ears-cli = pkgs.callPackage ./ears-cli.nix { };
+  fw-ectool = pkgs.callPackage ./fw-ectool.nix { };
   hexagon = pkgs.callPackage ./hexagon.nix { };
   mcaselector = pkgs.callPackage ./mcaselector.nix { };
   mkSymlinks = pkgs.callPackage ./mk-symlinks.nix { };
