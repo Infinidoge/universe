@@ -14,5 +14,5 @@
   boot.zfs.forceImportRoot = false;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  info.model = "Portable Installation";
+  info.model = "SD Card Installation";
 }

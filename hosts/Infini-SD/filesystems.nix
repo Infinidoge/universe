@@ -2,8 +2,8 @@
 
 let
   uuid = uuid: "/dev/disk/by-uuid/${uuid}";
-  main = uuid "ae3f3d98-1d87-47b4-a4ed-d69a896eee69";
-  commonOptions = [ "autodefrag" "noatime" "compress-force=zstd:4" ];
+  main = uuid "527062b3-7a48-4456-8527-30887c6e9f52";
+  commonOptions = [ "autodefrag" "noatime" "compress-force=zstd:1" ];
 
   mkMain' = options: {
     device = main;
@@ -28,7 +28,7 @@ in
     "/boot" = mkMain [ "subvol=boot" ];
 
     "/boot/efi" = {
-      device = uuid "D7DB-2291";
+      device = uuid "E41C-506A";
       fsType = "vfat";
       neededForBoot = true;
     };
