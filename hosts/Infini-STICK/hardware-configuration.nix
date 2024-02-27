@@ -10,7 +10,8 @@
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [ "boot.shell_on_fail" ];
-  boot.supportedFilesystems = [ "btrfs" ];
+  boot.supportedFilesystems = [ "btrfs" "zfs" ];
+  boot.zfs.forceImportRoot = false;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   info.model = "Portable Installation";
