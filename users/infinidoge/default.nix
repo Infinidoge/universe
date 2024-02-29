@@ -70,15 +70,15 @@ in
     ];
   };
 
-  environment.variables.EDITOR =
-    let
-      pkg = config.home-manager.users.infinidoge.programs.emacs.package;
-      editorScript = pkgs.writeScriptBin "emacseditor" ''
-        #!${pkgs.runtimeShell}
-        exec ${pkg}/bin/emacsclient --create-frame "$@"
-      '';
-    in
-    (lib.mkForce "${editorScript}/bin/emacseditor");
+  #environment.variables.EDITOR =
+  #  let
+  #    pkg = config.home-manager.users.infinidoge.programs.emacs.package;
+  #    editorScript = pkgs.writeScriptBin "emacseditor" ''
+  #      #!${pkgs.runtimeShell}
+  #      exec ${pkg}/bin/emacsclient --create-frame "$@"
+  #    '';
+  #  in
+  #  (lib.mkForce "${editorScript}/bin/emacseditor");
 
   modules = {
     locale.fonts = {
