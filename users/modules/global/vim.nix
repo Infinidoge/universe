@@ -4,8 +4,8 @@
     settings = {
       background = "dark";
       directory = [
-        "."
         "~/.local/share/vim/swap//"
+        "."
       ];
       expandtab = true;
       history = 50;
