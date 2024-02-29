@@ -34,6 +34,7 @@
     manix
     moreutils
     nmap
+    parallel
     parted
     perl
     rhash
