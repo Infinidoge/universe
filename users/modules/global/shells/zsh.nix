@@ -42,7 +42,7 @@
           if [[ $# -eq 0 ]] then
             \builtin cd -- "$(fd -H -t d | fzf)"
           else
-            \builtin cd -- "$(fd -H -t d | fzf -1 -q "$@")"
+            \builtin cd -- "$(fd -H -t d | fzf -1 -q "$*")"
           fi
         }
 
