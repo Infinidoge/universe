@@ -36,6 +36,7 @@
     nmap
     parallel
     parted
+    pciutils
     perl
     rhash
     ripgrep
