@@ -17,11 +17,20 @@ in
         monitors = mkDefault 1;
       };
 
+      common.wm = {
+        locker = pkgs.xsecurelock;
+      };
+
       # Compositor to prevent screen tearing
       services.picom = {
         enable = true;
         backend = "glx";
         vSync = true;
+      };
+
+      programs.xss-lock = {
+        enable = true;
+        lockerCommand = lib.getExe config.common.wm.locker;
       };
 
       # Automatically attach/detatch connected/disconnected monitors
@@ -53,7 +62,7 @@ in
           xprop
         ])
 
-        xsecurelock
+        config.common.wm.locker
         blugon
       ];
     }

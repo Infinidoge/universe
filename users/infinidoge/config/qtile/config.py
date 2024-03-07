@@ -283,7 +283,7 @@ keys = [
     # ),
     Key(
         [Keys.SUPER, Keys.CONTROL], "l",
-        lazy.spawn("xsecurelock"),
+        lazy.spawn("@locker@"),
         desc="Lock Screen",
     ),
 
