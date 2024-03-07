@@ -11,6 +11,7 @@
 - [ ] Move `$EDITOR` script to a home-manager session variable
 - [ ] Fix https://github.com/NixOS/nixpkgs/issues/45039
 - [ ] Look into `thermald` for Framework
+- [ ] Handle error codes in git-fzf and git-fzf-edit
 
 # Issues pending fixes
 
