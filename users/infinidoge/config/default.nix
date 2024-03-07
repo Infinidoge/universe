@@ -39,6 +39,7 @@ with lib;
       };
       wallpaper_mode = "fill";
       firefox = config.programs.firefox.package.meta.mainProgram;
+      locker = main.common.wm.locker.meta.mainProgram;
     };
 
     "blugon".source = ./blugon;
