@@ -43,7 +43,6 @@ lib.mkIf main.info.graphical {
       # :editor format
       nodePackages.prettier
 
-
       # --- :lang ---
       # :lang org
       python3Packages.pygments
