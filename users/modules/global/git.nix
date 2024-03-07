@@ -1,6 +1,27 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     gh
+
+    (writeScriptBin "git-fzf" ''
+      git ls-files &> /dev/null
+      if [[ $? -eq 128 ]] then
+        echo "Not in a git repository"
+      elif [[ $# -eq 0 ]] then
+        echo "$(git ls-files | fzf)"
+      else
+        echo "$(git ls-files | fzf -1 -q "$*")"
+      fi
+    '')
+    (writeScriptBin "git-fzf-edit" ''
+      git ls-files &> /dev/null
+      if [[ $? -eq 128 ]] then
+        echo "Not in a git repository"
+      elif [[ $# -eq 0 ]] then
+        $EDITOR "$(git ls-files | fzf)"
+      else
+        $EDITOR "$(git ls-files | fzf -1 -q "$*")"
+      fi
+    '')
   ];
 
   programs.git = {
@@ -50,6 +71,8 @@
       crypt = "!git-crypt";
 
       root = "rev-parse --show-toplevel";
+      fzf = "!git-fzf";
+      edit = "!git-fzf-edit";
     };
   };
 }
