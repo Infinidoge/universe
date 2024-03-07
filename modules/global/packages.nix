@@ -23,6 +23,7 @@
     erdtree
     eza
     fd
+    fzf
     htop
     hyfetch
     imagemagick
