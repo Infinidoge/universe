@@ -82,8 +82,12 @@ in
     timestamp = "date +%s -d";
 
     neofetch = "neowofetch";
-
   };
+
+  universe.variables = {
+  };
+
+  environment.variables = config.universe.variables;
 
   environment.shellAliases = config.universe.shellAliases // {
     # sudo
