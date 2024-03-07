@@ -37,7 +37,8 @@ in
           naturalScrolling = true;
         };
 
-        logind.lidSwitch = mkDefault "ignore";
+        logind.lidSwitch = mkDefault "suspend-then-hibernate";
+        logind.lidSwitchExternalPower = mkDefault "ignore";
 
         tlp.enable = mkDefault true;
 
