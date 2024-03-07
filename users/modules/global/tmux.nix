@@ -1,12 +1,9 @@
 { ... }: {
   programs.tmux = {
     enable = true;
+    mouse = true;
     clock24 = true;
-    terminal = "screen-256color";
+    terminal = "xterm-256color";
     prefix = "C-Space";
-
-    extraConfig = ''
-      set -g mouse on
-    '';
   };
 }
