@@ -10,3 +10,5 @@
 - Setup Nix LSP with [nil](https://github.com/oxalica/nil)
 - Replace CloudFlare SSL certificate with Let's Encrypt via [ACME](https://nixos.wiki/wiki/ACME)
 - Set timezone for portable devices with localtimed
+- Switch to nvim and setup
+  - Base off of [Ersei's config](https://git.sr.ht/~fd/nix-configs/tree/main/item/home/common/nvim)?
