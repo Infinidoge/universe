@@ -12,6 +12,7 @@
       history = 50;
       ignorecase = true;
       smartcase = true;
+      relativenumber = true;
       mouse = "a";
       number = true;
       tabstop = 4;
