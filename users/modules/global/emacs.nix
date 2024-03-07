@@ -3,7 +3,7 @@ let
   ifGraphical = lib.optionals main.info.graphical;
   ifGraphical' = lib.optional main.info.graphical;
 in
-{
+lib.mkIf main.info.graphical {
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: with epkgs; [ vterm pdf-tools emacsql-sqlite ];
