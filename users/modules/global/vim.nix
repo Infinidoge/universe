@@ -18,5 +18,8 @@
       tabstop = 4;
       shiftwidth = 4;
     };
+    extraConfig = ''
+      set clipboard=unnamedplus,unnamed
+    '';
   };
 }
