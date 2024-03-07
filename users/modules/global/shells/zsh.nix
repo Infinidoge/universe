@@ -47,6 +47,14 @@
         }
 
         alias "jh"="cd ~ && j"
+
+        editi() {
+          if [[ $# -eq 0 ]] then
+            edit "$(fd -H -t f | fzf)"
+          else
+            edit "$(fd -H -t f | fzf -1 -q "$*")"
+          fi
+        }
       '';
 
       dotDir = ".config/zsh";
