@@ -85,6 +85,7 @@ in
   };
 
   universe.variables = {
+    FZF_DEFAULT_OPTS = "--extended";
   };
 
   environment.variables = config.universe.variables;
