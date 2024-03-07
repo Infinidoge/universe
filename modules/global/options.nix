@@ -39,6 +39,7 @@ in
     universe = {
       packages = mkOpt (listOf package) [ ];
       shellAliases = mkOpt (attrsOf str) { };
+      variables = mkOpt (attrsOf (oneOf [ (listOf str) str path ])) { };
     };
 
     common = mkOpt (attrsOf anything) { };
