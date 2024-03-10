@@ -56,6 +56,11 @@
 
   programs.ns-usbloader.enable = true;
 
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.valent;
+  };
+
   services.fwupd = {
     enable = true;
     extraRemotes = [ "lvfs-testing" ];
