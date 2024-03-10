@@ -57,7 +57,6 @@
     ## Follow systems
     systems.url = "github:nix-systems/default";
     agenix.inputs.systems.follows = "systems";
-    devshell.inputs.systems.follows = "systems";
     flake-utils.inputs.systems.follows = "systems";
     universe-cli.inputs.systems.follows = "systems";
 
