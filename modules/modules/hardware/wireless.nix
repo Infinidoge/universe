@@ -1,4 +1,4 @@
-{ config, lib, private, ... }:
+{ config, lib, private, pkgs, ... }:
 with lib;
 with lib.our;
 let
@@ -33,6 +33,7 @@ in
         userControlled.enable = true;
         fallbackToWPA2 = mkDefault false;
       };
+      environment.systemPackages = [ pkgs.wpa_supplicant_gui ];
     })
   ];
 }

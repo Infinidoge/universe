@@ -507,6 +507,7 @@ groups.append(
             DropDown("calculator", "speedcrunch", x=0.2, y=0.2, width=0.6, height=0.6),
             DropDown("arandr", "arandr", x=0.2, y=0.1, width=0.6, height=0.4),
             DropDown("bluetooth", "blueman-manager", x=0.2, y=0.2, width=0.6, height=0.6),
+            DropDown("wifi", "wpa_gui", x=0.3, y=0.3, width=0.4, height=0.4),
         ],
     )
 )
@@ -525,6 +526,10 @@ keys.extend(
         Key(
             [Keys.SUPER, Keys.ALT], "b",
             lazy.group["scratchpad"].dropdown_toggle("bluetooth"),
+        ),
+        Key(
+            [Keys.SUPER, Keys.ALT], "n",
+            lazy.group["scratchpad"].dropdown_toggle("wifi"),
         ),
     ]
 )
