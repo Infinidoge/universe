@@ -12,6 +12,7 @@
 - [ ] Fix https://github.com/NixOS/nixpkgs/issues/45039
 - [ ] Look into `thermald` for Framework
 - [ ] Handle error codes in git-fzf and git-fzf-edit
+- [ ] Remove networking scratchpad dropdown on non-wireless systems
 
 # Issues pending fixes
 
