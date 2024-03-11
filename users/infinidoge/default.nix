@@ -61,6 +61,7 @@ in
         picard
 
         (discord-canary.override { withVencord = true; withOpenASAR = true; })
+        (discord.override { withVencord = true; withOpenASAR = true; })
         schildichat-desktop
         thunderbird
         tor-browser
