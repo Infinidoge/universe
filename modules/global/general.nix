@@ -22,6 +22,8 @@
     "d /mnt 0777 root root - -"
   ];
 
+  services.timesyncd.extraConfig = "FallbackNTP=162.159.200.1 2606:4700:f1::1"; # time.cloudflare.com
+
   system.activationScripts = {
     # FIX: command-not-found database doesn't exist normally
     # FIXME: activation script doesn't work properly, and frequently errors
