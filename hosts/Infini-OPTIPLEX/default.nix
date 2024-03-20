@@ -25,18 +25,6 @@
   };
 
   networking = {
-    interfaces = {
-      enp0s31f6 = {
-        ipv4.addresses = [{
-          address = "128.210.6.103";
-          prefixLength = 28;
-        }];
-      };
-    };
-    defaultGateway = {
-      address = "128.210.6.97";
-      interface = "enp0s31f6";
-    };
     firewall = {
       allowedUDPPorts = [ 80 443 ];
       allowedTCPPorts = [ 80 443 ];
