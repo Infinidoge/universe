@@ -39,20 +39,10 @@ with lib;
     enable = true;
     openFirewall = mkDefault true;
     settings.X11Forwarding = mkDefault false;
-    hostKeys = mkDefault [
-      {
-        bits = 4096;
-        openSSHFormat = true;
-        path = "/etc/ssh/ssh_host_rsa_key";
-        rounds = 100;
-        type = "rsa";
-      }
-      {
+    hostKeys = mkDefault [{
         path = "/etc/ssh/ssh_host_ed25519_key";
-        rounds = 100;
         type = "ed25519";
-      }
-    ];
+    }];
   };
 
   services.nginx = {
