@@ -104,8 +104,8 @@ with lib;
 
   users.users.remotebuild = {
     description = "Unprivledged user for Nix remote builds";
-    isNormalUser = true;
-    createHome = false;
+    isSystemUser = true;
+    shell = pkgs.bashInteractive;
     openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
     group = "remotebuild";
   };
