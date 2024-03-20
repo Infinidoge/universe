@@ -63,6 +63,7 @@
   environment.systemPackages = config.universe.packages ++ (with pkgs; [
     binutils
     btrfs-progs
+    bubblewrap
     compsize
     dosfstools
     exfat # Windows drives
