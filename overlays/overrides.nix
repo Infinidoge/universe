@@ -27,10 +27,10 @@ in
   python3 = prev.python3.override {
     packageOverrides = pythonFinal: pythonPrev: {
       qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
-        version = "0.0.0+unstable-2024-02-14";
+        version = "0.0.0+unstable-2024-03-13";
         src = oldAttrs.src.override {
-          rev = "bdfacffc56755d507c11359db0fb30a5768002f6";
-          hash = "sha256-9q+I6HvZqg54eh4WoKR3H9fjTLGktk5vdvo7qTAVLok=";
+          rev = "c4d3c6e602f9ed619086cc3942bd1c47ebabedbf";
+          hash = "sha256-1mvS/bvXDplkiG7GzDFu9cEFV9onbvNTYbhb4W1qj+0=";
         };
       });
     };
