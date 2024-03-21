@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     gh
+    git-absorb
 
     (writeScriptBin "git-fzf" ''
       git ls-files &> /dev/null
