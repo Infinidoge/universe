@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation {
 
   installPhase = ''
     mkdir -p $out
-    cp -r $src/app/* $out
+    cp -r ./app/* $out
     rm $out/ponder.zip
   '';
 
