@@ -16,7 +16,9 @@ stdenvNoCC.mkDerivation {
   preferLocalBuild = true;
 
   installPhase = ''
-    cp -r $src/app $out
+    mkdir -p $out
+    cp -r $src/app/* $out
+    rm $out/ponder.zip
   '';
 
   meta = with lib; {
