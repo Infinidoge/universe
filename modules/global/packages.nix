@@ -35,6 +35,7 @@
     manix
     moreutils
     nmap
+    openssl
     parallel
     parted
     pciutils
