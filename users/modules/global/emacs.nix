@@ -13,6 +13,7 @@ lib.mkIf main.info.graphical {
   services.emacs = {
     enable = true;
     client.enable = true;
+    startWithUserSession = false;
   };
 
   home = {
