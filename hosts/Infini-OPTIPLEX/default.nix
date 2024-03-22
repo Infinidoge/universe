@@ -78,6 +78,9 @@
         "nitter.inx.moe" = ssl // {
           globalRedirect = "twitter.com";
         };
+        "ponder.inx.moe" = ssl // {
+          locations."/".root = pkgs.ponder;
+        };
       };
   };
 }
