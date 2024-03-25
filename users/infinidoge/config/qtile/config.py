@@ -670,6 +670,7 @@ def init_widget_list(main=True, laptop=False):
         [
             widget.Clock(
                 format="%A, %B %d, %Y - %H:%M:%S ",
+                timezone=None,
             ),
         ],
     ]
