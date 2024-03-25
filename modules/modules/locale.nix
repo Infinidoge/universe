@@ -31,6 +31,8 @@ in
 
     time.timeZone = cfg.timezone;
 
+    services.automatic-timezoned.enable = true;
+
     fonts = {
       packages = cfg.fonts.fonts;
       fontconfig.defaultFonts = mkAliasDefinitions opt.fonts.defaults;
