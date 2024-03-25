@@ -37,6 +37,7 @@
       package = pkgs.tailscale-doge;
       openFirewall = true;
       useRoutingFeatures = if config.info.stationary then "both" else "client";
+      extraUpFlags = "--accept-routes";
     };
 
     zerotierone.enable = false;
