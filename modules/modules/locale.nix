@@ -9,7 +9,7 @@ in
   options.modules.locale = with types; {
     keymap = mkOpt str "us";
     locale = mkOpt str "en_US.UTF-8";
-    timezone = mkOpt str "America/New_York";
+    timezone = mkOpt (nullOr str) "America/New_York";
 
     fonts = {
       fonts = mkOpt (listOf package) [ ];
@@ -29,7 +29,7 @@ in
 
     i18n.defaultLocale = cfg.locale;
 
-    time.timeZone = cfg.timezone;
+    time.timeZone = mkIf (cfg.timezone != null) cfg.timezone;
 
     services.automatic-timezoned.enable = true;
 
