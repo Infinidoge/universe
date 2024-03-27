@@ -92,7 +92,8 @@ in
 
   environment.shellAliases = config.universe.shellAliases // {
     # sudo
-    s = ifSudo "sudo -E ";
+    sudo = ifSudo "sudo -E ";
+    s = ifSudo "sudo ";
     si = ifSudo "sudo -i";
     se = ifSudo "sudoedit";
 
