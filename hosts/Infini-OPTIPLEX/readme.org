@@ -61,6 +61,19 @@ Setup for another server hosting computer, which I keep with me at college. Usin
 <<install_extra>>
 #+END_SRC
 
+#+NAME: data_setup
+#+BEGIN_SRC bash :tangle data_setup.bash :shebang "#!/usr/bin/env bash" :noweb yes :comments noweb
+<<boilerplate>>
+
+<<mount_check>>
+
+<<data_partitioning>>
+
+<<data_filesystems>>
+
+<<data_subvolumes>>
+#+END_SRC
+
 ** Script Boilerplate
 
 #+NAME: boilerplate
@@ -176,4 +189,35 @@ HOME=/mnt/persist/home/infinidoge /mnt/persist/home/infinidoge/.config/emacs/bin
 #+BEGIN_SRC bash
 echo "LOG: Unmounting all"
 sudo umount -R /mnt
+#+END_SRC
+
+** Setup Data Drive
+
+*** Partitioning
+
+#+NAME: data_partitioning
+#+BEGIN_SRC bash
+echo "LOG: Partitioning $DISK for data storage"
+sudo parted $DISK -- mktable gpt
+sudo parted $DISK -s -- mkpart primary btrfs 0% 100%
+#+END_SRC
+
+*** Making Filesystems
+
+#+NAME: data_filesystems
+#+BEGIN_SRC bash
+echo "LOG: Making data filesystems"
+echo "- Making btrfa filesystem on ${PART}1"
+sudo mkfs.btrfs "${PART}1" --csum xxhash -L "data" -f
+#+END_SRC
+
+*** Making Subvolumes
+
+#+NAME: data_subvolumes
+#+BEGIN_SRC bash
+echo "LOG: Making data subvolumes on ${PART}1"
+sudo mount "${PART}1" /mnt
+sudo btrfs subvolume create /mnt/root
+sudo btrfs subvolume create /mnt/root/srv
+sudo btrfs subvolume create /mnt/root/srv/jellyfin
 #+END_SRC
