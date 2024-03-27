@@ -102,6 +102,7 @@ in
     vcat = "mpv";
 
     lsdisk = "lsblk -o name,size,mountpoints,fstype,label,uuid,fsavail,fsuse%";
+    lsdisks = "lsblk -o name,size,fstype,label,uuid,fsavail,fsuse%";
     lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
 
     # yt-dlp
