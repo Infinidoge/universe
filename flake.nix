@@ -45,7 +45,6 @@
     agenix.inputs.darwin.follows = "blank";
     nix-minecraft.inputs.flake-compat.follows = "blank";
     nixos-wsl.inputs.flake-compat.follows = "blank";
-    universe-cli.inputs.blank.follows = "blank";
 
     ## Follow flake-utils
     flake-utils.url = "github:numtide/flake-utils";
