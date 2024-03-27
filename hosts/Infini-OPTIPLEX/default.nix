@@ -7,6 +7,7 @@
     ./freshrss.nix
     ./thelounge.nix
     ./vaultwarden.nix
+    ./jellyfin.nix
   ];
 
   system.stateVersion = "23.05";
