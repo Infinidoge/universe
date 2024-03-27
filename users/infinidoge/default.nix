@@ -117,6 +117,7 @@ in
       "libvirtd"
       "minecraft"
       "factorio"
+      "jellyfin"
       "plugdev"
       "video"
       "wheel"
