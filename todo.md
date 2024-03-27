@@ -13,6 +13,7 @@
 - [ ] Look into `thermald` for Framework
 - [ ] Handle error codes in git-fzf and git-fzf-edit
 - [ ] Remove networking scratchpad dropdown on non-wireless systems
+- [ ] Hardware acceleration on Jellyfin
 
 # Issues pending fixes
 
