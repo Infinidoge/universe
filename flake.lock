@@ -46,29 +46,17 @@
     },
     "crane": {
       "inputs": {
-        "flake-compat": [
-          "universe-cli",
-          "blank"
-        ],
-        "flake-utils": [
-          "universe-cli",
-          "flake-utils"
-        ],
         "nixpkgs": [
           "universe-cli",
           "nixpkgs"
-        ],
-        "rust-overlay": [
-          "universe-cli",
-          "rust-overlay"
         ]
       },
       "locked": {
-        "lastModified": 1685896619,
-        "narHash": "sha256-6rgKAm8/GaFYOrshu+heVjUCgWTJJpzsm9YyENsYDRo=",
+        "lastModified": 1711407199,
+        "narHash": "sha256-A/nB4j3JHL51ztlMQdfKw6y8tUJJzai3bLsZUEEaBxY=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "4bdf5595ae15481b4021358dc17d6c0df8eecd7f",
+        "rev": "7e468a455506f2e65550e08dfd45092f0857a009",
         "type": "github"
       },
       "original": {
@@ -430,9 +418,6 @@
     },
     "universe-cli": {
       "inputs": {
-        "blank": [
-          "blank"
-        ],
         "crane": "crane",
         "devshell": [
           "devshell"
@@ -454,11 +439,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705129652,
-        "narHash": "sha256-zCSZnn1EI67BkC84WFDTC3bPfYHC83W/ULoHVOasc+k=",
+        "lastModified": 1711527998,
+        "narHash": "sha256-A9k3TDN+6zVj7Wwh6eQwZrI22M3BD85UAn2rQhSPj0E=",
         "owner": "Infinidoge",
         "repo": "universe-cli",
-        "rev": "821349b01b1698b134f5936c7586b7e6c2396d2c",
+        "rev": "48a91933f8ccaa8bedf6eb0b1c87dc874f6261d2",
         "type": "github"
       },
       "original": {
