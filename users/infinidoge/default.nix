@@ -59,6 +59,8 @@ in
         vimpc
         id3v2
         picard
+        jellyfin-media-player
+        sonixd
 
         (discord-canary.override { withVencord = true; withOpenASAR = true; })
         (discord.override { withVencord = true; withOpenASAR = true; })
