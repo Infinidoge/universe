@@ -68,8 +68,8 @@
     compsize
     dosfstools
     exfat # Windows drives
-    frei
     ntfs3g # Windows drives
+    smartmontools
     usbutils
 
     # covered by home manager
