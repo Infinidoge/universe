@@ -69,6 +69,7 @@ with lib;
     nix-diff
     nix-du
     nix-index
+    nix-melt
     nix-output-monitor
     nix-tree
     nixfmt
