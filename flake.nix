@@ -48,6 +48,7 @@
 
     ## Follow flake-utils
     flake-utils.url = "github:numtide/flake-utils";
+    devshell.inputs.flake-utils.follows = "flake-utils";
     nix-minecraft.inputs.flake-utils.follows = "flake-utils";
     nixos-wsl.inputs.flake-utils.follows = "flake-utils";
     rust-overlay.inputs.flake-utils.follows = "flake-utils";
