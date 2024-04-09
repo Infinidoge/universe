@@ -747,7 +747,7 @@ screens = [
         wallpaper="@wallpaper@",
         wallpaper_mode="@wallpaper_mode@",
     )
-    for i in range(int(run_command("xrandr --listmonitors | grep 'Monitors:' | awk {'print $2'}")))
+    for i in range(4)
 ]
 
 # Drag floating layouts.
