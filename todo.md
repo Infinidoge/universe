@@ -14,6 +14,15 @@
 - [ ] Handle error codes in git-fzf and git-fzf-edit
 - [ ] Remove networking scratchpad dropdown on non-wireless systems
 - [ ] Hardware acceleration on Jellyfin
+- [ ] Set fingerprint timeout to definite
+- [ ] Look into `imv` image viewer
+- [ ] Look into `broot` file search
+- [ ] File Qtile bug report for clock timezone
+- [ ] https://github.com/nix-community/nixvim
+
+# Move to Wayland
+- [ ] https://sr.ht/~emersion/kanshi/
+- [ ] rofi -> wofi
 
 # Issues pending fixes
 
