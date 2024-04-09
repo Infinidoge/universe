@@ -61,7 +61,9 @@
 
       history.path = "$HOME/${dotDir}/.zsh_history";
 
-      shellAliases = main.environment.shellAliases // config.home.shellAliases;
+      shellAliases = main.environment.shellAliases // config.home.shellAliases // {
+        lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
+      };
 
       oh-my-zsh = {
         enable = true;
