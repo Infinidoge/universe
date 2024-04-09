@@ -29,4 +29,6 @@
     # FIXME: activation script doesn't work properly, and frequently errors
     # channels-update.text = "${pkgs.nix}/bin/nix-channel --update";
   };
+
+  environment.noXlibs = lib.mkDefault (!config.info.graphical);
 }
