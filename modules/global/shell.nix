@@ -105,7 +105,6 @@ in
 
     lsdisk = "lsblk -o name,size,mountpoints,fstype,label,uuid,fsavail,fsuse%";
     lsdisks = "lsblk -o name,size,fstype,label,uuid,fsavail,fsuse%";
-    lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
 
     # yt-dlp
     yt-m4a = ''yt-dlp -f "bestaudio[ext=m4a]" -o "%(title)s.%(ext)s"'';
