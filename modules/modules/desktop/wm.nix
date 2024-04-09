@@ -38,9 +38,6 @@ in
         enable = config.info.graphical && !config.info.stationary;
         ignoreLid = true;
         defaultTarget = "horizontal";
-        hooks.postswitch = {
-          "reload_qtile" = "qtile cmd-obj -o cmd -f reload_config";
-        };
       };
 
       services.xserver.enable = true;
