@@ -14,6 +14,7 @@ in
   inherit latest fork stable;
 
   inherit (latest)
+    vencord
     ;
 
   inherit (fork)
