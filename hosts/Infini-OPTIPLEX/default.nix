@@ -67,13 +67,6 @@
       in
       {
         "*.inx.moe" = ssl // {
-          listen = lib.flatten
-            (map
-              (addr: [
-                { inherit addr; port = 443; ssl = true; }
-                { inherit addr; port = 80; ssl = false; }
-              ])
-              cfg.defaultListenAddresses);
           globalRedirect = "inx.moe";
         };
         "nitter.inx.moe" = ssl // {
