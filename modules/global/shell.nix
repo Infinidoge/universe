@@ -71,6 +71,8 @@ in
 
     dd = "dd status=progress";
 
+    du = "du -h";
+
     cat = "bat --paging=never";
     catp = "bat --paging=always";
 
