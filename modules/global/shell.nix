@@ -20,14 +20,14 @@ in
 
     # ls
     ls = "${lib.getExe pkgs.eza}"; # HACK: Bypasses PATH so it works in nix develop shell
-    la = "ls --long --no-filesize --no-permissions --no-user --git --icons";
+    la = "ls --long --no-filesize --no-permissions --no-user --icons --git";
     lat = "la --tree -I .git";
     l = "la --all";
     lt = "l --tree -I .git";
     le = "l --extended";
     lg = "l --git-ignore";
     lgt = "lt --git-ignore";
-    ll = "ls --long --all --group --icons";
+    ll = "ls --long --all --icons --group";
     llt = "ll --tree -I .git";
     lle = "ll --extended";
     llg = "ll --git-ignore";
