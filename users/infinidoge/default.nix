@@ -43,6 +43,8 @@ in
 
       jmtpfs
 
+      peaclock
+
       bsd-finger
       (ifGraphical [
         bitwarden
