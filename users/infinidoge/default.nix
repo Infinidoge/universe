@@ -44,8 +44,6 @@ in
       jmtpfs
 
       bsd-finger
-      sgt-puzzles
-
       (ifGraphical [
         bitwarden
 
@@ -55,6 +53,8 @@ in
 
         krita
         inkscape
+
+        sgt-puzzles
 
         vimpc
         id3v2
