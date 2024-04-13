@@ -24,6 +24,10 @@ in
       enable = mkBoolOpt cfg.enableAll;
       package = mkOpt package pkgs.olympus;
     };
+    puzzles = {
+      enable = mkBoolOpt cfg.enableAll;
+      package = mkOpt package pkgs.sgt-puzzles;
+    };
   };
 
   config = mkMerge [
@@ -32,6 +36,7 @@ in
         (mkIf cfg.prismlauncher.enable cfg.prismlauncher.package)
         (mkIf cfg.lutris.enable cfg.lutris.package)
         (mkIf cfg.olympus.enable cfg.olympus.package)
+        (mkIf cfg.puzzles.enable cfg.puzzles.package)
       ];
 
       modules.software.steam = {
