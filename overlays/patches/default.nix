@@ -19,4 +19,6 @@ in
       hash = "sha256-05tNiv2wdztkjBBiBS5hpuC5n3QrsJ5o15Uv7Q42on4=";
     })
   ];
+
+  hyfetch = addPatches prev.hyfetch [ ./neofetch-remove-steam-packages.patch ];
 }
