@@ -30,5 +30,6 @@
     # channels-update.text = "${pkgs.nix}/bin/nix-channel --update";
   };
 
-  environment.noXlibs = lib.mkDefault (!config.info.graphical);
+  # Reenable when CI and a binary cache is setup
+  #environment.noXlibs = lib.mkDefault (!config.info.graphical);
 }
