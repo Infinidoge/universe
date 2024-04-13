@@ -1,0 +1,33 @@
+From 7053a5d87423f58a88662ac23a243758509132f9 Mon Sep 17 00:00:00 2001
+From: Infinidoge <infinidoge@inx.moe>
+Date: Sat, 13 Apr 2024 01:56:13 -0400
+Subject: [PATCH] remove steam packages
+
+---
+ neofetch | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/neofetch b/neofetch
+index 10e9ad70..cfd9c22b 100755
+--- a/neofetch
++++ b/neofetch
+@@ -2137,16 +2137,6 @@ get_packages() {
+             shopt -u nullglob
+             }
+ 
+-            # Steam games
+-            STEAM_P=".local/share/Steam/steamapps/common"
+-            if [[ -d "$HOME/$STEAM_P" ]]; then
+-                manager=steam && dir "$HOME/$STEAM_P/*/"
+-            elif [[ -d "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P" ]]; then
+-                manager=steam && dir "$HOME/.var/app/com.valvesoftware.Steam/$STEAM_P/*/"
+-            elif [[ -d "$HOME/.steam/steam/steamapps/common" ]]; then
+-                manager=steam && dir "$HOME/.steam/steam/steamapps/common/*/"
+-            fi
+-
+             # Other (Needs complex command)
+             has kpm-pkg && ((packages+=$(kpm  --get-selections | grep -cv deinstall$)))
+ 
+-- 
+2.43.1
+
