@@ -359,6 +359,16 @@ keys = [
         desc="Lower volume",
     ),
     Key(
+        [Keys.SHIFT], "XF86AudioRaiseVolume",
+        lazy.spawn("amixer set Master 1%+"),
+        desc="Raise volume",
+    ),
+    Key(
+        [Keys.SHIFT], "XF86AudioLowerVolume",
+        lazy.spawn("amixer set Master 1%-"),
+        desc="Lower volume",
+    ),
+    Key(
         [], "XF86AudioMute",
         lazy.spawn("amixer set Master toggle"),
         desc="Toggle mute",
