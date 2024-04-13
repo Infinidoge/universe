@@ -32,37 +32,29 @@ in
     home.sessionVariables.KEYID = "0x30E7A4C03348641E";
 
     home.packages = with pkgs; flatten [
-      ncdu
-
-      unbted
-      packwiz
-
-      toot
-
       bitwarden-cli
-
-      jmtpfs
-
-      peaclock
-
       bsd-finger
-      (ifGraphical [
-        bitwarden
+      jmtpfs
+      ncdu
+      packwiz
+      peaclock
+      toot
+      unbted
 
+      (ifGraphical [
+        # Tools
+        bitwarden
+        inkscape
+        krita
+        libreoffice-fresh
         speedcrunch
 
-        libreoffice-fresh
-
-        krita
-        inkscape
-
-        sgt-puzzles
-
-        vimpc
+        # Media
         id3v2
-        picard
         jellyfin-media-player
+        picard
         sonixd
+        vimpc
 
         (discord-canary.override { withVencord = true; withOpenASAR = true; })
         (discord.override { withVencord = true; withOpenASAR = true; })
