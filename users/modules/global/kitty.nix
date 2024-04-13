@@ -1,6 +1,6 @@
 { main, pkgs, lib, ... }:
 {
-  config = lib.mkIf main.info.graphical {
+  config = {
     programs.kitty = {
       enable = true;
       font = {
