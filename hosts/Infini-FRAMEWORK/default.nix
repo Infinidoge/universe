@@ -49,6 +49,7 @@
       gaming = {
         steam.enable = true;
         prismlauncher.enable = true;
+        puzzles.enable = true;
       };
     };
     virtualization.enable = true;
