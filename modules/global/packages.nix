@@ -68,6 +68,7 @@
     compsize
     dosfstools
     exfat # Windows drives
+    kitty.terminfo
     ntfs3g # Windows drives
     smartmontools
     usbutils
