@@ -67,6 +67,10 @@ in
     ];
   };
 
+  systemd.user.tmpfiles.users.infinidoge.rules = mkIf config.info.graphical [
+    "L+ /home/infinidoge/.local/share/jellyfinmediaplayer/scripts/mpris.so - - - - ${pkgs.mpvScripts.mpris}/share/mpv/scripts/mpris.so"
+  ];
+
   #environment.variables.EDITOR =
   #  let
   #    pkg = config.home-manager.users.infinidoge.programs.emacs.package;
