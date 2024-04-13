@@ -63,11 +63,17 @@
     virtualHosts =
       let
         cfg = config.services.nginx;
-        inherit (config.common.nginx) ssl;
+        inherit (config.common.nginx) ssl ssl-optional;
       in
       {
         "*.inx.moe" = ssl // {
           globalRedirect = "inx.moe";
+        };
+        "blahaj.inx.moe" = ssl-optional // {
+          locations."/" = {
+            tryFiles = "/Blahaj.png =404";
+            root = ./static;
+          };
         };
         "nitter.inx.moe" = ssl // {
           globalRedirect = "twitter.com";
