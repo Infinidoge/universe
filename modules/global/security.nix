@@ -38,10 +38,13 @@ with lib;
   services.openssh = {
     enable = true;
     openFirewall = mkDefault true;
-    settings.X11Forwarding = mkDefault false;
+    settings = {
+      X11Forwarding = mkDefault false;
+      GatewayPorts = mkDefault "yes";
+    };
     hostKeys = mkDefault [{
-        path = "/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
+      path = "/etc/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
     }];
   };
 
