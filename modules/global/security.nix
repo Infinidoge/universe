@@ -48,6 +48,18 @@ with lib;
     }];
   };
 
+  programs.ssh = {
+    extraConfig = with config.common; ''
+      Host rsync.net
+          Hostname ${rsyncnet.host}
+          User ${rsyncnet.user}
+
+      Host admin.rsync.net
+          Hostname ${rsyncnet.host}
+          User ${rsyncnet.account}
+    '';
+  };
+
   services.nginx = {
     statusPage = true;
     recommendedTlsSettings = true;
@@ -68,6 +80,12 @@ with lib;
       ssl = ssl-cert // {
         forceSSL = true;
       };
+    };
+
+    rsyncnet = rec {
+      account = "de3482";
+      user = "${account}s1";
+      host = "${account}.rsync.net";
     };
   };
 }
