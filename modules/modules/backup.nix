@@ -41,6 +41,8 @@ let
   repo = "rsync.net:backups/hosts";
 in
 {
+  users.groups."borg" = { };
+
   environment.systemPackages = with pkgs; [
     borgbackup
   ];
