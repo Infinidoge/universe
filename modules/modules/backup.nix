@@ -21,10 +21,12 @@ let
       excludes
     );
 
+  BORG_REMOTE_PATH = "/usr/local/bin/borg1/borg1";
+
   commonArgs = {
     environment = {
       BORG_RSH = "ssh -i ${config.secrets.borg-ssh-key}";
-      BORG_REMOTE_PATH = "/usr/local/bin/borg1/borg1";
+      inherit BORG_REMOTE_PATH;
     };
     extraCreateArgs = "--verbose --stats --checkpoint-interval 600";
     compression = "auto,zstd,3";
@@ -36,15 +38,22 @@ let
       passCommand = "cat ${config.secrets.borg-password}";
     };
   };
+
+  repo = "rsync.net:backups/hosts";
 in
 {
   environment.systemPackages = with pkgs; [
     borgbackup
   ];
 
+  environment.variables = {
+    inherit BORG_REMOTE_PATH;
+    BORG_REPO = repo;
+  };
+
   services.borgbackup.jobs."persist" = commonArgs // rec {
     paths = "/persist";
-    repo = "rsync.net:backups/hosts/${config.networking.hostName}";
+    inherit repo;
     exclude = map (append paths) excludes';
     startAt = "daily";
     prune.keep = {
