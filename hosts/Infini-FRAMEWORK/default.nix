@@ -16,6 +16,7 @@
 
       "/root/.local/share/nix"
       "/root/.ssh"
+      "/root/.cache/borg"
 
       # /var directories
       "/var/log"

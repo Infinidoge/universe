@@ -31,4 +31,6 @@ in
   "inx.moe.key.age".publicKeys = allKeys;
   "vaultwarden.age".publicKeys = allKeys;
   "freshrss.age".publicKeys = allKeys;
+  "borg-password.age".publicKeys = allKeys;
+  "borg-ssh-key.age".publicKeys = allKeys;
 }

@@ -25,6 +25,8 @@ in
           "infinidoge-password"
           "root-password"
           "binary-cache-private-key"
+          "borg-password"
+          "borg-ssh-key"
           ;
       }
       (mkIf config.services.nginx.enable {
