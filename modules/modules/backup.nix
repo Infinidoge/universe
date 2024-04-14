@@ -39,6 +39,15 @@ let
   };
 
   repo = "rsync.net:backups/hosts";
+
+  backupTimes = {
+    "Infini-FRAMEWORK" = "00:00";
+    "Infini-OPTIPLEX" = "01:00";
+    "Infini-SERVER" = "02:00";
+    "Infini-DESKTOP" = "03:00";
+    "Infini-SD" = "04:00";
+
+  };
 in
 {
   users.groups."borg" = { };
@@ -57,12 +66,16 @@ in
     paths = "/persist";
     inherit repo;
     exclude = map (append paths) excludes';
-    startAt = "daily";
+    startAt = "*-*-* ${backupTimes.${config.networking.hostName}}";
     prune.keep = {
       within = "1d"; # Keep all archives from the last day
       daily = 7;
       weekly = 4;
       monthly = -1;  # Keep at least one archive for each month
     };
+  };
+
+  systemd.timers."borgbackup-job-persist" = {
+    requires = [ "network-online.target" ];
   };
 }
