@@ -24,6 +24,29 @@
 - [ ] https://sr.ht/~emersion/kanshi/
 - [ ] rofi -> wofi
 
+# Provisioning scripts
+- [ ] https://github.com/nix-community/disko
+- [ ] Generate host SSH keys and rekey secrets
+  - https://github.com/NixOS/nixpkgs/blob/1042fd8b148a9105f3c0aca3a6177fd1d9360ba5/nixos/modules/services/networking/ssh/sshd.nix#L561-L576
+- [ ] Generate basic configuration in universe
+- [ ] Install extras like doom
+
+# SSH keys revamp
+- [ ] Put SSH host keys in host folders
+- [ ] Automatically include host keys in known hosts file, with common connection points
+- [ ] Use plaintext ssh keys file instead of nix file?
+
+# Secrets revamp
+- [ ] Collect host keys from host folders
+- [ ] Bundle secrets with services?
+- [ ] Bundle secrets with hosts?
+
+# Certificate Authority
+- [ ] SSH CA
+  - https://vriska.dev/trusting-ssh-keys-using-a-centralized-hardware-secret/
+- [ ] SSL CA
+- [ ] Signing server?
+
 # Issues pending fixes
 
 - [x] Home Manager, "`optionsDocBook` is deprecated", https://github.com/nix-community/home-manager/issues/4273
