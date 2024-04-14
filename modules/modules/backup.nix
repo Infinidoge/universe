@@ -21,12 +21,11 @@ let
       excludes
     );
 
-  BORG_REMOTE_PATH = "/usr/local/bin/borg1/borg1";
 
   commonArgs = {
     environment = {
       BORG_RSH = "ssh -i ${config.secrets.borg-ssh-key}";
-      inherit BORG_REMOTE_PATH;
+      BORG_REMOTE_PATH = "/usr/local/bin/borg1/borg1";
     };
     extraCreateArgs = "--verbose --stats --checkpoint-interval 600";
     compression = "auto,zstd,3";
@@ -47,8 +46,9 @@ in
   ];
 
   environment.variables = {
-    inherit BORG_REMOTE_PATH;
+    inherit (commonArgs.environment) BORG_RSH BORG_REMOTE_PATH;
     BORG_REPO = repo;
+    BORG_PASSCOMMAND = commonArgs.encryption.passCommand;
   };
 
   services.borgbackup.jobs."persist" = commonArgs // rec {
