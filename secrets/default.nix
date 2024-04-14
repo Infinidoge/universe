@@ -9,7 +9,9 @@ let
     { file = "${./.}/${name}"; };
   secrets = listToAttrs (map mkSecret (attrNames (import ./secrets.nix)));
 
-  withOwner = name: secret: secret // { owner = name; group = name; };
+  withOwnerGroup = name: secret: secret // { owner = name; group = name; };
+  withOwner = name: secret: secret // { owner = name; };
+  withGroup = name: secret: secret // { group = name; };
 in
 {
   options = {
@@ -30,14 +32,14 @@ in
           ;
       }
       (mkIf config.services.nginx.enable {
-        "inx.moe.pem" = withOwner "nginx" secrets."inx.moe.pem";
-        "inx.moe.key" = withOwner "nginx" secrets."inx.moe.key";
+        "inx.moe.pem" = withOwnerGroup "nginx" secrets."inx.moe.pem";
+        "inx.moe.key" = withOwnerGroup "nginx" secrets."inx.moe.key";
       })
       (mkIf config.services.vaultwarden.enable {
-        "vaultwarden" = withOwner "vaultwarden" secrets."vaultwarden";
+        "vaultwarden" = withOwnerGroup "vaultwarden" secrets."vaultwarden";
       })
       (mkIf config.services.freshrss.enable {
-        "freshrss" = withOwner "freshrss" secrets."freshrss";
+        "freshrss" = withOwnerGroup "freshrss" secrets."freshrss";
       })
     ];
   };
