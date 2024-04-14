@@ -111,6 +111,7 @@ in
     extraGroups = [
       "adbusers"
       "bluetooth"
+      "borg"
       "dialout"
       "disk"
       "docker"
