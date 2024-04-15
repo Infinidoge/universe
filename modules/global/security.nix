@@ -68,6 +68,22 @@ with lib;
     recommendedProxySettings = true;
   };
 
+  services.fail2ban = {
+    ignoreIP = [
+      "100.101.102.0/14"
+      "172.16.0.0/12"
+      "192.168.1.0/24"
+      "192.168.137.0/24"
+    ];
+    bantime = "24h";
+    bantime-increment = {
+      enable = true;
+      multipliers = "1 2 4 8 16 32 64";
+      maxtime = "168h"; # Do not ban for more than 1 week
+      overalljails = true; # Calculate the bantime based on all the violations
+    };
+  };
+
   common = {
     nginx = rec {
       ssl-cert = {
