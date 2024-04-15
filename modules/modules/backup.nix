@@ -26,6 +26,7 @@ let
     environment = {
       BORG_RSH = "ssh -i ${config.secrets.borg-ssh-key}";
       BORG_REMOTE_PATH = "/usr/local/bin/borg1/borg1";
+      BORG_RELOCATED_REPO_ACCESS_IS_OK = "yes";
     };
     extraCreateArgs = "--verbose --stats --checkpoint-interval 600";
     compression = "auto,zstd,3";
