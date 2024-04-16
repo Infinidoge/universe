@@ -15,6 +15,7 @@
     ### Nix Libraries
     agenix.url = "github:ryantm/agenix";
     devshell.url = "github:numtide/devshell";
+    disko.url = "github:nix-community/disko";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-registry = { url = "github:NixOS/flake-registry"; flake = false; };
     home-manager.url = "github:nix-community/home-manager";
@@ -33,6 +34,7 @@
     ## Follow nixpkgs
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
@@ -146,6 +148,7 @@
               inputs.impermanence.nixosModules.impermanence
               inputs.home-manager.nixosModules.home-manager
               inputs.agenix.nixosModules.age
+              inputs.disko.nixosModules.disko
 
               # --- Domain-Specific Modules ---
               inputs.nix-minecraft.nixosModules.minecraft-servers
