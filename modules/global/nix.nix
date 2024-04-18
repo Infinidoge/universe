@@ -72,7 +72,6 @@ with lib;
     nix-melt
     nix-output-monitor
     nix-tree
-    nixfmt
     nixpkgs-fmt
     nvd
 
