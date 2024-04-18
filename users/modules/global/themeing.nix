@@ -28,7 +28,7 @@
         package = pkgs.adwaita-qt;
         name = "adwaita-dark";
       };
-      platformTheme = "gnome";
+      platformTheme.name = "adwaita";
     };
   };
 }
