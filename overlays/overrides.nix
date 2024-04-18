@@ -23,7 +23,7 @@ in
   inherit (stable)
     ;
 
-  schildichat-desktop = stable.schildichat-desktop.override { electron = final.electron_26; };
+  schildichat-desktop = stable.schildichat-desktop.override { electron = final.electron_28; };
 
   python3 = prev.python3.override {
     packageOverrides = pythonFinal: pythonPrev: {
