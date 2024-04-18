@@ -2,7 +2,7 @@
 with lib;
 {
   nix = {
-    package = pkgs.nixVersions.nix_2_17;
+    package = pkgs.nixVersions.unstable;
 
     settings = {
       allowed-users = [ "*" ];
