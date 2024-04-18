@@ -23,7 +23,7 @@
 
   services.gpg-agent = {
     enable = true;
-    pinentryFlavor = (if main.services.xserver.enable then "qt" else "curses");
+    pinentryPackage = (if main.info.graphical then pkgs.pinentry-qt else pkgs.pinentry-curses);
     extraConfig = ''
       allow-emacs-pinentry
       allow-loopback-pinentry
