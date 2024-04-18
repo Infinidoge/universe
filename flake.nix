@@ -144,11 +144,11 @@
               ./secrets
 
               # --- Library Modules ---
-              inputs.nixos-wsl.nixosModules.wsl
-              inputs.impermanence.nixosModules.impermanence
-              inputs.home-manager.nixosModules.home-manager
               inputs.agenix.nixosModules.age
               inputs.disko.nixosModules.disko
+              inputs.home-manager.nixosModules.home-manager
+              inputs.impermanence.nixosModules.impermanence
+              inputs.nixos-wsl.nixosModules.wsl
 
               # --- Domain-Specific Modules ---
               inputs.nix-minecraft.nixosModules.minecraft-servers
