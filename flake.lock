@@ -429,11 +429,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1711527998,
-        "narHash": "sha256-A9k3TDN+6zVj7Wwh6eQwZrI22M3BD85UAn2rQhSPj0E=",
+        "lastModified": 1713808913,
+        "narHash": "sha256-KPFMrTNAk1Mv+kOH8CvBAbzmnrGmJ4k0fQ6HTf183QA=",
         "owner": "Infinidoge",
         "repo": "universe-cli",
-        "rev": "48a91933f8ccaa8bedf6eb0b1c87dc874f6261d2",
+        "rev": "b9630a12bef59791928f8d0e802762d371d33d7e",
         "type": "github"
       },
       "original": {
