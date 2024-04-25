@@ -43,6 +43,7 @@ in
 
       (ifGraphical [
         # Tools
+        audacity
         bitwarden
         inkscape
         krita
