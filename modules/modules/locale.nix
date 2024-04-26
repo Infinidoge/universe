@@ -31,7 +31,7 @@ in
 
     time.timeZone = mkIf (cfg.timezone != null) cfg.timezone;
 
-    services.automatic-timezoned.enable = true;
+    services.automatic-timezoned.enable = config.modules.hardware.form.laptop;
 
     fonts = {
       packages = cfg.fonts.fonts;
