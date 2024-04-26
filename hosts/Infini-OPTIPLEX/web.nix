@@ -52,13 +52,6 @@ in
         '';
       };
     };
-    "test.inx.moe" = ssl // {
-      locations."/" = {
-        root = "/srv/web/inx.moe";
-        inherit tryFiles;
-        extraConfig = websiteConfig;
-      };
-    };
 
     "ponder.inx.moe" = ssl // {
       locations."/".root = pkgs.ponder;
