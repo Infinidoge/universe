@@ -8,7 +8,11 @@ with lib;
     '';
     acme = {
       acceptTerms = true;
-      defaults.email = "infinidoge@inx.moe";
+      defaults = {
+        email = "infinidoge@inx.moe";
+        dnsProvider = "cloudflare";
+        environmentFile = config.secrets.cloudflare;
+      };
     };
 
     pam.sshAgentAuth = {
@@ -87,8 +91,8 @@ with lib;
   common = {
     nginx = rec {
       ssl-cert = {
-        sslCertificate = config.secrets."inx.moe.pem";
-        sslCertificateKey = config.secrets."inx.moe.key";
+        enableACME = true;
+        acmeRoot = null;
       };
       ssl-optional = ssl-cert // {
         addSSL = true;
