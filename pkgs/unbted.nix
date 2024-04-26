@@ -7,11 +7,11 @@
 }:
 stdenv.mkDerivation rec {
   pname = "unbted";
-  version = "1.1";
+  version = "1.2.1";
 
   src = fetchurl {
     url = "https://github.com/unascribed/unbted/releases/download/v${version}/unbted-${version}.jar";
-    sha256 = "sha256-Sn6dQV4oCcpYdpa6Cvmese5FqgJ0z9WdVx5GNIMULno=";
+    sha256 = "sha256-diQQyqghdKvU7zfO1Id/A787wndC4HwjwdJxN9JISjg=";
   };
   dontUnpack = true;
 
