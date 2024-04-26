@@ -33,8 +33,7 @@ in
         "borg-password" = secrets."borg-password" // { group = "borg"; mode = "440";};
       }
       (mkIf config.services.nginx.enable {
-        "inx.moe.pem" = withOwnerGroup "nginx" secrets."inx.moe.pem";
-        "inx.moe.key" = withOwnerGroup "nginx" secrets."inx.moe.key";
+        inherit (secrets) "cloudflare";
       })
       (mkIf config.services.vaultwarden.enable {
         "vaultwarden" = withOwnerGroup "vaultwarden" secrets."vaultwarden";

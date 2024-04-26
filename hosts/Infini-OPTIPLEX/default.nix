@@ -8,6 +8,7 @@
     ./thelounge.nix
     ./vaultwarden.nix
     ./jellyfin.nix
+    ./web.nix
   ];
 
   system.stateVersion = "23.05";
@@ -59,30 +60,17 @@
 
   services.fail2ban.enable = true;
 
-  services.nginx = {
-    enable = true;
+  services.nginx.enable = true;
 
-    virtualHosts =
-      let
-        cfg = config.services.nginx;
-        inherit (config.common.nginx) ssl ssl-optional;
-      in
-      {
-        "*.inx.moe" = ssl // {
-          globalRedirect = "inx.moe";
-        };
-        "blahaj.inx.moe" = ssl-optional // {
-          locations."/" = {
-            tryFiles = "/Blahaj.png =404";
-            root = ./static;
-          };
-        };
-        "nitter.inx.moe" = ssl // {
-          globalRedirect = "twitter.com";
-        };
-        "ponder.inx.moe" = ssl // {
-          locations."/".root = pkgs.ponder;
-        };
-      };
+  security.acme.certs."inx.moe" = {
+    group = "nginx";
+    extraDomainNames = [ "*.inx.moe" ];
+  };
+
+  services.nginx.virtualHosts."*.inx.moe" = {
+    useACMEHost = "inx.moe";
+    addSSL = true;
+    default = true;
+    globalRedirect = "inx.moe";
   };
 }
