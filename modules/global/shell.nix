@@ -34,6 +34,7 @@ in
     llgt = "llt --git-ignore";
 
     # erdtree
+    erd = "erd -H --no-git";
     et = "erd";
 
     # git
