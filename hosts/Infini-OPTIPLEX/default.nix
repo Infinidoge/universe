@@ -72,5 +72,6 @@
     addSSL = true;
     default = true;
     globalRedirect = "inx.moe";
+    redirectCode = 302;
   };
 }
