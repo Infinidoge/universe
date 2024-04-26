@@ -52,9 +52,5 @@ in
         '';
       };
     };
-
-    "ponder.inx.moe" = ssl // {
-      locations."/".root = pkgs.ponder;
-    };
   };
 }
