@@ -19,19 +19,22 @@ in
       };
     };
     "test.inx.moe" = ssl // {
-      root = "/srv/web/inx.moe";
       locations."/" = {
-        tryFiles = "$uri $uri.html =404";
+        root = "/srv/web/inx.moe";
+        tryFiles = "$uri $uri.html $uri/ =404";
         extraConfig = ''
           deny all;
 
-          location ~ "\.(html|css|txt)" {
-            allow all;
-          }
+          error_page 403 404 /404.html;
 
-          location = /template.html {
-            deny all;
-          };
+          location = /template.html { deny all; }
+          location /.git { deny all; }
+
+          location = /404.html { allow all; internal; }
+
+          location ~* "\.(html|css|txt)$" { allow all; }
+          location ~ "/[^.]+" { allow all; }
+          location ~ "/$" { allow all; }
         '';
       };
     };
