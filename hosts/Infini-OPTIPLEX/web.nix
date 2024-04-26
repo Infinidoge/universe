@@ -10,7 +10,7 @@ in
         root = ./static;
       };
     };
-    "files.inx.moe" = {
+    "files.inx.moe" = ssl // {
       locations."/" = {
         root = "/srv/web/files.inx.moe";
         extraConfig = ''
@@ -18,7 +18,7 @@ in
         '';
       };
     };
-    "test.inx.moe" = {
+    "test.inx.moe" = ssl // {
       root = "/srv/web/inx.moe";
       locations."/" = {
         tryFiles = "$uri $uri.html =404";
