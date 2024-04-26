@@ -10,6 +10,14 @@ in
         root = ./static;
       };
     };
+    "files.inx.moe" = {
+      locations."/" = {
+        root = "/srv/web/files.inx.moe";
+        extraConfig = ''
+          autoindex on;
+        '';
+      };
+    };
 
     "ponder.inx.moe" = ssl // {
       locations."/".root = pkgs.ponder;
