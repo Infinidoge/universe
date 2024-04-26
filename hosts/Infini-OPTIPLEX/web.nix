@@ -18,6 +18,23 @@ in
         '';
       };
     };
+    "test.inx.moe" = {
+      root = "/srv/web/inx.moe";
+      locations."/" = {
+        tryFiles = "$uri $uri.html =404";
+        extraConfig = ''
+          deny all;
+
+          location ~ "\.(html|css|txt)" {
+            allow all;
+          }
+
+          location = /template.html {
+            deny all;
+          };
+        '';
+      };
+    };
 
     "ponder.inx.moe" = ssl // {
       locations."/".root = pkgs.ponder;
