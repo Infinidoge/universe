@@ -104,7 +104,7 @@ in
     acat = "mpv --no-audio-display";
     vcat = "mpv";
 
-    lsdisk = "lsblk -o name,size,mountpoints,fstype,label,uuid,fsavail,fsuse%";
+    lsdisk = "lsblk -o name,size,mountpoints,fstype,label,fsavail,fsuse%";
     lsdisks = "lsblk -o name,size,fstype,label,uuid,fsavail,fsuse%";
 
     # yt-dlp
