@@ -20,5 +20,9 @@ in
       pulse.enable = true;
       alsa.enable = true;
     };
+
+    persist.directories = [
+      "/var/lib/alsa"
+    ];
   };
 }

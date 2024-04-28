@@ -26,6 +26,10 @@ in
     (mkIf cfg.bluetooth.enable {
       hardware.bluetooth.enable = true;
       services.blueman.enable = cfg.bluetooth.blueman.enable;
+
+      persist.directories = [
+        "/var/lib/bluetooth"
+      ];
     })
     (mkIf cfg.wifi.enable {
       networking.wireless = {

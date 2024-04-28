@@ -10,27 +10,9 @@
 
   persist = {
     directories = [
-      "/home"
-      "/etc/nixos"
-      "/etc/nixos-private"
-
-      "/root/.local/share/nix"
-      "/root/.ssh"
-      "/root/.cache/borg"
-
-      # /var directories
-      "/var/log"
-      "/var/lib/fprint"
-      "/var/lib/bluetooth"
-      "/var/lib/systemd/coredump"
-      "/var/lib/systemd/backlight"
-      "/var/lib/tailscale"
-      "/var/lib/alsa"
-      "/var/lib/libvirt"
     ];
 
     files = [
-      "/etc/machine-id"
     ];
   };
 
