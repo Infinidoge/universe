@@ -64,6 +64,7 @@ in
           "*/cache2"
           "*/Cache"
           ".local/share/Steam"
+          ".local/share/Trash"
         ];
       };
 
