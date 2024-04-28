@@ -23,6 +23,7 @@ with lib;
 
   hardware = {
     enableRedistributableFirmware = mkDefault true;
+    cpu.intel.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
     cpu.amd.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
   };
 
