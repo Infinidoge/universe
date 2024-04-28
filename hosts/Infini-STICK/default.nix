@@ -18,21 +18,9 @@
 
   persist = {
     directories = [
-      "/home"
-      "/etc/nixos"
-      "/etc/nixos-private"
-
-      "/root/.local/share/nix"
-      "/root/.ssh"
-
-      # /var directories
-      "/var/log"
-      "/var/lib/systemd/coredump"
-      "/var/lib/tailscale"
     ];
 
     files = [
-      "/etc/machine-id"
     ];
   };
 
