@@ -50,6 +50,10 @@
     };
     virtualization.enable = true;
     software.minipro.enable = true;
+
+    backups.extraExcludes = [
+      "/home/infinidoge/Hydrus"
+    ];
   };
 
   home = { pkgs, ... }: {
