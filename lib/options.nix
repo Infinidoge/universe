@@ -1,4 +1,3 @@
-# Taken from https://github.com/hlissner/dotfiles/blob/master/lib/options.nix
 { lib }:
 let
   inherit (lib) mkOption types;

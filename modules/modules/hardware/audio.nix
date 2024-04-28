@@ -1,4 +1,3 @@
-# Created by hlissner: https://github.com/hlissner/dotfiles/blob/master/modules/hardware/audio.nix
 { options, config, lib, pkgs, ... }:
 
 with lib;

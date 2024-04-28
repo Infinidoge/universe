@@ -1,7 +1,6 @@
 { config, lib, ... }:
 with lib;
 {
-  # Security settings based on https://github.com/hlissner/dotfiles/blob/master/modules/security.nix
   security = {
     sudo.wheelNeedsPassword = false;
     sudo.extraConfig = ''
