@@ -3,6 +3,7 @@ with lib;
 {
   # Security settings based on https://github.com/hlissner/dotfiles/blob/master/modules/security.nix
   security = {
+    sudo.wheelNeedsPassword = false;
     sudo.extraConfig = ''
       Defaults lecture=never
     '';
@@ -13,11 +14,6 @@ with lib;
         dnsProvider = "cloudflare";
         environmentFile = config.secrets.cloudflare;
       };
-    };
-
-    pam.sshAgentAuth = {
-      enable = true;
-      authorizedKeysFiles = lib.mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
     };
   };
 
