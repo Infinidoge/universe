@@ -2,7 +2,8 @@
 with lib;
 with lib.our;
 let
-  cfg = config.modules.hardware.peripherals.fprint-sensor;
+  # Since it is aliased
+  cfg = config.services.fprintd;
 in
 {
   options.modules.hardware.peripherals.fprint-sensor = mkOpt types.attrs { };
