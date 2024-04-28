@@ -39,7 +39,7 @@ let
   mkJob = paths: commonArgs // {
     inherit paths;
     inherit (cfg) repo;
-    exclude = cfg.extraExcludes ++ (map (append paths) excludes');
+    exclude = map (append paths) (excludes' ++ cfg.extraExcludes);
     startAt = "*-*-* ${cfg.backupTimes.${config.networking.hostName}}";
   };
 
