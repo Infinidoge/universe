@@ -39,6 +39,18 @@
 
   services.minecraft-servers.servers.emd-server.autoStart = false;
 
+  services.borgbackup.jobs."persist" = {
+    preHook = ''
+      tmux -S /run/minecraft/friend-server.sock send-keys "say Server is backing up..." Enter
+      tmux -S /run/minecraft/friend-server.sock send-keys save-off Enter
+      tmux -S /run/minecraft/friend-server.sock send-keys save-all Enter
+    '';
+    postHook = ''
+      tmux -S /run/minecraft/friend-server.sock send-keys save-on Enter
+      tmux -S /run/minecraft/friend-server.sock send-keys "say Backup complete" Enter
+    '';
+  };
+
   persist = {
     directories = [
       "/srv"
