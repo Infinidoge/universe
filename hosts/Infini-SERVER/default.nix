@@ -25,6 +25,10 @@
         address = "192.168.1.212";
       };
     };
+
+    backups.extraExcludes = [
+      "/srv/minecraft/emd-server/world-backups"
+    ];
   };
 
   services = {
