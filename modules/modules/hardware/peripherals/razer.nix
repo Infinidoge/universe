@@ -1,4 +1,3 @@
-# from https://github.com/hlissner/dotfiles/blob/master/modules/hardware/razer.nix
 { options, config, lib, pkgs, ... }:
 
 with lib;
