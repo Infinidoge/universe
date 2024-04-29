@@ -47,6 +47,7 @@
         }
 
         alias "jh"="cd ~ && j"
+        alias "gj"="gcd && j"
 
         editi() {
           if [[ $# -eq 0 ]] then
