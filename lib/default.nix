@@ -48,6 +48,17 @@ rec {
   };
 
   spread = function: list: if list == [ ] then function else spread (function (head list)) (tail list);
+
+  # Takes a function and makes it lazy, by consuming arguments and applying it to the inner function first
+  # before calling the original function
+  lazy = func: inner: {
+    inherit func;
+    app = inner;
+    __functor = self: input:
+      let app = self.app input; in
+      if (typeOf app) == "lambda" then self // { inherit app; }
+      else self.func app;
+  };
 } // (
   import ./digga.nix { inherit lib; }
 ) // (
