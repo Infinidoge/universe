@@ -8,6 +8,8 @@ in
 {
   boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
 
+  boot.zfs.extraPools = [ "zssd" "zhdd" ];
+
   disko.devices = {
     nodev."/" = mkTmpfs "64G";
     disk = {
