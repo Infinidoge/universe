@@ -2,38 +2,24 @@
 with lib.our.disko;
 let
   inherit (builtins) mapAttrs;
+  inherit (lib) genAttrs flip;
   mountOptions = defaultMountOptions;
 in
 {
   boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
 
-  persist.directories = [ "/etc/ssh" ];
-
   disko.devices = {
-    nodev."/" = {
-      fsType = "tmpfs";
-      mountOptions = mountOptions ++ [
-        "size=64G"
-        "mode=755"
-      ];
-    };
+    nodev."/" = mkTmpfs "64G";
     disk = {
       lun = mkDisk "usb-HP_iLO_LUN_01_Media_0_000002660A01-0:1" {
         partitions = {
-          boot = {
-            size = "256M";
-            type = "EF00";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-              inherit mountOptions;
+          boot = mkESP "64M" "/boot/efi";
+          store = mkBtrfsPart "100%" "/media/store" {
+            subvolumes = mkBtrfsSubvols {
+              "/boot" = { };
+              "/etc/ssh" = { };
             };
           };
-          # Keystore partition?
-          #keystore = {
-          #  size = "100%";
-          #};
         };
       };
       ssd1 = mkZDisk "wwn-0x50026b728203a6fb" "zssd";
@@ -60,7 +46,9 @@ in
     };
   };
 
-  fileSystems."/persist".neededForBoot = true;
-  fileSystems."/storage".neededForBoot = true;
-  fileSystems."/etc/ssh".neededForBoot = true;
+  fileSystems = flip genAttrs (_: { neededForBoot = true; }) [
+    "/persist"
+    "/storage"
+    "/etc/ssh"
+  ];
 }
