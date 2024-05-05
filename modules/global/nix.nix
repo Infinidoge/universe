@@ -2,14 +2,14 @@
 with lib;
 {
   nix = {
-    package = pkgs.nixVersions.unstable;
+    package = pkgs.nixVersions.latest;
 
     settings = {
       allowed-users = [ "*" ];
       trusted-users = [ "root" "@wheel" "remotebuild" ];
 
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-      experimental-features = [ "flakes" "nix-command" "impure-derivations" "no-url-literals" "repl-flake" ];
+      experimental-features = [ "flakes" "nix-command" "impure-derivations" "no-url-literals" ];
 
       auto-optimise-store = true;
       fallback = true;

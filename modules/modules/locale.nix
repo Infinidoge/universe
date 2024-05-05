@@ -19,13 +19,11 @@ in
 
   config = {
     console.keyMap = mkDefault cfg.keymap;
-    services.xserver = {
-      xkb = {
-        layout = mkDefault cfg.keymap;
-        options = "compose:ralt";
-      };
-      libinput.enable = true;
+    services.xserver.xkb = {
+      layout = mkDefault cfg.keymap;
+      options = "compose:ralt";
     };
+    services.libinput.enable = true;
 
     i18n.defaultLocale = cfg.locale;
 
