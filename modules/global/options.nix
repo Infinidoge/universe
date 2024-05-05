@@ -21,6 +21,7 @@ in
     env = mkAliasOpt;
 
     persist = mkAliasOpt;
+    storage = mkAliasOpt;
 
     info = {
       monitors = mkOpt int 1;
@@ -60,5 +61,6 @@ in
     environment.variables = mkAliasDefinitions options.env;
 
     environment.persistence."/persist" = mkAliasDefinitions options.persist;
+    environment.persistence."/storage" = lib.mkAliasDefinitions options.storage;
   };
 }

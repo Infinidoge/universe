@@ -2,10 +2,6 @@
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
-    ({ options, lib, ... }: {
-      options.storage = lib.our.mkOpt lib.types.attrs { };
-      environment.persistence."/storage" = lib.mkAliasDefinitions options.storage;
-    })
   ];
 
   networking.hostId = "8fa7a57c";
