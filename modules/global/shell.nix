@@ -80,12 +80,24 @@ in
     mktmp = "cd $(mktemp -d)";
 
     edit = "$EDITOR";
+    e = "edit";
+    ei = "editi";
 
     lpath = "echo \"$PATH\" | tr \":\" \"\n\"";
     timestamp = "date +%s -d";
 
     neofetch = "neowofetch";
   };
+
+  universe.packages = [
+    (pkgs.writeScriptBin "editi" ''
+      if [[ $# -eq 0 ]] then
+        $EDITOR "$(fd -H -t f | fzf)"
+      else
+        $EDITOR "$(fd -H -t f | fzf -1 -q "$*")"
+      fi
+    '')
+  ];
 
   universe.variables = {
     FZF_DEFAULT_OPTS = "--extended";
