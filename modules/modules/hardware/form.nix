@@ -32,7 +32,7 @@ in
       };
 
       services = {
-        xserver.libinput.touchpad = {
+        libinput.touchpad = {
           clickMethod = "clickfinger";
           naturalScrolling = true;
         };
