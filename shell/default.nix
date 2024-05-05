@@ -1,7 +1,7 @@
 { self, lib, ... }:
 
 {
-  perSystem = { pkgs, ... }: {
+  perSystem = { pkgs, inputs', ... }: {
     devshells.default =
       let
         pythonEnv = (pkgs.python311.withPackages (p: with p; [
@@ -14,6 +14,7 @@
 
         devshell.packages = [
           pythonEnv
+          inputs'.disko.packages.disko
         ];
 
         env = [
