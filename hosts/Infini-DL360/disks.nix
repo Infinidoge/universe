@@ -1,5 +1,5 @@
 { config, lib, ... }:
-with lib.disko;
+with lib.our.disko;
 let
   inherit (builtins) mapAttrs;
   mountOptions = defaultMountOptions;
@@ -16,10 +16,9 @@ in
       ];
     };
     disk = {
-      lun = "usb-HP_iLO_LUN_01_Media_0_000002660A01-0:1" {
+      lun = mkDisk "usb-HP_iLO_LUN_01_Media_0_000002660A01-0:1" {
         partitions = {
-          ESP = {
-            name = "boot";
+          boot = {
             size = "256M";
             type = "EF00";
             content = {
@@ -46,11 +45,15 @@ in
     };
     zpool = mapAttrs mkZPool {
       zssd = {
-        nix = mkZfs "/nix" {};
-        persist = mkZfs "/persist" {};
+        datasets = {
+          nix = mkZfs "/nix" {};
+          persist = mkZfs "/persist" {};
+        };
       };
       zhdd = {
-        storage = mkZfs "/storage" {};
+        datasets = {
+          storage = mkZfs "/storage" {};
+        };
       };
     };
   };
