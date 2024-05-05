@@ -7,6 +7,8 @@ in
 {
   boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
 
+  persist.directories = [ "/etc/ssh" ];
+
   disko.devices = {
     nodev."/" = {
       fsType = "tmpfs";
@@ -60,4 +62,5 @@ in
 
   fileSystems."/persist".neededForBoot = true;
   fileSystems."/storage".neededForBoot = true;
+  fileSystems."/etc/ssh".neededForBoot = true;
 }
