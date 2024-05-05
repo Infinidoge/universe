@@ -2,13 +2,6 @@
   imports = [
     ./hardware-configuration.nix
     ./filesystems.nix
-
-    ./factorio.nix
-    ./freshrss.nix
-    ./thelounge.nix
-    ./vaultwarden.nix
-    ./jellyfin.nix
-    ./web.nix
   ];
 
   system.stateVersion = "23.05";

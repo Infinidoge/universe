@@ -2,6 +2,13 @@
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
+
+    ./factorio.nix
+    ./freshrss.nix
+    ./thelounge.nix
+    ./vaultwarden.nix
+    ./jellyfin.nix
+    ./web.nix
   ];
 
   networking.hostId = "8fa7a57c";
