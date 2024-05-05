@@ -11,6 +11,7 @@ in
 
     grub = {
       enable = mkBoolOpt false;
+      efiSysMountPoint = mkOpt path "/boot/efi";
     };
     systemd-boot.enable = mkBoolOpt false;
   };
@@ -37,7 +38,7 @@ in
         };
         efi = {
           canTouchEfiVariables = mkDefault false;
-          efiSysMountPoint = mkDefault "/boot/efi";
+          efiSysMountPoint = cfg.grub.efiSysMountPoint;
         };
       };
     })
