@@ -1,4 +1,8 @@
 { lib }:
+let
+  inherit (builtins) mapAttrs removeAttrs;
+  inherit (lib) optionals;
+in
 rec {
   # Constants
 
@@ -17,17 +21,52 @@ rec {
     } // content;
   };
 
+  mkESP' = mountOptions: size: mountpoint: {
+    inherit size;
+    type = "EF00";
+    content = {
+      type = "filesystem";
+      format = "vfat";
+      inherit mountpoint mountOptions;
+    };
+  };
+  mkESP = mkESP' defaultMountOptions;
+
+  mkTmpfs' = mountOptions: size: mode: {
+    fsType = "tmpfs";
+    mountOptions = mountOptions ++ [ "size=${size}" "mode=${mode}" ];
+  };
+  mkTmpfs = size: mkTmpfs' defaultMountOptions size "755";
+
+  # btrfs
+
+  mkBtrfsPart = size: mountpoint: content: {
+    inherit size;
+    content = {
+      inherit mountpoint;
+      type = "btrfs";
+    } // content;
+  };
+
+  mkBtrfsSubvols' = mountOptions: mapAttrs (n: v: {
+    mountpoint = n;
+    mountOptions = mountOptions ++ (optionals (v ? mountOptions) v.mountOptions);
+  } // (removeAttrs v ["mountOptions"]));
+  mkBtrfsSubvols = mkBtrfsSubvols' defaultMountOptions;
+
   # ZFS
+
+  mkZPart = size: pool: {
+    inherit size;
+    content = {
+      type = "zfs";
+      inherit pool;
+    };
+  };
 
   mkZDisk = id: pool: mkDisk id {
     partitions = {
-      zfs = {
-        size = "100%";
-        content = {
-          type = "zfs";
-          inherit pool;
-        };
-      };
+      zfs = mkZPart "100%" pool;
     };
   };
 
