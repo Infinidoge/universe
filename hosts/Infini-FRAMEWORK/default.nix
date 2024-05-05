@@ -99,7 +99,7 @@
     #  sshUser = "remotebuild";
     #}
     {
-      hostName = "infini-sd";
+      hostName = "infini-dl360";
       system = "x86_64-linux";
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       protocol = "ssh-ng";
