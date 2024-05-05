@@ -11,6 +11,7 @@
 
   modules = {
     boot.grub.enable = true;
+    boot.grub.efiSysMountPoint = "/boot";
     boot.timeout = 1;
     hardware.form.server = true;
   };
