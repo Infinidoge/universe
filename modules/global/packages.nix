@@ -24,6 +24,7 @@
     eza
     fd
     fzf
+    gptfdisk
     htop
     hyfetch
     imagemagick
