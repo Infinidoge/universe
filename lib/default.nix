@@ -65,4 +65,6 @@ rec {
   import ./hosts.nix { inherit lib; }
 ) // (
   import ./options.nix { inherit lib; }
-))
+)) // {
+  disko = import ./disko.nix { inherit lib; };
+}
