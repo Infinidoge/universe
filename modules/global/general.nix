@@ -28,4 +28,7 @@
   #environment.noXlibs = lib.mkDefault (!config.info.graphical);
 
   persist.hideMounts = true;
+
+  # Disable force importing ZFS roots
+  boot.zfs.forceImportRoot = false;
 }
