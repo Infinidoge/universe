@@ -36,13 +36,13 @@ in
     zpool = mapAttrs mkZPool {
       zssd = {
         datasets = {
-          nix = mkZfs "/nix" { options.mountpoint = "legacy"; };
-          persist = mkZfs "/persist" { options.mountpoint = "legacy"; };
+          nix = mkZfs "/nix" { };
+          persist = mkZfs "/persist" { };
         };
       };
       zhdd = {
         datasets = {
-          storage = mkZfs "/storage" { options.mountpoint = "legacy"; };
+          storage = mkZfs "/storage" { };
         };
       };
     };
