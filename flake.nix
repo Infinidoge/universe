@@ -30,6 +30,9 @@
     ## Rust
     rust-overlay.url = "github:oxalica/rust-overlay";
 
+    ## Neovim
+    nixvim.url = "github:nix-community/nixvim";
+
     ### Cleanup ###
     ## Follow nixpkgs
     agenix.inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +42,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     universe-cli.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -47,6 +51,8 @@
     agenix.inputs.darwin.follows = "blank";
     nix-minecraft.inputs.flake-compat.follows = "blank";
     nixos-wsl.inputs.flake-compat.follows = "blank";
+    nixvim.inputs.flake-compat.follows = "blank";
+    nixvim.inputs.nix-darwin.follows = "blank";
 
     ## Follow flake-utils
     flake-utils.url = "github:numtide/flake-utils";
@@ -64,6 +70,17 @@
 
     ## Misc
     agenix.inputs.home-manager.follows = "home-manager";
+    nixvim.inputs.flake-parts.follows = "flake-parts";
+    nixvim.inputs.home-manager.follows = "home-manager";
+    nixvim.inputs.devshell.follows = "devshell";
+    nixvim.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+    pre-commit-hooks.inputs = {
+      flake-compat.follows = "blank";
+      flake-utils.follows = "flake-utils";
+      nixpkgs.follows = "nixpkgs";
+      nixpkgs-stable.follows = "nixpkgs";
+    };
     universe-cli.inputs = {
       devshell.follows = "devshell";
       flake-parts.follows = "flake-parts";
@@ -136,6 +153,7 @@
                 home-manager = {
                   sharedModules = [
                     inputs.impermanence.nixosModules.home-manager.impermanence
+                    inputs.nixvim.homeManagerModules.nixvim
                   ] ++ (self.lib.leaves ./users/modules);
                 };
               }
