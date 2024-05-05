@@ -75,6 +75,7 @@ rec {
     mode = "raidz";
     mountpoint = "/media/${name}";
     rootFsOptions = {
+      mountpoint = "legacy";
       compression = "zstd";
       atime = "off";
     };
@@ -84,7 +85,8 @@ rec {
 
   mkZfs' = mountOptions: mountpoint: options: {
     type = "zfs_fs";
-    inherit mountpoint mountOptions options;
+    inherit mountpoint mountOptions;
+    options = { mountpoint = "legacy"; } // options;
   };
   mkZfs = mkZfs' defaultMountOptions;
 
