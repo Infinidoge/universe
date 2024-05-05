@@ -7,7 +7,7 @@
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfpzp4nROMc3nuSu+/ivkm0koyn2Da5NtVbYl+Rg+O1 infinidoge@Infini-OPTIPLEX"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJvXocQzoHqluU+eRhb68N77Avzux1IY9pe/0tl7QV3a infinidoge@Infini-STICK"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIAFZRE0BLE8pPixrwNu8oqtL+MEhkePNnc8/kWrYsOm infinidoge@Infini-SD"
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEiH7Vc1nsEB3Q2GvanGAxz+2tl3vlwVweI0wkOeTUu infinidoge@Infini-DL360"
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIUIcQljnMxXsLU8RO33kqFRqEOgQi7U0x+UFG4Caskk infinidoge@Infini-DL360"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPpqFpFfQEWr4CVu7N/0MDyaktoMEsB+m2NuIaDx5j0r infinidoge@Infini-RASPBERRY"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBE2YScxTK7JOCXBn4KjFWp9Lwcp4OovesYXrPCpRP4X Project Infinity"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIltuTbxiBxOox2DAW5LACjGjJ9UFvJOAcrFYK7WMHkV [redacted-infinidoge]@data.cs.purdue.edu"
