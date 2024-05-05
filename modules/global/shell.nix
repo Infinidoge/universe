@@ -69,6 +69,7 @@ in
     # Miscellaneous
     mnt = ifSudo' "mount";
     umnt = ifSudo' "umount";
+    bmnt = ifSudo "mnt -o bind,X-mount.mkdir";
 
     dd = "dd status=progress";
 
