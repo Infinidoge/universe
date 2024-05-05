@@ -21,9 +21,7 @@
       timeout = 1;
     };
 
-    hardware = {
-      form.server = true;
-    };
+    hardware.form.server = true;
   };
 
   networking = {
