@@ -78,7 +78,7 @@
     vim
   ]) ++ (lib.optionals config.info.graphical (with pkgs; [
     arandr
-    ffmpeg
+    ffmpeg-full
     mpv
   ]));
 }
