@@ -73,8 +73,7 @@ in
         "Infini-OPTIPLEX" = "01:00";
         "Infini-SERVER" = "02:00";
         "Infini-DESKTOP" = "03:00";
-        "Infini-SD" = "04:00";
-        "Infini-DL360" = "05:00";
+        "Infini-DL360" = "04:00";
       };
 
       modules.backups.jobs = {
