@@ -1,9 +1,11 @@
 { config, lib, pkgs, ... }:
-
+let
+  domain = config.common.subdomain "bitwarden";
+in
 {
   persist.directories = [ config.services.vaultwarden.dataDir ];
 
-  services.nginx.virtualHosts."bitwarden.inx.moe" = config.common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = config.common.nginx.ssl // {
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
     };
@@ -13,8 +15,8 @@
     enable = true;
     environmentFile = config.secrets."vaultwarden";
     dataDir = "/srv/vaultwarden";
-    config = {
-      DOMAIN = "https://bitwarden.inx.moe";
+    config = with config.common.email; {
+      DOMAIN = "https://${domain}";
       SIGNUPS_ALLOWED = false;
 
       ROCKET_ADDRESS = "127.0.0.1";
@@ -24,11 +26,11 @@
       PUSH_ENABLED = true;
       PUSH_RELAY_URI = "https://push.bitwarden.com";
 
-      SMTP_HOST = "smtp.purelymail.com";
-      SMTP_FROM = "noreply+vaultwarden@inx.moe";
-      SMTP_PORT = 465;
+      SMTP_HOST = smtp.address;
+      SMTP_PORT = smtp.SSLTLS;
       SMTP_SECURITY = "force_tls";
-      SMTP_USERNAME = "noreply@inx.moe";
+      SMTP_USERNAME = outgoing;
+      SMTP_FROM = withSubaddress "vaultwarden";
     };
   };
 }
