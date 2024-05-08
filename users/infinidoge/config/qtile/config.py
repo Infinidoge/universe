@@ -425,6 +425,16 @@ keys = [
         desc="Start Firefox (New Private Window)",
     ),
     Key(
+        [Keys.SUPER, Keys.ALT, Keys.SHIFT], "f",
+        lazy.spawncmd(prompt="search", command="@firefox@ --search '%s'", complete=None, shell=False),
+        desc="Search for a term in Firefox",
+    ),
+    Key(
+        [Keys.SUPER, Keys.ALT, Keys.CONTROL, Keys.SHIFT], "f",
+        lazy.spawncmd(prompt="private search", command="@firefox@  --private-window 'https://google.com/search?q=%s'", complete=None, shell=False),
+        desc="Search for a term in Firefox",
+    ),
+    Key(
         [Keys.SUPER, Keys.ALT], "e",
         lazy.spawn(Apps.EDITOR),
         desc="Launch Emacs",
