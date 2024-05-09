@@ -6,6 +6,7 @@
     ./web.nix
 
     ./factorio.nix
+    ./forgejo.nix
     ./freshrss.nix
     ./jellyfin.nix
     ./thelounge.nix
