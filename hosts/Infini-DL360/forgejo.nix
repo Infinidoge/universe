@@ -12,7 +12,7 @@ in
     settings = {
       server = {
         ROOT_URL = "https://${domain}/";
-        SSH_DOMAIN = domain;
+        SSH_DOMAIN = config.common.domain;
         LANDING_PAGE = "explore";
       };
       mailer = with config.common.email; {
