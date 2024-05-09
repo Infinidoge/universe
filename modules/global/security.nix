@@ -84,6 +84,9 @@ with lib;
     };
   };
 
+  # For permission to access smtp password
+  users.groups.smtp = { };
+
   common = rec {
     domain = "inx.moe";
     subdomain = subdomain: "${subdomain}.${domain}";
