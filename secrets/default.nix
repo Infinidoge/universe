@@ -9,9 +9,9 @@ let
     { file = "${./.}/${name}"; };
   secrets = listToAttrs (map mkSecret (attrNames (import ./secrets.nix)));
 
-  withOwnerGroup = name: secret: secret // { owner = name; group = name; };
+  withOwnerGroup = name: secret: secret // { owner = name; group = name; mode = "440"; };
   withOwner = name: secret: secret // { owner = name; };
-  withGroup = name: secret: secret // { group = name; };
+  withGroup = name: secret: secret // { group = name; mode = "440"; };
 in
 {
   options = {
