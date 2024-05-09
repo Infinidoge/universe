@@ -33,4 +33,5 @@ in
   "borg-password.age".publicKeys = allKeys;
   "borg-ssh-key.age".publicKeys = allKeys;
   "cloudflare.age".publicKeys = allKeys;
+  "smtp-password.age".publicKeys = allKeys;
 }
