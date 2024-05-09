@@ -3,12 +3,13 @@
     ./hardware-configuration.nix
     ./disks.nix
 
+    ./web.nix
+
     ./factorio.nix
     ./freshrss.nix
+    ./jellyfin.nix
     ./thelounge.nix
     ./vaultwarden.nix
-    ./jellyfin.nix
-    ./web.nix
   ];
 
   networking.hostId = "8fa7a57c";
