@@ -41,6 +41,10 @@ in
       indexer = {
         REPO_INDEXER_ENABLED = true;
       };
+      "ui.meta" = {
+        AUTHOR = "Infinidoge's Void";
+        DESCRIPTION = "A Forgejo instance hosting Infinidoge's personal repositories";
+      };
     };
   };
 
