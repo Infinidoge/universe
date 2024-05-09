@@ -41,6 +41,9 @@ in
       (mkIf config.services.freshrss.enable {
         "freshrss" = withOwnerGroup "freshrss" secrets."freshrss";
       })
+      (mkIf config.services.forgejo.enable {
+        "smtp-password" = withGroup "smtp" secrets."smtp-password";
+      })
     ];
   };
 }
