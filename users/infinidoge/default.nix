@@ -111,6 +111,7 @@ in
     isNormalUser = true;
     extraGroups = [
       "adbusers"
+      "adm"
       "bluetooth"
       "borg"
       "dialout"
