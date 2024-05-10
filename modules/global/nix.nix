@@ -4,6 +4,8 @@ with lib;
   nix = {
     package = pkgs.nixVersions.latest;
 
+    channel.enable = false;
+
     settings = {
       allowed-users = [ "*" ];
       trusted-users = [ "root" "@wheel" "remotebuild" ];
