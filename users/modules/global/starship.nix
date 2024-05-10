@@ -25,27 +25,6 @@
           vicmd_symbol = "[❮](bold purple)";
         };
 
-        aws.symbol = "  ";
-        conda.symbol = " ";
-        dart.symbol = " ";
-        docker_context.symbol = " ";
-        elixir.symbol = " ";
-        elm.symbol = " ";
-        golang.symbol = " ";
-        hg_branch.symbol = " ";
-        java.symbol = " ";
-        julia.symbol = " ";
-        memory_usage.symbol = " ";
-        nim.symbol = " ";
-        package.symbol = " ";
-        perl.symbol = " ";
-        php.symbol = " ";
-        python.symbol = " ";
-        ruby.symbol = " ";
-        rust.symbol = " ";
-        scala.symbol = " ";
-        swift.symbol = "ﯣ ";
-
         directory = {
           style = "cyan";
           read_only = " ";
@@ -55,7 +34,7 @@
         git_branch = {
           format = "[$symbol$branch]($style)";
           style = "bold dimmed white";
-          symbol = " ";
+          symbol = " ";
         };
 
         git_status = {
@@ -63,7 +42,7 @@
           conflicted = "";
           ahead = "[⟫\${count}](green bold) ";
           behind = "[⟪\${count}](red bold)";
-          diverged = "[](red bold) ";
+          diverged = "[󰃻](red bold) ";
           untracked = "[](grey bold) ";
           stashed = "[↪](grey bold) ";
           modified = "[](yellow bold) ";
