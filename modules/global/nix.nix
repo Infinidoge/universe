@@ -24,6 +24,9 @@ with lib;
       secret-key-files = mkIf config.modules.secrets.enable config.secrets.binary-cache-private-key;
 
       min-free = 536870912; # 0.5 gibi bytes
+
+      # Workaround for https://github.com/NixOS/nix/issues/9574
+      nix-path = config.nix.nixPath;
     };
 
     gc = {
