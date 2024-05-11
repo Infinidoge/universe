@@ -14,7 +14,6 @@
     bat
     browsh
     cloc
-    coreutils-doge
     cryptsetup
     curl
     difftastic
@@ -67,6 +66,7 @@
     btrfs-progs
     bubblewrap
     compsize
+    coreutils-doge
     dosfstools
     exfat # Windows drives
     kitty.terminfo
