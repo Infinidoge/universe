@@ -111,7 +111,6 @@ in
     isNormalUser = true;
     extraGroups = [
       "adbusers"
-      "adm"
       "bluetooth"
       "borg"
       "dialout"
@@ -124,6 +123,7 @@ in
       "minecraft"
       "nginx"
       "plugdev"
+      "systemd-journal"
       "video"
       "wheel"
     ];
