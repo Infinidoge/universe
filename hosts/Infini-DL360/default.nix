@@ -1,10 +1,11 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, private, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
 
     ./web.nix
 
+    private.nixosModules.minecraft-servers
     ./factorio.nix
     ./forgejo.nix
     ./freshrss.nix
@@ -72,5 +73,24 @@
     default = true;
     globalRedirect = "inx.moe";
     redirectCode = 302;
+  };
+
+  services.minecraft-servers.servers.emd-server.autoStart = lib.mkForce false;
+
+  services.borgbackup.jobs."persist" = let tmux = lib.getExe pkgs.tmux; in {
+    preHook = ''
+      ${tmux} -S /run/minecraft/friend-server.sock send-keys "say Server is backing up..." Enter
+      ${tmux} -S /run/minecraft/friend-server.sock send-keys save-off Enter
+      ${tmux} -S /run/minecraft/friend-server.sock send-keys save-all Enter
+      ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Server is backing up..." Enter
+      ${tmux} -S /run/minecraft/sister-server.sock send-keys save-off Enter
+      ${tmux} -S /run/minecraft/sister-server.sock send-keys save-all Enter
+    '';
+    postHook = ''
+      ${tmux} -S /run/minecraft/friend-server.sock send-keys save-on Enter
+      ${tmux} -S /run/minecraft/friend-server.sock send-keys "say Backup complete" Enter
+      ${tmux} -S /run/minecraft/sister-server.sock send-keys save-on Enter
+      ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Backup complete" Enter
+    '';
   };
 }
