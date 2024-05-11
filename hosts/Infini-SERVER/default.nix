@@ -32,8 +32,6 @@
 
   services = {
     avahi.reflector = true;
-
-    soft-serve-ng.enable = true;
   };
 
   persist = {
