@@ -26,4 +26,6 @@ with lib;
           User ${rsyncnet.account}
     '';
   };
+
+  programs.mosh.enable = true;
 }
