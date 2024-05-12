@@ -34,32 +34,6 @@ with lib;
   # Allow non-root users to allow other users to access mount point
   programs.fuse.userAllowOther = mkDefault true;
 
-  # For rage encryption, all hosts need a ssh key pair
-  services.openssh = {
-    enable = true;
-    openFirewall = mkDefault true;
-    settings = {
-      X11Forwarding = mkDefault false;
-      GatewayPorts = mkDefault "yes";
-    };
-    hostKeys = mkDefault [{
-      path = "/etc/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }];
-  };
-
-  programs.ssh = {
-    extraConfig = with config.common; ''
-      Host rsync.net
-          Hostname ${rsyncnet.host}
-          User ${rsyncnet.user}
-
-      Host admin.rsync.net
-          Hostname ${rsyncnet.host}
-          User ${rsyncnet.account}
-    '';
-  };
-
   services.nginx = {
     statusPage = true;
     recommendedTlsSettings = true;
