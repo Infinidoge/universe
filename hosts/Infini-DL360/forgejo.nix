@@ -6,8 +6,12 @@ in
 {
   services.forgejo = {
     enable = true;
+
     user = "git";
     stateDir = "/srv/forgejo";
+
+    lfs.enable = true;
+
     mailerPasswordFile = config.secrets.smtp-password;
     settings = {
       server = {
