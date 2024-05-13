@@ -29,6 +29,8 @@
     enable = true;
     package = pkgs.gitFull;
 
+    lfs.enable = true;
+
     extraConfig = {
       pull.rebase = true;
       merge.ignore.driver = "true";
