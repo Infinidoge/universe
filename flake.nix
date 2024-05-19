@@ -34,57 +34,47 @@
     nixvim.url = "github:nix-community/nixvim";
 
     ### Cleanup ###
-    ## Follow nixpkgs
+    ## Common
+    blank.url = "github:divnix/blank";
+    flake-utils.url = "github:numtide/flake-utils";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+    systems.url = "github:nix-systems/default";
+
+    ## Follow common
+    agenix.inputs.darwin.follows = "blank";
+    agenix.inputs.home-manager.follows = "home-manager";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.systems.follows = "systems";
+    devshell.inputs.flake-utils.follows = "flake-utils";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
-    universe-cli.inputs.nixpkgs.follows = "nixpkgs";
-
-    ## Blank out
-    blank.url = "github:divnix/blank";
-    agenix.inputs.darwin.follows = "blank";
-    nix-minecraft.inputs.flake-compat.follows = "blank";
-    nixos-wsl.inputs.flake-compat.follows = "blank";
-    nixvim.inputs.flake-compat.follows = "blank";
-    nixvim.inputs.nix-darwin.follows = "blank";
-
-    ## Follow flake-utils
-    flake-utils.url = "github:numtide/flake-utils";
-    devshell.inputs.flake-utils.follows = "flake-utils";
-    nix-minecraft.inputs.flake-utils.follows = "flake-utils";
-    nixos-wsl.inputs.flake-utils.follows = "flake-utils";
-    rust-overlay.inputs.flake-utils.follows = "flake-utils";
-    universe-cli.inputs.flake-utils.follows = "flake-utils";
-
-    ## Follow systems
-    systems.url = "github:nix-systems/default";
-    agenix.inputs.systems.follows = "systems";
     flake-utils.inputs.systems.follows = "systems";
-    universe-cli.inputs.systems.follows = "systems";
-
-    ## Misc
-    agenix.inputs.home-manager.follows = "home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-minecraft.inputs.flake-compat.follows = "blank";
+    nix-minecraft.inputs.flake-utils.follows = "flake-utils";
+    nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl.inputs.flake-compat.follows = "blank";
+    nixos-wsl.inputs.flake-utils.follows = "flake-utils";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.inputs.devshell.follows = "devshell";
+    nixvim.inputs.flake-compat.follows = "blank";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     nixvim.inputs.home-manager.follows = "home-manager";
-    nixvim.inputs.devshell.follows = "devshell";
+    nixvim.inputs.nix-darwin.follows = "blank";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
-    pre-commit-hooks.inputs = {
-      flake-compat.follows = "blank";
-      nixpkgs.follows = "nixpkgs";
-      nixpkgs-stable.follows = "nixpkgs";
-    };
-    universe-cli.inputs = {
-      devshell.follows = "devshell";
-      flake-parts.follows = "flake-parts";
-      rust-overlay.follows = "rust-overlay";
-    };
+    pre-commit-hooks.inputs.flake-compat.follows = "blank";
+    pre-commit-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
+    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
+    rust-overlay.inputs.flake-utils.follows = "flake-utils";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    universe-cli.inputs.devshell.follows = "devshell";
+    universe-cli.inputs.flake-parts.follows = "flake-parts";
+    universe-cli.inputs.flake-utils.follows = "flake-utils";
+    universe-cli.inputs.nixpkgs.follows = "nixpkgs";
+    universe-cli.inputs.rust-overlay.follows = "rust-overlay";
+    universe-cli.inputs.systems.follows = "systems";
   };
 
   outputs = inputs@{ flake-parts, nixpkgs, private, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ self, lib, ... }: {
