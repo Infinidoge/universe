@@ -10,6 +10,7 @@
     ./forgejo.nix
     ./freshrss.nix
     ./jellyfin.nix
+    ./postgresql.nix
     ./thelounge.nix
     ./vaultwarden.nix
   ];
