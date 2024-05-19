@@ -71,13 +71,19 @@ lib.mkIf main.info.graphical {
           inherit (texlive)
             scheme-medium
 
+            apa7
+            apacite
             biblatex
+            biblatex-apa
             biblatex-chicago
             capt-of minted
             catchfile
+            endfloat
             framed
             fvextra
             lipsum
+            scalerel
+            threeparttable
             upquote
             wrapfig
             xstring

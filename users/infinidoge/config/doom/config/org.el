@@ -90,3 +90,14 @@
 (use-package! ox-extra
   :config
   (ox-extras-activate '(ignore-headlines)))
+
+(add-to-list 'org-latex-classes
+  '("apa7"
+    "\\documentclass{apa7}"
+    ("\\section{%s}" . "\\section*{%s}")
+    ("\\subsection{%s}" . "\\subsection*{%s}")
+    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+    ("\\paragraph{%s}" . "\\paragraph*{%s}")
+    ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
+    )
+  )
