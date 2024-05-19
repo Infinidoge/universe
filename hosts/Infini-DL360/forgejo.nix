@@ -10,6 +10,12 @@ in
     user = "git";
     stateDir = "/srv/forgejo";
 
+    database = {
+      inherit (cfg) user;
+      name = "git";
+      type = "postgres";
+    };
+
     lfs.enable = true;
 
     mailerPasswordFile = config.secrets.smtp-password;
