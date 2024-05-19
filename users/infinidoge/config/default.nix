@@ -2,7 +2,7 @@
 with lib;
 {
   xdg.configFile = {
-    "doom" = {
+    "doom" = mkIf config.programs.emacs.enable {
       source = ./doom;
       onChange = ''
         echo "[doom] applying doom configuration"
