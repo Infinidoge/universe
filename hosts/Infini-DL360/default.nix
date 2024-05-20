@@ -9,6 +9,7 @@
     ./factorio.nix
     ./forgejo.nix
     ./freshrss.nix
+    ./hydra.nix
     ./jellyfin.nix
     ./postgresql.nix
     ./thelounge.nix
