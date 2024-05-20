@@ -312,7 +312,7 @@ in
       use-substitutes = ${if cfg.useSubstitutes then "1" else "0"}
     '';
 
-    environment.systemPackages = [ hydra-package ];
+    environment.systemPackages = [ hydra-package pkgs.git ];
 
     environment.variables = hydraEnv;
 
