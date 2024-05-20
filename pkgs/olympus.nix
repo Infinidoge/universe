@@ -43,6 +43,7 @@ buildFHSUserEnv {
   ];
 
   meta.platforms = lib.platforms.linux;
+  meta.hydraPlatforms = [];
 
   # https://github.com/EverestAPI/Olympus/blob/main/lib-linux/olympus.desktop
   # https://stackoverflow.com/questions/8822097/how-to-replace-a-whole-line-with-sed
