@@ -164,6 +164,10 @@
           (self.lib.flattenLeaves ./hosts);
 
       homeConfigurations = self.lib.mkHomeConfigurations { inherit (self.nixosConfigurations) "data.cs.purdue.edu"; };
+
+      hydraJobs = {
+        inherit (self) packages;
+      };
     };
 
     imports = [
