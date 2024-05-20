@@ -9,12 +9,12 @@
 let
   olympus = stdenv.mkDerivation rec {
     pname = "olympus";
-    version = "2846";
+    version = "4084";
 
     # https://everestapi.github.io/
     src = fetchzip {
       url = "https://dev.azure.com/EverestAPI/Olympus/_apis/build/builds/${version}/artifacts?artifactName=linux.main&$format=zip#linux.main.zip";
-      hash = "sha256-qz1pIuqiHb6cG/iH/sTgr08ajhIvjXpLa3clgDnmMnM=";
+      hash = "sha256-tKnMF7+KlEuQ15pBwV31s+R27oDLiKTLXgqmlLAKMhM=";
     };
 
     buildInputs = [ unzip ];
