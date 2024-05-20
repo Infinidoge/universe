@@ -29,8 +29,6 @@ in
 
     time.timeZone = mkIf (cfg.timezone != null) cfg.timezone;
 
-    services.automatic-timezoned.enable = config.modules.hardware.form.laptop;
-
     fonts = {
       packages = cfg.fonts.fonts;
       fontconfig.defaultFonts = mkAliasDefinitions opt.fonts.defaults;
