@@ -44,6 +44,9 @@ in
       (mkIf config.services.forgejo.enable {
         "smtp-password" = withGroup "smtp" secrets."smtp-password";
       })
+      (mkIf config.services.hydra.enable {
+        inherit (secrets) hydra;
+      })
     ];
   };
 }
