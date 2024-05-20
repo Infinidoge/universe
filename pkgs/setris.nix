@@ -41,5 +41,6 @@ stdenv.mkDerivation (self: rec {
     license = licenses.unfree;
     platforms = platforms.all; # Uses a 'universal' jar
     maintainers = with maintainers; [ infinidoge ];
+    broken = true;
   };
 })
