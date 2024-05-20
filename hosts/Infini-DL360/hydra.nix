@@ -25,6 +25,7 @@ in
     };
     extraConfig = ''
       binary_cache_secret_key_file = ${config.secrets.binary-cache-private-key}
+      allow_import_from_derivation = true
       <git-input>
         timeout = 3600
       </git-input>
