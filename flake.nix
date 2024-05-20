@@ -166,7 +166,7 @@
       homeConfigurations = self.lib.mkHomeConfigurations { inherit (self.nixosConfigurations) "data.cs.purdue.edu"; };
 
       hydraJobs = {
-        inherit (self) packages;
+        packages = lib.mapAttrs (_: lib.filterAttrs (n: v: v ? meta -> v.meta ? broken -> !v.meta.broken)) self.packages;
       };
     };
 
