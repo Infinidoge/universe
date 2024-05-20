@@ -53,7 +53,9 @@ in
       hostName = "localhost";
       system = "x86_64-linux";
       supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-      maxJobs = 16;
+      protocol = "ssh";
+      maxJobs = 32;
+      speedFactor = 16;
     }
   ];
 }
