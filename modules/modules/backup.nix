@@ -66,6 +66,10 @@ in
           ".local/share/Steam"
           ".local/share/Trash"
         ];
+        "/var/log/journal/**" = [
+          "system.journal"
+          "user-1000.journal"
+        ];
       };
 
       modules.backups.backupTimes = {
