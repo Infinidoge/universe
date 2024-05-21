@@ -167,6 +167,13 @@
 
       hydraJobs = {
         packages = lib.mapAttrs (_: lib.filterAttrs (n: v: v ? meta -> v.meta ? broken -> !v.meta.broken)) self.packages;
+        nixosConfigurations.x86_64-linux = lib.flip lib.genAttrs (name: { toplevel = self.nixosConfigurations.${name}.config.system.build.toplevel; }) [
+          "Infini-DESKTOP"
+          "Infini-DL360"
+          "Infini-FRAMEWORK"
+          "Infini-OPTIPLEX"
+          "Infini-SERVER"
+        ];
       };
     };
 
