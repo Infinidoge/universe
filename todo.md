@@ -20,6 +20,8 @@
 - [ ] File Qtile bug report for clock timezone
 - [ ] https://github.com/nix-community/nixvim
 - [ ] Figure out Minecraft OpenAL startup error (`aoss` as wrapper is a workaround)
+- [ ] Backup postgres database as a borgbackup dump
+- [ ] Add Xonsh
 
 # Move to Wayland
 - [ ] https://sr.ht/~emersion/kanshi/
