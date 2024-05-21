@@ -58,7 +58,7 @@ with lib;
       "home-manager=${inputs.home-manager}"
     ];
 
-    distributedBuilds = true;
+    distributedBuilds = mkDefault true;
     extraOptions = ''
       builders-use-substitutes = true
     '';

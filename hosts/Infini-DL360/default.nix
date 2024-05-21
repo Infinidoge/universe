@@ -22,6 +22,8 @@
 
   info.loc.purdue = true;
 
+  nix.distributedBuilds = false;
+
   modules = {
     boot.grub.enable = true;
     boot.timeout = 5;
