@@ -29,7 +29,7 @@ in
           "borg-ssh-key"
           ;
 
-        "borg-password" = secrets."borg-password" // { group = "borg"; mode = "440";};
+        "borg-password" = secrets."borg-password" // { group = "borg"; mode = "440"; };
         "binary-cache-private-key" = secrets.binary-cache-private-key // lib.optionalAttrs config.services.hydra.enable { group = "hydra"; mode = "440"; };
       }
       (mkIf config.services.nginx.enable {
