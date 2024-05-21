@@ -13,6 +13,7 @@ with lib;
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       experimental-features = [ "flakes" "nix-command" "impure-derivations" "no-url-literals" ];
 
+      allow-import-from-derivation = true;
       auto-optimise-store = true;
       fallback = true;
       keep-derivations = true;
