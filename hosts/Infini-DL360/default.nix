@@ -38,6 +38,8 @@
     ];
   };
 
+  documentation.man.man-db.enable = false;
+
   networking = {
     firewall = {
       allowedUDPPorts = [ 80 443 ];
