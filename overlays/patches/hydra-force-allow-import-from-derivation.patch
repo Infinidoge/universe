@@ -1,0 +1,25 @@
+From 800c20af32526d650645f1ded7d2d0f576b61e25 Mon Sep 17 00:00:00 2001
+From: Infinidoge <infinidoge@inx.moe>
+Date: Tue, 21 May 2024 01:19:15 -0400
+Subject: [PATCH] force allow import from derivation
+
+---
+ src/script/hydra-eval-jobset | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/script/hydra-eval-jobset b/src/script/hydra-eval-jobset
+index 72a386f5..208d182b 100755
+--- a/src/script/hydra-eval-jobset
++++ b/src/script/hydra-eval-jobset
+@@ -372,7 +372,7 @@ sub evalJobs {
+                 inputsToArgs($inputInfo));
+     }
+ 
+-    push @cmd, "--no-allow-import-from-derivation" if $config->{allow_import_from_derivation} // "true" ne "true";
++    push @cmd, "--allow-import-from-derivation";
+ 
+     if (defined $ENV{'HYDRA_DEBUG'}) {
+         sub escape {
+-- 
+2.44.0
+
