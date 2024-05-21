@@ -50,5 +50,3 @@
 
 # Issues pending fixes
 
-- [x] Home Manager, "`optionsDocBook` is deprecated", https://github.com/nix-community/home-manager/issues/4273
-- [x] Home Manager, handle `use-xdg-base-directories`, https://github.com/nix-community/home-manager/issues/4593
