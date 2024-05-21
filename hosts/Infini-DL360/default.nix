@@ -11,6 +11,7 @@
     ./freshrss.nix
     ./hydra.nix
     ./jellyfin.nix
+    ./jitsi.nix
     ./postgresql.nix
     ./thelounge.nix
     ./vaultwarden.nix
