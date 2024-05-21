@@ -47,6 +47,7 @@
     desktop = {
       wm.enable = true;
       gaming.enableAll = true;
+      gaming.olympus.enable = false; # Build is currently broken
     };
     virtualization.enable = true;
     software.minipro.enable = true;
