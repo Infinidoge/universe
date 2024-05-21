@@ -1,8 +1,5 @@
 {
   description = "Infinidoge's NixOS configuration";
-  nixConfig = {
-    allow-import-from-derivation = true;
-  };
 
   inputs = {
     ### Nixpkgs ###
