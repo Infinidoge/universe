@@ -33,6 +33,9 @@
     ## Neovim
     nixvim.url = "github:nix-community/nixvim";
 
+    ## Conduwuit
+    conduwuit.url = "github:girlbossceo/conduwuit";
+
     ### Cleanup ###
     ## Common
     blank.url = "github:divnix/blank";
@@ -45,6 +48,10 @@
     agenix.inputs.home-manager.follows = "home-manager";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.systems.follows = "systems";
+    conduwuit.inputs.attic.follows = "blank";
+    conduwuit.inputs.flake-compat.follows = "blank";
+    conduwuit.inputs.flake-utils.follows = "flake-utils";
+    conduwuit.inputs.nixpkgs.follows = "nixpkgs";
     devshell.inputs.flake-utils.follows = "flake-utils";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
     disko.inputs.nixpkgs.follows = "nixpkgs";
