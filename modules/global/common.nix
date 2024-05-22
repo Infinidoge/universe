@@ -1,5 +1,7 @@
-{ ... }:
+{ config, ... }:
 {
+  _module.args.common = config.common;
+
   common = rec {
     domain = "inx.moe";
     subdomain = subdomain: "${subdomain}.${domain}";
