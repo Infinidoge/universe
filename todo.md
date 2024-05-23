@@ -18,7 +18,6 @@
 - [ ] Look into `imv` image viewer
 - [ ] Look into `broot` file search
 - [ ] File Qtile bug report for clock timezone
-- [ ] https://github.com/nix-community/nixvim
 - [ ] Figure out Minecraft OpenAL startup error (`aoss` as wrapper is a workaround)
 - [ ] Backup postgres database as a borgbackup dump
 - [ ] Add Xonsh
@@ -49,6 +48,10 @@
   - https://vriska.dev/trusting-ssh-keys-using-a-centralized-hardware-secret/
 - [ ] SSL CA
 - [ ] Signing server?
+
+# NixVim
+- [ ] LSP support
+- [ ] Fix Nix indenting
 
 # Issues pending fixes
 
