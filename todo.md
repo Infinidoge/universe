@@ -53,6 +53,7 @@
 # NixVim
 - [ ] LSP support
 - [ ] Fix Nix indenting
+- [ ] Borrow from [Ersei's config](https://git.sr.ht/~fd/nix-configs/tree/main/item/home/common/nvim)
 
 # Issues pending fixes
 
