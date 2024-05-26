@@ -1,5 +1,7 @@
-{ config, channel, inputs, pkgs, lib, self, ... }:
-with lib;
+{ config, inputs, pkgs, lib, ... }:
+let
+  inherit (lib) mkIf mkDefault filterAttrs mapAttrs';
+in
 {
   nix = {
     package = pkgs.nixVersions.latest;
@@ -78,6 +80,7 @@ with lib;
     nix-melt
     nix-output-monitor
     nix-tree
+    nixfmt-rfc-style
     nixpkgs-fmt
     nvd
 
@@ -92,20 +95,17 @@ with lib;
   ];
 
   environment = {
-    shellAliases =
-      let ifSudo = mkIf config.security.sudo.enable;
-      in
-      {
-        # nix
-        n = "nix";
-        ns = "n search --no-update-lock-file";
-        nf = "n flake";
-        nepl = "n repl '<nixpkgs>'";
-        srch = "ns nixpkgs";
-        mn = ''
-          manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | sk --preview="manix '{}'" | xargs manix
-        '';
-      };
+    shellAliases = {
+      # nix
+      n = "nix";
+      ns = "n search --no-update-lock-file";
+      nf = "n flake";
+      nepl = "n repl '<nixpkgs>'";
+      srch = "ns nixpkgs";
+      mn = ''
+        manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | sk --preview="manix '{}'" | xargs manix
+      '';
+    };
   };
 
   users.users.remotebuild = {
