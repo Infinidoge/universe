@@ -27,7 +27,8 @@ let
   websites = lib.genAttrs [
     "inx.moe"
     "stickers.inx.moe"
-  ] mkWebsite;
+  ]
+    mkWebsite;
 
   redirects = lib.mapAttrs mkRedirect {
     "nitter.inx.moe" = "twitter.com";

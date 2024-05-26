@@ -51,7 +51,7 @@ rec {
   mkBtrfsSubvols' = mountOptions: mapAttrs (n: v: {
     mountpoint = n;
     mountOptions = mountOptions ++ (optionals (v ? mountOptions) v.mountOptions);
-  } // (removeAttrs v ["mountOptions"]));
+  } // (removeAttrs v [ "mountOptions" ]));
   mkBtrfsSubvols = mkBtrfsSubvols' defaultMountOptions;
 
   # ZFS

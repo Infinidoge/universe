@@ -33,7 +33,8 @@ in
   config = mkMerge [
     {
       home.home.packages = with pkgs; [
-        (mkIf cfg.prismlauncher.enable cfg.prismlauncher.package) alsa-oss
+        (mkIf cfg.prismlauncher.enable cfg.prismlauncher.package)
+        alsa-oss
         (mkIf cfg.lutris.enable cfg.lutris.package)
         (mkIf cfg.olympus.enable cfg.olympus.package)
         (mkIf cfg.puzzles.enable cfg.puzzles.package)
