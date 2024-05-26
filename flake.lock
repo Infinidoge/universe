@@ -485,7 +485,9 @@
         "pre-commit-hooks": [
           "pre-commit-hooks"
         ],
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
       },
       "locked": {
         "lastModified": 1715976947,
@@ -584,6 +586,7 @@
         "rust-overlay": "rust-overlay",
         "stable": "stable",
         "systems": "systems",
+        "treefmt-nix": "treefmt-nix",
         "universe-cli": "universe-cli"
       }
     },
@@ -661,16 +664,15 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
-          "nixvim",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1714058656,
-        "narHash": "sha256-Qv4RBm4LKuO4fNOfx9wl40W2rBbv5u5m+whxRYUMiaA=",
+        "lastModified": 1715940852,
+        "narHash": "sha256-wJqHMg/K6X3JGAE9YLM0LsuKrKb4XiBeVaoeMNlReZg=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "c6aaf729f34a36c445618580a9f95a48f5e4e03f",
+        "rev": "2fba33a182602b9d49f0b2440513e5ee091d838b",
         "type": "github"
       },
       "original": {

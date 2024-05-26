@@ -22,6 +22,7 @@
     impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
 
     ### Domain-Specific Flake Inputs ###
     ## Minecraft
@@ -71,11 +72,13 @@
     nixvim.inputs.nix-darwin.follows = "blank";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+    nixvim.inputs.treefmt-nix.follows = "treefmt-nix";
     pre-commit-hooks.inputs.flake-compat.follows = "blank";
     pre-commit-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.inputs.flake-utils.follows = "flake-utils";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     universe-cli.inputs.devshell.follows = "devshell";
     universe-cli.inputs.flake-parts.follows = "flake-parts";
     universe-cli.inputs.flake-utils.follows = "flake-utils";
@@ -98,6 +101,9 @@
           self.overlays.patches
         ];
       };
+
+      treefmt.projectRootFile = "flake.nix";
+      treefmt.programs.nixpkgs-fmt.enable = true;
     };
 
     flake = {
@@ -188,6 +194,7 @@
       ./pkgs
       ./shell
       inputs.devshell.flakeModule
+      inputs.treefmt-nix.flakeModule
     ];
   });
 }
