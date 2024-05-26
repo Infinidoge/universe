@@ -32,7 +32,7 @@ let
       within = "1d"; # Keep all archives from the last day
       daily = 7;
       weekly = 4;
-      monthly = -1;  # Keep at least one archive for each month
+      monthly = -1; # Keep at least one archive for each month
     };
   };
 
@@ -50,7 +50,7 @@ in
     enable = mkBoolOpt true;
     userEnvironment = mkBoolOpt true;
     repo = mkOpt str "rsync.net:backups/hosts";
-    excludes = mkOpt (attrsOf (listOf str)) {};
+    excludes = mkOpt (attrsOf (listOf str)) { };
     extraExcludes = mkOpt (listOf str) [ ];
     backupTimes = mkOpt (attrsOf str) { };
     jobs = mkOpt (attrsOf str) { };

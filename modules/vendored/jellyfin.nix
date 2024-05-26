@@ -77,7 +77,7 @@ in
         ExecStart = "${cfg.package}/bin/jellyfin --datadir '${cfg.dataDir}' --cachedir '${cfg.cacheDir}' --logdir '${cfg.logDir}'";
         Restart = "on-failure";
         TimeoutSec = 15;
-        SuccessExitStatus = ["0" "143"];
+        SuccessExitStatus = [ "0" "143" ];
 
         # Security options:
         NoNewPrivileges = true;
@@ -128,7 +128,7 @@ in
     };
 
     users.groups = mkIf (cfg.group == "jellyfin") {
-      jellyfin = {};
+      jellyfin = { };
     };
 
     networking.firewall = mkIf cfg.openFirewall {

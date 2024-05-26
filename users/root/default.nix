@@ -5,5 +5,5 @@
     openssh.authorizedKeys.keys = import ./ssh-keys.nix;
   };
 
-  home-manager.users.root = { ... }: {};
+  home-manager.users.root = { ... }: { };
 }
