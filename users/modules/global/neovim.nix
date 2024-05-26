@@ -13,12 +13,9 @@
       mouse = "a";
       tabstop = 4;
       shiftwidth = 4;
-      clipboard = "unnamedplus,unnamed";
-      directory = [
-        "~/.local/share/vim/swap//"
-        "."
-      ];
     };
+
+    clipboard.register = [ "unnamedplus" "unnamed" ];
 
     globals = {
       doom_one_cursor_coloring = true;
@@ -43,11 +40,15 @@
     ];
 
     plugins = {
+      autoclose.enable = true;
       comment.enable = true;
+      cursorline.enable = true;
       direnv.enable = true;
+      fidget.enable = true;
+      fzf-lua.enable = true;
       gitsigns.enable = true;
-      # lsp.enable = true;
-      # nix.enable = true;
+      nix.enable = true;
+      lsp-format.enable = true;
       # nvim-autopairs.enable = true;
       surround.enable = true;
       todo-comments.enable = true;
@@ -55,6 +56,35 @@
       treesitter.enable = true;
       ts-autotag.enable = true;
       ts-context-commentstring.enable = true;
+
+      #nvim-jdtls.enable = true;
+
+      lsp = {
+        enable = true;
+        servers = {
+          clangd.enable = true;
+          hls.enable = true;
+          lua-ls.enable = true;
+          nil_ls = {
+            enable = true;
+            extraOptions = {
+              settings.nil.formatting.command = [ "nixpkgs-fmt" ];
+            };
+          };
+          nimls.enable = true;
+          pyright.enable = true;
+          rust-analyzer = {
+            enable = true;
+            installRustc = false;
+            installCargo = false;
+          };
+        };
+      };
     };
+
+    extraConfigLua = ''
+      vim.cmd [[cabbrev wq execute "Format sync" <bar> wq]]
+      vim.cmd [[cabbrev x execute "Format sync" <bar> x]]
+    '';
   };
 }
