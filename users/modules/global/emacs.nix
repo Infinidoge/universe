@@ -81,13 +81,14 @@ lib.mkIf main.info.graphical {
             endfloat
             framed
             fvextra
+            hanging
             lipsum
+            mleftright
             scalerel
             threeparttable
             upquote
             wrapfig
             xstring
-            mleftright
             ;
         })
         biber
