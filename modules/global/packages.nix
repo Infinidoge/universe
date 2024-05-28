@@ -36,6 +36,7 @@
     moreutils
     nmap
     openssl
+    pandoc
     parallel
     parted
     pciutils
@@ -58,6 +59,7 @@
     yq
     zip
   ] ++ (lib.optionals config.info.graphical (with pkgs; [
+    graphviz
     yt-dlp
   ]));
 
@@ -81,5 +83,7 @@
     arandr
     ffmpeg-full
     mpv
+    xclip
+    xdotool
   ]));
 }

@@ -23,9 +23,6 @@ lib.mkIf main.info.graphical {
 
     packages = with pkgs; lib.flatten [
       # --- Doom Emacs ---
-      fd
-      ripgrep
-      fzf
       mlocate
 
       gnumake
@@ -34,11 +31,6 @@ lib.mkIf main.info.graphical {
       # :tools editorconfig
       editorconfig-core-c
       editorconfig-checker
-
-      # --- :app ---
-      # :app everywhere
-      xdotool
-      xclip
 
       # --- :editor ---
       # :editor format
@@ -50,7 +42,6 @@ lib.mkIf main.info.graphical {
       ## +gnuplot
       gnuplot
       ## +roam2
-      graphviz
 
       # :lang common-lisp
       sbcl
@@ -95,16 +86,12 @@ lib.mkIf main.info.graphical {
       ])
 
       # :lang markdown
-      pandoc
       # python3Packages.grip
       python-grip
 
       # :lang sh
       shellcheck
       shfmt
-
-      # :lang json
-      jq
 
       # :lang data
       libxml2
