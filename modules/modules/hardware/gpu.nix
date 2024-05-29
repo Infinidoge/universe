@@ -24,6 +24,7 @@ in
           vaapiVdpau
 
           (optionals cfg.intel [
+            intel-compute-runtime
             intel-media-driver
             vaapiIntel
           ])
