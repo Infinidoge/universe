@@ -60,7 +60,6 @@ in
         ])
 
         config.common.wm.locker
-        blugon
       ];
     }
     (mkIf cfg.qtile.enable {
