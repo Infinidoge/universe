@@ -83,7 +83,5 @@
     arandr
     ffmpeg-full
     mpv
-    xclip
-    xdotool
   ]));
 }

@@ -58,6 +58,8 @@ in
           xwininfo
           xprop
         ])
+        xclip
+        xdotool
 
         config.common.wm.locker
       ];
