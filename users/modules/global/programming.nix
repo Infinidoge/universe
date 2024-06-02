@@ -27,7 +27,7 @@ in
     cabal2nix
 
     # Java
-    openjdk19
+    openjdk
     clang-tools
     gradle
 
