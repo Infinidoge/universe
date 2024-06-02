@@ -41,7 +41,7 @@
     ## Common
     blank.url = "github:divnix/blank";
     flake-utils.url = "github:numtide/flake-utils";
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+    git-hooks.url = "github:cachix/git-hooks.nix";
     systems.url = "github:nix-systems/default";
 
     ## Follow common
@@ -58,6 +58,9 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-utils.inputs.systems.follows = "systems";
+    git-hooks.inputs.flake-compat.follows = "blank";
+    git-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
+    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.flake-compat.follows = "blank";
     nix-minecraft.inputs.flake-utils.follows = "flake-utils";
@@ -68,14 +71,11 @@
     nixvim.inputs.devshell.follows = "devshell";
     nixvim.inputs.flake-compat.follows = "blank";
     nixvim.inputs.flake-parts.follows = "flake-parts";
+    nixvim.inputs.git-hooks.follows = "git-hooks";
     nixvim.inputs.home-manager.follows = "home-manager";
     nixvim.inputs.nix-darwin.follows = "blank";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
     nixvim.inputs.treefmt-nix.follows = "treefmt-nix";
-    pre-commit-hooks.inputs.flake-compat.follows = "blank";
-    pre-commit-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
-    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.inputs.flake-utils.follows = "flake-utils";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
