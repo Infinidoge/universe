@@ -70,6 +70,12 @@
 
   services.nginx.enable = true;
 
+  modules.backups.excludes = {
+    "/var/log/" = [
+      "nginx/access.log"
+    ];
+  };
+
   security.acme.certs."inx.moe" = {
     group = "nginx";
     extraDomainNames = [ "*.inx.moe" ];
