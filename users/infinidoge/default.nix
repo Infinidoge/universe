@@ -45,6 +45,7 @@ in
         # Tools
         audacity
         bitwarden
+        davinci-resolve
         inkscape
         krita
         libreoffice-fresh
