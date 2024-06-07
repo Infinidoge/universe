@@ -40,7 +40,7 @@ let
     inherit paths;
     inherit (cfg) repo;
     exclude = map (append paths) (excludes' ++ cfg.extraExcludes);
-    startAt = "*-*-* ${cfg.backupTimes.${config.networking.hostName}}";
+    startAt = if cfg.backupTimes ? "${config.networking.hostName}" then "*-*-* ${cfg.backupTimes.${config.networking.hostName}}" else [ ];
   };
 
   cfg = config.modules.backups;
