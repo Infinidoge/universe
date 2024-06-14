@@ -19,6 +19,19 @@
     };
   };
 
+  networking = {
+    interfaces.eno4 = {
+      ipv4.addresses = [{
+        address = "128.210.6.109";
+        prefixLength = 28;
+      }];
+    };
+    defaultGateway = {
+      address = "128.210.6.97";
+      interface = "eno4";
+    };
+  };
+
   documentation.man.man-db.enable = false;
 
   persist = {
