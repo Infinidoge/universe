@@ -49,6 +49,7 @@ in
         inkscape
         krita
         libreoffice-fresh
+        simulide
         speedcrunch
 
         # Media
