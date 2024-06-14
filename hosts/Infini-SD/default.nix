@@ -8,6 +8,10 @@
 
   boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
 
+  hardware.infiniband = {
+    enable = true;
+  };
+
   modules = {
     boot.grub.enable = true;
     hardware = {
