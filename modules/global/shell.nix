@@ -71,6 +71,8 @@ in
     umnt = ifSudo' "umount";
     bmnt = ifSudo "mnt -o bind,X-mount.mkdir";
 
+    ts = ifSudo' "tailscale";
+
     dd = "dd status=progress";
 
     du = "du -h";
