@@ -51,6 +51,10 @@
     };
   };
 
+  hardware.infiniband = {
+    enable = true;
+  };
+
   services.fail2ban.enable = true;
 
   environment.etc."fail2ban/filter.d/nginx-url-probe.local".text = lib.mkDefault (lib.mkAfter ''
