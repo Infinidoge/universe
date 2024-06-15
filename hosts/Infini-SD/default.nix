@@ -32,6 +32,10 @@
     };
   };
 
+  services.udev.extraRules = ''
+    DRIVER=="mlx4_core", ATTR{mlx4_port1}="eth", ATTR{mlx4_port2}="eth"
+  '';
+
   documentation.man.man-db.enable = false;
 
   persist = {
