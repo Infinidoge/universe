@@ -49,14 +49,15 @@
       f = "fetch -p";
       c = "commit";
       p = "push";
+      pu = "pull";
       ba = "branch -a";
       bd = "branch -d";
       bD = "branch -D";
       d = "diff";
       dc = "diff --cached";
       ds = "diff --staged";
-      r = "restore";
-      rs = "restore --staged";
+      r = "restore -p";
+      rs = "restore --staged -p";
       st = "status -sb";
 
       # reset
