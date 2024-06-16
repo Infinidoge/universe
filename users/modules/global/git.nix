@@ -7,6 +7,7 @@
       git ls-files &> /dev/null
       if [[ $? -eq 128 ]] then
         echo "Not in a git repository"
+        exit 1
       elif [[ $# -eq 0 ]] then
         echo "$(git ls-files | fzf)"
       else
@@ -17,6 +18,7 @@
       git ls-files &> /dev/null
       if [[ $? -eq 128 ]] then
         echo "Not in a git repository"
+        exit 1
       elif [[ $# -eq 0 ]] then
         $EDITOR "$(git ls-files | fzf)"
       else
