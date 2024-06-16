@@ -14,7 +14,9 @@
       timeout = 1;
     };
 
-    hardware.form.server = true;
+    hardware.form.desktop = true;
+    hardware.gpu.intel = true;
+    desktop.wm.enable = true;
   };
 
   persist = {
