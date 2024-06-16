@@ -10,7 +10,7 @@
     sharedModules = [
       {
         home = {
-          stateVersion = config.system.stateVersion;
+          stateVersion = "24.05";
           sessionVariables = {
             inherit (config.environment.sessionVariables) NIX_PATH;
           };
