@@ -40,7 +40,10 @@
     ];
 
     plugins = {
-      autoclose.enable = true;
+      autoclose = {
+        enable = true;
+        options.disableWhenTouch = true;
+      };
       comment.enable = true;
       cursorline.enable = true;
       direnv.enable = true;
