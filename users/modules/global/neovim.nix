@@ -59,6 +59,7 @@
       treesitter.enable = true;
       ts-autotag.enable = true;
       ts-context-commentstring.enable = true;
+      typst-vim.enable = true;
 
       #nvim-jdtls.enable = true;
 
@@ -81,6 +82,7 @@
             installRustc = false;
             installCargo = false;
           };
+          typst-lsp.enable = true;
         };
       };
     };
