@@ -61,6 +61,8 @@ in
         xclip
         xdotool
 
+        pavucontrol
+
         config.common.wm.locker
       ];
     }
