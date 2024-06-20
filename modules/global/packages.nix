@@ -33,7 +33,6 @@
     man-pages
     man-pages-posix
     manix
-    moreutils
     nmap
     openssl
     pandoc
