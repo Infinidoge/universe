@@ -436,11 +436,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1717291958,
-        "narHash": "sha256-v8YSFLbnGoh8cW2SHfZqmQRmaeN60HVSMuHNeyCeWvw=",
+        "lastModified": 1719019420,
+        "narHash": "sha256-Xjh8CcqOSQB02Me+49H2QTKDZZpn3xQNZlMgLqj3cy8=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "rev": "756825ee4ac068fa3316c7cd58a364342012693b",
+        "rev": "8e2b23d249a1889ca624b94ac1eb1a1ebb66a164",
         "type": "github"
       },
       "original": {
@@ -550,11 +550,11 @@
     },
     "private": {
       "locked": {
-        "lastModified": 1716080685,
-        "narHash": "sha256-IHajuwxvRYieDKvmUUV14E83rDd83pum+5yYjHhfN/4=",
+        "lastModified": 1719104998,
+        "narHash": "sha256-x4Gj5mU9eusNK2Vz8cr/fw7HItk8WB/o9YnyJsmX3L0=",
         "ref": "refs/heads/master",
-        "rev": "d5dba2647e31e12bf17d3e22207e6774f13fa31c",
-        "revCount": 37,
+        "rev": "1be3435afa28b1cf65bc831239b122972dc48362",
+        "revCount": 38,
         "type": "git",
         "url": "ssh://git@github.com/Infinidoge/universe-private"
       },
