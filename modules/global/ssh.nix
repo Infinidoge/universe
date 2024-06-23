@@ -5,6 +5,7 @@ with lib;
   services.openssh = {
     enable = true;
     openFirewall = mkDefault true;
+    sftpServerExecutable = "internal-sftp";
     settings = {
       X11Forwarding = mkDefault false;
       GatewayPorts = mkDefault "yes";

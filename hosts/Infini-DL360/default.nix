@@ -111,4 +111,29 @@
       ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Backup complete" Enter
     '';
   };
+
+  users.users.incoming = {
+    description = "User for incoming files with a chroot jail";
+    isSystemUser = true;
+    group = "incoming";
+  };
+  users.groups.incoming = { };
+
+  systemd.tmpfiles.settings."30-external" = {
+    "/srv/external".d = { user = "root"; group = "root"; };
+    "/srv/external/incoming".d = { user = "incoming"; group = "incoming"; mode = "0770"; };
+  };
+
+  # https://enotacoes.wordpress.com/2021/10/05/limiting-user-to-sshfs-or-sftp-of-one-directory-only/
+  # https://github.com/NixOS/nixpkgs/blob/d603719ec6e294f034936c0d0dc06f689d91b6c3/nixos/modules/services/networking/ssh/sshd.nix#L663
+  services.openssh.extraConfig = ''
+    Match user incoming
+      AuthorizedKeysFile /etc/ssh/authorized_keys.d/infinidoge /etc/ssh/authorized_keys.d/%u
+      ChrootDirectory /srv/external
+      ForceCommand ${config.services.openssh.sftpServerExecutable} -d incoming -u 007
+      X11Forwarding no
+      AllowTcpForwarding no
+      KbdInteractiveAuthentication no
+      PasswordAuthentication no
+  '';
 }
