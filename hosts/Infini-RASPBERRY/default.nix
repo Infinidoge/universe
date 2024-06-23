@@ -3,7 +3,7 @@ with lib;
 {
   imports = [
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
-    inputs.nixos-generators.nixosModules.sd-aarch64
+    ./sd-image.nix
   ];
 
   system.stateVersion = "23.11";
@@ -24,11 +24,14 @@ with lib;
     wireless.enable = mkDefault true;
   };
 
+  systemd.services.wpa_aupplicant.wantedBy = lib.mkOverride 10 [ "multi-user.target" ];
+
   boot = {
+    consoleLogLevel = lib.mkDefault 7;
     kernelPackages = mkForce pkgs.linuxPackages_rpi4;
 
     # Removes ZFS >:(
-    supportedFilesystems = mkForce [ "btrfs" "cifs" "f2fs" "jfs" "ntfs" "reiserfs" "vfat" "xfs" "ext4" "vfat" ];
+    supportedFilesystems = mkForce [ "btrfs" "ntfs" "vfat" "ext4" ];
 
     tmp.useTmpfs = true;
     # kernelParams = [
@@ -41,6 +44,15 @@ with lib;
       grub.enable = mkForce false;
       generic-extlinux-compatible.enable = mkForce true;
     };
+  };
+
+  documentation = {
+    enable = false;
+    doc.enable = false;
+    man.enable = false;
+    man.man-dp.enable = false;
+    man.mandoc.enable = false;
+    nixos.enable = false;
   };
 
   hardware.deviceTree = {
