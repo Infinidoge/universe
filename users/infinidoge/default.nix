@@ -120,6 +120,7 @@ in
       "docker"
       "factorio"
       "forgejo"
+      "incoming"
       "jellyfin"
       "libvirtd"
       "minecraft"
