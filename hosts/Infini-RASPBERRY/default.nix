@@ -9,6 +9,7 @@ with lib;
   system.stateVersion = "23.11";
   modules = {
     hardware.form.raspi = true;
+    boot.ignore = true;
   };
 
   nixpkgs.overlays = [
@@ -18,7 +19,7 @@ with lib;
     })
   ];
 
-  nixpkgs.hostPlatform.system = "aarch64-linux";
+  nixpkgs.hostPlatform = lib.mkForce "aarch64-linux";
 
   modules.hardware = {
     wireless.enable = mkDefault true;
@@ -46,11 +47,16 @@ with lib;
     };
   };
 
+  fileSystems."/" = {
+    device = "/dev/nmcblk0p2";
+    fsType = "ext4";
+  };
+
   documentation = {
     enable = false;
     doc.enable = false;
     man.enable = false;
-    man.man-dp.enable = false;
+    man.man-db.enable = false;
     man.mandoc.enable = false;
     nixos.enable = false;
   };
