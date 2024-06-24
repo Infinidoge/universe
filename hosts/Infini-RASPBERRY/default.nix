@@ -52,6 +52,8 @@ with lib;
     fsType = "ext4";
   };
 
+  home.programs.man.generateCaches = false;
+
   documentation = {
     enable = false;
     doc.enable = false;
