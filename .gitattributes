@@ -1,1 +1,2 @@
 flake.lock merge=ignore
+*.age binary
