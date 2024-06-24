@@ -56,7 +56,7 @@ in
         id3v2
         jellyfin-media-player
         picard
-        sonixd
+        feishin
 
         (discord-canary.override { withVencord = true; withOpenASAR = true; })
         (discord.override { withVencord = true; withOpenASAR = true; })
