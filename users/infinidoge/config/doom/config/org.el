@@ -30,10 +30,11 @@
 
 ;; Run formatters in org src blocks on save
 (defun infinidoge/format-org-src-blocks ()
-  (org-babel-map-src-blocks nil
-    (if (equal (alist-get :format (org-babel-parse-header-arguments header-args) "yes")
-               "yes")
-        (+format--org-region nil nil))))
+  (save-excursion
+    (org-babel-map-src-blocks nil
+      (if (equal (alist-get :format (org-babel-parse-header-arguments header-args) "yes")
+                 "yes")
+          (+format--org-region nil nil)))))
 
 (add-hook 'before-save-hook 'infinidoge/format-org-src-blocks)
 
