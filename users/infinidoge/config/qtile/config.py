@@ -474,6 +474,11 @@ keys = [
         lazy.spawn("thunderbird"),
         desc="Launch thunderbird",
     ),
+    Key(
+        [Keys.SUPER, Keys.ALT, Keys.CONTROL], "m",
+        lazy.spawn("autorandr -c"),
+        desc="Run autorandr",
+    ),
 ]
 # fmt: on
 
