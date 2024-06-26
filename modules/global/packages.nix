@@ -30,6 +30,7 @@
     iputils
     jq
     lynx
+    magic-wormhole
     man-pages
     man-pages-posix
     manix
