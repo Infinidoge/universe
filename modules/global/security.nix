@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   inherit (config.nixpkgs.hostPlatform) system;
@@ -17,6 +17,16 @@ in
         environmentFile = config.secrets.cloudflare;
       };
     };
+    pki.certificateFiles = [
+      (pkgs.fetchurl {
+        url = "https://files.inx.moe/ca/ca.cert.pem";
+        hash = "sha256-YZKiWLnO7uSHYJeNfTVxN87xMSPbJC7iTif3lMtUxpI=";
+      })
+      (pkgs.fetchurl {
+        url = "https://files.inx.moe/ca/intermediate.cert.pem";
+        hash = "sha256-NpVi8Uv2IaxCq+laQp+YL1xrJeIFeDZv5SKAWT1bzGQ=";
+      })
+    ];
   };
 
   hardware = {
