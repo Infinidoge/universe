@@ -42,6 +42,8 @@
   };
 
   programs.ns-usbloader.enable = true;
+  hardware.uinput.enable = true;
+  services.joycond.enable = true;
 
   services.fwupd = {
     enable = true;
