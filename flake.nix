@@ -50,6 +50,7 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.systems.follows = "systems";
     conduwuit.inputs.attic.follows = "blank";
+    conduwuit.inputs.cachix.follows = "blank";
     conduwuit.inputs.flake-compat.follows = "blank";
     conduwuit.inputs.flake-utils.follows = "flake-utils";
     conduwuit.inputs.nixpkgs.follows = "nixpkgs";
@@ -76,7 +77,6 @@
     nixvim.inputs.nix-darwin.follows = "blank";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.treefmt-nix.follows = "treefmt-nix";
-    rust-overlay.inputs.flake-utils.follows = "flake-utils";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     universe-cli.inputs.devshell.follows = "devshell";
