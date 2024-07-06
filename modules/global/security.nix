@@ -27,6 +27,7 @@ in
         hash = "sha256-NpVi8Uv2IaxCq+laQp+YL1xrJeIFeDZv5SKAWT1bzGQ=";
       })
     ];
+    polkit.enable = true;
   };
 
   hardware = {
