@@ -23,4 +23,6 @@ in
   hyfetch = addPatches prev.hyfetch [ ./neofetch-remove-steam-packages.patch ];
 
   hydra_unstable = addPatches prev.hydra_unstable [ ./hydra-force-allow-import-from-derivation.patch ];
+
+  openssh = addPatches prev.openssh [ ./srv-records.patch ];
 }

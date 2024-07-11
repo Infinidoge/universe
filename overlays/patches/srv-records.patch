@@ -1,0 +1,676 @@
+From f568270c4ec5b0472e0a49af510fd58f1f65155b Mon Sep 17 00:00:00 2001
+From: Mara Sophie Grosch <littlefox@lf-net.org>
+Date: Sat, 13 Feb 2021 23:01:02 +0100
+Subject: [PATCH 1/4] Resolve SRV record for hostname
+
+Very crude first implementation, needs more polishing.
+
+Only tries to resolve via SRV if a port is not given manually, via
+config or command line.
+
+Only the highest-prio lowest-weight host is used currently, it does
+not do load balancing! Still useful for non-standard ports.
+
+Working towards fixing https://bugzilla.mindrot.org/show_bug.cgi?id=2217
+---
+ dns.c |   2 +-
+ dns.h |   3 ++
+ ssh.c | 144 ++++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 135 insertions(+), 14 deletions(-)
+
+diff --git a/dns.c b/dns.c
+index 939241440..e4423655e 100644
+--- a/dns.c
++++ b/dns.c
+@@ -52,7 +52,7 @@ static const char * const errset_text[] = {
+ 	"data does not exist",	/* 5 ERRSET_NODATA */
+ };
+ 
+-static const char *
++const char *
+ dns_result_totext(unsigned int res)
+ {
+ 	switch (res) {
+diff --git a/dns.h b/dns.h
+index 864ab7d00..bba0095db 100644
+--- a/dns.h
++++ b/dns.h
+@@ -46,6 +46,7 @@ enum sshfp_hashes {
+ 
+ #define DNS_RDATACLASS_IN	1
+ #define DNS_RDATATYPE_SSHFP	44
++#define DNS_RDATATYPE_SRV	33
+ 
+ #define DNS_VERIFY_FOUND	0x00000001
+ #define DNS_VERIFY_MATCH	0x00000002
+@@ -56,4 +57,6 @@ int	verify_host_key_dns(const char *, struct sockaddr *,
+     struct sshkey *, int *);
+ int	export_dns_rr(const char *, struct sshkey *, FILE *, int, int);
+ 
++const char* dns_result_totext(unsigned int res);
++
+ #endif /* DNS_H */
+diff --git a/ssh.c b/ssh.c
+index 0019281f4..95871013f 100644
+--- a/ssh.c
++++ b/ssh.c
+@@ -108,6 +108,7 @@
+ #include "ssherr.h"
+ #include "myproposal.h"
+ #include "utf8.h"
++#include "dns.h"
+ 
+ #ifdef ENABLE_PKCS11
+ #include "ssh-pkcs11.h"
+@@ -243,6 +244,105 @@ default_client_percent_dollar_expand(const char *str,
+ 	return ret;
+ }
+ 
++/*
++ * Attempt to resolve _ssh._tcp.$orig_name SRV record to the highest-priority
++ * host and port.
++ * Returns the port of the target service via out-argument
++ * Returns NULL on failure and when no SRV record is found.
++ */
++static char *
++resolve_srv(const char* orig_name, int *port) {
++    const size_t prefix_len = 10;
++    const size_t orig_len = strlen(orig_name);
++    char* name = malloc(prefix_len + orig_len + 1);
++    snprintf(name, prefix_len + orig_len + 1, "_ssh._tcp.%s", orig_name);
++
++    debug3_f("Trying to lookup SRV for: %s (%s)", orig_name, name);
++
++    struct rrsetinfo *srvs = NULL;
++    int result = getrrsetbyname(name, DNS_RDATACLASS_IN, DNS_RDATATYPE_SRV, 0, &srvs);
++
++    if(result) {
++        debug2_f("SRV lookup error: %s", dns_result_totext(result));
++        goto fail;
++    }
++
++    if(!srvs->rri_nrdatas) {
++        debug2_f("No SRV records found for %s", name);
++        goto fail;
++    }
++
++    uint16_t cur_prio = UINT16_MAX;
++    uint16_t cur_weight = 0;
++    uint16_t cur_port   = 0;
++    char*    cur_target = NULL;
++
++    for(unsigned i = 0; i < srvs->rri_nrdatas; ++i) {
++        struct rdatainfo srv = srvs->rri_rdatas[i];
++
++        if(srv.rdi_length >= 9) {
++            uint16_t prio   = ntohs(*(uint16_t*)srv.rdi_data);
++            uint16_t weight = ntohs(*(uint16_t*)(srv.rdi_data + 2));
++            uint16_t port   = ntohs(*(uint16_t*)(srv.rdi_data + 4));
++
++            if(prio < cur_prio || (prio == cur_prio && weight > cur_weight)) {
++                const char* target_labels = srv.rdi_data + 6;
++                size_t      target_index  = 0;
++
++                char*  target = NULL;
++                size_t target_size = 0;
++
++                uint8_t next_label_len;
++                do {
++                    next_label_len = target_labels[target_index];
++
++                    char* old_target = target;
++
++                    if(old_target) {
++                        target = malloc(target_size + next_label_len + 2);
++                        memcpy(target, old_target, target_size);
++                        target[target_size] = '.';
++                        memcpy(target + target_size + 1, target_labels + target_index + 1, next_label_len);
++                        target[target_size + next_label_len + 1] = 0;
++
++                        target_size += 1;
++
++                        free(old_target);
++                    }
++                    else {
++                        target = malloc(next_label_len + 1);
++                        memcpy(target, target_labels + target_index + 1, next_label_len);
++                        target[next_label_len] = 0;
++                    }
++
++                    target_size  += next_label_len;
++                    target_index += next_label_len + 1;
++                } while(next_label_len > 0 && target_index + next_label_len <= srv.rdi_length - 6);
++
++                debug2_f("Found SRV record pointing at %s:%u (weight %u, prio %u)", target, port, weight, prio);
++
++                cur_port   = port;
++                cur_target = target;
++                cur_weight = weight;
++                cur_prio   = prio;
++            }
++        }
++    }
++
++fail:
++    freerrset(srvs);
++    free(name);
++
++    if(cur_target) {
++        debug_f("Connecting via SRV record to %s:%u", cur_target, cur_port);
++
++        *port = cur_port;
++        return cur_target;
++    }
++
++    return NULL;
++}
++
+ /*
+  * Attempt to resolve a host name / port to a set of addresses and
+  * optionally return any CNAMEs encountered along the way.
+@@ -250,21 +350,34 @@ default_client_percent_dollar_expand(const char *str,
+  * NB. this function must operate with a options having undefined members.
+  */
+ static struct addrinfo *
+-resolve_host(const char *name, int port, int logerr, char *cname, size_t clen)
++resolve_host(const char *orig_name, int *port, int logerr, char *cname, size_t clen)
+ {
++    char* name = NULL;
++
++    if(*port <= 0) {
++        name = resolve_srv(orig_name, port);
++    }
++
++    if(!name) {
++        name = malloc(strlen(orig_name) + 1);
++        strcpy(name, orig_name);
++    }
++
+ 	char strport[NI_MAXSERV];
+ 	const char *errstr = NULL;
+ 	struct addrinfo hints, *res;
+ 	int gaierr;
+ 	LogLevel loglevel = SYSLOG_LEVEL_DEBUG1;
+ 
+-	if (port <= 0)
+-		port = default_ssh_port();
+-	if (cname != NULL)
++	if (*port <= 0) {
++		*port = default_ssh_port();
++    }
++	if (cname != NULL) {
+ 		*cname = '\0';
+-	debug3_f("lookup %s:%d", name, port);
++    }
++	debug3_f("lookup %s:%d", name, *port);
+ 
+-	snprintf(strport, sizeof strport, "%d", port);
++	snprintf(strport, sizeof strport, "%d", *port);
+ 	memset(&hints, 0, sizeof(hints));
+ 	hints.ai_family = options.address_family == -1 ?
+ 	    AF_UNSPEC : options.address_family;
+@@ -276,6 +389,7 @@ resolve_host(const char *name, int port, int logerr, char *cname, size_t clen)
+ 			loglevel = SYSLOG_LEVEL_ERROR;
+ 		do_log2(loglevel, "%s: Could not resolve hostname %.100s: %s",
+ 		    __progname, name, ssh_gai_strerror(gaierr));
++        free(name);
+ 		return NULL;
+ 	}
+ 	if (cname != NULL && res->ai_canonname != NULL) {
+@@ -289,6 +403,8 @@ resolve_host(const char *name, int port, int logerr, char *cname, size_t clen)
+ 				*cname = '\0';
+ 		}
+ 	}
++
++    free(name);
+ 	return res;
+ }
+ 
+@@ -423,7 +539,7 @@ check_follow_cname(int direct, char **namep, const char *cname)
+  * NB. this function must operate with a options having undefined members.
+  */
+ static struct addrinfo *
+-resolve_canonicalize(char **hostp, int port)
++resolve_canonicalize(char **hostp, int *port)
+ {
+ 	int i, direct, ndots;
+ 	char *cp, *fullhost, newname[NI_MAXHOST];
+@@ -433,7 +549,7 @@ resolve_canonicalize(char **hostp, int port)
+ 	 * Attempt to canonicalise addresses, regardless of
+ 	 * whether hostname canonicalisation was requested
+ 	 */
+-	if ((addrs = resolve_addr(*hostp, port,
++	if ((addrs = resolve_addr(*hostp, *port,
+ 	    newname, sizeof(newname))) != NULL) {
+ 		debug2_f("hostname %.100s is address", *hostp);
+ 		if (strcasecmp(*hostp, newname) != 0) {
+@@ -1227,12 +1343,14 @@ main(int ac, char **av)
+ 	if ((was_addr = is_addr(host)) == 0)
+ 		lowercase(host);
+ 
++    int port = options.port;
++
+ 	/*
+ 	 * Try to canonicalize if requested by configuration or the
+ 	 * hostname is an address.
+ 	 */
+ 	if (options.canonicalize_hostname != SSH_CANONICALISE_NO || was_addr)
+-		addrs = resolve_canonicalize(&host, options.port);
++		addrs = resolve_canonicalize(&host, &port);
+ 
+ 	/*
+ 	 * If CanonicalizePermittedCNAMEs have been specified but
+@@ -1251,7 +1369,7 @@ main(int ac, char **av)
+ 	    option_clear_or_none(options.jump_host);
+ 	if (addrs == NULL && config_has_permitted_cnames(&options) && (direct ||
+ 	    options.canonicalize_hostname == SSH_CANONICALISE_ALWAYS)) {
+-		if ((addrs = resolve_host(host, options.port,
++		if ((addrs = resolve_host(host, &port,
+ 		    direct, cname, sizeof(cname))) == NULL) {
+ 			/* Don't fatal proxied host names not in the DNS */
+ 			if (direct)
+@@ -1280,8 +1398,8 @@ main(int ac, char **av)
+ 		 * enabled and the port number may have changed since, so
+ 		 * reset it in address list
+ 		 */
+-		if (addrs != NULL && options.port > 0)
+-			set_addrinfo_port(addrs, options.port);
++		if (addrs != NULL && port > 0)
++			set_addrinfo_port(addrs, port);
+ 	}
+ 
+ 	/* Fill configuration defaults. */
+@@ -1606,7 +1724,7 @@ main(int ac, char **av)
+ 	 */
+ 	if (addrs == NULL && options.proxy_command == NULL) {
+ 		debug2("resolving \"%s\" port %d", host, options.port);
+-		if ((addrs = resolve_host(host, options.port, 1,
++		if ((addrs = resolve_host(host, &port, 1,
+ 		    cname, sizeof(cname))) == NULL)
+ 			cleanup_exit(255); /* resolve_host logs the error */
+ 	}
+-- 
+2.44.1
+
+
+From 885aca548189e24d50431f59b1c7c14b378c4d91 Mon Sep 17 00:00:00 2001
+From: Mara Sophie Grosch <littlefox@lf-net.org>
+Date: Sat, 13 Feb 2021 23:12:31 +0100
+Subject: [PATCH 2/4] Move DNS name decoding to dns.{c/h}
+
+---
+ dns.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+ dns.h |  2 ++
+ ssh.c | 38 +++-----------------------------------
+ 3 files changed, 48 insertions(+), 35 deletions(-)
+
+diff --git a/dns.c b/dns.c
+index e4423655e..ab156f5c3 100644
+--- a/dns.c
++++ b/dns.c
+@@ -342,3 +342,46 @@ export_dns_rr(const char *hostname, struct sshkey *key, FILE *f, int generic,
+ 
+ 	return success;
+ }
++
++/*
++ * Decoded a DNS wire-format name to the commonly
++ * used, dot-separated format of labels.
++ * Returns a dynamically allocated string on success
++ * and NULL on error.
++ */
++char*
++dns_decode_name(const char* data, size_t len) {
++    size_t      index  = 0;
++
++    char*  decoded = NULL;
++    size_t size    = 0;
++
++    uint8_t next_label_len;
++    do {
++        next_label_len = data[index];
++
++        char* old_decoded = decoded;
++
++        if(old_decoded) {
++            decoded = malloc(size + next_label_len + 2);
++            memcpy(decoded, old_decoded, size);
++            decoded[size] = '.';
++            memcpy(decoded + size + 1, data + index + 1, next_label_len);
++            decoded[size + next_label_len + 1] = 0;
++
++            size += 1;
++
++            free(old_decoded);
++        }
++        else {
++            decoded = malloc(next_label_len + 1);
++            memcpy(decoded, data + index + 1, next_label_len);
++            decoded[next_label_len] = 0;
++        }
++
++        size  += next_label_len;
++        index += next_label_len + 1;
++    } while(next_label_len > 0 && index + next_label_len <= len);
++
++    return decoded;
++}
+diff --git a/dns.h b/dns.h
+index bba0095db..e0a737f12 100644
+--- a/dns.h
++++ b/dns.h
+@@ -59,4 +59,6 @@ int	export_dns_rr(const char *, struct sshkey *, FILE *, int, int);
+ 
+ const char* dns_result_totext(unsigned int res);
+ 
++char* dns_decode_name(const char* data, size_t len);
++
+ #endif /* DNS_H */
+diff --git a/ssh.c b/ssh.c
+index 95871013f..c295653e4 100644
+--- a/ssh.c
++++ b/ssh.c
+@@ -284,43 +284,11 @@ resolve_srv(const char* orig_name, int *port) {
+             uint16_t prio   = ntohs(*(uint16_t*)srv.rdi_data);
+             uint16_t weight = ntohs(*(uint16_t*)(srv.rdi_data + 2));
+             uint16_t port   = ntohs(*(uint16_t*)(srv.rdi_data + 4));
++            char* target    = dns_decode_name(srv.rdi_data + 6, srv.rdi_length - 6);
+ 
+-            if(prio < cur_prio || (prio == cur_prio && weight > cur_weight)) {
+-                const char* target_labels = srv.rdi_data + 6;
+-                size_t      target_index  = 0;
+-
+-                char*  target = NULL;
+-                size_t target_size = 0;
+-
+-                uint8_t next_label_len;
+-                do {
+-                    next_label_len = target_labels[target_index];
+-
+-                    char* old_target = target;
+-
+-                    if(old_target) {
+-                        target = malloc(target_size + next_label_len + 2);
+-                        memcpy(target, old_target, target_size);
+-                        target[target_size] = '.';
+-                        memcpy(target + target_size + 1, target_labels + target_index + 1, next_label_len);
+-                        target[target_size + next_label_len + 1] = 0;
+-
+-                        target_size += 1;
+-
+-                        free(old_target);
+-                    }
+-                    else {
+-                        target = malloc(next_label_len + 1);
+-                        memcpy(target, target_labels + target_index + 1, next_label_len);
+-                        target[next_label_len] = 0;
+-                    }
+-
+-                    target_size  += next_label_len;
+-                    target_index += next_label_len + 1;
+-                } while(next_label_len > 0 && target_index + next_label_len <= srv.rdi_length - 6);
+-
+-                debug2_f("Found SRV record pointing at %s:%u (weight %u, prio %u)", target, port, weight, prio);
++            debug2_f("Found SRV record pointing at %s:%u (weight %u, prio %u)", target, port, weight, prio);
+ 
++            if(prio < cur_prio || (prio == cur_prio && weight > cur_weight)) {
+                 cur_port   = port;
+                 cur_target = target;
+                 cur_weight = weight;
+-- 
+2.44.1
+
+
+From ac087b03f2733b128616bb575c11c511b81b6b39 Mon Sep 17 00:00:00 2001
+From: Mara Sophie Grosch <littlefox@lf-net.org>
+Date: Sun, 14 Feb 2021 00:20:26 +0100
+Subject: [PATCH 3/4] Add some unit tests for dns_decode_name
+
+---
+ Makefile.in                   | 17 +++++++++++++
+ dns.c                         | 32 ++++++++++++++++-------
+ regress/Makefile              |  1 +
+ regress/unittests/Makefile    |  3 ++-
+ regress/unittests/dns/tests.c | 48 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 91 insertions(+), 10 deletions(-)
+ create mode 100644 regress/unittests/dns/tests.c
+
+diff --git a/Makefile.in b/Makefile.in
+index e1b77ebc6..4f30d0c5f 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -288,6 +288,8 @@ clean:	regressclean
+ 	rm -f regress/unittests/bitmap/test_bitmap$(EXEEXT)
+ 	rm -f regress/unittests/conversion/*.o
+ 	rm -f regress/unittests/conversion/test_conversion$(EXEEXT)
++	rm -f regress/unittests/dns/*.o
++	rm -f regress/unittests/dns/test_dns$(EXEEXT)
+ 	rm -f regress/unittests/hostkeys/*.o
+ 	rm -f regress/unittests/hostkeys/test_hostkeys$(EXEEXT)
+ 	rm -f regress/unittests/kex/*.o
+@@ -325,6 +327,8 @@ distclean:	regressclean
+ 	rm -f regress/unittests/bitmap/test_bitmap
+ 	rm -f regress/unittests/conversion/*.o
+ 	rm -f regress/unittests/conversion/test_conversion
++	rm -f regress/unittests/dns/*.o
++	rm -f regress/unittests/dns/test_dns
+ 	rm -f regress/unittests/hostkeys/*.o
+ 	rm -f regress/unittests/hostkeys/test_hostkeys
+ 	rm -f regress/unittests/kex/*.o
+@@ -510,6 +514,7 @@ regress-prep:
+ 	$(MKDIR_P) `pwd`/regress/unittests/authopt
+ 	$(MKDIR_P) `pwd`/regress/unittests/bitmap
+ 	$(MKDIR_P) `pwd`/regress/unittests/conversion
++	$(MKDIR_P) `pwd`/regress/unittests/dns
+ 	$(MKDIR_P) `pwd`/regress/unittests/hostkeys
+ 	$(MKDIR_P) `pwd`/regress/unittests/kex
+ 	$(MKDIR_P) `pwd`/regress/unittests/match
+@@ -629,6 +634,17 @@ regress/unittests/conversion/test_conversion$(EXEEXT): \
+ 	    regress/unittests/test_helper/libtest_helper.a \
+ 	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+ 
++UNITTESTS_TEST_DNS_OBJS=\
++	regress/unittests/dns/tests.o \
++	$(SKOBJS)
++
++regress/unittests/dns/test_dns$(EXEEXT): \
++    ${UNITTESTS_TEST_DNS_OBJS} \
++    regress/unittests/test_helper/libtest_helper.a libssh.a
++	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_DNS_OBJS) \
++	    regress/unittests/test_helper/libtest_helper.a \
++	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(LIBS)
++
+ UNITTESTS_TEST_KEX_OBJS=\
+ 	regress/unittests/kex/tests.o \
+ 	regress/unittests/kex/test_kex.o \
+@@ -718,6 +734,7 @@ regress-unit-binaries: regress-prep $(REGRESSLIBS) \
+ 	regress/unittests/authopt/test_authopt$(EXEEXT) \
+ 	regress/unittests/bitmap/test_bitmap$(EXEEXT) \
+ 	regress/unittests/conversion/test_conversion$(EXEEXT) \
++	regress/unittests/dns/test_dns$(EXEEXT) \
+ 	regress/unittests/hostkeys/test_hostkeys$(EXEEXT) \
+ 	regress/unittests/kex/test_kex$(EXEEXT) \
+ 	regress/unittests/match/test_match$(EXEEXT) \
+diff --git a/dns.c b/dns.c
+index ab156f5c3..dfd4a49bb 100644
+--- a/dns.c
++++ b/dns.c
+@@ -351,23 +351,34 @@ export_dns_rr(const char *hostname, struct sshkey *key, FILE *f, int generic,
+  */
+ char*
+ dns_decode_name(const char* data, size_t len) {
+-    size_t      index  = 0;
++    if(len < 1) {
++        return NULL;
++    }
+ 
+     char*  decoded = NULL;
+     size_t size    = 0;
+ 
+-    uint8_t next_label_len;
+-    do {
+-        next_label_len = data[index];
++    size_t index  = 0;
++    uint8_t next_label_len = data[index++];
++
++    while(1) {
++        if(index + next_label_len > len) {
++            return NULL;
++        }
++
++        if(!next_label_len) {
++            return decoded;
++        }
+ 
+         char* old_decoded = decoded;
+ 
+         if(old_decoded) {
+             decoded = malloc(size + next_label_len + 2);
++            decoded[size + next_label_len + 1] = 0;
++
+             memcpy(decoded, old_decoded, size);
+             decoded[size] = '.';
+-            memcpy(decoded + size + 1, data + index + 1, next_label_len);
+-            decoded[size + next_label_len + 1] = 0;
++            memcpy(decoded + size + 1, data + index, next_label_len);
+ 
+             size += 1;
+ 
+@@ -375,13 +386,16 @@ dns_decode_name(const char* data, size_t len) {
+         }
+         else {
+             decoded = malloc(next_label_len + 1);
+-            memcpy(decoded, data + index + 1, next_label_len);
+             decoded[next_label_len] = 0;
++
++            memcpy(decoded, data + index, next_label_len);
+         }
+ 
+         size  += next_label_len;
+-        index += next_label_len + 1;
+-    } while(next_label_len > 0 && index + next_label_len <= len);
++        index += next_label_len;
++
++        next_label_len = data[index++];
++    }
+ 
+     return decoded;
+ }
+diff --git a/regress/Makefile b/regress/Makefile
+index 7f7349706..af22225c5 100644
+--- a/regress/Makefile
++++ b/regress/Makefile
+@@ -305,6 +305,7 @@ unit:
+ 			-d ${.CURDIR}/unittests/authopt/testdata ; \
+ 		$$V ${.OBJDIR}/unittests/bitmap/test_bitmap ; \
+ 		$$V ${.OBJDIR}/unittests/conversion/test_conversion ; \
++		$$V ${.OBJDIR}/unittests/dns/test_dns ; \
+ 		$$V ${.OBJDIR}/unittests/kex/test_kex ; \
+ 		$$V ${.OBJDIR}/unittests/hostkeys/test_hostkeys \
+ 			-d ${.CURDIR}/unittests/hostkeys/testdata ; \
+diff --git a/regress/unittests/Makefile b/regress/unittests/Makefile
+index e370900e4..3032c2d1b 100644
+--- a/regress/unittests/Makefile
++++ b/regress/unittests/Makefile
+@@ -1,6 +1,7 @@
+ #	$OpenBSD: Makefile,v 1.13 2023/09/24 08:14:13 claudio Exp $
+ 
+-SUBDIR=	test_helper sshbuf sshkey bitmap kex hostkeys utf8 match conversion
++REGRESS_FAIL_EARLY?=	yes
++SUBDIR=	test_helper sshbuf sshkey bitmap kex hostkeys utf8 match conversion dns
+ SUBDIR+=authopt misc sshsig
+ 
+ .include <bsd.subdir.mk>
+diff --git a/regress/unittests/dns/tests.c b/regress/unittests/dns/tests.c
+new file mode 100644
+index 000000000..53e6d0a6e
+--- /dev/null
++++ b/regress/unittests/dns/tests.c
+@@ -0,0 +1,48 @@
++/* 	$OpenBSD: tests.c,v 1.3 2021/01/18 11:43:34 dtucker Exp $ */
++/*
++ * Regress test for dns utility functions
++ *
++ * Placed in the public domain
++ */
++
++#include "includes.h"
++
++#include <sys/types.h>
++#include <sys/param.h>
++#include <stdio.h>
++#ifdef HAVE_STDINT_H
++#include <stdint.h>
++#endif
++#include <stdlib.h>
++#include <string.h>
++
++#include "../test_helper/test_helper.h"
++
++#include "sshkey.h"
++#include "dns.h"
++
++void
++tests(void)
++{
++    TEST_START("dns_decode_name");
++
++    // no data at all
++	ASSERT_PTR_EQ(dns_decode_name(0, 0), NULL);
++
++    // some data, but truncated a lot
++	ASSERT_PTR_EQ(dns_decode_name("\04example", 4), NULL);
++
++    // some data, but truncated (trailing zero length label missing)
++	ASSERT_PTR_EQ(dns_decode_name("\07example", 8), NULL);
++
++    // single label, correct data
++	ASSERT_STRING_EQ(dns_decode_name("\07example", 9), "example");
++
++    // two labels, correct data
++	ASSERT_STRING_EQ(dns_decode_name("\07example\03com", 13), "example.com");
++
++    // three labels, correct data
++	ASSERT_STRING_EQ(dns_decode_name("\03www\07example\03com", 17), "www.example.com");
++
++	TEST_DONE();
++}
+-- 
+2.44.1
+
+
+From d17e6c0b75b56914b755356e464b8aa77b442fa3 Mon Sep 17 00:00:00 2001
+From: Mara Sophie Grosch <littlefox@lf-net.org>
+Date: Sun, 14 Feb 2021 00:35:53 +0100
+Subject: [PATCH 4/4] Code reordering: fix uninitialized use
+
+---
+ ssh.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/ssh.c b/ssh.c
+index c295653e4..144825214 100644
+--- a/ssh.c
++++ b/ssh.c
+@@ -252,6 +252,9 @@ default_client_percent_dollar_expand(const char *str,
+  */
+ static char *
+ resolve_srv(const char* orig_name, int *port) {
++    uint16_t cur_port   = 0;
++    char*    cur_target = NULL;
++
+     const size_t prefix_len = 10;
+     const size_t orig_len = strlen(orig_name);
+     char* name = malloc(prefix_len + orig_len + 1);
+@@ -274,8 +277,6 @@ resolve_srv(const char* orig_name, int *port) {
+ 
+     uint16_t cur_prio = UINT16_MAX;
+     uint16_t cur_weight = 0;
+-    uint16_t cur_port   = 0;
+-    char*    cur_target = NULL;
+ 
+     for(unsigned i = 0; i < srvs->rri_nrdatas; ++i) {
+         struct rdatainfo srv = srvs->rri_rdatas[i];
+-- 
+2.44.1
+
