@@ -6,7 +6,9 @@ in
   home.packages = with pkgs; flatten [
     # C
     gcc
+    gdb
     clang-tools
+    binutils
 
     # C Sharp
     dotnetCorePackages.sdk_6_0
