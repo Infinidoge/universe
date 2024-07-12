@@ -47,7 +47,7 @@
 # Certificate Authority
 - [ ] SSH CA
   - https://vriska.dev/trusting-ssh-keys-using-a-centralized-hardware-secret/
-- [ ] SSL CA
+- [x] SSL CA
 - [ ] Signing server?
 
 # NixVim
