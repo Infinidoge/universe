@@ -13,7 +13,6 @@
       ];
     };
     plugins = with pkgs; [ ];
-    pass.enable = true;
     theme = "Adapta-Nokto";
   };
 }
