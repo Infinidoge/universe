@@ -72,4 +72,6 @@ in
     zig
     zls
   ];
+
+  programs.java.enable = true;
 }
