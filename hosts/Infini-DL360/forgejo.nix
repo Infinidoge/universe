@@ -18,7 +18,7 @@ in
 
     lfs.enable = true;
 
-    mailerPasswordFile = config.secrets.smtp-password;
+    secrets.mailer.PASSWD = config.secrets.smtp-password;
     settings = {
       server = {
         ROOT_URL = "https://${domain}/";
