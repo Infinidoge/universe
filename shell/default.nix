@@ -4,8 +4,8 @@
   perSystem = { pkgs, inputs', ... }: {
     devshells.default =
       let
-        pythonEnv = (pkgs.python311.withPackages (p: with p; [
-          pkgs.qtile.passthru.unwrapped
+        pythonEnv = (pkgs.python3.withPackages (p: with p; [
+          qtile
         ]));
       in
       {
