@@ -37,6 +37,10 @@ in
     };
   };
 
+  qtile = prev.qtile.overrideAttrs {
+    version = final.python3Packages.qtile.version;
+  };
+
   python-grip = fork.python3Packages.grip;
 
   factorio-headless = latest.factorio-headless.overrideAttrs (old: {
