@@ -56,7 +56,10 @@
       surround.enable = true;
       todo-comments.enable = true;
       treesitter-context.enable = false;
-      treesitter.enable = true;
+      treesitter = {
+        enable = true;
+        folding = false;
+      };
       ts-autotag.enable = true;
       ts-context-commentstring.enable = true;
       typst-vim.enable = true;
