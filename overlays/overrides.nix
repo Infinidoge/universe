@@ -28,9 +28,9 @@ in
   python3 = prev.python3.override {
     packageOverrides = pythonFinal: pythonPrev: {
       qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
-        version = "0.0.0+unstable-2024-03-13";
+        version = "0.0.0+unstable-2024-06-25";
         src = oldAttrs.src.override {
-          rev = "c4d3c6e602f9ed619086cc3942bd1c47ebabedbf";
+          rev = "dfb7186eed9253fff9958877bb3fe1e5e0ffcf32";
           hash = "sha256-1mvS/bvXDplkiG7GzDFu9cEFV9onbvNTYbhb4W1qj+0=";
         };
       });
