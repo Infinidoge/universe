@@ -4,7 +4,7 @@
   inputs = {
     ### Nixpkgs ###
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    latest.url = "github:nixos/nixpkgs";
+    latest.url = "github:NixOS/nixpkgs";
     fork.url = "github:Infinidoge/nixpkgs/combined/all";
     stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
