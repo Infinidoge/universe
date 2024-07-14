@@ -16,7 +16,6 @@ in
     (mkIf (any' (with cfg; [ amdgpu nvidia intel ])) {
       hardware.opengl = {
         enable = true;
-        driSupport = true;
         driSupport32Bit = true;
 
         extraPackages = with pkgs; flatten [

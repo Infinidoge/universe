@@ -131,7 +131,6 @@ in
       # Taken from the programs.steam option, reimplemented here to move software into userland
       hardware.opengl = {
         enable = true;
-        driSupport = true;
         driSupport32Bit = true;
       };
 
