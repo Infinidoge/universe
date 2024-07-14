@@ -162,6 +162,7 @@
 
               # --- Universe Modules ---
               ./secrets
+              private.nixosModules.secrets
 
               # --- Library Modules ---
               inputs.agenix.nixosModules.age
