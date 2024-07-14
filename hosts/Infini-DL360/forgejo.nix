@@ -4,6 +4,8 @@ let
   domain = config.common.subdomain "git";
 in
 {
+  persist.directories = [ "/var/lib/private/gitea-runner/" ];
+
   services.forgejo = {
     enable = true;
 
