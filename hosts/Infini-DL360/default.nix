@@ -32,6 +32,7 @@
     boot.grub.enable = true;
     boot.timeout = 5;
     hardware.form.server = true;
+    virtualization.enable = true;
   };
 
   persist = {
