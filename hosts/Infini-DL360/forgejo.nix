@@ -64,7 +64,7 @@ in
       enable = true;
       name = "Local Priviledged";
       url = "https://${domain}";
-      token = common.forgejo.actions.global_token;
+      token = common.forgejo.actions.user_token;
       labels = [
         "local:host"
       ];
