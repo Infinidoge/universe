@@ -75,7 +75,7 @@ in
         gawk
         gitMinimal
         gnused
-        nodejs
+        nix
         wget
       ];
     };
