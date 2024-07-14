@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, common, ... }:
 let
   cfg = config.services.forgejo;
   domain = config.common.subdomain "git";
@@ -55,6 +55,34 @@ in
         AUTHOR = "Infinidoge's Void";
         DESCRIPTION = "A Forgejo instance hosting Infinidoge's personal repositories";
       };
+    };
+  };
+
+  services.gitea-actions-runner.package = pkgs.forgejo-runner;
+  services.gitea-actions-runner.instances = {
+    local_priviledged = {
+      enable = true;
+      name = "Local Priviledged";
+      url = "https://${domain}";
+      token = common.forgejo.actions.global_token;
+      labels = [
+        "local:host"
+      ];
+      hostPackages = with pkgs; [
+        bash
+        coreutils
+        curl
+        gawk
+        gitMinimal
+        gnused
+        nodejs
+        wget
+      ];
+    };
+    local = {
+      enable = false;
+      token = common.forgejo.actions.global_token;
+      labels = [ ];
     };
   };
 
