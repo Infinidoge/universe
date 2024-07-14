@@ -62,9 +62,9 @@ in
 
   services.gitea-actions-runner.package = pkgs.forgejo-runner;
   services.gitea-actions-runner.instances = {
-    local_priviledged = {
+    local_privileged = {
       enable = true;
-      name = "Local Priviledged";
+      name = "Local Privileged";
       url = "https://${domain}";
       token = common.forgejo.actions.user_token;
       labels = [
