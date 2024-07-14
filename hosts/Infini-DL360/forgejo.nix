@@ -80,9 +80,16 @@ in
       ];
     };
     local = {
-      enable = false;
+      enable = true;
+      name = "Local";
+      url = "https://${domain}";
       token = common.forgejo.actions.global_token;
-      labels = [ ];
+      labels = [
+        "docker:docker://gitea/runner-images:ubuntu-latest"
+        "ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"
+        "ubuntu-22.04:docker://gitea/runner-images:ubuntu-22.04"
+        "ubuntu-20.04:docker://gitea/runner-images:ubuntu-20.04"
+      ];
     };
   };
 
