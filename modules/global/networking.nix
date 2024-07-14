@@ -26,6 +26,8 @@
       "2696:4700:4700::1111"
     ];
 
+    firewall.trustedInterfaces = [ "br-+" ];
+
     nftables = {
       enable = true;
     };
