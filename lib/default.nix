@@ -64,6 +64,7 @@ rec {
   };
 
   disko = import ./disko.nix { inherit lib; };
+  filesystems = import ./filesystems.nix { inherit lib self; };
 } // (
   import ./digga.nix { inherit lib; }
 ) // (
