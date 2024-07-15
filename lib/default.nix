@@ -49,14 +49,17 @@ rec {
 
   spread = function: list: if list == [ ] then function else spread (function (head list)) (tail list);
 
+  isFunction = obj: (typeOf obj) == "lambda" || ((typeOf obj) == "set" && obj ? __functor);
+
   # Takes a function and makes it lazy, by consuming arguments and applying it to the inner function first
   # before calling the original function
-  lazy = func: inner: {
+  # if the inner object is not actually a function, then just calls the original function
+  lazy = func: inner: if !(isFunction inner) then func inner else {
     inherit func;
     app = inner;
     __functor = self: input:
       let app = self.app input; in
-      if (typeOf app) == "lambda" then self // { inherit app; }
+      if isFunction app then self // { inherit app; }
       else self.func app;
   };
 
