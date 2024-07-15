@@ -1,9 +1,6 @@
 { config, main, pkgs, lib, ... }:
-let
-  ifGraphical = lib.optionals main.info.graphical;
-  ifGraphical' = lib.optional main.info.graphical;
-in
-lib.mkIf main.info.graphical {
+lib.mkIf main.info.graphical
+{
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: with epkgs; [ vterm pdf-tools emacsql-sqlite ];
@@ -23,8 +20,6 @@ lib.mkIf main.info.graphical {
     packages = with pkgs; lib.flatten [
       # --- Doom Emacs ---
       mlocate
-
-      gnumake
 
       # --- :tools ---
       # :tools editorconfig
@@ -49,33 +44,31 @@ lib.mkIf main.info.graphical {
       dockfmt
 
       # :lang latex
-      (ifGraphical [
-        (texlive.combine {
-          inherit (texlive)
-            scheme-medium
+      (texlive.combine {
+        inherit (texlive)
+          scheme-medium
 
-            apa7
-            apacite
-            biblatex
-            biblatex-apa
-            biblatex-chicago
-            capt-of minted
-            catchfile
-            endfloat
-            framed
-            fvextra
-            hanging
-            lipsum
-            mleftright
-            scalerel
-            threeparttable
-            upquote
-            wrapfig
-            xstring
-            ;
-        })
-        biber
-      ])
+          apa7
+          apacite
+          biblatex
+          biblatex-apa
+          biblatex-chicago
+          capt-of minted
+          catchfile
+          endfloat
+          framed
+          fvextra
+          hanging
+          lipsum
+          mleftright
+          scalerel
+          threeparttable
+          upquote
+          wrapfig
+          xstring
+          ;
+      })
+      biber
 
       # :lang markdown
       # python3Packages.grip
