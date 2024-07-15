@@ -1,4 +1,5 @@
-{ main, pkgs, ... }: {
+{ main, pkgs, ... }:
+{
   programs.rofi = {
     enable = main.info.graphical;
     extraConfig = {
