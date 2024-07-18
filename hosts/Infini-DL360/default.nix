@@ -129,6 +129,16 @@
     group = "nogroup";
   };
 
+  users.users.neofetch = {
+    description = "SSH Neofetch";
+    isSystemUser = true;
+    group = "nogroup";
+    hashedPassword = "$y$j9T$pixfaOyCz4Sbf8KE8AGVk.$TQKPzMvPan8qrO08kqjuJZO4LlUY7Yjxho0wIbcsmV3"; # :)
+    shell = pkgs.bash;
+  };
+
+  security.pam.services.sshd.allowNullPassword = true;
+
   systemd.tmpfiles.settings."30-external" = {
     "/srv/external".d = { user = "root"; group = "root"; };
     "/srv/external/incoming".d = { user = "incoming"; group = "incoming"; mode = "0770"; };
@@ -154,5 +164,13 @@
       PermitTunnel no
       GatewayPorts no
       PasswordAuthentication no
+
+    Match user neofetch
+      ForceCommand ${pkgs.hyfetch}/bin/neowofetch --config ${config.home-manager.users.infinidoge.xdg.configFile."neofetch/config.conf".source} --backend ascii
+      PermitTTY no
+      DisableForwarding yes
+      AuthenticationMethods none
+      KbdInteractiveAuthentication yes
+      PermitEmptyPasswords yes
   '';
 }
