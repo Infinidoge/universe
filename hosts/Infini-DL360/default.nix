@@ -123,6 +123,12 @@
   };
   users.groups.incoming = { };
 
+  users.users.jump = {
+    description = "User for ssh jumping";
+    isSystemUser = true;
+    group = "nogroup";
+  };
+
   systemd.tmpfiles.settings."30-external" = {
     "/srv/external".d = { user = "root"; group = "root"; };
     "/srv/external/incoming".d = { user = "incoming"; group = "incoming"; mode = "0770"; };
@@ -138,6 +144,15 @@
       X11Forwarding no
       AllowTcpForwarding no
       KbdInteractiveAuthentication no
+      PasswordAuthentication no
+
+    Match user jump
+      AuthorizedKeysFile /etc/ssh/authorized_keys.d/infinidoge /etc/ssh/authorized_keys.d/%u
+      ForceCommand ${pkgs.shadow}/bin/nologin
+      PermitTTY no
+      X11Forwarding no
+      PermitTunnel no
+      GatewayPorts no
       PasswordAuthentication no
   '';
 }
