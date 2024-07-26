@@ -14,6 +14,8 @@ in
       "/var/lib/tailscale"
 
       "/root/.ssh"
+
+      (optional config.services.fprintd.enable "/var/lib/fprint")
     ];
     files = [
       "/etc/machine-id"

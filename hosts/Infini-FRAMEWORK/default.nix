@@ -27,7 +27,6 @@
       form.laptop = true;
 
       peripherals = {
-        fprint-sensor.enable = true;
         printing.enable = true;
       };
     };
@@ -41,6 +40,7 @@
     };
   };
 
+  services.fprintd.enable = true;
   virtualisation.enable = true;
 
   programs.ns-usbloader.enable = true;
