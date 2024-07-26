@@ -29,11 +29,11 @@
   nix.distributedBuilds = false;
 
   modules = {
-    boot.grub.enable = true;
-    boot.timeout = 5;
     hardware.form.server = true;
     virtualization.enable = true;
   };
+
+  boot.loader.timeout = 5;
 
   persist = {
     directories = [

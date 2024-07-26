@@ -9,7 +9,6 @@ with lib;
   system.stateVersion = "23.11";
   modules = {
     hardware.form.raspi = true;
-    boot.ignore = true;
   };
 
   nixpkgs.overlays = [

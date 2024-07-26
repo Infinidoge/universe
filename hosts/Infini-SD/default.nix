@@ -13,7 +13,6 @@
   };
 
   modules = {
-    boot.grub.enable = true;
     hardware = {
       form.server = true;
     };
