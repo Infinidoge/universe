@@ -84,19 +84,20 @@ in
   #  in
   #  (lib.mkForce "${editorScript}/bin/emacseditor");
 
+  fonts.packages = with pkgs; [
+    (nerdfonts.override {
+      fonts = [ "DejaVuSansMono" "NerdFontsSymbolsOnly" ];
+    })
+    dejavu_fonts
+    emacs-all-the-icons-fonts
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ "DejaVuSansMono" ];
+  };
+
+
   modules = {
-    locale.fonts = {
-      fonts = with pkgs; [
-        (nerdfonts.override { fonts = config.modules.locale.fonts.defaults.monospace ++ [ "NerdFontsSymbolsOnly" ]; })
-        dejavu_fonts
-        emacs-all-the-icons-fonts
-      ];
-
-      defaults = {
-        monospace = [ "DejaVuSansMono" ];
-      };
-    };
-
     desktop.wm.qtile.enable = true;
   };
 
