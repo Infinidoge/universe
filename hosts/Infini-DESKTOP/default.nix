@@ -48,13 +48,14 @@
       gaming.enableAll = true;
       gaming.olympus.enable = false; # Build is currently broken
     };
-    virtualization.enable = true;
     software.minipro.enable = true;
 
     backups.extraExcludes = [
       "/home/infinidoge/Hydrus"
     ];
   };
+
+  virtualisation.enable = true;
 
   home = { pkgs, ... }: {
     home.packages = with pkgs; [

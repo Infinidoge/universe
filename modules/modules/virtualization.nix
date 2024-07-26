@@ -2,22 +2,22 @@
 with lib;
 with lib.our;
 let
-  cfg = config.modules.virtualization;
+  cfg = config.virtualisation;
 in
 {
-  options.modules.virtualization = {
+  options.virtualisation = {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = {
     virtualisation = {
-      libvirtd.enable = true;
-      docker.enable = true;
+      libvirtd.enable = mkDefault cfg.enable;
+      docker.enable = mkDefault cfg.enable;
     };
-    programs.dconf.enable = true;
-    environment.systemPackages = with pkgs; [ virt-manager docker-compose ];
-    persist.directories = [
-      "/var/lib/libvirt"
-    ];
+
+    programs.dconf.enable = mkIf cfg.libvirtd.enable true;
+    environment.systemPackages = (optional cfg.libvirtd.enable pkgs.virt-manager)
+      ++ (optional cfg.docker.enable pkgs.docker-compose);
+    persist.directories = optional cfg.libvirtd.enable "/var/lib/libvirt";
   };
 }
