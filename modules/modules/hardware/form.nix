@@ -71,6 +71,7 @@ in
     })
 
     (mkIf cfg.raspi {
+      boot.loader.grub.enable = false;
       # imports = [ inputs.nixos-hardware.outputs.nixosModules.raspberry-pi-4 ];
 
       # modules.hardware = {

@@ -20,7 +20,6 @@
   nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
 
   modules = {
-    boot.grub.enable = true;
     hardware = {
       gpu.intel = true;
       form.laptop = true;

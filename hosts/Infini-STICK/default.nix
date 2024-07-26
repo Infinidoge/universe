@@ -9,7 +9,6 @@
   boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   modules = {
-    boot.grub.enable = true;
     hardware = {
       audio.enable = true;
       form.portable = true;

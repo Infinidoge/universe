@@ -9,10 +9,6 @@
   info.loc.home = true;
 
   modules = {
-    boot = {
-      grub.enable = true;
-      timeout = 1;
-    };
     hardware = {
       # gpu.nvidia = true;
       form.server = true;
@@ -25,6 +21,8 @@
       };
     };
   };
+
+  boot.loader.timeout = 1;
 
   services = {
     avahi.reflector = true;

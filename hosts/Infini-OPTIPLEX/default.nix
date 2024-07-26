@@ -9,15 +9,12 @@
   info.loc.purdue = true;
 
   modules = {
-    boot = {
-      grub.enable = true;
-      timeout = 1;
-    };
-
     hardware.form.desktop = true;
     hardware.gpu.intel = true;
     desktop.wm.enable = true;
   };
+
+  boot.loader.timeout = 1;
 
   persist = {
     directories = [

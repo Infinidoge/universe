@@ -18,7 +18,6 @@
   };
 
   modules = {
-    boot.grub.enable = true;
     hardware = {
       gpu.nvidia = true;
       wireless.enable = true;
