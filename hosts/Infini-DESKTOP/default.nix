@@ -48,13 +48,11 @@
 
   virtualisation.enable = true;
 
-  home = { pkgs, ... }: {
-    home.packages = with pkgs; [
-      arduino
-      hydrus
-      sidequest
-    ];
-  };
+  home.home.packages = with pkgs; [
+    arduino
+    hydrus
+    sidequest
+  ];
 
   programs.ns-usbloader.enable = true;
   programs.minipro.enable = true;
