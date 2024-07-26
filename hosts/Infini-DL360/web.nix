@@ -35,7 +35,20 @@ let
   };
 in
 {
+  services.nginx.commonHttpConfig = ''
+    map $request_uri $jump_link {
+      default "https://inx.moe";
+      volatile;
+      include /srv/web/jump.map;
+    }
+  '';
+
   services.nginx.virtualHosts = websites // redirects // {
+    "j.inx.moe" = ssl-optional // {
+      locations."/" = {
+        return = "302 $jump_link";
+      };
+    };
     "blahaj.inx.moe" = ssl-optional // {
       locations."/" = {
         tryFiles = "/Blahaj.png =404";
