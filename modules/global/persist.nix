@@ -1,8 +1,10 @@
 { config, lib, ... }:
-with lib;
+let
+  inherit (lib) flatten optional;
+in
 {
   persist = {
-    directories = [
+    directories = flatten [
       "/home"
       "/etc/nixos"
       "/etc/nixos-private"
