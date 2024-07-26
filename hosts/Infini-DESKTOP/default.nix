@@ -48,7 +48,6 @@
       gaming.enableAll = true;
       gaming.olympus.enable = false; # Build is currently broken
     };
-    software.minipro.enable = true;
 
     backups.extraExcludes = [
       "/home/infinidoge/Hydrus"
@@ -66,6 +65,7 @@
   };
 
   programs.ns-usbloader.enable = true;
+  programs.minipro.enable = true;
 
   services.minecraft-servers = {
     enable = true;
