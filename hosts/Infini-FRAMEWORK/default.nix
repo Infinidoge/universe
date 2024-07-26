@@ -37,8 +37,9 @@
         puzzles.enable = true;
       };
     };
-    virtualization.enable = true;
   };
+
+  virtualisation.enable = true;
 
   programs.ns-usbloader.enable = true;
   hardware.uinput.enable = true;

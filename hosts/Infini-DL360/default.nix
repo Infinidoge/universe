@@ -30,10 +30,11 @@
 
   modules = {
     hardware.form.server = true;
-    virtualization.enable = true;
   };
 
   boot.loader.timeout = 5;
+
+  virtualisation.enable = true;
 
   persist = {
     directories = [
