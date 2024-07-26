@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = lib.lists.flatten [
     ./hardware-configuration.nix
     ./filesystems.nix
@@ -22,9 +22,6 @@
       gpu.nvidia = true;
       wireless.enable = true;
       form.desktop = true;
-
-      # FIXME: openrazer does not properly build under Linux 5.18
-      # peripherals.razer.enable = true;
     };
     services = {
       apcupsd = {
@@ -52,10 +49,17 @@
     arduino
     hydrus
     sidequest
+    razergenie # TODO: replace with polychromatic
   ];
+
 
   programs.ns-usbloader.enable = true;
   programs.minipro.enable = true;
+
+  hardware.openrazer = {
+    enable = true;
+    users = [ config.user.name ];
+  };
 
   services.minecraft-servers = {
     enable = true;
