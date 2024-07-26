@@ -27,14 +27,6 @@
       # peripherals.razer.enable = true;
     };
     services = {
-      foldingathome = {
-        enable = false;
-        user = "Infinidoge";
-        extra = {
-          control = true;
-          viewer = true;
-        };
-      };
       apcupsd = {
         enable = true;
         primary = true;
