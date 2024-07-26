@@ -49,7 +49,7 @@ in
         extraLibraries = pkgs:
           let
             prevLibs = if prev ? extraLibraries then prev.extraLibraries pkgs else [ ];
-            additionalLibs = with config.hardware.opengl;
+            additionalLibs = with config.hardware.graphics;
               if pkgs.stdenv.hostPlatform.is64bit
               then [ package ] ++ extraPackages
               else [ package32 ] ++ extraPackages32;
@@ -129,9 +129,9 @@ in
 
     (mkIf cfg.enable {
       # Taken from the programs.steam option, reimplemented here to move software into userland
-      hardware.opengl = {
+      hardware.graphics = {
         enable = true;
-        driSupport32Bit = true;
+        enable32Bit = true;
       };
 
       hardware.pulseaudio.support32Bit = config.hardware.pulseaudio.enable;
