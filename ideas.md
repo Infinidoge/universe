@@ -9,3 +9,4 @@
   - UUIDs can be generated using `uuidgen`. `uuidgen --md5 --namespace <UUID> --name <NAME>` is useful for deterministically generating UUIDs. Use the namespace to represent the computer itself, and the name to represent the partitions.
 - Setup Nix LSP with [nil](https://github.com/oxalica/nil)
 - Set timezone for portable devices with localtimed
+- Central proxy with Privoxy
