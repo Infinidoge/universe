@@ -14,9 +14,9 @@ in
 
   config = mkMerge [
     (mkIf (any' (with cfg; [ amdgpu nvidia intel ])) {
-      hardware.opengl = {
+      hardware.graphics = {
         enable = true;
-        driSupport32Bit = true;
+        enable32Bit = true;
 
         extraPackages = with pkgs; flatten [
           libvdpau-va-gl
