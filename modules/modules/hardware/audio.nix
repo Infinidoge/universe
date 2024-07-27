@@ -11,8 +11,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    sound.enable = true;
-
     services.pipewire = {
       enable = true;
       wireplumber.enable = true;
