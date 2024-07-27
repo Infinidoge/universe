@@ -47,6 +47,10 @@ in
     "sourcehut:"
     "git+https://git.sr.ht/"
     "git+ssh://git@git.sr.ht/"
+
+    "https://git.lix.systems/"
+    "git+https://git.lix.systems/"
+    "git+ssh://git@git.lix.systems/"
   ];
 
   nix.buildMachines = [
