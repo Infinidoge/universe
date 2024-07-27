@@ -60,7 +60,6 @@
     conduwuit.inputs.flake-compat.follows = "blank";
     conduwuit.inputs.flake-utils.follows = "flake-utils";
     conduwuit.inputs.nixpkgs.follows = "nixpkgs";
-    devshell.inputs.flake-utils.follows = "flake-utils";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
