@@ -320,7 +320,7 @@ in
       {
         keep-outputs = true;
         keep-derivations = true;
-        trusted-users = [ "hydra-queue-runner" ];
+        extra-trusted-users = [ "hydra" "hydra-queue-runner" "hydra-www" ];
       }
 
       (mkIf (versionOlder (getVersion config.nix.package.out) "2.4pre") {
@@ -418,6 +418,7 @@ in
     systemd.services.hydra-queue-runner = {
       wantedBy = [ "multi-user.target" ];
       requires = [ "hydra-init.service" ];
+      wants = [ "network-online.target" ];
       after = [ "hydra-init.service" "network.target" ];
       path = [ hydra-package pkgs.nettools pkgs.openssh pkgs.bzip2 config.nix.package ];
       restartTriggers = [ hydraConf ];
