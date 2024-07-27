@@ -1,6 +1,6 @@
-From 800c20af32526d650645f1ded7d2d0f576b61e25 Mon Sep 17 00:00:00 2001
+From 36229ee2c47d0d5f03e5a1ef28d70cd66d878907 Mon Sep 17 00:00:00 2001
 From: Infinidoge <infinidoge@inx.moe>
-Date: Tue, 21 May 2024 01:19:15 -0400
+Date: Sat, 27 Jul 2024 19:26:47 -0400
 Subject: [PATCH] force allow import from derivation
 
 ---
@@ -8,18 +8,18 @@ Subject: [PATCH] force allow import from derivation
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/script/hydra-eval-jobset b/src/script/hydra-eval-jobset
-index 72a386f5..208d182b 100755
+index a03ed6dd..64b48fe2 100755
 --- a/src/script/hydra-eval-jobset
 +++ b/src/script/hydra-eval-jobset
 @@ -372,7 +372,7 @@ sub evalJobs {
-                 inputsToArgs($inputInfo));
-     }
+     push @cmd, ("--max-jobs", 1);
+     push @cmd, "--meta";
+     push @cmd, "--force-recurse";
+-    push @cmd, ("--option", "allow-import-from-derivation", "false") if $config->{allow_import_from_derivation} // "true" ne "true";
++    push @cmd, ("--option", "allow-import-from-derivation", "true");
+     push @cmd, ("--workers", $config->{evaluator_workers} // 1);
+     push @cmd, ("--max-memory-size", $config->{evaluator_max_memory_size} // 4096);
  
--    push @cmd, "--no-allow-import-from-derivation" if $config->{allow_import_from_derivation} // "true" ne "true";
-+    push @cmd, "--allow-import-from-derivation";
- 
-     if (defined $ENV{'HYDRA_DEBUG'}) {
-         sub escape {
 -- 
-2.44.0
+2.45.2
 

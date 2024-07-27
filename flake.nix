@@ -30,6 +30,8 @@
     lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.lix.follows = "lix";
+    hydra.url = "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz";
+    hydra.inputs.lix.follows = "lix";
 
     ## Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
@@ -179,6 +181,7 @@
 
               # --- Domain-Specific Modules ---
               inputs.lix-module.nixosModules.default
+              inputs.hydra.nixosModules.overlayNixpkgsForThisHydra
               inputs.nix-minecraft.nixosModules.minecraft-servers
             ] ++ (self.lib.leaves ./modules);
           })
