@@ -4,7 +4,6 @@
   fw-ectool = pkgs.callPackage ./fw-ectool.nix { };
   hexagon = pkgs.callPackage ./hexagon.nix { };
   mcaselector = pkgs.callPackage ./mcaselector.nix { };
-  neocities = pkgs.callPackage ./neocities { };
   nix-modrinth-prefetch = pkgs.callPackage ./nix-modrinth-prefetch.nix { };
   olympus = pkgs.callPackage ./olympus.nix { };
   ponder = pkgs.callPackage ./ponder { };
