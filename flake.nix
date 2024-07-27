@@ -25,6 +25,12 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
 
     ### Domain-Specific Flake Inputs ###
+    ## Lix
+    lix = { url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz"; flake = false; };
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
+    lix-module.inputs.nixpkgs.follows = "nixpkgs";
+    lix-module.inputs.lix.follows = "lix";
+
     ## Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 
@@ -63,6 +69,7 @@
     git-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    lix-module.inputs.flake-utils.follows = "flake-utils";
     nix-minecraft.inputs.flake-compat.follows = "blank";
     nix-minecraft.inputs.flake-utils.follows = "flake-utils";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
@@ -172,6 +179,7 @@
               inputs.nixos-wsl.nixosModules.wsl
 
               # --- Domain-Specific Modules ---
+              inputs.lix-module.nixosModules.default
               inputs.nix-minecraft.nixosModules.minecraft-servers
             ] ++ (self.lib.leaves ./modules);
           })
