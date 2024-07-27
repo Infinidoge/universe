@@ -38,11 +38,21 @@ in
         (mkIf cfg.lutris.enable cfg.lutris.package)
         (mkIf cfg.olympus.enable cfg.olympus.package)
         (mkIf cfg.puzzles.enable cfg.puzzles.package)
+        (mkIf cfg.steam.enable protonup)
+        (mkIf cfg.steam.enable wineWowPackages.stable)
       ];
 
-      modules.software.steam = {
+      programs.steam = {
         enable = mkAliasDefinitions opt.steam.enable;
-        package = mkAliasDefinitions opt.steam.package;
+        package = cfg.steam.package.override (optionalAttrs config.modules.hardware.gpu.nvidia {
+          extraProfile = ''
+            unset VK_ICD_FILENAMES
+            export VK_ICD_FILENAMES=${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json
+          '';
+        });
+        extraCompatPackages = with pkgs; [
+          proton-ge-bin
+        ];
       };
     }
   ];
