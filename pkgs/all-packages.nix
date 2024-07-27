@@ -6,7 +6,6 @@
   mcaselector = pkgs.callPackage ./mcaselector.nix { };
   nix-modrinth-prefetch = pkgs.callPackage ./nix-modrinth-prefetch.nix { };
   olympus = pkgs.callPackage ./olympus.nix { };
-  ponder = pkgs.callPackage ./ponder { };
   sim65 = pkgs.callPackage ./sim65.nix { };
   substituteSubset = pkgs.callPackage ./substitute-subset.nix { };
   unbted = pkgs.callPackage ./unbted.nix { };
