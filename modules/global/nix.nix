@@ -10,7 +10,7 @@ in
 
     settings = {
       allowed-users = [ "*" ];
-      trusted-users = [ "root" "@wheel" "remotebuild" ];
+      trusted-users = [ "root" "@wheel" "remotebuild" "nix-ssh" ];
 
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       experimental-features = [ "flakes" "nix-command" "impure-derivations" "no-url-literals" ];
@@ -64,6 +64,12 @@ in
     extraOptions = ''
       builders-use-substitutes = true
     '';
+
+    sshServe = {
+      enable = mkDefault true;
+      write = true;
+      keys = config.user.openssh.authorizedKeys.keys;
+    };
   };
 
   nixpkgs.config = {
