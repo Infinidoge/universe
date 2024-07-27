@@ -17,7 +17,7 @@ in
       package = mkOpt package pkgs.prismlauncher;
     };
     lutris = {
-      enable = mkBoolOpt cfg.enableAll;
+      enable = mkBoolOpt false;
       package = mkOpt package pkgs.lutris;
     };
     olympus = {
