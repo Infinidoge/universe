@@ -18,6 +18,13 @@ The root of everything, the place where it all comes together.
 This configuration was originally based on the DevOS template, but I have since rewritten it to use flake-parts instead!
 Some parts of Digga's library is replicated in [lib/digga.nix](./lib/digga.nix) as a stop-gap measure until I rewrite it to use something else.
 
+### `/bin`
+
+Miscellaneous scripts that I use elsewhere as part of my configuration.
+
+- `bwrap.bash`: A bubble-wrap script used for running Nix on systems where it shouldn't be. See https://ersei.net/en/blog/its-nixin-time
+- `install-doom.bash`: A script to install Doom Emacs if it doesn't already exist
+
 ### `/hosts`
 
 Each of the devices that my configuration is setup to target.
@@ -37,6 +44,13 @@ Summary of what the scripts do
 
 Nix library components.
 
+- `default.nix`: All of the miscellaneous library functions I have defined for myself, as well as imports for the other library sections
+- `digga.nix`: Import utilities stolen from the Digga library
+- `disko.nix`: Shortcut functions for defining disk setups using Disko
+- `filesystems.nix`: Shortcut functions for defining disk setups using filesystems
+- `hosts.nix`: The `mkHost` function for importing NixOS hosts
+- `options.nix`: Helper functions for quickly defining new options
+
 ### `/modules`
 
 The real meat of the configuration, defines a bunch of NixOS modules that all get recursively imported;
@@ -52,24 +66,31 @@ Modules that create some sort of new functionality.
 
 Definitions that apply globally across all devices.
 
+- `backup.nix`: Borg-backup-based automatic backups for all of my devices
+- `boot.nix`: Sets up the bootloader. In my case: Grub.
 - Each file in the `caches` folder is a definition for a binary cache.
+- `common.nix`: Commonly reused definitions, through the `common` config option
+- `defaults.nix`: Overrides NixOS defaults, on account of `stateVersion` changes
 - `general.nix`: Broad general things that apply globally.
-- `hm-system-defaults.nix` defines default home-manager configurations that apply to all users
+- `graphical.nix`: Global configuration that applies to graphical environments
+- `home-manager.nix` defines default home-manager configurations that apply to all users
+- `kmscon.nix`: Setup for my preferred TTY: kmscon.
+- `locale.nix`: Sets up various locale-related things like keymap, compose key, timezone, etc.
 - `networking.nix`: Networking related settings, such as setting up tailscale, avahi, and DNS.
 - `nix.nix` defines Nix settings, like allowed users, garbage collection, etc. Also installs some Nix-related packages
 - `options.nix` defines shortcut options used throughout the configuration.
 - `packages.nix`: Packages that should be installed on everything.
+- `persist.nix`: Global setup for my persistent impermanence folders, from my standard `/persist` folder.
 - `security.nix`: Various security related settings.
 - `shell.nix`: Shell-related settings like aliases.
+- `ssh.nix`: SSH-related settings
+- `virtualisation.nix`: Setup for virtualisation, namely docker and libvirtd
 
 #### `/modules/modules`
 
 Modules that simplify the setup of things between devices.
 Differs from `global` in that they are gated behind options rather than applying globally.
 
-- `boot.nix`: Defines bootloader setups. Ensures that at least 1 of GRUB or systemd boot is selected
-- `locale.nix`: Sets up various locale-related things like keymap, compose key, timezone, etc.
-- `virtualization.nix`: Sets up things required for virtualization, namely libvirtd and docker.
 - `desktop`: Things related to the desktop experience
   - `gaming.nix`: Sets up gaming related software
   - `wm.nix`: Sets up my window manager of choice: Qtile
@@ -79,18 +100,22 @@ Differs from `global` in that they are gated behind options rather than applying
   - `gpu.nix`: GPU-specific settings, primarily with regards to setting up drivers and installing software necessary for hardware acceleration.
   - `wireless.nix`: Sets up wireless communication, namely WiFi and Bluetooth.
   - `peripherals`: Modules that setup peripherals like mice or printers.
-    - `fprint-sensor.nix`: Sets up a finger print sensor.
     - `printing.nix`: Sets up printing with the printing service.
-    - `razer.nix`: Sets up razer products via openrazer.
+    - `yubikey.nix`: Sets up yubikey-related software and settings
 - `services`: Sets up services.
   - `apcupsd.nix`: Sets up apcupsd to manage my UPS.
-  - `foldingathome.nix`: Sets up the Folding@Home service.
-  - `nix-ssh-serve.nix`: Sets up Nix ssh serve for serving the Nix store over SSH.
-  - `proxy.nix`: Sets up a local Privoxy instance that routes through an SSH SOCKS5 tunnel.
-- `software`: Sets up software things
-  - `console.nix`: Sets up the console, primarily using `kmscon`.
-  - `minipro.nix`: Sets up the minipro tool for using MiniPro brand EEPROM writers. This module has been upstreamed to Nixpkgs, pending merge.
-  - `steam.nix`: Sets up Steam, with extra libraries or hacks for getting things running smoothly.
+
+#### `/modules/vendored`
+
+These are modules taken from Nixpkgs or elsewhere that I vendor into my configuration so I can make deeper changes to them, while not using import-from-derivation type patching. Usually to change it so I can set an explicit directory to store files in.
+
+- `conduit.nix`: Modified to allow selecting a file storage location
+- `factorio.nix`: Modified primarily to allow setting map generation settings
+- `hydra.nix`: Modified to allow selecting a file storage location and specify an environment file.
+- `jellyfin.nix`: Modified to allow selecting file storage locations
+- `steam.nix`: Modified to put Steam's packages into user packages instead of system packages
+- `thelounge.nix`: Modified to allow selecting a file storage location
+- `vaultwarden.nix`: Modified to allow selecting a file storage location
 
 ### `/overlays`
 
@@ -110,11 +135,13 @@ Some may be upstreamed in the future, however some don't generally belong in Nix
 
 Packages themselves:
 
+- `bytecode-viewer.nix`: A viewer for Java bytecode
+- `ears-cli.nix`: A CLI for working with Ears-format skins
+- `fw-ectool.nix`: The ectool for Framework laptops
 - `hexagon.nix`: A runner/compiler for Hex Casting spells.
 - `mcaselector.nix`: A wrapper around the MCASelector jar so it runs on Nix.
 - `nix-modrinth-prefetch.nix`: A prefetcher for Modrinth mods.
 - `olympus.nix`: The olympus mod manager/installer for Celeste
-- `setris.nix`: Tetris with Sand!
 - `sim65.nix`: The Sim65 65c02 simulator and debugger. Not well tested.
 - `substitute-subset.nix`: `substituteAll` for a limited subset of files.
 - `unbted.nix`: An NBT editor for Minecraft.
@@ -127,11 +154,11 @@ Managed using `agenix`.
 ### `/shell`
 
 Things related to the shell environment for this configuration.
-This is pending a redo, since I recently replaced `bud` with [my own CLI tool, `universe-cli`](https://github.com/Infinidoge/universe-cli).
+Currently just provides `disko` and a Python environment with Qtile installed for editing the Qtile configuration.
 
 ### `/users`
 
-The real meat behind my personal configuration. Defines users of the system, including me.
+The real meat behind my personal non-system configuration. Defines users of the system, including me.
 
 #### `/users/modules`
 
@@ -155,13 +182,11 @@ Home Manager gettings that are set globally.
 - `htop.nix`
 - `keychain.nix`
 - `kitty.nix`
+- `mpris.nix`
+- `neovim.nix`
+- `obs-studio.nix`
+- `programming.nix`: Packages/configuration for various programming languages.
 - `rofi.nix`
-- `ssh.nix`
-- `starship.nix`
-- `theming.nix`
-- `tmux.nix`
-- `vim.nix`
-- `xdg.nix`
 - `shells`: Per-shell settings
   - `all.nix`: Imports all other shells
   - `common.nix`: Common things for all shells, imported by each shell
@@ -170,15 +195,12 @@ Home Manager gettings that are set globally.
   - `ion.nix`
   - `nushell.nix`
   - `zsh.nix`
-- `programming`: Packages/configuration for various programming languages.
-  - `haskell.nix`
-  - `java.nix`
-  - `lua.nix`
-  - `nim.nix`
-  - `python.nix`
-  - `racket.nix`
-  - `rust.nix`
-  - `zig.nix`
+- `ssh.nix`
+- `starship.nix`
+- `theming.nix`
+- `tmux.nix`
+- `vim.nix`
+- `zoxide.nix`
 
 #### `/users/root`
 
@@ -198,4 +220,3 @@ My setup is pretty extensive, but reading it isn't too particularly difficult.
   - `default.nix`: Pulls in the configuration files and puts them where they belong. Also defines my neofetch output.
   - `doom`: My Doom Emacs configuration. Doom Emacs is my editor and home, and I use it extensively.
   - `qtile`: My Qtile configuration. Qtile is my home of homes, the environment I am pretty literally always in while on my computers.
-  - `bluegon`: Changes screen color temperature for the benefit of my eyes. Pretty sure my setup is currently broken.
