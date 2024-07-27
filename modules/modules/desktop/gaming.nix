@@ -32,6 +32,17 @@ in
 
   config = mkMerge [
     {
+      assertions = [{
+        assertion = (any id (with cfg; [
+          steam.enable
+          prismlauncher.enable
+          lutris.enable
+          olympus.enable
+          puzzles.enable
+        ])) -> config.info.graphical;
+        message = "Games cannot be enabled in a non-graphical environment";
+      }];
+
       home.home.packages = with pkgs; [
         (mkIf cfg.prismlauncher.enable cfg.prismlauncher.package)
         alsa-oss
