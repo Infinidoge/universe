@@ -420,7 +420,9 @@
       "inputs": {
         "lix": "lix",
         "nix-eval-jobs": "nix-eval-jobs",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1721682989,
@@ -493,11 +495,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1722291371,
-        "narHash": "sha256-wn9Eipai/KUFhnq1BT408rWJEzbrHVNY5Gk9k81O+Co=",
+        "lastModified": 1721091462,
+        "narHash": "sha256-0cmEeoOiB91BviTJHzIyxkY+Gxv3O8ZnnExVAoXEFGI=",
         "ref": "refs/heads/main",
-        "rev": "548c973e8282bbec5b14f3860218b23564dc0381",
-        "revCount": 16028,
+        "rev": "6b4d46e9e0e1dd80e0977684ab20d14bcd1a6bc3",
+        "revCount": 15967,
         "type": "git",
         "url": "https://git.lix.systems/lix-project/lix"
       },
@@ -532,13 +534,25 @@
       }
     },
     "lix_2": {
-      "flake": false,
+      "inputs": {
+        "flake-compat": [
+          "blank"
+        ],
+        "nix2container": "nix2container_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-regression": "nixpkgs-regression_2",
+        "pre-commit-hooks": [
+          "git-hooks"
+        ]
+      },
       "locked": {
-        "lastModified": 1721992157,
-        "narHash": "sha256-D5bBsSKvYmVn8U4lhrvMemko7m2I/sicjyAYEWDfW9A=",
-        "rev": "6abad7cb238c5c7bf59a83bed55e7590c544fc2e",
+        "lastModified": 1722991830,
+        "narHash": "sha256-88a1nWeU+vIalvHQxUBoqBUYdMvbQYD2gTPTNK0sIyE=",
+        "rev": "529eed74c477eee8567f28379210cd47f0b4e18f",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/6abad7cb238c5c7bf59a83bed55e7590c544fc2e.tar.gz"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/529eed74c477eee8567f28379210cd47f0b4e18f.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -653,6 +667,22 @@
         "type": "github"
       }
     },
+    "nix2container_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720642556,
+        "narHash": "sha256-qsnqk13UmREKmRT7c8hEnz26X3GFFyIQrqx4EaRc1Is=",
+        "owner": "nlewo",
+        "repo": "nix2container",
+        "rev": "3853e5caf9ad24103b13aa6e0e8bcebb47649fe4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nlewo",
+        "repo": "nix2container",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1722114937,
@@ -696,16 +726,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1720691131,
-        "narHash": "sha256-CWT+KN8aTPyMIx8P303gsVxUnkinIz0a/Cmasz1jyIM=",
+        "lastModified": 1722062969,
+        "narHash": "sha256-QOS0ykELUmPbrrUGmegAUlpmUFznDQeR4q7rFhl8eQg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a046c1202e11b62cbede5385ba64908feb7bfac4",
+        "rev": "b73c2221a46c13557b1b3be9c2070cc42cf01eb3",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-24.05",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -726,19 +756,19 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs-regression_2": {
       "locked": {
-        "lastModified": 1722062969,
-        "narHash": "sha256-QOS0ykELUmPbrrUGmegAUlpmUFznDQeR4q7rFhl8eQg=",
+        "lastModified": 1643052045,
+        "narHash": "sha256-uGJ0VXIhWKGXxkeNnq4TvV3CIOkUJ3PAoLZ3HMzNVMw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b73c2221a46c13557b1b3be9c2070cc42cf01eb3",
+        "rev": "215d4d0fd80ca5163643b03a33fde804a29cc1e2",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "rev": "215d4d0fd80ca5163643b03a33fde804a29cc1e2",
         "type": "github"
       }
     },
@@ -875,7 +905,7 @@
         "nix-minecraft": "nix-minecraft",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "private": "private",
         "rust-overlay": "rust-overlay",
