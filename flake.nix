@@ -211,6 +211,7 @@
     imports = [
       ./pkgs
       ./shell
+      ./templates
       inputs.devshell.flakeModule
       inputs.treefmt-nix.flakeModule
     ];
