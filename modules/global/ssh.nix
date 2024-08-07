@@ -25,6 +25,9 @@ with lib;
       Host admin.rsync.net
           Hostname ${rsyncnet.host}
           User ${rsyncnet.account}
+
+      Host inx.moe
+          Port 245
     '';
   };
 
