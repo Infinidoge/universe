@@ -31,7 +31,6 @@
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.lix.follows = "lix";
     hydra.url = "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz";
-    hydra.inputs.lix.follows = "lix";
 
     ## Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
