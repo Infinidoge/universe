@@ -26,11 +26,15 @@
 
     ### Domain-Specific Flake Inputs ###
     ## Lix
-    lix = { url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz"; flake = false; };
+    lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
+    lix.inputs.nixpkgs.follows = "nixpkgs";
+    lix.inputs.pre-commit-hooks.follows = "git-hooks";
+    lix.inputs.flake-compat.follows = "blank";
     lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.lix.follows = "lix";
     hydra.url = "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz";
+    hydra.inputs.nixpkgs.follows = "nixpkgs";
 
     ## Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
