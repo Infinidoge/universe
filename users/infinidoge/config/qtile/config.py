@@ -350,27 +350,27 @@ keys = [
     # Volume
     Key(
         [], "XF86AudioRaiseVolume",
-        lazy.spawn("amixer set Master 2%+"),
+        lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 2%+"),
         desc="Raise volume",
     ),
     Key(
         [], "XF86AudioLowerVolume",
-        lazy.spawn("amixer set Master 2%-"),
+        lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 2%-"),
         desc="Lower volume",
     ),
     Key(
         [Keys.SHIFT], "XF86AudioRaiseVolume",
-        lazy.spawn("amixer set Master 1%+"),
+        lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 1%+"),
         desc="Raise volume",
     ),
     Key(
         [Keys.SHIFT], "XF86AudioLowerVolume",
-        lazy.spawn("amixer set Master 1%-"),
+        lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 1%-"),
         desc="Lower volume",
     ),
     Key(
         [], "XF86AudioMute",
-        lazy.spawn("amixer set Master toggle"),
+        lazy.spawn("wpctl set-mute @DEFAULT_SINK@ toggle"),
         desc="Toggle mute",
     ),
 
@@ -653,7 +653,7 @@ def init_widget_list(main=True, laptop=False):
         ],
         [
             widget.TextBox(text=" Vol:", padding=0),
-            widget.Volume(padding=5),
+            widget.PulseVolume(padding=5),
         ],
     ]
 
