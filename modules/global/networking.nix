@@ -26,7 +26,7 @@
       "2696:4700:4700::1111"
     ];
 
-    firewall.trustedInterfaces = [ "br-+" ];
+    firewall.trustedInterfaces = [ "br-+" "tailscale0" ];
 
     nftables = {
       enable = true;
