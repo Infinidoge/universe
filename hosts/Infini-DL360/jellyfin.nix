@@ -47,6 +47,7 @@ in
   services.jellyfin = {
     enable = true;
     dataDir = "/srv/jellyfin";
+    logDir = "/var/log/jellyfin";
     openFirewall = true;
   };
 
