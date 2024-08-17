@@ -64,7 +64,7 @@
 
   environment.etc."fail2ban/filter.d/nginx-url-probe.local".text = lib.mkDefault (lib.mkAfter ''
     [Definition]
-    failregex = ^<HOST>.*(GET /(wp-|admin|boaform|phpmyadmin|\.env|\.git|notifications)|\.(dll|so|cfm|asp)|(\?|&)(=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000|=PHPE9568F36-D428-11d2-A769-00AA001ACF42|=PHPE9568F35-D428-11d2-A769-00AA001ACF42|=PHPE9568F34-D428-11d2-A769-00AA001ACF42)|\\x[0-9a-zA-Z]{2})
+    failregex = ^<HOST>.*GET.*(\.php|admin|wp\-).* HTTP/\d.\d\" 404.*$
   '');
 
   services.fail2ban.jails.nginx-url-probe.settings = {
