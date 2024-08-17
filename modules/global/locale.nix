@@ -12,7 +12,7 @@ in
   console.keyMap = cfg.keymap;
   services.xserver.xkb = {
     layout = cfg.keymap;
-    options = "compose:ralt";
+    options = "compose:ralt,caps:hyper";
   };
 
   services.libinput.enable = true;
