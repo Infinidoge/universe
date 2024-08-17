@@ -37,6 +37,8 @@ in
     erd = "erd --human --hidden --no-git";
     et = "erd";
 
+    tree = "tre --all";
+
     # git
     g = "git";
     gcd = "cd $(git root || echo \".\")";
