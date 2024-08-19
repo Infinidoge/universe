@@ -46,6 +46,7 @@ in
         audacity
         bitwarden
         davinci-resolve
+        imv
         inkscape
         krita
         libreoffice-fresh
