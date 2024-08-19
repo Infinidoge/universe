@@ -63,7 +63,7 @@ in
         (discord.override { withVencord = true; withOpenASAR = true; })
         cinny-desktop
         schildichat-desktop
-        thunderbird
+        thunderbird-115
         tor-browser
 
         (optional main.modules.hardware.form.desktop qbittorrent)
