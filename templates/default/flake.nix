@@ -10,7 +10,7 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake ({ ... }: {
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } ({ ... }: {
     systems = [ "x86_64-linux" ];
 
     imports = with inputs; [
