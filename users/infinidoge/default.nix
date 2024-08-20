@@ -61,8 +61,8 @@ in
 
         (discord-canary.override { withVencord = true; withOpenASAR = true; })
         (discord.override { withVencord = true; withOpenASAR = true; })
-        cinny-desktop
         schildichat-desktop
+        teams-for-linux
         thunderbird-115
         tor-browser
 
