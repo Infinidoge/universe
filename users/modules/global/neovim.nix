@@ -85,7 +85,7 @@
             installRustc = false;
             installCargo = false;
           };
-          typst-lsp.enable = true;
+          typst-lsp.enable = false;
         };
       };
     };
