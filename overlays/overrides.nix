@@ -46,4 +46,14 @@ in
   factorio-headless = latest.factorio-headless.overrideAttrs (old: {
     meta = old.meta // { mainProgram = "factorio"; };
   });
+
+  compsize = prev.compsize.override {
+    btrfs-progs = final.btrfs-progs.overrideAttrs rec {
+      version = "6.10";
+      src = final.fetchurl {
+        url = "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar.xz";
+        hash = "sha256-M4KoTj/P4f/eoHphqz9OhmZdOPo18fNFSNXfhnQj4N8=";
+      };
+    };
+  };
 }
