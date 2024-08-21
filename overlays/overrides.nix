@@ -21,6 +21,7 @@ in
     ;
 
   inherit (stable)
+    nix-melt
     ;
 
   schildichat-desktop = stable.schildichat-desktop.override { electron = final.electron_30; };
