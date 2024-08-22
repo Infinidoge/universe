@@ -48,6 +48,8 @@
 
   documentation.man.man-db.enable = false;
 
+  nix.settings.accept-flake-config = true;
+
   networking = {
     firewall = {
       allowedUDPPorts = [ 80 443 ];
