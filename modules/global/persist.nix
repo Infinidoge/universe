@@ -17,6 +17,7 @@ in
       "/root/.ssh"
 
       (optional config.services.fprintd.enable "/var/lib/fprint")
+      (optional (config.security.acme.certs != { }) "/var/lib/acme")
     ];
     files = [
       "/etc/machine-id"
