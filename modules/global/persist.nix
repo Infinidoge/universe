@@ -12,7 +12,7 @@ in
       "/var/log"
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
-      "/var/lib/tailscale"
+      { directory = "/var/lib/tailscale"; mode = "0700"; }
 
       "/root/.ssh"
 
