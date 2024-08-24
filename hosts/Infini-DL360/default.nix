@@ -38,9 +38,6 @@
   persist = {
     directories = [
       "/srv"
-
-      # TODO: Setup in module
-      "/var/lib/acme"
     ];
     files = [
     ];
