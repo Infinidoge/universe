@@ -1,5 +1,5 @@
 { config, main, pkgs, lib, ... }:
-lib.mkIf main.info.graphical
+lib.mkIf (main.info.graphical && !main.modules.hardware.form.portable)
 {
   programs.emacs = {
     enable = true;
