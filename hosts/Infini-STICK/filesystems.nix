@@ -18,7 +18,7 @@ in
 
   fileSystems = {
     "/" = {
-      device = "none";
+      device = "root";
       fsType = "tmpfs";
       options = [ "defaults" "size=4G" "mode=755" ];
     };
