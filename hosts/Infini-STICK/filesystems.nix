@@ -1,18 +1,21 @@
-{ config, lib, pkgs, ... }:
+{ ... }:
 
 let
   uuid = uuid: "/dev/disk/by-uuid/${uuid}";
-  main = uuid "ae3f3d98-1d87-47b4-a4ed-d69a896eee69";
-  commonOptions = [ "autodefrag" "noatime" "compress-force=zstd:4" ];
+  commonOptions = [ "autodefrag" "noatime" "compress-force=zstd:1" ];
 
   mkMain' = options: {
-    device = main;
+    device = uuid "85d60c21-bc62-471e-b305-f7e26499adb3";
     fsType = "btrfs";
     options = commonOptions ++ options;
   };
   mkMain = options: (mkMain' options) // { neededForBoot = true; };
 in
 {
+  environment.etc.crypttab.text = ''
+    vault UUID=8fe59989-cd9c-4142-bdf7-fc748cb56b34 - luks,noauto
+  '';
+
   fileSystems = {
     "/" = {
       device = "none";
@@ -21,6 +24,16 @@ in
     };
 
     "/media/main" = mkMain' [ ];
+    "/media/storage" = {
+      device = uuid "B56A-F857";
+      fsType = "exfat";
+      options = [ "defaults" "noatime" ];
+    };
+    "/media/vault" = {
+      device = "/dev/mapper/vault";
+      fsType = "ext4";
+      options = [ "defaults" "noauto" ];
+    };
 
     "/persist" = mkMain [ "subvol=root" ];
     "/etc/ssh" = mkMain [ "subvol=root/etc/ssh" ];
@@ -28,7 +41,7 @@ in
     "/boot" = mkMain [ "subvol=boot" ];
 
     "/boot/efi" = {
-      device = uuid "D7DB-2291";
+      device = uuid "C167-F1F0";
       fsType = "vfat";
       neededForBoot = true;
     };
