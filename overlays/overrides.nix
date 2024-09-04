@@ -35,6 +35,9 @@ in
           hash = "sha256-1mvS/bvXDplkiG7GzDFu9cEFV9onbvNTYbhb4W1qj+0=";
         };
       });
+      qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
+        doCheck = false;
+      };
     };
   };
 

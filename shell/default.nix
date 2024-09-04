@@ -6,6 +6,7 @@
       let
         pythonEnv = (pkgs.python3.withPackages (p: with p; [
           qtile
+          qtile-extras
         ]));
       in
       {
