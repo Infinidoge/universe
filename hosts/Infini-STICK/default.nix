@@ -4,6 +4,7 @@
     ./filesystems.nix
   ];
 
+  system.stateVersion = "24.11";
   networking.hostId = "06a3f197";
 
   boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
@@ -15,13 +16,7 @@
     };
   };
 
-  persist = {
-    directories = [
-    ];
-
-    files = [
-    ];
+  specialisation."Graphical".configuration = {
+    modules.desktop.wm.enable = true;
   };
-
-  system.stateVersion = "23.11";
 }
