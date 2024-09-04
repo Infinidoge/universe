@@ -44,8 +44,6 @@
     ];
   };
 
-  documentation.man.man-db.enable = false;
-
   nix.settings.accept-flake-config = true;
 
   networking = {
