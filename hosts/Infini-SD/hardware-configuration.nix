@@ -11,7 +11,6 @@
   boot.extraModulePackages = [ ];
   boot.kernelParams = [ "boot.shell_on_fail" ];
   boot.supportedFilesystems = [ "btrfs" "zfs" ];
-  boot.zfs.forceImportRoot = false;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   info.model = "SD Card Installation";
