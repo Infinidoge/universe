@@ -18,6 +18,10 @@ in
       alsa.enable = true;
     };
 
+    environment.systemPackages = with pkgs; [
+      easyeffects
+    ];
+
     persist.directories = [
       "/var/lib/alsa"
     ];
