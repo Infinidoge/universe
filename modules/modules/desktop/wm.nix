@@ -67,7 +67,12 @@ in
       ];
     }
     (mkIf cfg.qtile.enable {
-      services.xserver.windowManager.qtile.enable = true;
+      services.xserver.windowManager.qtile = {
+        enable = true;
+        extraPackages = p: with p; [
+          qtile-extras
+        ];
+      };
 
       info.env.wm = "qtile";
 
