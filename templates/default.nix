@@ -3,10 +3,11 @@ let
   mkTemplate = name:
     let
       path = ./. + "/${name}";
-      flake = import (path + "/flake.nix");
+      flakePath = path + "/flake.nix";
+      meta = if builtins.pathExists flakePath then import flakePath else { };
     in
     { inherit path; }
-    // lib.optionalAttrs (flake ? description) { inherit (flake) description; };
+    // lib.optionalAttrs (meta ? description) { inherit (meta) description; };
 
   templates = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./.));
 in
