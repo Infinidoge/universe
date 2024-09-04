@@ -56,6 +56,7 @@ in
     nixPath = [
       "nixpkgs=${inputs.nixpkgs}"
       "home-manager=${inputs.home-manager}"
+      "devshell=${inputs.devshell}"
     ];
 
     distributedBuilds = mkDefault true;
