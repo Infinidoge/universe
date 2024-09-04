@@ -1,0 +1,46 @@
+From edc6f970ef3db713df9d7b261891bf7252d65a5d Mon Sep 17 00:00:00 2001
+From: Infinidoge <infinidoge@inx.moe>
+Date: Sat, 31 Aug 2024 18:24:14 -0400
+Subject: [PATCH] add package-lock
+
+---
+ package-lock.json | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+ create mode 100644 package-lock.json
+
+diff --git a/package-lock.json b/package-lock.json
+new file mode 100644
+index 0000000..6bd9d83
+--- /dev/null
++++ b/package-lock.json
+@@ -0,0 +1,27 @@
++{
++  "name": "unmap",
++  "version": "1.1.0",
++  "lockfileVersion": 3,
++  "requires": true,
++  "packages": {
++    "": {
++      "name": "unmap",
++      "version": "1.1.0",
++      "license": "MIT",
++      "dependencies": {
++        "minimist": "^1.2.0"
++      },
++      "bin": {
++        "unmap": "bin/unmap"
++      }
++    },
++    "node_modules/minimist": {
++      "version": "1.2.8",
++      "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz",
++      "integrity": "sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==",
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    }
++  }
++}
+-- 
+2.45.2
+
