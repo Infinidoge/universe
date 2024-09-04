@@ -49,7 +49,6 @@
     sshfs
     strace
     tealdeer
-    tre-command
     unixtools.whereis
     unrar-wrapper
     unzip
