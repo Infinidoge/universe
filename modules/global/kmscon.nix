@@ -2,7 +2,7 @@
 {
   services.kmscon = {
     enable = true;
-    hwRender = true;
+    hwRender = false;
     useXkbConfig = true;
     fonts = [
       (rec {
