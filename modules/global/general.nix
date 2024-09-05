@@ -35,4 +35,5 @@
   # Disable man-db/man-cache
   # I don't use it, and it takes ages on rebuild
   documentation.man.man-db.enable = false;
+  home.programs.man.generateCaches = false;
 }
