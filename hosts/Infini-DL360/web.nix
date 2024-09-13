@@ -66,5 +66,12 @@ in
         '';
       };
     };
+    "old.inx.moe" = ssl-optional // {
+      locations."/" = {
+        root = "/srv/web/inx.moe";
+        inherit tryFiles;
+        extraConfig = websiteConfig;
+      };
+    };
   };
 }
