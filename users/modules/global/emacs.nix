@@ -32,7 +32,6 @@ lib.mkIf (main.info.graphical && !main.modules.hardware.form.portable)
 
       # --- :lang ---
       # :lang org
-      python3Packages.pygments
       ## +gnuplot
       gnuplot
       ## +roam2
