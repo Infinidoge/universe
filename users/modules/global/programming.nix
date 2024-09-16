@@ -53,8 +53,8 @@ in
       pyls-isort
       pytest
     ])
-    pyright
     pipenv
+    ruff
 
     # Racket
     racket

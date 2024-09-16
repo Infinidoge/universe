@@ -41,6 +41,11 @@
         action = "<C-\\><C-n>";
         mode = "t";
       }
+      {
+        key = "<M-CR>";
+        action.__raw = "vim.lsp.buf.code_action";
+        mode = [ "n" "i" "v" "s" ];
+      }
     ];
 
     plugins = {
@@ -83,7 +88,19 @@
             };
           };
           nimls.enable = true;
-          pyright.enable = true;
+          pylsp = {
+            enable = true;
+            settings = {
+              plugins = {
+                ruff = {
+                  formatEnabled = true;
+                  enable = true;
+                  format = [ "I" ];
+                };
+                rope.enable = true;
+              };
+            };
+          };
           rust-analyzer = {
             enable = true;
             installRustc = false;
