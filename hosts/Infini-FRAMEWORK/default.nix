@@ -87,8 +87,8 @@
         DP-4 = portable-second // { position = "0x0"; };
       };
       docked = {
-        eDP-1 = framework // { position = "1080x716"; };
-        DP-1-3 = dock // { position = "2885x506"; };
+        eDP-1 = framework // { position = "0x210"; };
+        DP-1-3 = dock // { position = "1805x0"; };
       };
       docked-alt = {
         eDP-1 = framework // { position = "1080x716"; };
