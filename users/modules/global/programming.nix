@@ -41,8 +41,8 @@ in
     nimlsp
 
     # Python
-    python311
-    (with python311Packages; [
+    python312
+    (with python312Packages; [
       black
       isort
       jupyter
