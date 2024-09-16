@@ -48,8 +48,14 @@
       cob = "checkout -b";
       f = "fetch -p";
       c = "commit";
+      ca = "commit -a";
+      caa = "commit -a --amend";
+      can = "commit --amend --no-edit";
+      caan = "commit -a --amend --no-edit";
       p = "push";
+      pfl = "push --force-with-lease";
       pu = "pull";
+      b = "branch";
       ba = "branch -a";
       bd = "branch -d";
       bD = "branch -D";
@@ -58,6 +64,7 @@
       ds = "diff --staged";
       r = "restore -p";
       rs = "restore --staged -p";
+      sw = "switch";
       st = "status -sb";
 
       # reset
