@@ -41,8 +41,7 @@ in
     nimlsp
 
     # Python
-    python312
-    (with python312Packages; [
+    (python312.withPackages (p: with p; [
       black
       isort
       jupyter
@@ -50,9 +49,13 @@ in
       nose
       pip
       pyflakes
-      pyls-isort
       pytest
-    ])
+
+      python-lsp-server
+      python-lsp-ruff
+      pylsp-rope
+      pyls-isort
+    ]))
     pipenv
     ruff
 
