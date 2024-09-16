@@ -9,9 +9,9 @@
         echo "Not in a git repository"
         exit 1
       elif [[ $# -eq 0 ]] then
-        echo "$(git ls-files | fzf)"
+        echo "$(git ls-files | fzf --filepath-word --multi)"
       else
-        echo "$(git ls-files | fzf -1 -q "$*")"
+        echo "$(git ls-files | fzf --filepath-word --multi -1 -q "$*")"
       fi
     '')
     (writeScriptBin "git-fzf-edit" ''
@@ -20,9 +20,9 @@
         echo "Not in a git repository"
         exit 1
       elif [[ $# -eq 0 ]] then
-        $EDITOR "$(git ls-files | fzf)"
+        $EDITOR "$(git ls-files | fzf --filepath-word --multi)"
       else
-        $EDITOR "$(git ls-files | fzf -1 -q "$*")"
+        $EDITOR "$(git ls-files | fzf --filepath-word --multi -1 -q "$*")"
       fi
     '')
   ];

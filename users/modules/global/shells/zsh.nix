@@ -40,9 +40,9 @@
 
         j() {
           if [[ $# -eq 0 ]] then
-            \builtin cd -- "$(fd -H -t d | fzf)"
+            \builtin cd -- "$(fd -H -t d | fzf --filepath-word)"
           else
-            \builtin cd -- "$(fd -H -t d | fzf -1 -q "$*")"
+            \builtin cd -- "$(fd -H -t d | fzf --filepath-word -1 -q "$*")"
           fi
         }
 
