@@ -19,7 +19,7 @@
         ];
 
         env = [
-          { name = "PYTHONPATH"; value = "${pythonEnv}/${pythonEnv.sitePackages}"; }
+          { name = "PYTHONPATH"; prefix = "${pythonEnv}/${pythonEnv.sitePackages}"; }
         ];
       };
   };
