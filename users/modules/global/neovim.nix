@@ -36,7 +36,11 @@
     ];
 
     keymaps = [
-      { key = "<C-w> n"; action = "<C-\\><C-n>"; mode = "t"; }
+      {
+        key = "<C-w> n";
+        action = "<C-\\><C-n>";
+        mode = "t";
+      }
     ];
 
     plugins = {
