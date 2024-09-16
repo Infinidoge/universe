@@ -105,10 +105,13 @@
 
   systemd.services.set-initial-backlight = {
     description = "Sets the initial backlight state on startup";
-    wantedBy = [ "sys-devices-pci0000:00-0000:00:02.0-drm-card0-card0\\x2deDP\\x2d1-intel_backlight.device" ];
+    wantedBy = [
+      "sys-devices-pci0000:00-0000:00:02.0-drm-card0-card0\\x2deDP\\x2d1-intel_backlight.device"
+      "sys-devices-pci0000:00-0000:00:02.0-drm-card1-card1\\x2deDP\\x2d1-intel_backlight.device"
+    ];
     after = [ "system-systemd\\x2dbacklight.slice" "systemd-backlight@backlight:intel_backlight.service" ];
     serviceConfig.Type = "oneshot";
-    script = "${lib.getExe pkgs.acpilight} -set 50";
+    script = "${lib.getExe pkgs.brightnessctl} set 50%";
   };
 
   nix.buildMachines = [
