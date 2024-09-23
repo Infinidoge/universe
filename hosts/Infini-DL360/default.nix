@@ -10,6 +10,7 @@
     ./factorio.nix
     ./forgejo.nix
     ./freshrss.nix
+    ./hedgedoc.nix
     ./hydra.nix
     ./jellyfin.nix
     ./jupyter.nix

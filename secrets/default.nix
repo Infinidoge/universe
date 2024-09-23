@@ -47,6 +47,9 @@ in
       (mkIf config.services.hydra.enable {
         inherit (secrets) hydra;
       })
+      (mkIf config.services.hedgedoc.enable {
+        "hedgedoc" = withOwnerGroup "hedgedoc" secrets."hedgedoc";
+      })
     ];
   };
 }
