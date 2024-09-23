@@ -36,4 +36,5 @@ in
   "cloudflare.age".publicKeys = allKeys;
   "smtp-password.age".publicKeys = allKeys;
   "hydra.age".publicKeys = allKeys;
+  "hedgedoc.age".publicKeys = allKeys;
 }
