@@ -7,7 +7,6 @@
     search = [
       # Tailscale
       "tail4c593.ts.net"
-      "infinidoge.github.beta.tailscale.net"
     ];
     nameservers = [
       # Tailscale
