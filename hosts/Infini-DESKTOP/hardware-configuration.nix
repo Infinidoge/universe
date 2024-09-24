@@ -10,4 +10,6 @@
     monitors = 3;
     model = "Custom Desktop";
   };
+
+  hardware.nvidia.open = true;
 }
