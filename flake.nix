@@ -52,6 +52,9 @@
     ## Conduwuit
     conduwuit.url = "github:girlbossceo/conduwuit";
 
+    ## Vencord
+    vencord = { url = "github:Vendicated/Vencord"; flake = false; };
+
     ### Cleanup ###
     ## Common
     blank.url = "github:divnix/blank";
