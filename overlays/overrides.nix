@@ -9,12 +9,17 @@ let
   latest = mkPkgsUnfree inputs.latest;
   fork = mkPkgs inputs.fork;
   stable = mkPkgs inputs.stable;
+
+  versionFromInput = input:
+    let
+      slice = a: b: builtins.substring a b input.lastModifiedDate;
+    in
+    "0-unstable-${slice 0 5}-${slice 5 7}-${slice 7 9}";
 in
 {
   inherit latest fork stable;
 
   inherit (latest)
-    vencord
     ;
 
   inherit (fork)
@@ -23,6 +28,15 @@ in
   inherit (stable)
     nix-melt
     ;
+
+  vencord = latest.vencord.overrideAttrs (old: {
+    src = inputs.vencord;
+    version = versionFromInput inputs.vencord;
+    env = old.env // {
+      VENCORD_REMOTE = "Vendicated/Vencord";
+      VENCORD_HASH = builtins.substring 0 9 inputs.vencord.rev;
+    };
+  });
 
   schildichat-desktop = stable.schildichat-desktop.override { electron = final.electron_30; };
 

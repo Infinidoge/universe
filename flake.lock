@@ -907,7 +907,8 @@
         "stable": "stable",
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix_2",
-        "universe-cli": "universe-cli"
+        "universe-cli": "universe-cli",
+        "vencord": "vencord"
       }
     },
     "rust-analyzer-src": {
@@ -1068,6 +1069,22 @@
       "original": {
         "owner": "Infinidoge",
         "repo": "universe-cli",
+        "type": "github"
+      }
+    },
+    "vencord": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1727154824,
+        "narHash": "sha256-koAs4jlOQBU50f25qaogZEvvByGPlVBHBvqjyBQzjOs=",
+        "owner": "Vendicated",
+        "repo": "Vencord",
+        "rev": "cb2848f186f3d074d1a3390643aba70fa481eb6b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Vendicated",
+        "repo": "Vencord",
         "type": "github"
       }
     }
