@@ -62,7 +62,7 @@
       nix.enable = true;
       lsp-format.enable = true;
       # nvim-autopairs.enable = true;
-      surround.enable = true;
+      vim-surround.enable = true;
       todo-comments.enable = true;
       treesitter-context.enable = false;
       treesitter = {
