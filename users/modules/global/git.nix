@@ -44,6 +44,8 @@
 
     aliases = {
       a = "add -p";
+      ai = "add -i";
+      an = "add -N";
       co = "checkout";
       cob = "checkout -b";
       f = "fetch -p";
@@ -55,6 +57,7 @@
       p = "push";
       pfl = "push --force-with-lease";
       pu = "pull";
+      pua = "pull --autostash";
       b = "branch";
       ba = "branch -a";
       bd = "branch -d";
@@ -86,6 +89,7 @@
       root = "rev-parse --show-toplevel";
       fzf = "!git-fzf";
       edit = "!git-fzf-edit";
+      e = "edit";
     };
   };
 }
