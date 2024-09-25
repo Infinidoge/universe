@@ -9,9 +9,6 @@
       "tail4c593.ts.net"
     ];
     nameservers = [
-      # Tailscale
-      "100.100.100.100"
-
       # Google Public DNS
       "8.8.8.8"
       "8.8.4.4"
@@ -23,6 +20,9 @@
       "1.0.0.1"
       "2696:4700:4700::1111"
       "2696:4700:4700::1111"
+
+      # Tailscale
+      "100.100.100.100"
     ];
 
     firewall.trustedInterfaces = [ "br-+" "tailscale0" ];
