@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ pkgs, lib, ... }:
 with lib.our.disko;
 let
   inherit (builtins) mapAttrs;
@@ -6,7 +6,7 @@ let
   mountOptions = defaultMountOptions;
 in
 {
-  boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   boot.zfs.extraPools = [ "zssd" "zhdd" ];
 

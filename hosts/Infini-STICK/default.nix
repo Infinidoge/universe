@@ -1,4 +1,4 @@
-{ lib, config, ... }: {
+{ lib, config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./filesystems.nix
@@ -7,7 +7,7 @@
   system.stateVersion = "24.11";
   networking.hostId = "06a3f197";
 
-  boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   modules = {
     hardware = {
