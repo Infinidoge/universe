@@ -96,9 +96,9 @@ in
   universe.packages = [
     (pkgs.writeScriptBin "editi" ''
       if [[ $# -eq 0 ]] then
-        $EDITOR "$(fd -H -t f | fzf --filepath-word --multi)"
+        fd -H -t f | fzf --filepath-word --multi | xargs $EDITOR
       else
-        $EDITOR "$(fd -H -t f | fzf --filepath-word --multi -1 -q "$*")"
+        fd -H -t f | fzf --filepath-word --multi -1 -q "$*" | xargs $EDITOR
       fi
     '')
   ];
