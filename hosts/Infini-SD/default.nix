@@ -1,4 +1,4 @@
-{ lib, config, ... }: {
+{ lib, config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./filesystems.nix
@@ -6,7 +6,7 @@
 
   networking.hostId = "3275c7d3";
 
-  boot.kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   hardware.infiniband = {
     enable = true;
