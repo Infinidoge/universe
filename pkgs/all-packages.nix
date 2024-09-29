@@ -11,4 +11,5 @@
   unbted = pkgs.callPackage ./unbted.nix { };
   bytecode-viewer = pkgs.callPackage ./bytecode-viewer.nix { };
   unmap = pkgs.callPackage ./unmap.nix { };
+  tmx-cups-ppd = pkgs.callPackage ./tmx-cups-ppd.nix { };
 }
