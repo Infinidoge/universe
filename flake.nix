@@ -3,6 +3,13 @@
 
   nixConfig = {
     allow-import-from-derivation = true;
+    extra-experimental-features = [
+      "nix-command"
+      "flakes"
+      "impure-derivations"
+      "no-url-literals"
+      "pipe-operator"
+    ];
   };
 
   inputs = {

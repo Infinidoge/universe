@@ -11,7 +11,13 @@ in
       trusted-users = [ "root" "@wheel" "remotebuild" "nix-ssh" ];
 
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-      experimental-features = [ "flakes" "nix-command" "impure-derivations" "no-url-literals" ];
+      experimental-features = [
+        "flakes"
+        "nix-command"
+        "impure-derivations"
+        "no-url-literals"
+        "pipe-operator"
+      ];
 
       allow-import-from-derivation = true;
       auto-optimise-store = true;
