@@ -16,9 +16,9 @@
     ./jellyfin.nix
     ./jupyter.nix
     ./postgresql.nix
+    ./ssh.nix
     ./thelounge.nix
     ./vaultwarden.nix
-    ./ssh.nix
   ];
 
   networking.hostId = "8fa7a57c";
