@@ -24,17 +24,19 @@ let
     (attrValues systems)
     (attrValues users)
   ]);
+
+  generate = secrets: foldl' (a: b: a // b) { } (map (n: { ${n}.publicKeys = allKeys; }) secrets);
 in
-{
-  "infinidoge-password.age".publicKeys = allKeys;
-  "root-password.age".publicKeys = allKeys;
-  "binary-cache-private-key.age".publicKeys = allKeys;
-  "vaultwarden.age".publicKeys = allKeys;
-  "freshrss.age".publicKeys = allKeys;
-  "borg-password.age".publicKeys = allKeys;
-  "borg-ssh-key.age".publicKeys = allKeys;
-  "cloudflare.age".publicKeys = allKeys;
-  "smtp-password.age".publicKeys = allKeys;
-  "hydra.age".publicKeys = allKeys;
-  "hedgedoc.age".publicKeys = allKeys;
-}
+generate [
+  "infinidoge-password.age"
+  "root-password.age"
+  "binary-cache-private-key.age"
+  "vaultwarden.age"
+  "freshrss.age"
+  "borg-password.age"
+  "borg-ssh-key.age"
+  "cloudflare.age"
+  "smtp-password.age"
+  "hydra.age"
+  "hedgedoc.age"
+]
