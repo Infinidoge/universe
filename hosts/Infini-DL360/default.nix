@@ -12,6 +12,7 @@
     ./freshrss.nix
     ./hedgedoc.nix
     ./hydra.nix
+    ./immich.nix
     ./jellyfin.nix
     ./jupyter.nix
     ./postgresql.nix
