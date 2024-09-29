@@ -21,6 +21,8 @@
 
   environment.enableDebugInfo = true;
 
+  services.printing.drivers = [ pkgs.tmx-cups-ppd ];
+
   modules = {
     hardware = {
       gpu.intel = true;
