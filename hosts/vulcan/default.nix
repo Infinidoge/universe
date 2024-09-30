@@ -21,5 +21,6 @@
         UNIVERSE_FLAKE_ROOT = "${config.home.homeDirectory}/universe";
       };
     };
+    nix.settings.use-xdg-base-directories = true;
   };
 }
