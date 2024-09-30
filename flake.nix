@@ -204,7 +204,12 @@
           })
           (self.lib.flattenLeaves ./hosts);
 
-      homeConfigurations = self.lib.mkHomeConfigurations { inherit (self.nixosConfigurations) "data.cs.purdue.edu"; };
+      homeConfigurations = self.lib.mkHomeConfigurations {
+        inherit (self.nixosConfigurations)
+          "data.cs.purdue.edu"
+          vulcan
+          ;
+      };
 
       hydraJobs = {
         packages = lib.mapAttrs (_: lib.filterAttrs (n: v: v ? meta -> v.meta ? broken -> !v.meta.broken)) self.packages;
