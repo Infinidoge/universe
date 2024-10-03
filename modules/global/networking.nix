@@ -6,7 +6,8 @@
     useDHCP = true;
     search = [
       # Tailscale
-      "tail4c593.ts.net"
+      "tailnet.inx.moe"
+      #"tail4c593.ts.net"
     ];
     nameservers = [
       # Google Public DNS
@@ -22,7 +23,7 @@
       "2696:4700:4700::1111"
 
       # Tailscale
-      "100.100.100.100"
+      #"100.100.100.100"
     ];
 
     firewall.trustedInterfaces = [ "br-+" "tailscale0" ];
