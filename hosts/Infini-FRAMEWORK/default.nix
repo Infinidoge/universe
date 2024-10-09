@@ -50,6 +50,14 @@
   hardware.uinput.enable = true;
   services.joycond.enable = true;
 
+  hardware.printers.ensurePrinters = [
+    {
+      name = "EPSON-TM-m30";
+      deviceUri = "lpd://169.254.184.17/queue";
+      model = "tm-m30-rastertotmt.ppd.gz";
+    }
+  ];
+
   services.fwupd = {
     enable = true;
     extraRemotes = [ "lvfs-testing" ];
