@@ -53,5 +53,9 @@ in
         eDP-1 = framework // { position = "1920x0"; };
         DP-4 = dorm // { position = "0x0"; };
       };
+      dorm-2 = {
+        eDP-1 = framework // { position = "1920x0"; };
+        DP-3 = dorm // { position = "0x0"; };
+      };
     });
 }
