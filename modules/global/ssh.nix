@@ -28,9 +28,6 @@ with lib;
 
       Host inx.moe
           Port 245
-
-      Host vulcan
-          Hostname vulcan.tail4d9247.ts.net
     '';
   };
 
