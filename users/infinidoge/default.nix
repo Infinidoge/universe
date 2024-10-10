@@ -45,7 +45,6 @@ in
         # Tools
         audacity
         bitwarden
-        davinci-resolve
         imv
         inkscape
         krita
