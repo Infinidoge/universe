@@ -41,6 +41,7 @@ in
       };
 
       services.xserver.enable = true;
+      services.xserver.enableTearFree = true;
 
       services.xserver.displayManager = {
         lightdm.enable = true;
