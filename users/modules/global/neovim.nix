@@ -80,8 +80,8 @@
         servers = {
           clangd.enable = true;
           hls.enable = true;
-          lua-ls.enable = true;
-          nil-ls = {
+          lua_ls.enable = true;
+          nil_ls = {
             enable = true;
             extraOptions = {
               settings.nil.formatting.command = [ "nixpkgs-fmt" ];
@@ -101,12 +101,12 @@
               };
             };
           };
-          rust-analyzer = {
+          rust_analyzer = {
             enable = true;
             installRustc = false;
             installCargo = false;
           };
-          typst-lsp.enable = false;
+          typst_lsp.enable = false;
         };
       };
     };
