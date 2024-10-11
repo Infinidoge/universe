@@ -10,7 +10,7 @@ in
     settings = {
       inherit domain;
       protocolUseSSL = true;
-      port = 3003;
+      port = 4003;
 
       db = { dialect = "sqlite"; storage = "/srv/hedgedoc/db.sqlite"; };
       uploadsPath = "/srv/hedgedoc/uploads";
