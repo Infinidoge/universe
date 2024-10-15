@@ -8,6 +8,7 @@ in
 
   services.forgejo = {
     enable = true;
+    package = pkgs.forgejo;
 
     user = "git";
     stateDir = "/srv/forgejo";
