@@ -29,6 +29,7 @@
           };
         };
         news.display = "silent";
+        news.entries = lib.mkForce [ ];
       }
       (lib.mkIf config.info.graphical {
         xdg.systemDirs.data = [
