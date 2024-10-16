@@ -19,6 +19,7 @@
 
       sessionVariables = {
         UNIVERSE_FLAKE_ROOT = "${config.home.homeDirectory}/universe";
+        UNIVERSE_MODE = "home-manager";
       };
     };
     nix.settings.use-xdg-base-directories = true;
