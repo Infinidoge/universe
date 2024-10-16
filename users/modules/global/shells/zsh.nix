@@ -48,6 +48,36 @@
 
         alias "jh"="cd ~ && j"
         alias "gj"="gcd && j"
+
+        mktmpunzip() {
+          dir=$(mktemp -t -d unzip.XXX)
+          if ! file=$(realpath -e "$1"); then
+            echo "error: file does not exist"
+            return 1
+          fi
+          shift 1
+          unzip "$file" "$@" -d "$dir"
+          \builtin cd $dir
+          mv $file .
+        }
+
+        mktmpclone() {
+          location="$1"
+          if [ "$2" != "" ]; then
+            dirspec="$2.XXX"
+            shift 2
+          else
+            dirspec="clone.XXX"
+            shift 1
+          fi
+          if ! dir=$(mktemp -t -d "$dirspec"); then
+            echo "error: couldn't create temp directory"
+            return 1
+          fi
+
+          git clone "$location" "$dir" "$@"
+          \builtin cd "$dir"
+        }
       '';
 
       dotDir = ".config/zsh";
