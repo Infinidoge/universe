@@ -97,7 +97,6 @@
 
           # zsh modifications
           "zsh-interactive-cd"
-          "command-not-found"
           "sudo"
 
           # Aliases
