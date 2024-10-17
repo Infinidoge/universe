@@ -20,6 +20,7 @@ in
   inherit latest fork stable;
 
   inherit (latest)
+    bitwarden-desktop
     ;
 
   inherit (fork)
@@ -42,6 +43,8 @@ in
 
   python3 = prev.python3.override {
     packageOverrides = pythonFinal: pythonPrev: {
+      inherit (latest.python3Packages) pymdown-extensions onnx;
+
       qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
         version = "0.0.0+unstable-2024-06-25";
         src = oldAttrs.src.override {
