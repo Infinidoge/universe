@@ -48,7 +48,7 @@ in
         powerManagement.enable = mkDefault true;
       };
 
-      virtualisation.docker.enableNvidia = true;
+      hardware.nvidia-container-toolkit.enable = true;
     })
 
     (mkIf cfg.intel { })
