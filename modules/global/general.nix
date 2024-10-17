@@ -32,8 +32,8 @@
   # Disable force importing ZFS roots
   boot.zfs.forceImportRoot = false;
 
-  # Disable man-db/man-cache
+  # Disable man cache
   # I don't use it, and it takes ages on rebuild
-  documentation.man.man-db.enable = false;
+  documentation.man.generateCaches = false;
   home.programs.man.generateCaches = false;
 }
