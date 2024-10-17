@@ -39,8 +39,6 @@
     '';
   };
 
-  documentation.man.man-db.enable = false;
-
   persist = {
     directories = [
     ];
