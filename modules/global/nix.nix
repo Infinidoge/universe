@@ -82,11 +82,17 @@ in
 
   programs.nix-ld.enable = mkDefault true;
 
+  programs.nix-index-database.comma.enable = true;
+  programs.nix-index = {
+    enable = true;
+    enableBashIntegration = false;
+    enableZshIntegration = false;
+    enableFishIntegration = false;
+  };
+
   universe.packages = with pkgs; [
-    comma
     nix-diff
     nix-du
-    nix-index
     nix-melt
     nix-output-monitor
     nix-tree

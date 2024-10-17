@@ -31,6 +31,7 @@
     flake-registry = { url = "github:NixOS/flake-registry"; flake = false; };
     home-manager.url = "github:nix-community/home-manager";
     impermanence.url = "github:nix-community/impermanence/63f4d0443e32b0dd7189001ee1894066765d18a5";
+    nix-index-database.url = "github:nix-community/nix-index-database";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     treefmt-nix.url = "github:numtide/treefmt-nix";
@@ -88,6 +89,7 @@
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.flake-utils.follows = "flake-utils";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.flake-compat.follows = "blank";
     nix-minecraft.inputs.flake-utils.follows = "flake-utils";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
@@ -180,6 +182,7 @@
                 home-manager = {
                   sharedModules = [
                     inputs.impermanence.nixosModules.home-manager.impermanence
+                    inputs.nix-index-database.hmModules.nix-index
                     inputs.nixvim.homeManagerModules.nixvim
                   ] ++ (self.lib.leaves ./users/modules);
                 };
@@ -194,6 +197,7 @@
               inputs.disko.nixosModules.disko
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
+              inputs.nix-index-database.nixosModules.nix-index
               inputs.nixos-wsl.nixosModules.wsl
 
               # --- Domain-Specific Modules ---
