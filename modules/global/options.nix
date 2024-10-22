@@ -1,5 +1,5 @@
 # Heavily inspired by hlissner: https://github.com/hlissner/dotfiles/blob/master/modules/options.nix
-{ config, options, lib, home-manager, ... }:
+{ config, options, lib, ... }:
 with lib;
 with lib.our;
 let

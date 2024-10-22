@@ -1,4 +1,4 @@
-{ lib, main, config, pkgs, ... }:
+{ config, main, lib, pkgs, ... }:
 lib.mkIf main.info.graphical
 {
   gtk = {

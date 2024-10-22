@@ -1,5 +1,6 @@
-{ pkgs, config, lib, ... }:
+{ config, pkgs, ... }:
 let
+  cfg = config.services.postgresql;
   directory = "/srv/postgresql";
 in
 {
@@ -8,6 +9,6 @@ in
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_16;
-    dataDir = "${directory}/${config.services.postgresql.package.psqlSchema}";
+    dataDir = "${directory}/${cfg.package.psqlSchema}";
   };
 }

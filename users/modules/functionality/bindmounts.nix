@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 # Modified from https://github.com/nix-community/impermanence/blob/master/home-manager.nix
 

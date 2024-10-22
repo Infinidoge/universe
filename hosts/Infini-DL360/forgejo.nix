@@ -1,7 +1,7 @@
-{ config, pkgs, common, ... }:
+{ config, common, pkgs, ... }:
 let
   cfg = config.services.forgejo;
-  domain = config.common.subdomain "git";
+  domain = common.subdomain "git";
 in
 {
   persist.directories = [ "/var/lib/private/gitea-runner/" ];
@@ -25,10 +25,10 @@ in
     settings = {
       server = {
         ROOT_URL = "https://${domain}/";
-        SSH_DOMAIN = config.common.domain;
+        SSH_DOMAIN = common.domain;
         LANDING_PAGE = "explore";
       };
-      mailer = with config.common.email; {
+      mailer = with common.email; {
         ENABLED = true;
         PROTOCOL = "smtps";
         SMTP_ADDR = smtp.address;
@@ -49,7 +49,7 @@ in
       service = {
         DISABLE_REGISTRATION = true;
         OFFLINE_MODE = false;
-        NO_REPLY_ADDRESS = config.common.email.outgoing;
+        NO_REPLY_ADDRESS = common.email.outgoing;
       };
       indexer = {
         REPO_INDEXER_ENABLED = true;
@@ -96,7 +96,7 @@ in
     };
   };
 
-  services.nginx.virtualHosts.${domain} = config.common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
     locations."/" = {
       proxyPass = "http://${cfg.settings.server.DOMAIN}:${toString cfg.settings.server.HTTP_PORT}";
       extraConfig = ''

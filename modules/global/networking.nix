@@ -1,4 +1,4 @@
-{ pkgs, config, private, ... }:
+{ config, pkgs, private, ... }:
 {
   imports = [ private.nixosModules.networking ];
 

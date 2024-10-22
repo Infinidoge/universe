@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ ... }:
 let
   uuid = uuid: "/dev/disk/by-uuid/${uuid}";
   main = uuid "9d4bf2d8-f139-42e7-937a-541a7870d806";

@@ -1,4 +1,4 @@
-{ config, self, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (lib) flatten optional mkIf;
   ifGraphical = lib.optionals config.info.graphical;

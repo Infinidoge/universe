@@ -1,31 +1,38 @@
-{ pkgs, config, ... }:
+{ config, pkgs, ... }:
+let
+  cfg = config.services.openssh;
+in
 {
-  users.users.incoming = {
-    description = "User for incoming files with a chroot jail";
-    isSystemUser = true;
-    group = "incoming";
-  };
-  users.groups.incoming = { };
+  users.users = {
+    incoming = {
+      description = "User for incoming files with a chroot jail";
+      isSystemUser = true;
+      group = "incoming";
+    };
 
-  users.users.jump = {
-    description = "User for ssh jumping";
-    isSystemUser = true;
-    group = "nogroup";
-  };
+    jump = {
+      description = "User for ssh jumping";
+      isSystemUser = true;
+      group = "nogroup";
+    };
 
-  users.users.neofetch = {
-    description = "SSH Neofetch";
-    isSystemUser = true;
-    group = "nogroup";
-    hashedPassword = "$y$j9T$pixfaOyCz4Sbf8KE8AGVk.$TQKPzMvPan8qrO08kqjuJZO4LlUY7Yjxho0wIbcsmV3"; # :)
-    shell = pkgs.bash;
-  };
+    neofetch = {
+      description = "SSH Neofetch";
+      isSystemUser = true;
+      group = "nogroup";
+      hashedPassword = "$y$j9T$pixfaOyCz4Sbf8KE8AGVk.$TQKPzMvPan8qrO08kqjuJZO4LlUY7Yjxho0wIbcsmV3"; # :)
+      shell = pkgs.bash;
+    };
 
-  users.users.guest = {
-    description = "Guest shell account for temporary access";
-    group = "users";
-    isNormalUser = true;
-    shell = pkgs.bash;
+    guest = {
+      description = "Guest shell account for temporary access";
+      group = "users";
+      isNormalUser = true;
+      shell = pkgs.bash;
+    };
+  };
+  users.groups = {
+    incoming = { };
   };
 
   security.pam.services.sshd.allowNullPassword = true;
@@ -41,7 +48,7 @@
     Match user incoming
       AuthorizedKeysFile /etc/ssh/authorized_keys.d/infinidoge /etc/ssh/authorized_keys.d/%u
       ChrootDirectory /srv/external
-      ForceCommand ${config.services.openssh.sftpServerExecutable} -d incoming -u 007
+      ForceCommand ${cfg.sftpServerExecutable} -d incoming -u 007
       X11Forwarding no
       AllowTcpForwarding no
       KbdInteractiveAuthentication no

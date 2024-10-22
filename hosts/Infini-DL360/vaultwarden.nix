@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, common, lib, pkgs, ... }:
 let
-  domain = config.common.subdomain "bitwarden";
+  domain = common.subdomain "bitwarden";
 in
 {
   persist.directories = [ config.services.vaultwarden.dataDir ];
 
-  services.nginx.virtualHosts.${domain} = config.common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
     };
@@ -15,7 +15,7 @@ in
     enable = true;
     environmentFile = config.secrets."vaultwarden";
     dataDir = "/srv/vaultwarden";
-    config = with config.common.email; {
+    config = with common.email; {
       DOMAIN = "https://${domain}";
       SIGNUPS_ALLOWED = false;
 

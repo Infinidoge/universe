@@ -1,6 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, common, pkgs, lib, ... }:
 let
-  inherit (config.common.nginx) ssl ssl-optional;
+  inherit (common.nginx) ssl ssl-optional;
 
   tryFiles = "$uri $uri.html $uri/ =404";
   websiteConfig = ''

@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ config, lib, ... }:
 
 lib.mkIf config.info.graphical {
   boot.extraModulePackages = with config.boot.kernelPackages; [

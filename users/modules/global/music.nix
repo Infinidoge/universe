@@ -1,4 +1,4 @@
-{ main, config, lib, pkgs, ... }:
+{ main, lib, pkgs, ... }:
 lib.mkIf main.info.graphical
 {
   services = {
