@@ -25,6 +25,7 @@
     fzf
     gnumake
     gptfdisk
+    gum
     htop
     hyfetch
     imagemagick
