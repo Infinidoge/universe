@@ -1,4 +1,4 @@
-{ private, config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   modules.hardware.form.server = true;

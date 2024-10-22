@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, common, ... }:
 let
   address = "127.0.0.1";
   port = 8096;
@@ -13,7 +13,7 @@ let
   '';
 in
 {
-  services.nginx.virtualHosts."jellyfin.inx.moe" = config.common.nginx.ssl // {
+  services.nginx.virtualHosts."jellyfin.inx.moe" = common.nginx.ssl // {
     extraConfig = ''
       client_max_body_size 20M;
     '';

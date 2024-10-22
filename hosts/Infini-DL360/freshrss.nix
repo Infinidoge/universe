@@ -1,10 +1,10 @@
-{ config, ... }:
+{ config, common, ... }:
 
 let
   domain = "freshrss.inx.moe";
 in
 {
-  services.nginx.virtualHosts.${domain} = config.common.nginx.ssl;
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl;
 
   services.freshrss = {
     enable = true;

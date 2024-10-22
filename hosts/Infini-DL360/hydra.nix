@@ -1,11 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, common, ... }:
 let
-  domain = config.common.subdomain "hydra";
+  domain = common.subdomain "hydra";
 in
 {
-  services.nginx.virtualHosts.${domain} = config.common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
     locations."/" = {
-      proxyPass = "http://localhost:${builtins.toString config.services.hydra.port}";
+      proxyPass = "http://localhost:${toString config.services.hydra.port}";
     };
   };
 
@@ -14,13 +14,13 @@ in
     port = 3333;
     baseDir = "/srv/hydra";
     hydraURL = "https://${domain}";
-    notificationSender = config.common.email.withSubaddress "hydra";
-    smtpHost = config.common.email.smtp.address;
+    notificationSender = common.email.withSubaddress "hydra";
+    smtpHost = common.email.smtp.address;
     useSubstitutes = true;
     environmentFile = config.secrets.hydra;
     extraEnv = {
-      EMAIL_SENDER_TRANSPORT_sasl_username = config.common.email.outgoing;
-      EMAIL_SENDER_TRANSPORT_port = builtins.toString config.common.email.smtp.SSLTLS;
+      EMAIL_SENDER_TRANSPORT_sasl_username = common.email.outgoing;
+      EMAIL_SENDER_TRANSPORT_port = toString common.email.smtp.SSLTLS;
       EMAIL_SENDER_TRANSPORT_ssl = "ssl";
     };
     extraConfig = ''

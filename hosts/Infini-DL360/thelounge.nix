@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, common, pkgs, ... }:
 
 {
-  services.nginx.virtualHosts."thelounge.inx.moe" = config.common.nginx.ssl // {
+  services.nginx.virtualHosts."thelounge.inx.moe" = common.nginx.ssl // {
     locations."/" = {
       proxyPass = "http://localhost:${toString config.services.thelounge.port}";
     };

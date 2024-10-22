@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ config, common, pkgs, lib, ... }:
 with lib;
 with lib.our;
 let
@@ -30,7 +30,7 @@ in
 
       programs.xss-lock = {
         enable = true;
-        lockerCommand = lib.getExe config.common.wm.locker;
+        lockerCommand = lib.getExe common.wm.locker;
       };
 
       # Automatically attach/detatch connected/disconnected monitors
@@ -64,7 +64,7 @@ in
 
         pavucontrol
 
-        config.common.wm.locker
+        common.wm.locker
       ];
     }
     (mkIf cfg.qtile.enable {

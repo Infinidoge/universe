@@ -1,5 +1,7 @@
-{ config, pkgs, ... }:
+{ config, common, pkgs, ... }:
 let
+  cfg = config.services.jupyter;
+
   mkPythonKernel = displayName: env: {
     inherit displayName;
     language = "python";
@@ -53,10 +55,10 @@ in
     })
   ];
 
-  services.nginx.virtualHosts."jupyter.internal.inx.moe" = config.common.nginx.ssl // {
+  services.nginx.virtualHosts."jupyter.internal.inx.moe" = common.nginx.ssl // {
     listenAddresses = [ "100.101.102.124" ];
     locations."/" = {
-      proxyPass = "http://localhost:${toString config.services.jupyter.port}";
+      proxyPass = "http://localhost:${toString cfg.port}";
       proxyWebsockets = true;
     };
   };

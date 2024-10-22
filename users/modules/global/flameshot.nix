@@ -1,4 +1,4 @@
-{ config, main, pkgs, lib, ... }:
+{ main, ... }:
 {
   services.flameshot = {
     enable = main.info.graphical;

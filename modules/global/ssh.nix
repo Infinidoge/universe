@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ common, lib, ... }:
 with lib;
 {
   # For rage encryption, all hosts need a ssh key pair
@@ -17,7 +17,7 @@ with lib;
   };
 
   programs.ssh = {
-    extraConfig = with config.common; ''
+    extraConfig = with common; ''
       Host rsync.net
           Hostname ${rsyncnet.host}
           User ${rsyncnet.user}
