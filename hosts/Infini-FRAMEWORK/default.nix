@@ -63,6 +63,7 @@
     extraRemotes = [ "lvfs-testing" ];
     uefiCapsuleSettings.DisableCapsuleUpdateOnDisk = "true";
   };
+  systemd.services.fwupd-refresh.after = [ "network-online.target" ];
 
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
 
