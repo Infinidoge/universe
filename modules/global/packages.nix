@@ -23,8 +23,8 @@
     eza
     fd
     fzf
-    gptfdisk
     gnumake
+    gptfdisk
     htop
     hyfetch
     imagemagick
