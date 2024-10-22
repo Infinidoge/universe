@@ -38,6 +38,7 @@ in
       ncdu
       packwiz
       peaclock
+      pop
       toot
       unbted
 
