@@ -1,0 +1,22 @@
+From 161242f714b4dfb971bbc95163e2873042057a9b Mon Sep 17 00:00:00 2001
+From: Infinidoge <infinidoge@inx.moe>
+Date: Wed, 23 Oct 2024 02:14:29 -0400
+Subject: [PATCH] add @tailwind base directive
+
+---
+ style/jupyterlab-typography.css | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/style/jupyterlab-typography.css b/style/jupyterlab-typography.css
+index 63eb5c6..f4c884a 100644
+--- a/style/jupyterlab-typography.css
++++ b/style/jupyterlab-typography.css
+@@ -1,4 +1,4 @@
+-/* @tailwind base; */
++@tailwind base;
+ @tailwind components;
+ @tailwind utilities;
+ 
+-- 
+2.46.1
+
