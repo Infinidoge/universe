@@ -9,36 +9,23 @@ let
     logo32 = "${env}/${env.sitePackages}/ipykernel/resources/logo-32x32.png";
     logo64 = "${env}/${env.sitePackages}/ipykernel/resources/logo-64x64.png";
   };
-in
-{
-  services.jupyter = {
-    enable = true;
-    package = pkgs.python3Packages.jupyterlab;
 
-    # Hosted behind Tailscale, so security doesn't matter
-    command = "jupyter-lab --ServerApp.token='' --ServerApp.password=''";
-    password = "''";
-    ip = "*";
+  jupyterEnv = pkgs.python3.withPackages (p: with p; [
+    jupyterlab
+    jupyterlab-lsp
+    jupyterlab-pygments
 
-    user = "infinidoge";
-    group = "users";
-    notebookDir = "~/Notebooks";
+    # export
+    nbconvert
+    nbformat
 
-    kernels = {
-      python3 = mkPythonKernel "Python 3" (pkgs.python3.withPackages (p: with p; [
-        ipykernel
-        nbconvert
-        nbformat
+    # lsp
+    python-lsp-server
+    python-lsp-ruff
+  ]);
 
-        matplotlib
-        numpy
-        pandas
-        scipy
-      ]));
-    };
-  };
-
-  systemd.services.jupyter.path = with pkgs; [
+  jupyterPath = with pkgs; [
+    # export
     pandoc
     (texlive.combine {
       inherit (texlive)
@@ -54,6 +41,34 @@ in
         ;
     })
   ];
+in
+{
+  services.jupyter = {
+    enable = true;
+    package = jupyterEnv;
+
+    # Hosted behind Tailscale, so security doesn't matter
+    command = "jupyter-lab --ServerApp.token='' --ServerApp.password=''";
+    password = "''";
+    ip = "*";
+
+    user = "infinidoge";
+    group = "users";
+    notebookDir = "~/Notebooks";
+
+    kernels = {
+      python3 = mkPythonKernel "Python 3" (pkgs.python3.withPackages (p: with p; [
+        ipykernel
+
+        matplotlib
+        numpy
+        pandas
+        scipy
+      ]));
+    };
+  };
+
+  systemd.services.jupyter.path = jupyterPath;
 
   services.nginx.virtualHosts."jupyter.internal.inx.moe" = common.nginx.ssl // {
     listenAddresses = [ "100.101.102.124" ];
