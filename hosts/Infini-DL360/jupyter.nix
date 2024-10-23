@@ -12,8 +12,12 @@ let
 
   jupyterEnv = pkgs.python3.withPackages (p: with p; [
     jupyterlab
+
+    # extensions
     jupyterlab-lsp
+    jupyterlab-myst
     jupyterlab-pygments
+    jupyterlab-vim
 
     # export
     nbconvert
