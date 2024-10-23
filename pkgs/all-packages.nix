@@ -10,6 +10,6 @@
   substituteSubset = pkgs.callPackage ./substitute-subset.nix { };
   unbted = pkgs.callPackage ./unbted.nix { };
   bytecode-viewer = pkgs.callPackage ./bytecode-viewer.nix { };
-  unmap = pkgs.callPackage ./unmap.nix { };
+  unmap = pkgs.callPackage ./unmap { };
   tmx-cups-ppd = pkgs.callPackage ./tmx-cups-ppd.nix { };
 }
