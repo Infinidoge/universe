@@ -57,10 +57,6 @@ in
         variables.LAPTOP = "True";
         systemPackages = with pkgs; [ acpi brightnessctl ] ++ optional config.powerManagement.powertop.enable pkgs.powertop;
       };
-
-      persist.directories = [
-        "/var/lib/systemd/backlight"
-      ];
     })
 
     (mkIf cfg.portable {
