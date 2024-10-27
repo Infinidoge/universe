@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   programs = {
     # Enable dconf for programs that need it
@@ -34,6 +34,8 @@
 
   # Disable man cache
   # I don't use it, and it takes ages on rebuild
-  documentation.man.generateCaches = false;
-  home.programs.man.generateCaches = false;
+  documentation.man.generateCaches = lib.mkForce false;
+  home-manager.sharedModules = [
+    { programs.man.generateCaches = lib.mkForce false; }
+  ];
 }
