@@ -7,8 +7,8 @@ let
 in
 {
   environment.variables = {
-    GDK_DPI_SCALE = "${toString scaleFactor}";
-    QT_SCALE_FACTOR = "${toString scaleFactor}";
+    GDK_DPI_SCALE = toString scaleFactor;
+    QT_SCALE_FACTOR = toString scaleFactor;
   };
 
   services.autorandr.profiles =
