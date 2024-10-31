@@ -2,12 +2,14 @@
 # Importers from digga: https://github.com/divnix/digga/blob/main/src/importers.nix
 # Plus the mkHomeConfigurations generator from digga: https://github.com/divnix/digga/blob/main/src/generators.nix
 let
-  flattenTree =
+  flattenTree' =
     /*
      *
-       Synopsis: flattenTree _tree_
+       Synopsis: flattenTree' _cond_ _sep_ _tree_
 
        Flattens a _tree_ of the shape that is produced by rakeLeaves.
+       _cond_ determines when to stop recursing
+       _sep_ is the separator to join the path with
 
        Output Format:
        An attrset with names in the spirit of the Reverse DNS Notation form
@@ -16,35 +18,34 @@ let
        Example input:
        ```
        {
-       a = {
-       b = {
-       c = <path>;
-       };
-       };
+         a = {
+           b = {
+             c = <path>;
+           };
+         };
        }
        ```
 
        Example output:
        ```
        {
-       "a.b.c" = <path>;
+         "a.b.c" = <path>;
        }
        ```
      *
      */
+    cond:
+    sep:
     tree:
     let
       op = sum: path: val:
         let
-          pathStr = builtins.concatStringsSep "." path; # dot-based reverse DNS notation
+          pathStr = builtins.concatStringsSep sep path; # dot-based reverse DNS notation
         in
-        if builtins.isPath val
+        if cond val
         then
-        # builtins.trace "${toString val} is a path"
-          (sum
-            // {
-            "${pathStr}" = val;
-          })
+        # builtins.trace "${toString val} matches condition"
+          (sum // { "${pathStr}" = val; })
         else if builtins.isAttrs val
         then
         # builtins.trace "${builtins.toJSON val} is an attrset"
@@ -62,6 +63,8 @@ let
           (builtins.attrNames val);
     in
     recurse { } [ ] tree;
+
+  flattenTree = flattenTree' builtins.isPath ".";
 
   rakeLeaves =
     /*
@@ -133,7 +136,7 @@ let
     fqdn;
 in
 {
-  inherit rakeLeaves flattenTree flattenLeaves;
+  inherit rakeLeaves flattenTree flattenTree' flattenLeaves;
 
   leaves = dir: builtins.attrValues (flattenLeaves dir);
 
