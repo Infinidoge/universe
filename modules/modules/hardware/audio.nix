@@ -22,6 +22,8 @@ in
       easyeffects
     ];
 
+    security.rtkit.enable = true;
+
     persist.directories = [
       "/var/lib/alsa"
     ];
