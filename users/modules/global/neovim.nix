@@ -102,8 +102,15 @@ in
       fidget.enable = true;
       fzf-lua.enable = true;
       gitsigns.enable = true;
-      nix.enable = true;
       lsp-format.enable = true;
+      neorg = {
+        enable = true;
+        modules = let empty = { __empty = null; }; in {
+          "core.defaults" = empty;
+          "core.concealer" = empty;
+        };
+      };
+      nix.enable = true;
       # nvim-autopairs.enable = true;
       vim-surround.enable = true;
       todo-comments.enable = true;
@@ -111,6 +118,9 @@ in
       treesitter = {
         enable = true;
         folding = false;
+        settings = {
+          highlight.enable = true;
+        };
       };
       ts-autotag.enable = true;
       ts-context-commentstring.enable = true;
@@ -124,6 +134,8 @@ in
           clangd.enable = true;
           hls.enable = true;
           lua_ls.enable = true;
+          marksman.enable = true;
+          # Try nixd
           nil_ls = {
             enable = true;
             extraOptions = {
