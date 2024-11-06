@@ -7,7 +7,7 @@ let
   };
 
   latest = mkPkgsUnfree inputs.latest;
-  fork = mkPkgs inputs.fork;
+  fork = mkPkgsUnfree inputs.fork;
   stable = mkPkgs inputs.stable;
 
   versionFromInput = input:
@@ -72,7 +72,7 @@ in
 
   python-grip = fork.python3Packages.grip;
 
-  factorio-headless = latest.factorio-headless.overrideAttrs (old: {
+  factorio-headless = fork.factorio-headless.overrideAttrs (old: {
     meta = old.meta // { mainProgram = "factorio"; };
   });
 }
