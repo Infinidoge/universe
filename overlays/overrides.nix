@@ -32,12 +32,17 @@ in
     nix-melt
     ;
 
-  vencord = latest.vencord.overrideAttrs (old: {
+  vencord = latest.vencord.overrideAttrs (old: rec {
     src = inputs.vencord;
     version = versionFromInput inputs.vencord;
     env = old.env // {
       VENCORD_REMOTE = "Vendicated/Vencord";
       VENCORD_HASH = builtins.substring 0 9 inputs.vencord.rev;
+    };
+    pnpmDeps = final.pnpm.fetchDeps {
+      inherit (old) pname;
+      inherit src;
+      hash = "sha256-kUfCTF/HKHmsxzWyT6XK833+4A2RUBJcxx6lZsRSTn0=";
     };
   });
 
