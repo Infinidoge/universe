@@ -1,4 +1,20 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  flattenTree = lib.our.flattenTree' (val: val ? action) "";
+
+  mkLeader = { leader, mode }: name: value: {
+    key = leader + name;
+    inherit mode;
+  } // value;
+
+  mkLeaderMap = tree:
+    builtins.concatMap
+      (leader: lib.mapAttrsToList (mkLeader leader) (flattenTree tree))
+      [
+        { leader = "<leader>"; mode = [ "n" "v" ]; }
+        { leader = "<M- >"; mode = [ "n" "v" "i" ]; }
+      ];
+in
 {
   programs.nixvim = {
     enable = true;
@@ -29,7 +45,7 @@
       doom-one-nvim
     ];
 
-    globals.mapleader = "<space>";
+    globals.mapleader = " ";
 
     autoCmd = [
       { event = [ "TermOpen" ]; command = "setlocal nonumber norelativenumber"; }
@@ -37,16 +53,43 @@
 
     keymaps = [
       {
-        key = "<C-w> n";
+        key = "<Space>";
+        action = "<Nop>";
+        mode = [ "n" "v" ];
+        options = {
+          silent = true;
+        };
+      }
+      {
+        key = "<C-w>n";
         action = "<C-\\><C-n>";
         mode = "t";
       }
-      {
-        key = "<M-CR>";
-        action.__raw = "vim.lsp.buf.code_action";
-        mode = [ "n" "i" "v" "s" ];
-      }
-    ];
+    ] ++ mkLeaderMap {
+      c = {
+        a.action.__raw = "vim.lsp.buf.code_action";
+        f.action = ":Format<Enter>";
+        t = {
+          f.action = ":FormatToggle<Enter>";
+        };
+      };
+      w = {
+        q.action = ":close<Enter>";
+        v.action = ":vsplit<Enter>";
+        s.action = ":split<Enter>";
+        V.action = ":vsplit ";
+        S.action = ":split ";
+        n.action = ":next<Enter>";
+        p.action = ":previous<Enter>";
+      };
+      f = {
+        s.action = ":w<enter>";
+      };
+      q = {
+        q.action = ":q<Enter>";
+        x.action = ":x<Enter>";
+      };
+    };
 
     plugins = {
       autoclose = {
