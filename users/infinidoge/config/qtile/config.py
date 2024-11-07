@@ -479,6 +479,11 @@ keys = [
         lazy.spawn("autorandr -c"),
         desc="Run autorandr",
     ),
+    Key(
+        [Keys.SUPER, Keys.ALT], "XF86AudioPlay",
+        lazy.spawn("feishin"),
+        desc="Laucn Feishin",
+    ),
 ]
 # fmt: on
 
