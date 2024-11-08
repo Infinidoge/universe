@@ -55,7 +55,7 @@ class Apps:
 
     TERMINAL = guess_terminal(preference="kitty")  # Set preference if necessary
     SHELL = "zsh"
-    EDITOR = "emacsclient -c"
+    EDITOR = os.getenv("EDITOR", "vim")
 
     @classmethod
     def terminal_command(cls, program, args=tuple(), *, terminal=None):
@@ -437,12 +437,7 @@ keys = [
     Key(
         [Keys.SUPER, Keys.ALT], "e",
         lazy.spawn(Apps.EDITOR),
-        desc="Launch Emacs",
-    ),
-    Key(
-        [Keys.SUPER, Keys.ALT, Keys.CONTROL], "e",
-        lazy.spawn("doom +everywhere"),
-        desc="Launch Emacs 'everywhere' window",
+        desc="Launch editor",
     ),
     Key(
         [Keys.SUPER, Keys.ALT], "d",
