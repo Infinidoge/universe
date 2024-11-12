@@ -55,7 +55,7 @@ class Apps:
 
     TERMINAL = guess_terminal(preference="kitty")  # Set preference if necessary
     SHELL = "zsh"
-    EDITOR = os.getenv("EDITOR", "vim")
+    EDITOR = "nvim"
 
     @classmethod
     def terminal_command(cls, program, args=tuple(), *, terminal=None):
@@ -436,7 +436,7 @@ keys = [
     ),
     Key(
         [Keys.SUPER, Keys.ALT], "e",
-        lazy.spawn(Apps.EDITOR),
+        Apps.open_in_terminal(Apps.EDITOR),
         desc="Launch editor",
     ),
     Key(
