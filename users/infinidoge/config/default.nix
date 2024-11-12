@@ -2,14 +2,6 @@
 with lib;
 {
   xdg.configFile = {
-    "doom" = mkIf config.programs.emacs.enable {
-      source = ./doom;
-      onChange = ''
-        echo "[doom] applying doom configuration"
-        PATH="${config.home.path}/bin:$PATH" ${config.xdg.configHome}/emacs/bin/doom sync -e
-      '';
-    };
-
     "neofetch/config.conf".source = pkgs.substituteAll {
       src = ./neofetch.conf;
 

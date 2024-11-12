@@ -32,7 +32,7 @@
 - [ ] Generate host SSH keys and rekey secrets
   - https://github.com/NixOS/nixpkgs/blob/1042fd8b148a9105f3c0aca3a6177fd1d9360ba5/nixos/modules/services/networking/ssh/sshd.nix#L561-L576
 - [ ] Generate basic configuration in universe
-- [ ] Install extras like doom
+- [ ] Install extras
 
 # SSH keys revamp
 - [ ] Put SSH host keys in host folders

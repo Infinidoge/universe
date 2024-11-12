@@ -4,6 +4,9 @@ let
 in
 {
   home.packages = with pkgs; flatten [
+    editorconfig-core-c
+    editorconfig-checker
+
     # C
     gcc
     gdb
@@ -74,6 +77,38 @@ in
     # Zig
     zig
     zls
+
+    # LaTeX
+    (texlive.combine {
+      inherit (texlive)
+        scheme-medium
+
+        apa7
+        apacite
+        biblatex
+        biblatex-apa
+        biblatex-chicago
+        capt-of
+        minted
+        catchfile
+        endfloat
+        framed
+        fvextra
+        hanging
+        lipsum
+        mleftright
+        scalerel
+        threeparttable
+        upquote
+        wrapfig
+        xstring
+        ;
+    })
+    biber
+
+    # html
+    html-tidy
+    nodePackages.prettier
   ];
 
   programs.java.enable = true;
