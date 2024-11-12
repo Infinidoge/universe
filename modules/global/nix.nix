@@ -32,8 +32,10 @@ in
 
       min-free = 536870912; # 0.5 gibi bytes
 
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
+      nix-path = [
+        "nixpkgs=${inputs.nixpkgs}"
+        "devshell=${inputs.devshell}"
+      ];
     };
 
     gc = {
@@ -58,11 +60,6 @@ in
           to.type = "git";
         };
       };
-
-    nixPath = [
-      "nixpkgs=${inputs.nixpkgs}"
-      "devshell=${inputs.devshell}"
-    ];
 
     distributedBuilds = mkDefault true;
     extraOptions = ''
