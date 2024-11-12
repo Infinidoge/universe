@@ -23,7 +23,6 @@ Some parts of Digga's library is replicated in [lib/digga.nix](./lib/digga.nix) 
 Miscellaneous scripts that I use elsewhere as part of my configuration.
 
 - `bwrap.bash`: A bubble-wrap script used for running Nix on systems where it shouldn't be. See https://ersei.net/en/blog/its-nixin-time
-- `install-doom.bash`: A script to install Doom Emacs if it doesn't already exist
 
 ### `/hosts`
 
@@ -35,7 +34,7 @@ These source blocks are tangled to the respective bash scripts, which are used f
 Summary of what the scripts do
 
 - `prep.bash /path/to/dev/disk`: Partitions and formats the given disk.
-- `install.bash /path/to/dev/disk`: Mounts the file systems, then runs all commands for an installation, including cloning the configuration into `/etc/nixos` and installing Doom Emacs to `.config/emacs`
+- `install.bash /path/to/dev/disk`: Mounts the file systems, then runs all commands for an installation, including cloning the configuration into `/etc/nixos`
 - `bare_install.bash`: Just runs `nixos-install`
 - `mount.bash /path/to/dev/disk`: Mounts the file systems as in `install.bash`.
 - `data_setup.bash /path/to/dev/disk`: Partitions the disk as a separate data storage; Used for Infini-SERVER.
@@ -175,7 +174,6 @@ Modules that add new home manager functionality.
 Home Manager gettings that are set globally.
 
 - `direnv.nix`
-- `emacs.nix`
 - `flameshot.nix`
 - `git.nix`
 - `gpg.nix`
@@ -218,5 +216,4 @@ My setup is pretty extensive, but reading it isn't too particularly difficult.
 - `ssh-keys.nix`: My SSH public keys.
 - `config`: The parts of my dotfiles that I can't write in Nix. Mainly uses home manager to put files in the right place
   - `default.nix`: Pulls in the configuration files and puts them where they belong. Also defines my neofetch output.
-  - `doom`: My Doom Emacs configuration. Doom Emacs is my editor and home, and I use it extensively.
   - `qtile`: My Qtile configuration. Qtile is my home of homes, the environment I am pretty literally always in while on my computers.

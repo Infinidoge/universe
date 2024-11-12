@@ -8,8 +8,6 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    # defaultKeymap = "emacs";
-
     initExtraFirst = ''
       [[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
     '';

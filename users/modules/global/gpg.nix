@@ -25,7 +25,6 @@
     enable = true;
     pinentryPackage = (if main.info.graphical then pkgs.pinentry-qt else pkgs.pinentry-curses);
     extraConfig = ''
-      allow-emacs-pinentry
       allow-loopback-pinentry
     '';
   };

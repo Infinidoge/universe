@@ -75,22 +75,11 @@ in
     "L+ /home/infinidoge/.local/share/jellyfinmediaplayer/scripts/mpris.so - - - - ${pkgs.mpvScripts.mpris}/share/mpv/scripts/mpris.so"
   ];
 
-  #environment.variables.EDITOR =
-  #  let
-  #    pkg = config.home-manager.users.infinidoge.programs.emacs.package;
-  #    editorScript = pkgs.writeScriptBin "emacseditor" ''
-  #      #!${pkgs.runtimeShell}
-  #      exec ${pkg}/bin/emacsclient --create-frame "$@"
-  #    '';
-  #  in
-  #  (lib.mkForce "${editorScript}/bin/emacseditor");
-
   fonts.packages = with pkgs; [
     (nerdfonts.override {
       fonts = [ "DejaVuSansMono" "NerdFontsSymbolsOnly" ];
     })
     dejavu_fonts
-    emacs-all-the-icons-fonts
   ];
 
   fonts.fontconfig.defaultFonts = {
