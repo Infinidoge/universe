@@ -35,6 +35,7 @@ in
       nix-path = [
         "nixpkgs=${inputs.nixpkgs}"
         "devshell=${inputs.devshell}"
+        "local=/nix/nixpkgs"
       ];
     };
 
