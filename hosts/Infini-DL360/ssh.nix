@@ -64,7 +64,7 @@ in
       PasswordAuthentication no
 
     Match user neofetch
-      ForceCommand ${pkgs.hyfetch}/bin/neowofetch --config ${config.home-manager.users.infinidoge.xdg.configFile."neofetch/config.conf".source} --backend ascii
+      ForceCommand ${pkgs.hyfetch}/bin/neowofetch --config ${./neofetch.conf} --backend ascii
       PermitTTY no
       DisableForwarding yes
       AuthenticationMethods none
