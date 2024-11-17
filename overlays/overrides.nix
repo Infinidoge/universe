@@ -23,6 +23,7 @@ in
     bitwarden-desktop
     immich
     immich-machine-learning
+    factorio-headless
     ;
 
   inherit (fork)
@@ -71,8 +72,4 @@ in
   };
 
   python-grip = fork.python3Packages.grip;
-
-  factorio-headless = fork.factorio-headless.overrideAttrs (old: {
-    meta = old.meta // { mainProgram = "factorio"; };
-  });
 }
