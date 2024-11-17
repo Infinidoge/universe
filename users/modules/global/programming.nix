@@ -49,7 +49,6 @@ in
       isort
       jupyter
       mypy
-      nose
       pip
       pyflakes
       pytest
