@@ -10,12 +10,8 @@
 
     admins = [ "Infinidoge" ];
 
-    saveName = "hacktorio2";
-    game-name = "Hacktorio 2";
+    saveName = "hacktorio_space_age";
+    game-name = "Hacktorio 3: Space Age";
     game-password = private.variables.factorio-password;
-
-    mapGenSettings = {
-      seed = "3940972377";
-    };
   };
 }
