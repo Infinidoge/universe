@@ -66,6 +66,7 @@
       d = "diff";
       dc = "diff --cached";
       ds = "diff --staged";
+      dh = "diff HEAD~1 HEAD";
       r = "restore -p";
       rs = "restore --staged -p";
       sw = "switch";
