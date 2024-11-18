@@ -47,8 +47,8 @@ in
 
   schildichat-desktop = stable.schildichat-desktop.override { electron = final.electron_30; };
 
-  python3 = prev.python3.override {
-    packageOverrides = pythonFinal: pythonPrev: {
+  pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+    (pythonFinal: pythonPrev: {
       inherit (final) jupyterlab-vim jupyterlab-myst;
 
       qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
@@ -61,8 +61,8 @@ in
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
         doCheck = false;
       };
-    };
-  };
+    })
+  ];
 
   qtile = prev.qtile.overrideAttrs {
     version = final.python3Packages.qtile.version;
