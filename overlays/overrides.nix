@@ -61,6 +61,11 @@ in
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
         doCheck = false;
       };
+
+      # https://github.com/NixOS/nixpkgs/pull/356680/
+      term-image = pythonPrev.term-image.overridePythonAttrs {
+        pythonRelaxDeps = [ "pillow" ];
+      };
     })
   ];
 
