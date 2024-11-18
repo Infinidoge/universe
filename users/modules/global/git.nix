@@ -41,6 +41,7 @@
       status.showUntrackedFiles = "all";
       push.autoSetupRemote = true;
       branch.sort = "-committerdate";
+      commit.verbose = true;
     };
 
     aliases = {
