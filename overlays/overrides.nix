@@ -21,8 +21,6 @@ in
 
   inherit (latest)
     bitwarden-desktop
-    immich
-    immich-machine-learning
     factorio-headless
     ;
 
