@@ -132,7 +132,10 @@ in
         enable = true;
         servers = {
           clangd.enable = true;
-          hls.enable = true;
+          hls = {
+            enable = true;
+            installGhc = false;
+          };
           lua_ls.enable = true;
           marksman.enable = true;
           # Try nixd
