@@ -23,4 +23,8 @@ in
       "/etc/machine-id"
     ];
   };
+
+  # https://github.com/NixOS/nixpkgs/pull/351151
+  boot.initrd.systemd.suppressedUnits = [ "systemd-machine-id-commit.service" ];
+  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
 }
