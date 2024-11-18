@@ -35,13 +35,13 @@
     lfs.enable = true;
 
     extraConfig = {
-      pull.rebase = true;
-      merge.ignore.driver = "true";
-      init.defaultBranch = "master";
-      status.showUntrackedFiles = "all";
-      push.autoSetupRemote = true;
       branch.sort = "-committerdate";
       commit.verbose = true;
+      init.defaultBranch = "master";
+      merge.ignore.driver = "true";
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+      status.showUntrackedFiles = "all";
     };
 
     aliases = {
