@@ -1,6 +1,12 @@
 { config, pkgs, ... }:
 let
   cfg = config.services.openssh;
+
+  neofetchConfig = pkgs.substituteAll {
+    src = ./neofetch.conf;
+
+    inherit (config.info) model;
+  };
 in
 {
   users.users = {
@@ -64,7 +70,7 @@ in
       PasswordAuthentication no
 
     Match user neofetch
-      ForceCommand ${pkgs.hyfetch}/bin/neowofetch --config ${./neofetch.conf} --backend ascii
+      ForceCommand ${pkgs.hyfetch}/bin/neowofetch --config ${neofetchConfig} --backend ascii
       PermitTTY no
       DisableForwarding yes
       AuthenticationMethods none
