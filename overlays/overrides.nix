@@ -49,7 +49,6 @@ in
 
   python3 = prev.python3.override {
     packageOverrides = pythonFinal: pythonPrev: {
-      inherit (latest.python3Packages) pymdown-extensions onnx;
       inherit (final) jupyterlab-vim jupyterlab-myst;
 
       qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
