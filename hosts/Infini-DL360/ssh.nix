@@ -70,8 +70,8 @@ in
       PasswordAuthentication no
 
     Match user neofetch
-      ForceCommand ${pkgs.hyfetch}/bin/neowofetch --config ${neofetchConfig} --backend ascii
-      PermitTTY no
+      ForceCommand ${pkgs.hyfetch}/bin/neowofetch --config ${neofetchConfig}
+      PermitTTY yes
       DisableForwarding yes
       AuthenticationMethods none
       KbdInteractiveAuthentication yes
