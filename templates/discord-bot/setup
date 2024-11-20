@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# vim: set ft=bash:
+
+set -e
+
+if [ $# -lt 3 ]; then
+  echo "Not enough arguments"
+  echo 'usage: ./setup basename ClassName "description here"'
+  exit 1
+fi
+
+nameBase=$1
+nameClass=$2
+description=$3
+files=(
+  "flake.nix"
+  ".gitignore"
+  "pyproject.toml"
+  "rename/main.py"
+)
+
+for file in ${files[@]}; do
+    sed -i "
+    s/rename/$nameBase/g;
+    s/Rename/$nameClass/g;
+    s/@description@/$description/g;
+    " $file
+done
+
+mv rename $nameBase
