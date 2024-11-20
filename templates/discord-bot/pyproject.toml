@@ -1,0 +1,21 @@
+[project]
+name = "rename"
+version = "0.0.1"
+dependencies = [
+	"disnake",
+	"python-dotenv",
+	"aiosqlite"
+]
+
+[project.scripts]
+rename = "rename:run"
+
+[tool.setuptools.packages]
+find = {}
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 120

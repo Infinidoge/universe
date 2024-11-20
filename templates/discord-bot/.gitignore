@@ -1,0 +1,14 @@
+# Secrets
+.env
+
+# Nix
+.direnv/
+result
+
+# Python
+.ruff_cache
+.ropeproject
+
+# Runtime
+rename.sqlite3
+rename.sqlite3-journal
