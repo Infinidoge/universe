@@ -63,7 +63,7 @@ in
         (discord.override { withVencord = true; withOpenASAR = true; })
         schildichat-desktop
         teams-for-linux
-        thunderbird-115
+        thunderbird
         tor-browser
 
         (optional main.modules.hardware.form.desktop qbittorrent)
