@@ -45,6 +45,15 @@
       alias "jh"="cd ~ && j"
       alias "gj"="gcd && j"
 
+      mktmp() {
+        if [ "$1" != "" ]; then
+          dirspec="$1.XXX"
+        else
+          dirspec="tmp.XXX"
+        fi
+        \builtin cd $(mktemp -t -d "$dirspec")
+      }
+
       mktmpunzip() {
         dir=$(mktemp -t -d unzip.XXX)
         if ! file=$(realpath -e "$1"); then
@@ -82,6 +91,7 @@
 
     shellAliases = main.environment.shellAliases // config.home.shellAliases // {
       lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
+      mktmp = "mktmp"; # Remove global alias
     };
 
     oh-my-zsh = {
