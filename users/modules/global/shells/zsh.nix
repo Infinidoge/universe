@@ -83,6 +83,28 @@
         git clone "$location" "$dir" "$@"
         \builtin cd "$dir"
       }
+
+      censor-audio() {
+        file="$1"
+        shift 1
+
+        if [ 2 -gt $# ]; then
+          echo "Not enough arguments"
+          exit 1
+        fi
+
+        filters=""
+
+        while [[ "$1" =~ ^"[0-9]+\.?[0-9]*-[0-9]+\.?[0-9]*"$ ]]; do
+          if [ $filters != "" ]; then
+            filters+=", "
+          fi
+          filters+="volume=enable='between(t,''${1/-/,})':volume=0"
+          shift 1
+        done
+
+        ffmpeg -i "$file" -vcodec copy -af "$filters" "$@"
+      }
     '';
 
     dotDir = ".config/zsh";
