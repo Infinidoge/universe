@@ -105,6 +105,19 @@
 
         ffmpeg -i "$file" -vcodec copy -af "$filters" "$@"
       }
+
+      disget() {
+        curl "$1" --output ''${$(basename "$1")%%\?*}
+      }
+
+      disgetconv() {
+        url="$1"
+        tmpFileName="''${$(basename "$url")%%\?*}.XXX"
+        tmpFile=$(mktemp -t $tmpFileName)
+        curl "$url" --output "$tmpFile"
+        shift 1
+        magick "$tmpFile" "$@"
+      }
     '';
 
     dotDir = ".config/zsh";
