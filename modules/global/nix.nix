@@ -21,6 +21,7 @@ in
 
       allow-import-from-derivation = true;
       auto-optimise-store = true;
+      builders-use-substitutes = true;
       fallback = true;
       keep-derivations = true;
       keep-outputs = true;
