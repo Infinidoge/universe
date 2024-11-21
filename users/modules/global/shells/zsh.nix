@@ -45,6 +45,7 @@
       alias "jh"="cd ~ && j"
       alias "gj"="gcd && j"
 
+      unalias mktmp
       mktmp() {
         if [ "$1" != "" ]; then
           dirspec="$1.XXX"
@@ -124,10 +125,10 @@
 
     history.path = "$HOME/${dotDir}/.zsh_history";
 
-    shellAliases = main.environment.shellAliases // config.home.shellAliases // {
-      lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
-      mktmp = "mktmp"; # Remove global alias
-    };
+    shellAliases = builtins.removeAttrs
+      (main.environment.shellAliases // config.home.shellAliases // {
+        lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
+      }) [ "mktmp" ];
 
     oh-my-zsh = {
       enable = true;
