@@ -97,7 +97,7 @@
         filters=""
 
         while [[ "$1" =~ ^"[0-9]+\.?[0-9]*-[0-9]+\.?[0-9]*"$ ]]; do
-          if [ $filters != "" ]; then
+          if [ "$filters" != "" ]; then
             filters+=", "
           fi
           filters+="volume=enable='between(t,''${1/-/,})':volume=0"
