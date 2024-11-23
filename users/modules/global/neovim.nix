@@ -173,6 +173,10 @@ in
     extraConfigLua = ''
       vim.cmd [[cabbrev wq execute "Format sync" <bar> wq]]
       vim.cmd [[cabbrev x execute "Format sync" <bar> x]]
+      vim.cmd [[cabbrev Q q]]
+      vim.cmd [[cabbrev W w]]
+      vim.cmd [[cabbrev WQ wq]]
+      vim.cmd [[cabbrev X x]]
     '';
   };
 }
