@@ -6,8 +6,8 @@ in
   persist = {
     directories = flatten [
       "/home"
-      "/etc/nixos"
-      "/etc/nixos-private"
+      { directory = "/etc/nixos"; user = "infinidoge"; }
+      { directory = "/etc/nixos-private"; user = "infinidoge"; }
 
       "/var/log"
       "/var/lib/nixos"
