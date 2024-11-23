@@ -1,7 +1,7 @@
 { lib }:
 let
   inherit (builtins) mapAttrs removeAttrs;
-  inherit (lib) optionals;
+  inherit (lib) optionals flip genAttrs;
 in
 rec {
   # Constants
@@ -40,13 +40,14 @@ rec {
 
   # btrfs
 
-  mkBtrfsPart = size: mountpoint: content: {
-    inherit size;
+  mkBtrfsPart' = base: mountpoint: content': {
     content = {
       inherit mountpoint;
       type = "btrfs";
-    } // content;
-  };
+    } // content';
+  } // base;
+  mkBtrfsPart = size: mkBtrfsPart' { inherit size; };
+  mkBtrfsPartEndAt = end: mkBtrfsPart' { inherit end; };
 
   mkBtrfsSubvols' = mountOptions: mapAttrs (n: v: {
     mountpoint = n;
@@ -56,13 +57,14 @@ rec {
 
   # ZFS
 
-  mkZPart = size: pool: {
-    inherit size;
+  mkZPart' = base: content: pool: {
     content = {
       type = "zfs";
       inherit pool;
-    };
-  };
+    } // content;
+  } // base;
+  mkZPart = size: mkZPart' { inherit size; } { };
+  mkZPartEndAt = end: mkZPart' { inherit end; } { };
 
   mkZDisk = id: pool: mkDisk id {
     partitions = {
@@ -82,6 +84,7 @@ rec {
     inherit mountOptions;
   } // options;
   mkZPool = mkZPool' defaultMountOptions;
+  mkZPools = mapAttrs mkZPool;
 
   mkZfs' = mountOptions: mountpoint: options: {
     type = "zfs_fs";
@@ -94,4 +97,6 @@ rec {
     type = "zfs_volume";
     inherit size content;
   };
+
+  markNeededForBoot = flip genAttrs (_: { neededForBoot = true; });
 }
