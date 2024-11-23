@@ -1,11 +1,11 @@
 { pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ./filesystems.nix
+    ./disks.nix
   ];
 
   system.stateVersion = "24.11";
-  networking.hostId = "06a3f197";
+  networking.hostId = "deadbeef";
 
   boot.kernelPackages = pkgs.linuxPackages;
 
