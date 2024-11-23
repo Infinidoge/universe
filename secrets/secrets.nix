@@ -15,6 +15,7 @@ let
     Infini-SD = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8oViHNz64NG51uyll/q/hrSGwoHRgvYI3luD/IWTUT root@Infini-SD";
     Infini-DL360 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjmvE76BcPwZSjeNGzlguDQC67Yxa3uyOf5ZmVDWNys root@Infini-DL360";
     Infini-RASPBERRY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIwPqTFCztLbYFFUej42hRzzCBzG6BCZIb7zXi2cxeJp root@Infini-RASPBERRY";
+    hestia = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIUMLnWIbl6WNZxm22uyDv5mM27hPCn8u8ZZ8EpF+O/3 root@hestia";
   };
   users = {
     infinidoge = import ../users/infinidoge/ssh-keys.nix;
