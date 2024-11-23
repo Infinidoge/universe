@@ -32,6 +32,11 @@ with lib.our.disko;
         datasets = {
           storage = mkZfs "/storage" { };
           backups = mkZfs "/backups" { };
+          swap = mkZvol "16G" {
+            type = "swap";
+            resumeDevice = false;
+            discardPolicy = "both";
+          };
         };
       };
     };
