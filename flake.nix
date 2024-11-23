@@ -26,7 +26,7 @@
     ### Nix Libraries
     agenix.url = "github:ryantm/agenix";
     devshell.url = "github:numtide/devshell";
-    disko.url = "github:nix-community/disko";
+    disko.url = "github:nix-community/disko/latest";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-registry = { url = "github:NixOS/flake-registry"; flake = false; };
     home-manager.url = "github:nix-community/home-manager";
