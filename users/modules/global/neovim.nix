@@ -87,6 +87,7 @@ in
       };
       q = {
         q.action = ":q<Enter>";
+        Q.action = ":q!<Enter>";
         x.action = ":x<Enter>";
       };
     };
