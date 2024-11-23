@@ -1,10 +1,5 @@
 { pkgs, lib, ... }:
 with lib.our.disko;
-let
-  inherit (builtins) mapAttrs;
-  inherit (lib) genAttrs flip;
-  mountOptions = defaultMountOptions;
-in
 {
   boot.kernelPackages = pkgs.linuxPackages;
 
@@ -33,7 +28,7 @@ in
       hdd4 = mkZDisk "wwn-0x5000c5004d30f464" "zhdd";
       hdd5 = mkZDisk "wwn-0x5000c5004d30dc88" "zhdd";
     };
-    zpool = mapAttrs mkZPool {
+    zpool = mkZPools {
       zssd = {
         datasets = {
           nix = mkZfs "/nix" { };
@@ -48,7 +43,7 @@ in
     };
   };
 
-  fileSystems = flip genAttrs (_: { neededForBoot = true; }) [
+  fileSystems = markNeededForBoot [
     "/persist"
     "/storage"
     "/etc/ssh"
