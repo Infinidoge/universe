@@ -16,7 +16,7 @@
     };
   };
 
-  specialisation."Graphical".configuration = {
+  specialisation.graphical.configuration = {
     modules.desktop.wm.enable = true;
   };
 }
