@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
   flattenTree = lib.our.flattenTree' (val: val ? action) "";
 
@@ -14,6 +14,8 @@ let
         { leader = "<leader>"; mode = [ "n" "v" ]; }
         { leader = "<M- >"; mode = [ "n" "v" "i" ]; }
       ];
+
+  inherit (config.universe) programming;
 in
 {
   programs.nixvim = {
@@ -132,12 +134,12 @@ in
       lsp = {
         enable = true;
         servers = {
-          clangd.enable = true;
+          clangd.enable = programming.c.enable;
           hls = {
-            enable = true;
+            enable = programming.haskell.enable;
             installGhc = false;
           };
-          lua_ls.enable = true;
+          lua_ls.enable = programming.lua.enable;
           marksman.enable = true;
           # Try nixd
           nil_ls = {
@@ -146,9 +148,9 @@ in
               settings.nil.formatting.command = [ "nixpkgs-fmt" ];
             };
           };
-          nimls.enable = true;
+          nimls.enable = programming.nim.enable;
           pylsp = {
-            enable = true;
+            enable = programming.python.enable;
             settings = {
               plugins = {
                 ruff = {
@@ -161,7 +163,7 @@ in
             };
           };
           rust_analyzer = {
-            enable = true;
+            enable = programming.rust.enable;
             installRustc = false;
             installCargo = false;
           };
