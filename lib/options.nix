@@ -1,8 +1,8 @@
 { lib }:
 let
-  inherit (lib) mkOption types;
+  inherit (lib) mkOption types flatten;
 in
-{
+rec {
   mkOpt = type: default:
     mkOption { inherit type default; };
 
@@ -20,4 +20,12 @@ in
     type = types.bool;
     example = true;
   };
+
+  coercedPackageList = with types;
+    let
+      packageListType = listOf (either package packageListType);
+    in
+    coercedTo packageListType flatten (listOf package);
+
+  packageListOpt = mkOpt coercedPackageList [ ];
 }

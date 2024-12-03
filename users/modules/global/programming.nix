@@ -1,114 +1,157 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
-  inherit (lib) flatten;
+  inherit (lib) flip;
+  inherit (lib.our) mkBoolOpt' packageListOpt;
+
+  cfg = config.universe.programming;
+
+
+  programmingOpt' = kind: flip mkBoolOpt' "Programming: ${kind}";
+  programmingOpt = flip programmingOpt' cfg.all.enable;
+
+  addPackageLists = lib.mapAttrs (name: value: value // {
+    packages = packageListOpt;
+  });
 in
 {
-  home.packages = with pkgs; flatten [
-    editorconfig-core-c
-    editorconfig-checker
+  options.universe.programming = (addPackageLists {
+    base.enable = programmingOpt' "Base packages" true;
 
-    # C
-    gcc
-    gdb
-    clang-tools
-    binutils
+    c.enable = programmingOpt' "C" true;
+    csharp.enable = programmingOpt "C#";
+    haskell.enable = programmingOpt "Haskell";
+    java.enable = programmingOpt "Java";
+    lua.enable = programmingOpt "Lua";
+    nim.enable = programmingOpt "Nim";
+    python.enable = programmingOpt' "Python" true;
+    racket.enable = programmingOpt "Racket";
+    rust.enable = programmingOpt "Rust";
+    zig.enable = programmingOpt "Zig";
+    latex.enable = programmingOpt "LaTeX";
+    html.enable = programmingOpt "HTML";
+  }) // {
+    all.enable = programmingOpt' "All languages" false;
+  };
 
-    # C Sharp
-    dotnetCorePackages.sdk_6_0
-    omnisharp-roslyn
-
-    # Haskell
-    haskell-language-server
-    ghc
-    cabal-install
-    ormolu
-
-    (with haskellPackages; [
-      hoogle
-    ])
-
-    stack
-    # stack2nix
-    cabal2nix
-
-    # Java
-    openjdk
-    clang-tools
-    gradle
-
-    # Lua
-    lua-language-server
-
-    # Nim
-    nim
-    nimlsp
-
-    # Python
-    (python312.withPackages (p: with p; [
-      black
-      isort
-      jupyter
-      mypy
-      pip
-      pyflakes
-      pytest
-
-      python-lsp-server
-      python-lsp-ruff
-      pylsp-rope
-      pyls-isort
-    ]))
-    pipenv
-    ruff
-
-    # Racket
-    racket
-
-    # Rust
-    (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
-      extensions = [
-        "rust-src"
-        "rust-analyzer"
+  config = {
+    universe.programming = with pkgs; {
+      base.packages = [
+        editorconfig-core-c
+        editorconfig-checker
       ];
-    }))
-    gcc
 
-    # Zig
-    zig
-    zls
+      c.packages = [
+        gcc
+        gdb
+        clang-tools
+        binutils
+      ];
 
-    # LaTeX
-    (texlive.combine {
-      inherit (texlive)
-        scheme-medium
+      csharp.packages = [
+        dotnetCorePackages.sdk_6_0
+        omnisharp-roslyn
+      ];
 
-        apa7
-        apacite
-        biblatex
-        biblatex-apa
-        biblatex-chicago
-        capt-of
-        minted
-        catchfile
-        endfloat
-        framed
-        fvextra
-        hanging
-        lipsum
-        mleftright
-        scalerel
-        threeparttable
-        upquote
-        wrapfig
-        xstring
-        ;
-    })
-    biber
+      haskell.packages = with haskellPackages; [
+        ghc
+        cabal-install
+        ormolu
 
-    # html
-    html-tidy
-    nodePackages.prettier
-  ];
+        hoogle
 
-  programs.java.enable = true;
+        stack
+        # stack2nix
+        cabal2nix
+      ];
+
+
+      java.packages = [
+        openjdk
+        clang-tools
+        gradle
+      ];
+
+      lua.packages = [
+      ];
+
+      nim.packages = [
+        nim
+      ];
+
+      python.packages = [
+        (python312.withPackages (p: with p; [
+          black
+          isort
+          jupyter
+          mypy
+          pip
+          pyflakes
+          pytest
+        ]))
+        pipenv
+        ruff
+      ];
+
+      racket.packages = [
+        racket
+      ];
+
+      rust.packages = [
+        (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
+          extensions = [
+            "rust-src"
+            "rust-analyzer"
+          ];
+        }))
+        gcc
+      ];
+
+      zig.packages = [
+        zig
+        zls
+      ];
+
+      latex.packages = [
+        (texlive.combine {
+          inherit (texlive)
+            scheme-medium
+
+            apa7
+            apacite
+            biblatex
+            biblatex-apa
+            biblatex-chicago
+            capt-of
+            minted
+            catchfile
+            endfloat
+            framed
+            fvextra
+            hanging
+            lipsum
+            mleftright
+            scalerel
+            threeparttable
+            upquote
+            wrapfig
+            xstring
+            ;
+        })
+        biber
+      ];
+
+      html.packages = [
+        html-tidy
+        nodePackages.prettier
+      ];
+    };
+
+    home.packages = lib.concatMap
+      (v: lib.optionals (v ? packages && v.enable) v.packages)
+      (lib.attrValues cfg);
+
+    programs.java.enable = cfg.java.enable;
+
+  };
+
 }
