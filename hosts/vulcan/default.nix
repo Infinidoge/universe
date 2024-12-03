@@ -24,5 +24,7 @@
       };
     };
     nix.settings.use-xdg-base-directories = true;
+
+    universe.programming.all.enable = true;
   };
 }
