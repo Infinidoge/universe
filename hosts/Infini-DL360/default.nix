@@ -35,6 +35,8 @@
     hardware.form.server = true;
   };
 
+  home.universe.programming.all.enable = true;
+
   boot.loader.timeout = 5;
 
   virtualisation.enable = true;
