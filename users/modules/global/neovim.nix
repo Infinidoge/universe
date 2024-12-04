@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ main, pkgs, lib, ... }:
 let
   flattenTree = lib.our.flattenTree' (val: val ? action) "";
 
@@ -15,7 +15,7 @@ let
         { leader = "<M- >"; mode = [ "n" "v" "i" ]; }
       ];
 
-  inherit (config.universe) programming;
+  inherit (main.universe) programming;
 in
 {
   programs.nixvim = {

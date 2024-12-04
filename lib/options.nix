@@ -28,4 +28,8 @@ rec {
     coercedTo packageListType flatten (listOf package);
 
   packageListOpt = mkOpt coercedPackageList [ ];
+
+  addPackageLists = lib.mapAttrs (name: value: value // {
+    packages = packageListOpt;
+  });
 }
