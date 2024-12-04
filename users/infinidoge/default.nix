@@ -53,8 +53,8 @@ in
         simulide
         speedcrunch
 
-        (discord-canary.override { withVencord = true; withOpenASAR = true; })
-        (discord.override { withVencord = true; withOpenASAR = true; })
+        (discord-canary.override { withVencord = true; withOpenASAR = true; withTTS = false; })
+        (discord.override { withVencord = true; withOpenASAR = true; withTTS = false; })
         schildichat-desktop
         teams-for-linux
         thunderbird
