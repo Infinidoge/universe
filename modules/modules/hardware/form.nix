@@ -18,6 +18,7 @@ in
       modules.hardware.audio.enable = mkDefault true;
       modules.hardware.peripherals.yubikey.enable = true;
       info.stationary = mkDefault true;
+      universe.media.enable = mkDefault true;
     })
 
     (mkIf cfg.laptop {
@@ -26,6 +27,8 @@ in
         audio.enable = mkDefault true;
         peripherals.yubikey.enable = true;
       };
+
+      universe.media.enable = mkDefault true;
 
       hardware = {
         acpilight.enable = true;

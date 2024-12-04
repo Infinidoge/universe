@@ -53,12 +53,6 @@ in
         simulide
         speedcrunch
 
-        # Media
-        id3v2
-        jellyfin-media-player
-        picard
-        feishin
-
         (discord-canary.override { withVencord = true; withOpenASAR = true; })
         (discord.override { withVencord = true; withOpenASAR = true; })
         schildichat-desktop
@@ -71,7 +65,7 @@ in
     ];
   };
 
-  systemd.user.tmpfiles.users.infinidoge.rules = mkIf config.info.graphical [
+  systemd.user.tmpfiles.users.infinidoge.rules = mkIf config.universe.media.enable [
     "L+ /home/infinidoge/.local/share/jellyfinmediaplayer/scripts/mpris.so - - - - ${pkgs.mpvScripts.mpris}/share/mpv/scripts/mpris.so"
   ];
 

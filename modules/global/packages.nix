@@ -59,7 +59,7 @@
     xxHash
     yq
     zip
-  ] ++ (lib.optionals config.info.graphical (with pkgs; [
+  ] ++ (lib.optionals config.universe.media.enable (with pkgs; [
     graphviz
     yt-dlp
   ]));
@@ -82,6 +82,7 @@
     vim
   ]) ++ (lib.optionals config.info.graphical (with pkgs; [
     arandr
+  ])) ++ (lib.optionals config.universe.media.enable (with pkgs; [
     ffmpeg-full
     mpv
   ]));
