@@ -119,6 +119,15 @@
         shift 1
         magick "$tmpFile" "$@"
       }
+
+      disgetconvv() {
+        url="$1"
+        tmpFileName="''${$(basename "$url")%%\?*}.XXX"
+        tmpFile=$(mktemp -t $tmpFileName)
+        curl "$url" --output "$tmpFile"
+        shift 1
+        ffmpeg -i "$tmpFile" "$@"
+      }
     '';
 
     dotDir = ".config/zsh";
