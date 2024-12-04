@@ -22,6 +22,12 @@ in
       group = "nogroup";
     };
 
+    forward = {
+      description = "User for ssh forwarding";
+      isSystemUser = true;
+      group = "nogroup";
+    };
+
     neofetch = {
       description = "SSH Neofetch";
       isSystemUser = true;
@@ -66,6 +72,15 @@ in
       PermitTTY no
       X11Forwarding no
       PermitTunnel no
+      GatewayPorts no
+      PasswordAuthentication no
+
+    Match user forward
+      AuthorizedKeysFile /etc/ssh/authorized_keys.d/infinidoge /etc/ssh/authorized_keys.d/%u
+      ForceCommand ${pkgs.shadow}/bin/nologin
+      PermitTTY no
+      X11Forwarding no
+      PermitTunnel yes
       GatewayPorts no
       PasswordAuthentication no
 
