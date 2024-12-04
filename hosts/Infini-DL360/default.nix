@@ -130,4 +130,8 @@
       Group = "root";
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    ffmpeg-full
+  ];
 }
