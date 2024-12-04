@@ -1,17 +1,13 @@
 { config, pkgs, lib, ... }:
 let
   inherit (lib) flip;
-  inherit (lib.our) mkBoolOpt' packageListOpt;
+  inherit (lib.our) mkBoolOpt' addPackageLists;
 
   cfg = config.universe.programming;
 
 
   programmingOpt' = kind: flip mkBoolOpt' "Programming: ${kind}";
   programmingOpt = flip programmingOpt' cfg.all.enable;
-
-  addPackageLists = lib.mapAttrs (name: value: value // {
-    packages = packageListOpt;
-  });
 in
 {
   options.universe.programming = (addPackageLists {
@@ -146,7 +142,7 @@ in
       ];
     };
 
-    home.packages = lib.concatMap
+    universe.packages = lib.concatMap
       (v: lib.optionals (v ? packages && v.enable) v.packages)
       (lib.attrValues cfg);
 
