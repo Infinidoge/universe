@@ -16,6 +16,8 @@
     };
   };
 
+  universe.programming.c.enable = false;
+
   specialisation.graphical.configuration = {
     modules.desktop.wm.enable = true;
   };
