@@ -223,7 +223,7 @@
           "Infini-FRAMEWORK"
           "Infini-OPTIPLEX"
           "Infini-SERVER"
-          "Infini-STICK"
+          "hermes"
           "hestia"
         ];
       };
