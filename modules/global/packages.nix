@@ -12,7 +12,6 @@
 
     agenix
     bat
-    browsh
     cloc
     cryptsetup
     curl
@@ -31,11 +30,8 @@
     imagemagick
     iputils
     jq
-    lynx
-    magic-wormhole
     man-pages
     man-pages-posix
-    manix
     nmap
     openssl
     pandoc
