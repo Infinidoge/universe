@@ -44,7 +44,7 @@
     };
   };
 
-  home.universe.programming.all.enable = true;
+  universe.programming.all.enable = true;
 
   services.fprintd.enable = true;
   virtualisation.enable = true;

@@ -35,7 +35,7 @@
     hardware.form.server = true;
   };
 
-  home.universe.programming.all.enable = true;
+  universe.programming.all.enable = true;
 
   boot.loader.timeout = 5;
 

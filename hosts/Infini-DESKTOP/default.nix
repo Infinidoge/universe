@@ -45,7 +45,7 @@
 
   virtualisation.enable = true;
 
-  home.universe.programming.all.enable = true;
+  universe.programming.all.enable = true;
 
   home.home.packages = with pkgs; [
     arduino
