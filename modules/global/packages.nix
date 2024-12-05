@@ -54,6 +54,7 @@
     yq
     zip
   ] ++ (lib.optionals config.universe.media.enable (with pkgs; [
+    ghostscript
     graphviz
     imagemagick
     pandoc
