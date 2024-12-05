@@ -56,6 +56,21 @@
       allowedUDPPorts = [ 80 443 ];
       allowedTCPPorts = [ 80 443 25565 ];
     };
+
+    bridges = {
+      br0 = {
+        interfaces = [ "eno1" "eno2" "eno3" "eno4" ];
+      };
+    };
+    interfaces.br0.ipv4.addresses = [{ address = "192.168.137.11"; prefixLength = 24; }];
+    dhcpcd.denyInterfaces = [ "eno*" ];
+
+    defaultGateway = { address = "192.168.137.1"; interface = "br0"; };
+  };
+
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = true;
+    "net.ipv6.conf.all.forwarding" = true;
   };
 
   hardware.infiniband = {
