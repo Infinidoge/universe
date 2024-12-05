@@ -27,14 +27,12 @@
     gum
     htop
     hyfetch
-    imagemagick
     iputils
     jq
     man-pages
     man-pages-posix
     nmap
     openssl
-    pandoc
     parallel
     parted
     pciutils
@@ -57,6 +55,8 @@
     zip
   ] ++ (lib.optionals config.universe.media.enable (with pkgs; [
     graphviz
+    imagemagick
+    pandoc
     yt-dlp
   ]));
 
