@@ -42,6 +42,7 @@ in
       shellAliases = mkOpt (attrsOf str) { };
       variables = mkOpt (attrsOf (oneOf [ (listOf str) str path ])) { };
       media.enable = mkBoolOpt false;
+      minimal.enable = mkBoolOpt false;
     };
 
     common = mkOpt (attrsOf anything) { };

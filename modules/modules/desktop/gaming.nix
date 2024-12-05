@@ -45,6 +45,7 @@ in
 
       home.home.packages = with pkgs; [
         (mkIf cfg.prismlauncher.enable cfg.prismlauncher.package)
+        (mkIf cfg.prismlauncher.enable unbted)
         alsa-oss
         (mkIf cfg.lutris.enable cfg.lutris.package)
         (mkIf cfg.olympus.enable cfg.olympus.package)

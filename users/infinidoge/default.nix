@@ -36,31 +36,27 @@ in
       bsd-finger
       jmtpfs
       ncdu
-      packwiz
       peaclock
       pop
-      toot
-      unbted
+
+      (lib.optionals (!main.universe.minimal.enable) [
+        packwiz
+        toot
+      ])
 
       (ifGraphical [
-        # Tools
-        audacity
-        bitwarden
-        imv
-        inkscape
-        krita
-        libreoffice-fresh
-        simulide
         speedcrunch
-
         (discord-canary.override { withVencord = true; withOpenASAR = true; withTTS = false; })
+      ])
+
+      (lib.optionals (!main.universe.minimal.enable && main.info.graphical) [
         (discord.override { withVencord = true; withOpenASAR = true; withTTS = false; })
         schildichat-desktop
         teams-for-linux
         thunderbird
         tor-browser
-
-        (optional main.modules.hardware.form.desktop qbittorrent)
+        bitwarden
+        qbittorrent
       ])
     ];
   };
