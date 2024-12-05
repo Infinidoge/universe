@@ -8,11 +8,10 @@ with lib.our.disko;
   disko.devices = {
     nodev."/" = mkTmpfs "2G";
     disk = {
-      hdd1 = mkDisk "wwn-0x5000c50015bda593" {
+      main = mkDisk "usb-_USB_DISK_62859665-0:0" {
         partitions = {
           boot = mkESP "64M" "/boot/efi";
-          store = mkBtrfsPartEndAt "238400M" "/media/store" {
-            # 1/4th of 1000GB/931.5GiB
+          store = mkBtrfsPart "100%" "/media/store" {
             subvolumes = mkBtrfsSubvols {
               "/boot" = { };
               "/etc/ssh" = { };
@@ -20,11 +19,10 @@ with lib.our.disko;
               "/nix" = { };
             };
           };
-          zfs = mkZPart "100%" "tank";
         };
       };
-      hdd2 = mkZDisk "wwn-0x5000cca215d2481a" "tank";
-      hdd3 = mkZDisk "wwn-0x5000cca215d24629" "tank";
+      hdd1 = mkZDisk "wwn-0x5000cca215d2481a" "tank";
+      hdd2 = mkZDisk "wwn-0x5000cca215d24629" "tank";
     };
 
     zpool = mkZPools {
