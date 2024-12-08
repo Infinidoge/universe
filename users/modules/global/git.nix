@@ -3,6 +3,8 @@
   home.packages = with pkgs; [
     gh
     git-absorb
+    git-crypt
+    git-agecrypt
 
     (writeScriptBin "git-fzf" ''
       git ls-files &> /dev/null
@@ -86,8 +88,6 @@
 
       # delete merged branches
       bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d";
-
-      crypt = "!git-crypt";
 
       root = "rev-parse --show-toplevel";
       fzf = "!git-fzf";
