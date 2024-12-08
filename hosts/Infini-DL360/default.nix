@@ -27,7 +27,7 @@
   info.loc.purdue = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
+  boot.binfmt.addEmulatedSystemsToNixSandbox = true;
 
   nix.distributedBuilds = false;
 
