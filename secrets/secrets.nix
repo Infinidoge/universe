@@ -40,4 +40,5 @@ generate [
   "smtp-password.age"
   "hydra.age"
   "hedgedoc.age"
+  "searx.age"
 ]

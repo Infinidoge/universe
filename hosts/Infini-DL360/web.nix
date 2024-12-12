@@ -84,4 +84,10 @@ in
       };
     };
   };
+
+  services.uwsgi = {
+    enable = true;
+    plugins = [ "python3" ];
+    instance.type = "emperor";
+  };
 }

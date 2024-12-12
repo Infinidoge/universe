@@ -16,6 +16,7 @@
     ./jellyfin.nix
     ./jupyter.nix
     ./postgresql.nix
+    ./searx.nix
     ./ssh.nix
     ./thelounge.nix
     ./vaultwarden.nix
