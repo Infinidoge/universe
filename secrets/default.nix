@@ -27,6 +27,7 @@ in
           "infinidoge-password"
           "root-password"
           "borg-ssh-key"
+          "ovpn"
           ;
 
         "borg-password" = secrets."borg-password" // { group = "borg"; mode = "440"; };

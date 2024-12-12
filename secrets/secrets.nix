@@ -41,4 +41,5 @@ generate [
   "hydra.age"
   "hedgedoc.age"
   "searx.age"
+  "ovpn.age"
 ]
