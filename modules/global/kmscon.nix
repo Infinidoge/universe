@@ -7,7 +7,7 @@
     fonts = [
       (rec {
         name = "DejaVuSansMono";
-        package = (pkgs.nerdfonts.override { fonts = [ name ]; });
+        package = pkgs.nerd-fonts.dejavu-sans-mono;
       })
     ];
     extraConfig = ''
