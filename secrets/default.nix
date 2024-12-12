@@ -50,6 +50,9 @@ in
       (mkIf config.services.hedgedoc.enable {
         "hedgedoc" = withOwnerGroup "hedgedoc" secrets."hedgedoc";
       })
+      (mkIf config.services.searx.enable {
+        inherit (secrets) searx;
+      })
     ];
   };
 }
