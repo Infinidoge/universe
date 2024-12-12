@@ -44,7 +44,7 @@ in
       ];
 
       csharp.packages = [
-        dotnetCorePackages.sdk_6_0
+        dotnetCorePackages.sdk_8_0
         omnisharp-roslyn
       ];
 
