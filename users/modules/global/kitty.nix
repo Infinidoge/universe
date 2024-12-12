@@ -3,7 +3,7 @@
   programs.kitty = {
     enable = true;
     font = rec {
-      package = (pkgs.nerdfonts.override { fonts = [ name ]; });
+      package = pkgs.nerd-fonts.dejavu-sans-mono;
       name = "DejaVuSansMono";
       size = 12;
     };

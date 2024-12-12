@@ -66,9 +66,8 @@ in
   ];
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override {
-      fonts = [ "DejaVuSansMono" "NerdFontsSymbolsOnly" ];
-    })
+    nerd-fonts.dejavu-sans-mono
+    nerd-fonts.symbols-only
     dejavu_fonts
   ];
 
