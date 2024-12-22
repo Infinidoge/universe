@@ -6,7 +6,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "tmx-cups-ppd";
+  pname = "tmx-cups-ppd";
   version = "2.0.2.101";
 
   src = fetchurl {
