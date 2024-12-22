@@ -31,6 +31,14 @@ in
     nix-melt
     ;
 
+  gum = latest.gum.overrideAttrs (old: {
+    src = old.src.override {
+      rev = "0f8f67f96e52159bc9645a9ffab4004658e4fdc6";
+      hash = "sha256-Ib7ZbRJ4hOdV+bfNQSQwYcDsHh/gWyweTV69UhG8DY0=";
+    };
+    vendorHash = "sha256-tg1cJoHy5gE/45IIN+wxltQOhr8voToWyBss0+dUhg4=";
+  });
+
   vencord = latest.vencord.overrideAttrs (old: rec {
     src = inputs.vencord;
     version = versionFromInput inputs.vencord;
