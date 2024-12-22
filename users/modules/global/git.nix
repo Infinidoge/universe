@@ -74,6 +74,7 @@
       rs = "restore --staged -p";
       sw = "switch";
       st = "status -sb";
+      rb = "rebase -i --autosquash";
 
       # reset
       soft = "reset --soft";
