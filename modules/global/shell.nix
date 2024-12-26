@@ -87,6 +87,8 @@ in
     e = "edit";
     ei = "editi";
 
+    watch = "watch -n 0.5 ";
+
     lpath = "echo \"$PATH\" | tr \":\" \"\n\"";
     timestamp = "date +%s -d";
 
