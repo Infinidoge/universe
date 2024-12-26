@@ -8,7 +8,7 @@ lib.mkIf main.universe.media.enable
   };
 
   programs.obs-studio = {
-    enable = main.universe.media.enable;
+    enable = true;
     plugins = with pkgs.obs-studio-plugins; [
       obs-pipewire-audio-capture
     ];
