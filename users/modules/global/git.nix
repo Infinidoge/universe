@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    gh
     git-absorb
     git-crypt
     git-agecrypt
@@ -94,6 +93,13 @@
       fzf = "!git-fzf";
       edit = "!git-fzf-edit";
       e = "edit";
+    };
+  };
+
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
     };
   };
 }
