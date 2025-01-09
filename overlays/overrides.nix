@@ -50,7 +50,7 @@ in
     pnpmDeps = final.pnpm.fetchDeps {
       inherit (old) pname;
       inherit src;
-      hash = "sha256-vVzERis1W3QZB/i6SQR9dQR56yDWadKWvFr+nLTQY9Y=";
+      hash = "sha256-ZUwtNtOmxjhOBpYB7vuytunGBRSuVxdlQsceRmeyhhI=";
     };
   });
 
