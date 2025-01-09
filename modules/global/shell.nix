@@ -81,7 +81,8 @@ in
     cat = "bat --paging=never";
     catp = "bat --paging=always";
 
-    mktmp = "cd $(mktemp -d)";
+    jh = "cd ~ && j";
+    gj = "gcd && j";
 
     edit = "$EDITOR";
     e = "edit";
@@ -110,6 +111,103 @@ in
   };
 
   environment.variables = config.universe.variables;
+
+  environment.interactiveShellInit = ''
+      if [[ "$(basename "$(readlink "/proc/$PPID/exe")")" == ".kitty-wrapped" ]]; then
+        PATH=$(echo "$PATH" | sed 's/\/nix\/store\/[a-zA-Z._0-9+-]\+\/bin:\?//g' | sed 's/:$//')
+      fi
+
+      j() {
+        if [[ $# -eq 0 ]] then
+          \builtin cd -- "$(fd -H -t d | fzf --filepath-word)"
+        else
+          \builtin cd -- "$(fd -H -t d | fzf --filepath-word -1 -q "$*")"
+        fi
+      }
+
+    mktmp() {
+      if [ "$1" != "" ]; then
+        dirspec="$1.XXX"
+      else
+        dirspec="tmp.XXX"
+      fi
+      \builtin cd $(mktemp -t -d "$dirspec")
+    }
+
+    mktmpunzip() {
+      dir=$(mktemp -t -d unzip.XXX)
+      if ! file=$(realpath -e "$1"); then
+        echo "error: file does not exist"
+        return 1
+      fi
+      shift 1
+      unzip "$file" "$@" -d "$dir"
+      \builtin cd $dir
+      mv $file .
+    }
+
+    mktmpclone() {
+      location="$1"
+      if [ "$2" != "" ]; then
+        dirspec="$2.XXX"
+        shift 2
+      else
+        dirspec="clone.XXX"
+        shift 1
+      fi
+      if ! dir=$(mktemp -t -d "$dirspec"); then
+        echo "error: couldn't create temp directory"
+        return 1
+      fi
+
+      git clone "$location" "$dir" "$@"
+      \builtin cd "$dir"
+    }
+
+    censor-audio() {
+      file="$1"
+      shift 1
+
+      if [ 2 -gt $# ]; then
+        echo "Not enough arguments"
+        exit 1
+      fi
+
+      filters=""
+
+      while [[ "$1" =~ ^"[0-9]+\.?[0-9]*-[0-9]+\.?[0-9]*"$ ]]; do
+        if [ "$filters" != "" ]; then
+          filters+=", "
+        fi
+        filters+="volume=enable='between(t,''${1/-/,})':volume=0"
+        shift 1
+      done
+
+      ffmpeg -i "$file" -vcodec copy -af "$filters" "$@"
+    }
+
+    disget() {
+      curl "$1" --output ''${$(basename "$1")%%\?*}
+    }
+
+    disgetconv() {
+      url="$1"
+      tmpFileName="''${$(basename "$url")%%\?*}.XXX"
+      tmpFile=$(mktemp -t $tmpFileName)
+      curl "$url" --output "$tmpFile"
+      shift 1
+      magick "$tmpFile" "$@"
+    }
+
+    disgetconvv() {
+      url="$1"
+      tmpFileName="''${$(basename "$url")%%\?*}.XXX"
+      tmpFile=$(mktemp -t $tmpFileName)
+      curl "$url" --output "$tmpFile"
+      shift 1
+      ffmpeg -i "$tmpFile" "$@"
+    }
+  '';
 
   environment.shellAliases = config.universe.shellAliases // {
     # sudo
