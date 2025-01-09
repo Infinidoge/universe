@@ -99,7 +99,12 @@
   programs.gh = {
     enable = true;
     settings = {
+      prompt = "enabled";
       git_protocol = "ssh";
+      aliases = {
+        co = "pr checkout";
+        clone = "repo clone";
+      };
     };
   };
 }
