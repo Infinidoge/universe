@@ -22,6 +22,7 @@ in
   inherit (latest)
     bitwarden-desktop
     factorio-headless
+    hydrus
     ;
 
   inherit (fork)
