@@ -8,6 +8,7 @@
       # Tailscale
       "tailnet.inx.moe"
       #"tail4c593.ts.net"
+      "nodes.pyro.host"
     ];
     nameservers = [
       # Google Public DNS
