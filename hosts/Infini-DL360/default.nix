@@ -67,6 +67,12 @@
     dhcpcd.denyInterfaces = [ "eno*" ];
 
     defaultGateway = { address = "192.168.137.1"; interface = "br0"; };
+
+    nat = {
+      enable = true;
+      internalInterfaces = [ "ve-*" ];
+      externalInterface = "br0";
+    };
   };
 
   boot.kernel.sysctl = {
