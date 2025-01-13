@@ -912,6 +912,26 @@
         "url": "ssh://git@github.com/Infinidoge/universe-private"
       }
     },
+    "qtile": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736685332,
+        "narHash": "sha256-iA3/Qbz1q06iAp8W/CP01guC5PESb/0Wyvlloura5OM=",
+        "owner": "qtile",
+        "repo": "qtile",
+        "rev": "50754b552ceb076e705815a01056920e2f7e37f8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "qtile",
+        "repo": "qtile",
+        "type": "github"
+      }
+    },
     "rocksdb": {
       "flake": false,
       "locked": {
@@ -954,6 +974,7 @@
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "private": "private",
+        "qtile": "qtile",
         "rust-overlay": "rust-overlay",
         "stable": "stable",
         "systems": "systems_2",

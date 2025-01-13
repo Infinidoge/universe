@@ -63,6 +63,9 @@
     ## Vencord
     vencord = { url = "github:Vendicated/Vencord"; flake = false; };
 
+    ## Qtile
+    qtile.url = "github:qtile/qtile";
+
     ### Cleanup ###
     ## Common
     blank.url = "github:divnix/blank";
@@ -104,6 +107,7 @@
     nixvim.inputs.nix-darwin.follows = "blank";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.treefmt-nix.follows = "treefmt-nix";
+    qtile.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     universe-cli.inputs.devshell.follows = "devshell";
@@ -176,6 +180,7 @@
                   # --- Domain-Specific Overlays
                   inputs.agenix.overlays.default
                   inputs.nix-minecraft.overlay
+                  inputs.qtile.overlays.default
                   inputs.rust-overlay.overlays.default
                   inputs.universe-cli.overlays.default
                 ];
