@@ -30,7 +30,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-registry = { url = "github:NixOS/flake-registry"; flake = false; };
     home-manager.url = "github:nix-community/home-manager";
-    impermanence.url = "github:nix-community/impermanence/63f4d0443e32b0dd7189001ee1894066765d18a5";
+    impermanence.url = "github:nix-community/impermanence";
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
