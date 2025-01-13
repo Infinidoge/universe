@@ -16,6 +16,7 @@ let
       ];
 
   inherit (main.universe) programming;
+  inherit (main) universe;
 in
 {
   programs.nixvim = {
@@ -77,6 +78,7 @@ in
       };
       w = {
         q.action = ":close<Enter>";
+        d.action = ":close<Enter>";
         v.action = ":vsplit<Enter>";
         s.action = ":split<Enter>";
         V.action = ":vsplit ";
@@ -100,12 +102,20 @@ in
         options.disableWhenTouch = true;
       };
       comment.enable = true;
+      cmp.enable = true;
       cursorline.enable = true;
       direnv.enable = true;
       fidget.enable = true;
       fzf-lua.enable = true;
       gitsigns.enable = true;
+      hydra = {
+        enable = true;
+      };
+      image.enable = universe.media.enable;
       lsp-format.enable = true;
+      mkdnflow = {
+        enable = true;
+      };
       neorg = {
         enable = true;
         modules = let empty = { __empty = null; }; in {
@@ -123,6 +133,7 @@ in
         folding = false;
         settings = {
           highlight.enable = true;
+          indent.enable = true;
         };
       };
       ts-autotag.enable = true;
@@ -153,12 +164,18 @@ in
             enable = programming.python.enable;
             settings = {
               plugins = {
+                autopep8.enable = false;
                 ruff = {
                   formatEnabled = true;
                   enable = true;
                   format = [ "I" ];
+                  extendSelect = [ "I" ];
+
+                  lineLength = 120;
+                  select = [ "F" ];
                 };
                 rope.enable = true;
+                rope_completion.enable = true;
               };
             };
           };
