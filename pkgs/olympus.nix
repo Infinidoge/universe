@@ -4,7 +4,7 @@
 , fetchzip
 , unzip
 , makeDesktopItem
-, buildFHSUserEnv
+, buildFHSEnv
 }:
 let
   olympus = stdenv.mkDerivation rec {
@@ -29,7 +29,7 @@ let
     '';
   };
 in
-buildFHSUserEnv {
+buildFHSEnv {
   inherit (olympus) name;
   runScript = "${olympus}/opt/olympus/olympus";
   targetPkgs = pkgs: [
