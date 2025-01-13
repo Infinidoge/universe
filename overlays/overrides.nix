@@ -59,28 +59,11 @@ in
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pythonFinal: pythonPrev: {
       inherit (final) jupyterlab-vim jupyterlab-myst;
-
-      qtile = pythonPrev.qtile.overrideAttrs (oldAttrs: {
-        version = "0.0.0+unstable-2024-11-28";
-        src = oldAttrs.src.override {
-          rev = "4897d0d15d4403de00d19c570d60178541c7c582";
-          hash = "sha256-k0kxvPUOEb6/1HnihRhPcULO+AI8PPvtX3SBt3EImI8=";
-        };
-      });
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
         doCheck = false;
       };
-
-      # https://github.com/NixOS/nixpkgs/pull/356680/
-      term-image = pythonPrev.term-image.overridePythonAttrs {
-        pythonRelaxDeps = [ "pillow" ];
-      };
     })
   ];
-
-  qtile = prev.qtile.overrideAttrs {
-    version = final.python3Packages.qtile.version;
-  };
 
   python-grip = fork.python3Packages.grip;
 }
