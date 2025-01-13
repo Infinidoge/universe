@@ -88,7 +88,6 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-utils.inputs.systems.follows = "systems";
     git-hooks.inputs.flake-compat.follows = "blank";
-    git-hooks.inputs.nixpkgs-stable.follows = "nixpkgs";
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.flake-utils.follows = "flake-utils";
@@ -97,7 +96,6 @@
     nix-minecraft.inputs.flake-utils.follows = "flake-utils";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.inputs.flake-compat.follows = "blank";
-    nixos-wsl.inputs.flake-utils.follows = "flake-utils";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.devshell.follows = "devshell";
     nixvim.inputs.flake-compat.follows = "blank";
