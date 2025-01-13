@@ -90,6 +90,7 @@
     git-hooks.inputs.flake-compat.follows = "blank";
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    hydra.inputs.lix.follows = "lix";
     lix-module.inputs.flake-utils.follows = "flake-utils";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.flake-compat.follows = "blank";
@@ -104,6 +105,7 @@
     nixvim.inputs.home-manager.follows = "home-manager";
     nixvim.inputs.nix-darwin.follows = "blank";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.inputs.nuschtosSearch.follows = "blank";
     nixvim.inputs.treefmt-nix.follows = "treefmt-nix";
     qtile.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
