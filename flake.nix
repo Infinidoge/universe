@@ -39,14 +39,8 @@
     ### Domain-Specific Flake Inputs ###
     ## Lix
     lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-    lix.inputs.nixpkgs.follows = "nixpkgs";
-    lix.inputs.pre-commit-hooks.follows = "git-hooks";
-    lix.inputs.flake-compat.follows = "blank";
     lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
-    lix-module.inputs.lix.follows = "lix";
     hydra.url = "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz";
-    hydra.inputs.nixpkgs.follows = "nixpkgs";
 
     ## Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
@@ -91,7 +85,13 @@
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     hydra.inputs.lix.follows = "lix";
+    hydra.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.flake-utils.follows = "flake-utils";
+    lix-module.inputs.lix.follows = "lix";
+    lix-module.inputs.nixpkgs.follows = "nixpkgs";
+    lix.inputs.flake-compat.follows = "blank";
+    lix.inputs.nixpkgs.follows = "nixpkgs";
+    lix.inputs.pre-commit-hooks.follows = "git-hooks";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.flake-compat.follows = "blank";
     nix-minecraft.inputs.flake-utils.follows = "flake-utils";
