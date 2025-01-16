@@ -58,6 +58,9 @@ in
       (mkIf config.services.authentik.enable {
         inherit (secrets) authentik authentik-ldap;
       })
+      (mkIf config.services.radicale.enable {
+        radicale-ldap = withOwnerGroup "radicale" secrets.radicale-ldap;
+      })
     ];
   };
 }

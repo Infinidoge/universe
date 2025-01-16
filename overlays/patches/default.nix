@@ -23,4 +23,10 @@ in
   hydra_unstable = addPatches prev.hydra_unstable [ ./hydra-force-allow-import-from-derivation.patch ];
 
   openssh-srv = addPatches prev.openssh [ ./srv-records.patch ];
+
+  pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+    (pythonFinal: pythonPrev: {
+      ldap3 = addPatches pythonPrev.ldap3 [ ./ldap3.patch ];
+    })
+  ];
 }

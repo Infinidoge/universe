@@ -45,4 +45,5 @@ generate [
   "ovpn.age"
   "authentik.age"
   "authentik-ldap.age"
+  "radicale-ldap.age"
 ]
