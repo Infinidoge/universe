@@ -1,13 +1,12 @@
 { config, common, inputs, ... }:
 let
   domain = common.subdomain "matrix";
-  cfg = config.services.matrix-conduit;
+  cfg = config.services.conduwuit;
   host = "http://localhost:${toString cfg.settings.global.port}";
 in
 {
-  services.matrix-conduit = {
+  services.conduwuit = {
     enable = true;
-    dataDir = "/srv/conduit";
     package = inputs.conduwuit.packages.x86_64-linux.default;
     settings = {
       global = {
