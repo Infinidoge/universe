@@ -10,24 +10,6 @@ let
     logo64 = "${env}/${env.sitePackages}/ipykernel/resources/logo-64x64.png";
   };
 
-  jupyterEnv = pkgs.python3.withPackages (p: with p; [
-    jupyterlab
-
-    # extensions
-    jupyterlab-lsp
-    jupyterlab-myst
-    jupyterlab-pygments
-    jupyterlab-vim
-
-    # export
-    nbconvert
-    nbformat
-
-    # lsp
-    python-lsp-server
-    python-lsp-ruff
-  ]);
-
   jupyterPath = with pkgs; [
     # export
     pandoc
@@ -49,7 +31,22 @@ in
 {
   services.jupyter = {
     enable = true;
-    package = jupyterEnv;
+    package = pkgs.python3.pkgs.jupyterlab;
+    extraPackages = with pkgs.python3.pkgs; [
+      # extensions
+      jupyterlab-lsp
+      jupyterlab-myst
+      jupyterlab-pygments
+      jupyterlab-vim
+
+      # export
+      nbconvert
+      nbformat
+
+      # lsp
+      python-lsp-server
+      python-lsp-ruff
+    ];
 
     # Hosted behind Tailscale, so security doesn't matter
     command = "jupyter-lab --ServerApp.token='' --ServerApp.password=''";
