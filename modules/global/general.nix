@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, common, secrets, lib, ... }:
 {
   programs = {
     # Enable dconf for programs that need it
@@ -38,4 +38,24 @@
   home-manager.sharedModules = [
     { programs.man.generateCaches = lib.mkForce false; }
   ];
+
+  programs.msmtp = with common.email; {
+    enable = true;
+    setSendmail = true;
+    defaults = {
+      host = smtp.address;
+      port = smtp.STARTTLS;
+      tls = true;
+      auth = true;
+    };
+    accounts = rec {
+      noreply = {
+        user = outgoing;
+        passwordeval = "cat ${secrets.smtp-password}";
+      };
+      default = noreply // {
+        from = withSubaddress "%U-%H";
+      };
+    };
+  };
 }
