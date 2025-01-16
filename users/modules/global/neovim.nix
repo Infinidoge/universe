@@ -118,10 +118,13 @@ in
       };
       neorg = {
         enable = true;
-        modules = let empty = { __empty = null; }; in {
-          "core.defaults" = empty;
-          "core.concealer" = empty;
+        settings = {
+          load = let empty = { __empty = null; }; in {
+            "core.defaults" = empty;
+            "core.concealer" = empty;
+          };
         };
+
       };
       nix.enable = true;
       # nvim-autopairs.enable = true;
