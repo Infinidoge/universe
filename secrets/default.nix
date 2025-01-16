@@ -55,6 +55,9 @@ in
       (mkIf config.services.searx.enable {
         inherit (secrets) searx;
       })
+      (mkIf config.services.authentik.enable {
+        inherit (secrets) authentik authentik-ldap;
+      })
     ];
   };
 }

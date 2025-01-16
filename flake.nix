@@ -60,6 +60,9 @@
     ## Qtile
     qtile.url = "github:qtile/qtile";
 
+    ## Authentik
+    authentik-nix.url = "github:nix-community/authentik-nix";
+
     ### Cleanup ###
     ## Common
     blank.url = "github:divnix/blank";
@@ -72,6 +75,12 @@
     agenix.inputs.home-manager.follows = "home-manager";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.systems.follows = "systems";
+    authentik-nix.inputs.flake-compat.follows = "blank";
+    authentik-nix.inputs.flake-parts.follows = "flake-parts";
+    authentik-nix.inputs.flake-utils.follows = "flake-utils";
+    authentik-nix.inputs.nixpkgs.follows = "nixpkgs";
+    authentik-nix.inputs.poetry2nix.inputs.treefmt-nix.follows = "treefmt-nix";
+    authentik-nix.inputs.systems.follows = "systems";
     conduwuit.inputs.attic.follows = "blank";
     conduwuit.inputs.cachix.follows = "blank";
     conduwuit.inputs.flake-compat.follows = "blank";
@@ -206,6 +215,7 @@
               inputs.nixos-wsl.nixosModules.wsl
 
               # --- Domain-Specific Modules ---
+              inputs.authentik-nix.nixosModules.default
               inputs.lix-module.nixosModules.default
               inputs.hydra.nixosModules.overlayNixpkgsForThisHydra
               inputs.nix-minecraft.nixosModules.minecraft-servers
