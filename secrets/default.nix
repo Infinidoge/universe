@@ -20,6 +20,7 @@ in
   };
 
   config = mkIf config.modules.secrets.enable {
+    _module.args.secrets = config.secrets;
     secrets = mapAttrs (n: v: v.path) config.age.secrets;
     age.secrets = mkMerge [
       {

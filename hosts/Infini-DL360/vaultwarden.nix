@@ -1,4 +1,4 @@
-{ config, common, lib, pkgs, ... }:
+{ config, common, secrets, lib, pkgs, ... }:
 let
   domain = common.subdomain "bitwarden";
 in
@@ -13,7 +13,7 @@ in
 
   services.vaultwarden = {
     enable = true;
-    environmentFile = config.secrets."vaultwarden";
+    environmentFile = secrets."vaultwarden";
     dataDir = "/srv/vaultwarden";
     config = with common.email; {
       DOMAIN = "https://${domain}";

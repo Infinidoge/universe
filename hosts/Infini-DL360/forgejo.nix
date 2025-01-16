@@ -1,4 +1,4 @@
-{ config, common, pkgs, ... }:
+{ config, common, secrets, pkgs, ... }:
 let
   cfg = config.services.forgejo;
   domain = common.subdomain "git";
@@ -21,7 +21,7 @@ in
 
     lfs.enable = true;
 
-    secrets.mailer.PASSWD = config.secrets.smtp-password;
+    secrets.mailer.PASSWD = secrets.smtp-password;
     settings = {
       server = {
         ROOT_URL = "https://${domain}/";

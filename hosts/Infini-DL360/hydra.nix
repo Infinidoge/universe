@@ -1,4 +1,4 @@
-{ config, common, ... }:
+{ config, common, secrets, ... }:
 let
   domain = common.subdomain "hydra";
 in
@@ -24,7 +24,7 @@ in
       EMAIL_SENDER_TRANSPORT_ssl = "ssl";
     };
     extraConfig = ''
-      binary_cache_secret_key_file = ${config.secrets.binary-cache-private-key}
+      binary_cache_secret_key_file = ${secrets.binary-cache-private-key}
       allow_import_from_derivation = true
       <git-input>
         timeout = 3600

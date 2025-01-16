@@ -1,4 +1,4 @@
-{ config, common, ... }:
+{ config, common, secrets, ... }:
 let
   cfg = config.services.hedgedoc;
   domain = common.subdomain "md";
@@ -6,7 +6,7 @@ in
 {
   services.hedgedoc = {
     enable = true;
-    environmentFile = config.secrets."hedgedoc";
+    environmentFile = secrets."hedgedoc";
     settings = {
       inherit domain;
       protocolUseSSL = true;
