@@ -106,6 +106,7 @@ in
       "minecraft"
       "nginx"
       "plugdev"
+      "smtp"
       "systemd-journal"
       "video"
       "wheel"
