@@ -1,4 +1,4 @@
-{ config, common, ... }:
+{ config, common, secrets, ... }:
 let
   cfg = config.services.searx;
   domain = common.subdomain "search";
@@ -8,7 +8,7 @@ in
     enable = true;
     runInUwsgi = true;
     redisCreateLocally = true;
-    environmentFile = config.secrets."searx";
+    environmentFile = secrets."searx";
     uwsgiConfig = {
       disable-logging = true;
       socket = "/run/searx/searx.sock";

@@ -1,4 +1,4 @@
-{ config, common, ... }:
+{ common, secrets, ... }:
 
 let
   domain = "freshrss.inx.moe";
@@ -12,6 +12,6 @@ in
     baseUrl = "https://${domain}";
     dataDir = "/srv/freshrss";
     defaultUser = "infinidoge";
-    passwordFile = config.secrets."freshrss";
+    passwordFile = secrets."freshrss";
   };
 }
