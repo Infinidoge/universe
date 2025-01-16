@@ -9,6 +9,7 @@ let
   latest = mkPkgsUnfree inputs.latest;
   fork = mkPkgsUnfree inputs.fork;
   stable = mkPkgs inputs.stable;
+  old-stable = mkPkgs inputs.old-stable;
 
   versionFromInput = input:
     let
@@ -54,7 +55,7 @@ in
     };
   });
 
-  schildichat-desktop = stable.schildichat-desktop.override { electron = final.electron; };
+  schildichat-desktop = old-stable.schildichat-desktop.override { electron = final.electron; };
 
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pythonFinal: pythonPrev: {
