@@ -43,4 +43,6 @@ generate [
   "hedgedoc.age"
   "searx.age"
   "ovpn.age"
+  "authentik.age"
+  "authentik-ldap.age"
 ]

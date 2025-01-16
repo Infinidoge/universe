@@ -6,6 +6,7 @@
     ./web.nix
 
     private.nixosModules.minecraft-servers
+    ./authentik.nix
     ./conduwuit.nix
     ./factorio.nix
     ./forgejo.nix
