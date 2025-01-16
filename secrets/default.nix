@@ -33,6 +33,7 @@ in
 
         "borg-password" = secrets."borg-password" // { group = "borg"; mode = "440"; };
         "binary-cache-private-key" = secrets.binary-cache-private-key // lib.optionalAttrs config.services.hydra.enable { group = "hydra"; mode = "440"; };
+        "smtp-password" = withGroup "smtp" secrets."smtp-password";
       }
       (mkIf config.services.nginx.enable {
         inherit (secrets) "cloudflare";
@@ -42,9 +43,6 @@ in
       })
       (mkIf config.services.freshrss.enable {
         "freshrss" = withOwnerGroup "freshrss" secrets."freshrss";
-      })
-      (mkIf config.services.forgejo.enable {
-        "smtp-password" = withGroup "smtp" secrets."smtp-password";
       })
       (mkIf config.services.hydra.enable {
         inherit (secrets) hydra;
