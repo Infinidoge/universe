@@ -2,6 +2,7 @@
   home-manager = {
     useUserPackages = lib.mkDefault true;
     useGlobalPkgs = true;
+    backupFileExtension = "old";
 
     extraSpecialArgs = {
       main = config;
