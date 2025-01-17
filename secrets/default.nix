@@ -34,6 +34,7 @@ in
         "borg-password" = secrets."borg-password" // { group = "borg"; mode = "440"; };
         "binary-cache-private-key" = secrets.binary-cache-private-key // lib.optionalAttrs config.services.hydra.enable { group = "hydra"; mode = "440"; };
         "smtp-password" = withGroup "smtp" secrets."smtp-password";
+        "personal-smtp-password" = withOwner "infinidoge" secrets."personal-smtp-password";
       }
       (mkIf config.services.nginx.enable {
         inherit (secrets) "cloudflare";

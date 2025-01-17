@@ -46,4 +46,5 @@ generate [
   "authentik.age"
   "authentik-ldap.age"
   "radicale-ldap.age"
+  "personal-smtp-password.age"
 ]
