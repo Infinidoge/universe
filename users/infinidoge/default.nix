@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, common, secrets, lib, pkgs, ... }:
 let
   inherit (lib) flatten optional mkIf;
   ifGraphical = lib.optionals config.info.graphical;
@@ -29,7 +29,13 @@ in
       };
     };
 
-    home.sessionVariables.KEYID = "0x30E7A4C03348641E";
+    home.sessionVariables = {
+      KEYID = "0x30E7A4C03348641E";
+      POP_SMTP_HOST = common.email.smtp.address;
+      POP_SMTP_PORT = common.email.smtp.STARTTLS;
+      POP_SMTP_USERNAME = common.email.withUser "infinidoge";
+      POP_SMTP_PASSWORD = "$(cat ${secrets.personal-smtp-password})";
+    };
 
     home.packages = with pkgs; flatten [
       bitwarden-cli
