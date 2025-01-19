@@ -15,6 +15,7 @@ with lib.our.disko;
             subvolumes = mkBtrfsSubvols {
               "/boot" = { };
               "/etc/ssh" = { };
+              "/etc/secrets" = { };
             };
           };
         };
@@ -47,5 +48,6 @@ with lib.our.disko;
     "/persist"
     "/storage"
     "/etc/ssh"
+    "/etc/secrets"
   ];
 }
