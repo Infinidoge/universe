@@ -1,4 +1,4 @@
-{ config, common, secrets, ... }:
+{ config, common, secrets, pkgs, ... }:
 let
   domain = common.subdomain "hydra";
 in
@@ -18,18 +18,22 @@ in
     smtpHost = common.email.smtp.address;
     useSubstitutes = true;
     environmentFile = config.secrets.hydra;
-    extraEnv = {
-      EMAIL_SENDER_TRANSPORT_sasl_username = common.email.outgoing;
-      EMAIL_SENDER_TRANSPORT_port = toString common.email.smtp.SSLTLS;
-      EMAIL_SENDER_TRANSPORT_ssl = "ssl";
-    };
     extraConfig = ''
       binary_cache_secret_key_file = ${secrets.binary-cache-private-key}
       allow_import_from_derivation = true
+      email_notification = 1
       <git-input>
         timeout = 3600
       </git-input>
     '';
+  };
+
+  systemd.services.hydra-queue-runner.path = [ pkgs.msmtp ];
+  systemd.services.hydra-server.path = [ pkgs.msmtp ];
+
+  users.users = {
+    hydra.extraGroups = [ "smtp" ];
+    hydra-queue-runner.extraGroups = [ "smtp" ];
   };
 
   nix.settings.allowed-uris = [
