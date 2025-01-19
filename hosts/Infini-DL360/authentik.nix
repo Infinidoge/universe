@@ -40,8 +40,8 @@ in
   };
 
   systemd.services.authentik-worker.serviceConfig.LoadCredential = [
-    "${ldap}.pem:${config.security.acme.certs.${ldap}.directory}/fullchain.pem"
-    "${ldap}.key:${config.security.acme.certs.${ldap}.directory}/key.pem"
+    "${ldap}.pem:/etc/secrets/ssl/ldap.inx.moe/fullchain.pem"
+    "${ldap}.key:/etc/secrets/ssl/ldap.inx.moe/key.pem"
   ];
 
   services.nginx.virtualHosts.${domain} = {
