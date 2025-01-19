@@ -1,0 +1,25 @@
+From aeccfa8e7291a1cf15064a1fd4ff2da433c8cc9d Mon Sep 17 00:00:00 2001
+From: Infinidoge <infinidoge@inx.moe>
+Date: Wed, 15 Jan 2025 12:53:56 -0500
+Subject: [PATCH] remove createTimestamp and modifyTimestamp from search
+
+---
+ ldap3/core/server.py | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/ldap3/core/server.py b/ldap3/core/server.py
+index 41ff2afa..bcc13412 100644
+--- a/ldap3/core/server.py
++++ b/ldap3/core/server.py
+@@ -483,8 +483,6 @@ class Server(object):
+                                                    'dITContentRules',
+                                                    'dITStructureRules',
+                                                    'nameForms',
+-                                                   'createTimestamp',
+-                                                   'modifyTimestamp',
+                                                    '*'],  # requests all remaining attributes (other)
+                                        get_operational_attributes=True
+                                        )
+-- 
+2.47.0
+
