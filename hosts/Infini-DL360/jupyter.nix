@@ -38,6 +38,7 @@ in
       jupyterlab-myst
       jupyterlab-pygments
       jupyterlab-vim
+      jupyterlab-vpython
 
       # export
       nbconvert
@@ -61,6 +62,16 @@ in
       python3 = mkPythonKernel "Python 3" (pkgs.python3.withPackages (p: with p; [
         ipykernel
 
+        matplotlib
+        numpy
+        pandas
+        scipy
+      ]));
+      vpython = mkPythonKernel "VPython" (pkgs.python3.withPackages (p: with p; [
+        ipykernel
+        jupyterlab-vpython
+
+        vpython-jupyter
         matplotlib
         numpy
         pandas
