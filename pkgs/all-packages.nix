@@ -1,5 +1,5 @@
 { pkgs }:
-{
+rec {
   bytecode-viewer = pkgs.callPackage ./bytecode-viewer.nix { };
   ears-cli = pkgs.callPackage ./ears-cli.nix { };
   fw-ectool = pkgs.callPackage ./fw-ectool.nix { };
@@ -14,4 +14,8 @@
   tmx-cups-ppd = pkgs.callPackage ./tmx-cups-ppd.nix { };
   unbted = pkgs.callPackage ./unbted.nix { };
   unmap = pkgs.callPackage ./unmap { };
+  vpython-jupyter = pkgs.python3Packages.callPackage ./vpython-jupyter.nix { inherit jupyterlab-vpython; };
+  jupyterlab-vpython = pkgs.python3Packages.callPackage ./jupyterlab-vpython { };
+  jupyter-server-proxy = pkgs.python3Packages.callPackage ./jupyter-server-proxy { inherit simpervisor; };
+  simpervisor = pkgs.python3Packages.callPackage ./simpervisor.nix { };
 }

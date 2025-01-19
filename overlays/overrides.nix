@@ -59,7 +59,13 @@ in
 
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pythonFinal: pythonPrev: {
-      inherit (final) jupyterlab-vim jupyterlab-myst;
+      inherit (final)
+        jupyterlab-vim
+        jupyterlab-myst
+        jupyterlab-vpython
+        vpython-jupyter
+        ;
+
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
         doCheck = false;
       };
