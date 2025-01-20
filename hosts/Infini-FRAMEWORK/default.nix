@@ -108,6 +108,20 @@
     }
   ];
 
+  networking.firewall.allowedUDPPorts = [ 51820 ];
+
+  networking.wg-quick.interfaces.wg0 = {
+    address = [ "10.10.0.3/32" ];
+    listenPort = 51820;
+    privateKeyFile = "/home/infinidoge/tmp/bb-vpn.key";
+    peers = [{
+      publicKey = "SYpnrGvxx8l4w9c7KVRVW6GyNDr/iK+maPPMw/Ua7XY=";
+      allowedIPs = [ "10.9.0.0/24" ];
+      endpoint = "66.23.193.252:55555";
+      persistentKeepalive = 25;
+    }];
+  };
+
   specialisation.router.configuration = {
     networking = {
       interfaces."enp0s13f0u1" = {
