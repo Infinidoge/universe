@@ -8,8 +8,6 @@ from disnake.ext.commands import Bot
 from dotenv import find_dotenv, load_dotenv
 
 from .db import setup_db
-from .notifications import Notifications
-from .settings import Settings
 
 # Logger setup
 logger_disnake = logging.getLogger("disnake")
