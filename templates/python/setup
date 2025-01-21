@@ -3,7 +3,7 @@
 
 set -e
 
-if [ $# -lt 3 ]; then
+if [ $# -lt 1 ]; then
   echo "Not enough arguments"
   echo 'usage: ./setup basename'
   exit 1
