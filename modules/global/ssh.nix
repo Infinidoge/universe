@@ -9,6 +9,8 @@ with lib;
     settings = {
       X11Forwarding = mkDefault false;
       GatewayPorts = mkDefault "yes";
+      ClientAliveInterval = 60;
+      TCPKeepAlive = "yes";
     };
     hostKeys = mkDefault [{
       path = "/etc/ssh/ssh_host_ed25519_key";
