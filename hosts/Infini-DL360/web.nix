@@ -75,6 +75,9 @@ in
           autoindex on;
         '';
       };
+      locations."/p/" = {
+        root = "/srv/web/files.inx.moe";
+      };
     };
     "old.inx.moe" = ssl-optional // {
       locations."/" = {
