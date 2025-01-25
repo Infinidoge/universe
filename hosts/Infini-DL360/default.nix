@@ -21,6 +21,7 @@
     ./searx.nix
     ./ssh.nix
     ./thelounge.nix
+    ./torrenting.nix
     ./vaultwarden.nix
   ];
 
