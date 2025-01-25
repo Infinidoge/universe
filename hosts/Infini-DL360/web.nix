@@ -86,6 +86,9 @@ in
         extraConfig = websiteConfig;
       };
     };
+    "foxy.software" = ssl-optional // {
+      locations."/".return = "301 https://inx.moe";
+    };
   };
 
   services.uwsgi = {
