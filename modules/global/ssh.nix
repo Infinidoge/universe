@@ -39,6 +39,9 @@ with lib;
 
       Host inx.moe
           Port 245
+
+      Host *.nodes.pyro.host
+          Port 7976
     '';
   };
 
