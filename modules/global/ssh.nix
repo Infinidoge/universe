@@ -26,6 +26,9 @@ with lib;
 
   programs.ssh = {
     extraConfig = with common; ''
+      CanonicalizeHostname yes
+      CanonicalDomains nodes.pyro.host tailnet.inx.moe
+
       Host rsync.net
           Hostname ${rsyncnet.host}
           User ${rsyncnet.user}
