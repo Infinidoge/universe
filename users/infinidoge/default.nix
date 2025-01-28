@@ -58,6 +58,7 @@ in
       (lib.optionals (!main.universe.minimal.enable && main.info.graphical) [
         (discord.override { withVencord = true; withOpenASAR = true; withTTS = false; })
         schildichat-desktop
+        signal-desktop
         teams-for-linux
         thunderbird
         tor-browser
