@@ -159,7 +159,7 @@ in
           nil_ls = {
             enable = true;
             extraOptions = {
-              settings.nil.formatting.command = [ "nixpkgs-fmt" ];
+              settings.nil.formatting.command = [ "nixfmt" ];
             };
           };
           nimls.enable = programming.nim.enable;
