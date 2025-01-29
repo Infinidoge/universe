@@ -10,20 +10,27 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } ({ ... }: {
-    systems = [ "x86_64-linux" ];
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { ... }:
+      {
+        systems = [ "x86_64-linux" ];
 
-    imports = with inputs; [
-      devshell.flakeModule
-    ];
+        imports = with inputs; [
+          devshell.flakeModule
+        ];
 
-    perSystem = { pkgs, ... }: {
-      devshells.default.devshell = {
-        name = "template";
-        motd = "";
+        perSystem =
+          { pkgs, ... }:
+          {
+            devshells.default.devshell = {
+              name = "template";
+              motd = "";
 
-        packages = with pkgs; [ ];
-      };
-    };
-  });
+              packages = with pkgs; [ ];
+            };
+          };
+      }
+    );
 }

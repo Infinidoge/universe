@@ -1,16 +1,17 @@
-{ buildPythonPackage
-, fetchFromGitHub
+{
+  buildPythonPackage,
+  fetchFromGitHub,
 
-, yarnConfigHook
-, fetchYarnDeps
+  yarnConfigHook,
+  fetchYarnDeps,
 
-, jupyterlab
-, jupyter
-, jupyter-packaging
-, hatchling
-, hatch-jupyter-builder
-, hatch-nodejs-version
-, nodejs
+  jupyterlab,
+  jupyter,
+  jupyter-packaging,
+  hatchling,
+  hatch-jupyter-builder,
+  hatch-nodejs-version,
+  nodejs,
 }:
 
 buildPythonPackage rec {

@@ -10,25 +10,33 @@ rec {
 
   neededForBoot = self.lazy (fs: fs // { neededForBoot = true; });
 
-  mkFilesystemDev' = f: d: c: o:
+  mkFilesystemDev' =
+    f: d: c: o:
     neededForBoot (mkFilesystemDev f d c o);
 
-  mkFilesystem = fsType: uuid:
-    mkFilesystemDev fsType (diskByUuid uuid);
+  mkFilesystem = fsType: uuid: mkFilesystemDev fsType (diskByUuid uuid);
 
-  mkFilesystem' = f: d: c: o:
+  mkFilesystem' =
+    f: d: c: o:
     neededForBoot (mkFilesystemDev f d c o);
 
-
-  mkEFI = uuid: neededForBoot {
-    device = diskByUuid uuid;
-    fsType = "vfat";
-  };
-  mkTmpfs = name: size: neededForBoot {
-    device = name;
-    fsType = "tmpfs";
-    options = [ "defaults" "size=${size}" "mode=755" ];
-  };
+  mkEFI =
+    uuid:
+    neededForBoot {
+      device = diskByUuid uuid;
+      fsType = "vfat";
+    };
+  mkTmpfs =
+    name: size:
+    neededForBoot {
+      device = name;
+      fsType = "tmpfs";
+      options = [
+        "defaults"
+        "size=${size}"
+        "mode=755"
+      ];
+    };
   mkBtrfs' = options: uuid: extraOptions: {
     device = diskByUuid uuid;
     fsType = "btrfs";

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   ifSudo = lib.mkIf config.security.sudo.enable;
   ifSudo' = text: if config.security.sudo.enable then "sudo ${text}" else text;
@@ -42,7 +47,6 @@ in
     g = "git";
     gcd = "cd $(git root || echo \".\")";
     ucd = "cd $(uni cd || echo \".\")";
-
 
     # grep
     grep = "rg";

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./hardware-configuration.nix
     ./filesystems.nix
@@ -20,10 +21,12 @@
 
   networking = {
     interfaces.eno4 = {
-      ipv4.addresses = [{
-        address = "128.210.6.109";
-        prefixLength = 28;
-      }];
+      ipv4.addresses = [
+        {
+          address = "128.210.6.109";
+          prefixLength = 28;
+        }
+      ];
     };
     defaultGateway = {
       address = "128.210.6.97";

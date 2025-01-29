@@ -10,21 +10,26 @@
 
   home-manager.useUserPackages = false;
 
-  home = { main, config, ... }: {
-    home = {
-      packages = with pkgs; [
-        home-manager
-      ] ++ main.universe.packages;
+  home =
+    { main, config, ... }:
+    {
+      home = {
+        packages =
+          with pkgs;
+          [
+            home-manager
+          ]
+          ++ main.universe.packages;
 
-      inherit (main.universe) shellAliases;
+        inherit (main.universe) shellAliases;
 
-      sessionVariables = {
-        UNIVERSE_FLAKE_ROOT = "${config.home.homeDirectory}/universe";
-        UNIVERSE_MODE = "home-manager";
+        sessionVariables = {
+          UNIVERSE_FLAKE_ROOT = "${config.home.homeDirectory}/universe";
+          UNIVERSE_MODE = "home-manager";
+        };
       };
-    };
-    nix.settings.use-xdg-base-directories = true;
+      nix.settings.use-xdg-base-directories = true;
 
-    universe.programming.all.enable = true;
-  };
+      universe.programming.all.enable = true;
+    };
 }

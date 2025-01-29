@@ -1,17 +1,33 @@
-{ lib, self, config, ... }:
+{
+  lib,
+  self,
+  config,
+  ...
+}:
 with lib;
 let
   inherit (lib.our) mkOpt;
   inherit (lib.types) bool attrsOf path;
 
-  mkSecret = name: nameValuePair
-    (removeSuffix ".age" name)
-    { file = "${./.}/${name}"; };
+  mkSecret = name: nameValuePair (removeSuffix ".age" name) { file = "${./.}/${name}"; };
   secrets = listToAttrs (map mkSecret (attrNames (import ./secrets.nix)));
 
-  withOwnerGroup = name: secret: secret // { owner = name; group = name; mode = "440"; };
+  withOwnerGroup =
+    name: secret:
+    secret
+    // {
+      owner = name;
+      group = name;
+      mode = "440";
+    };
   withOwner = name: secret: secret // { owner = name; };
-  withGroup = name: secret: secret // { group = name; mode = "440"; };
+  withGroup =
+    name: secret:
+    secret
+    // {
+      group = name;
+      mode = "440";
+    };
 in
 {
   options = {
@@ -31,8 +47,16 @@ in
           "ovpn"
           ;
 
-        "borg-password" = secrets."borg-password" // { group = "borg"; mode = "440"; };
-        "binary-cache-private-key" = secrets.binary-cache-private-key // lib.optionalAttrs config.services.hydra.enable { group = "hydra"; mode = "440"; };
+        "borg-password" = secrets."borg-password" // {
+          group = "borg";
+          mode = "440";
+        };
+        "binary-cache-private-key" =
+          secrets.binary-cache-private-key
+          // lib.optionalAttrs config.services.hydra.enable {
+            group = "hydra";
+            mode = "440";
+          };
         "smtp-password" = withGroup "smtp" secrets."smtp-password";
         "personal-smtp-password" = withOwner "infinidoge" secrets."personal-smtp-password";
       }

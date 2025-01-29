@@ -7,7 +7,11 @@ let
   esp = uuid "A2B8-4C6E";
   data = uuid "59abb0ff-fe4e-4061-87d2-b728b937656a";
 
-  commonOptions = [ "autodefrag" "noatime" "ssd" ];
+  commonOptions = [
+    "autodefrag"
+    "noatime"
+    "ssd"
+  ];
 in
 {
 
@@ -15,7 +19,11 @@ in
     "/" = {
       device = "tmpfs";
       fsType = "tmpfs";
-      options = [ "defaults" "size=4G" "mode=755" ];
+      options = [
+        "defaults"
+        "size=4G"
+        "mode=755"
+      ];
     };
 
     "/media/main" = {

@@ -1,4 +1,9 @@
-{ config, main, pkgs, ... }:
+{
+  config,
+  main,
+  pkgs,
+  ...
+}:
 {
   programs.zsh = rec {
     enable = true;
@@ -35,10 +40,13 @@
 
     history.path = "$HOME/${dotDir}/.zsh_history";
 
-    shellAliases = builtins.removeAttrs
-      (main.environment.shellAliases // config.home.shellAliases // {
+    shellAliases = builtins.removeAttrs (
+      main.environment.shellAliases
+      // config.home.shellAliases
+      // {
         lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
-      }) [ "mktmp" ];
+      }
+    ) [ "mktmp" ];
 
     oh-my-zsh = {
       enable = true;

@@ -1,9 +1,10 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, jre
-, makeWrapper
-, maven
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  jre,
+  makeWrapper,
+  maven,
 }:
 
 maven.buildMavenPackage rec {

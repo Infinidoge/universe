@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 
@@ -16,22 +21,29 @@ let
     HYDRA_DATA = "${baseDir}";
   };
 
-  env = {
-    NIX_REMOTE = "daemon";
-    SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt"; # Remove in 16.03
-    PGPASSFILE = "${baseDir}/pgpass";
-    NIX_REMOTE_SYSTEMS = concatStringsSep ":" cfg.buildMachinesFiles;
-  } // optionalAttrs (cfg.smtpHost != null) {
-    EMAIL_SENDER_TRANSPORT = "SMTP";
-    EMAIL_SENDER_TRANSPORT_host = cfg.smtpHost;
-  } // hydraEnv // cfg.extraEnv;
+  env =
+    {
+      NIX_REMOTE = "daemon";
+      SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt"; # Remove in 16.03
+      PGPASSFILE = "${baseDir}/pgpass";
+      NIX_REMOTE_SYSTEMS = concatStringsSep ":" cfg.buildMachinesFiles;
+    }
+    // optionalAttrs (cfg.smtpHost != null) {
+      EMAIL_SENDER_TRANSPORT = "SMTP";
+      EMAIL_SENDER_TRANSPORT_host = cfg.smtpHost;
+    }
+    // hydraEnv
+    // cfg.extraEnv;
 
-  serverEnv = env // {
-    HYDRA_TRACKER = cfg.tracker;
-    XDG_CACHE_HOME = "${baseDir}/www/.cache";
-    COLUMNS = "80";
-    PGPASSFILE = "${baseDir}/pgpass-www"; # grrr
-  } // (optionalAttrs cfg.debugServer { DBIC_TRACE = "1"; });
+  serverEnv =
+    env
+    // {
+      HYDRA_TRACKER = cfg.tracker;
+      XDG_CACHE_HOME = "${baseDir}/www/.cache";
+      COLUMNS = "80";
+      PGPASSFILE = "${baseDir}/pgpass-www"; # grrr
+    }
+    // (optionalAttrs cfg.debugServer { DBIC_TRACE = "1"; });
 
   localDB = "dbi:Pg:dbname=hydra;user=hydra;";
 
@@ -39,7 +51,9 @@ let
 
   hydra-package =
     let
-      makeWrapperArgs = concatStringsSep " " (mapAttrsToList (key: value: "--set-default \"${key}\" \"${value}\"") hydraEnv);
+      makeWrapperArgs = concatStringsSep " " (
+        mapAttrsToList (key: value: "--set-default \"${key}\" \"${value}\"") hydraEnv
+      );
     in
     pkgs.buildEnv rec {
       name = "hydra-env";
@@ -236,7 +250,10 @@ in
         type = types.listOf types.path;
         default = optional (config.nix.buildMachines != [ ]) "/etc/nix/machines";
         defaultText = literalExpression ''optional (config.nix.buildMachines != []) "/etc/nix/machines"'';
-        example = [ "/etc/nix/machines" "/var/lib/hydra/provisioner/machines" ];
+        example = [
+          "/etc/nix/machines"
+          "/var/lib/hydra/provisioner/machines"
+        ];
         description = "List of files containing build machines.";
       };
 
@@ -256,7 +273,6 @@ in
     };
 
   };
-
 
   ###### implementation
 
@@ -312,7 +328,10 @@ in
       use-substitutes = ${if cfg.useSubstitutes then "1" else "0"}
     '';
 
-    environment.systemPackages = [ hydra-package pkgs.git ];
+    environment.systemPackages = [
+      hydra-package
+      pkgs.git
+    ];
 
     environment.variables = hydraEnv;
 
@@ -320,7 +339,11 @@ in
       {
         keep-outputs = true;
         keep-derivations = true;
-        extra-trusted-users = [ "hydra" "hydra-queue-runner" "hydra-www" ];
+        extra-trusted-users = [
+          "hydra"
+          "hydra-queue-runner"
+          "hydra-www"
+        ];
       }
 
       (mkIf (versionOlder (getVersion config.nix.package.out) "2.4pre") {
@@ -419,8 +442,17 @@ in
       wantedBy = [ "multi-user.target" ];
       requires = [ "hydra-init.service" ];
       wants = [ "network-online.target" ];
-      after = [ "hydra-init.service" "network.target" ];
-      path = [ hydra-package pkgs.nettools pkgs.openssh pkgs.bzip2 config.nix.package ];
+      after = [
+        "hydra-init.service"
+        "network.target"
+      ];
+      path = [
+        hydra-package
+        pkgs.nettools
+        pkgs.openssh
+        pkgs.bzip2
+        config.nix.package
+      ];
       restartTriggers = [ hydraConf ];
       environment = env // {
         PGPASSFILE = "${baseDir}/pgpass-queue-runner"; # grrr
@@ -444,8 +476,16 @@ in
       wantedBy = [ "multi-user.target" ];
       requires = [ "hydra-init.service" ];
       wants = [ "network-online.target" ];
-      after = [ "hydra-init.service" "network.target" "network-online.target" ];
-      path = with pkgs; [ hydra-package nettools jq ];
+      after = [
+        "hydra-init.service"
+        "network.target"
+        "network-online.target"
+      ];
+      path = with pkgs; [
+        hydra-package
+        nettools
+        jq
+      ];
       restartTriggers = [ hydraConf ];
       environment = env // {
         HYDRA_DBI = "${env.HYDRA_DBI};application_name=hydra-evaluator";

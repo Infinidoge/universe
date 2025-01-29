@@ -1,4 +1,11 @@
-{ config, lib, pkgs, private, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  private,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
@@ -57,19 +64,39 @@
 
   networking = {
     firewall = {
-      allowedUDPPorts = [ 80 443 ];
-      allowedTCPPorts = [ 80 443 25565 ];
+      allowedUDPPorts = [
+        80
+        443
+      ];
+      allowedTCPPorts = [
+        80
+        443
+        25565
+      ];
     };
 
     bridges = {
       br0 = {
-        interfaces = [ "eno1" "eno2" "eno3" "eno4" ];
+        interfaces = [
+          "eno1"
+          "eno2"
+          "eno3"
+          "eno4"
+        ];
       };
     };
-    interfaces.br0.ipv4.addresses = [{ address = "192.168.137.11"; prefixLength = 24; }];
+    interfaces.br0.ipv4.addresses = [
+      {
+        address = "192.168.137.11";
+        prefixLength = 24;
+      }
+    ];
     dhcpcd.denyInterfaces = [ "eno*" ];
 
-    defaultGateway = { address = "192.168.137.1"; interface = "br0"; };
+    defaultGateway = {
+      address = "192.168.137.1";
+      interface = "br0";
+    };
 
     nat = {
       enable = true;
@@ -89,10 +116,12 @@
 
   services.fail2ban.enable = true;
 
-  environment.etc."fail2ban/filter.d/nginx-url-probe.local".text = lib.mkDefault (lib.mkAfter ''
-    [Definition]
-    failregex = ^<HOST>.*GET.*(\.php|admin|wp\-).* HTTP/\d.\d\" 404.*$
-  '');
+  environment.etc."fail2ban/filter.d/nginx-url-probe.local".text = lib.mkDefault (
+    lib.mkAfter ''
+      [Definition]
+      failregex = ^<HOST>.*GET.*(\.php|admin|wp\-).* HTTP/\d.\d\" 404.*$
+    ''
+  );
 
   services.fail2ban.jails.nginx-url-probe.settings = {
     enabled = true;
@@ -127,22 +156,26 @@
 
   services.minecraft-servers.servers.emd-server.autoStart = lib.mkForce false;
 
-  services.borgbackup.jobs."persist" = let tmux = lib.getExe pkgs.tmux; in {
-    preHook = ''
-      ${tmux} -S /run/minecraft/friend-server.sock send-keys "say Server is backing up..." Enter
-      ${tmux} -S /run/minecraft/friend-server.sock send-keys save-off Enter
-      ${tmux} -S /run/minecraft/friend-server.sock send-keys save-all Enter
-      ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Server is backing up..." Enter
-      ${tmux} -S /run/minecraft/sister-server.sock send-keys save-off Enter
-      ${tmux} -S /run/minecraft/sister-server.sock send-keys save-all Enter
-    '';
-    postHook = ''
-      ${tmux} -S /run/minecraft/friend-server.sock send-keys save-on Enter
-      ${tmux} -S /run/minecraft/friend-server.sock send-keys "say Backup complete" Enter
-      ${tmux} -S /run/minecraft/sister-server.sock send-keys save-on Enter
-      ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Backup complete" Enter
-    '';
-  };
+  services.borgbackup.jobs."persist" =
+    let
+      tmux = lib.getExe pkgs.tmux;
+    in
+    {
+      preHook = ''
+        ${tmux} -S /run/minecraft/friend-server.sock send-keys "say Server is backing up..." Enter
+        ${tmux} -S /run/minecraft/friend-server.sock send-keys save-off Enter
+        ${tmux} -S /run/minecraft/friend-server.sock send-keys save-all Enter
+        ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Server is backing up..." Enter
+        ${tmux} -S /run/minecraft/sister-server.sock send-keys save-off Enter
+        ${tmux} -S /run/minecraft/sister-server.sock send-keys save-all Enter
+      '';
+      postHook = ''
+        ${tmux} -S /run/minecraft/friend-server.sock send-keys save-on Enter
+        ${tmux} -S /run/minecraft/friend-server.sock send-keys "say Backup complete" Enter
+        ${tmux} -S /run/minecraft/sister-server.sock send-keys save-on Enter
+        ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Backup complete" Enter
+      '';
+    };
 
   systemd.services.setup-infiniband = {
     wantedBy = [ "network.target" ];

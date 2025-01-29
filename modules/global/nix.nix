@@ -1,6 +1,17 @@
-{ config, inputs, pkgs, lib, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  inherit (lib) mkIf mkDefault filterAttrs mapAttrs';
+  inherit (lib)
+    mkIf
+    mkDefault
+    filterAttrs
+    mapAttrs'
+    ;
 in
 {
   nix = {
@@ -8,9 +19,19 @@ in
 
     settings = {
       allowed-users = [ "*" ];
-      trusted-users = [ "root" "@wheel" "remotebuild" "nix-ssh" ];
+      trusted-users = [
+        "root"
+        "@wheel"
+        "remotebuild"
+        "nix-ssh"
+      ];
 
-      system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      system-features = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
       experimental-features = [
         "flakes"
         "nix-command"
@@ -52,7 +73,12 @@ in
       let
         flakes = filterAttrs (n: v: v ? outputs) inputs;
       in
-      (mapAttrs' (n: v: { name = if n == "self" then "universe" else n; value = { flake = v; }; }) flakes)
+      (mapAttrs' (n: v: {
+        name = if n == "self" then "universe" else n;
+        value = {
+          flake = v;
+        };
+      }) flakes)
       // {
         nixpkgs-git = {
           exact = false;

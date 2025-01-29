@@ -1,9 +1,11 @@
 final: prev:
 
 let
-  addPatches = package: patches: package.overrideAttrs (old: {
-    patches = (old.patches or [ ]) ++ patches;
-  });
+  addPatches =
+    package: patches:
+    package.overrideAttrs (old: {
+      patches = (old.patches or [ ]) ++ patches;
+    });
 in
 {
   # coreutils-doge = addPatches prev.coreutils [ ./coreutils.patch ];
@@ -20,7 +22,9 @@ in
   #  })
   #];
 
-  hydra_unstable = addPatches prev.hydra_unstable [ ./hydra-force-allow-import-from-derivation.patch ];
+  hydra_unstable = addPatches prev.hydra_unstable [
+    ./hydra-force-allow-import-from-derivation.patch
+  ];
 
   openssh-srv = addPatches prev.openssh [ ./srv-records.patch ];
 

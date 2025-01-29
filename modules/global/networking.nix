@@ -1,4 +1,9 @@
-{ config, pkgs, private, ... }:
+{
+  config,
+  pkgs,
+  private,
+  ...
+}:
 {
   imports = [ private.nixosModules.networking ];
 
@@ -27,7 +32,10 @@
       #"100.100.100.100"
     ];
 
-    firewall.trustedInterfaces = [ "br-+" "tailscale0" ];
+    firewall.trustedInterfaces = [
+      "br-+"
+      "tailscale0"
+    ];
 
     nftables = {
       enable = true;

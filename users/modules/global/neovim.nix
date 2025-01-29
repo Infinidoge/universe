@@ -1,19 +1,40 @@
-{ main, pkgs, lib, ... }:
+{
+  main,
+  pkgs,
+  lib,
+  ...
+}:
 let
   flattenTree = lib.our.flattenTree' (val: val ? action) "";
 
-  mkLeader = { leader, mode }: name: value: {
-    key = leader + name;
-    inherit mode;
-  } // value;
+  mkLeader =
+    { leader, mode }:
+    name: value:
+    {
+      key = leader + name;
+      inherit mode;
+    }
+    // value;
 
-  mkLeaderMap = tree:
-    builtins.concatMap
-      (leader: lib.mapAttrsToList (mkLeader leader) (flattenTree tree))
-      [
-        { leader = "<leader>"; mode = [ "n" "v" ]; }
-        { leader = "<M- >"; mode = [ "n" "v" "i" ]; }
-      ];
+  mkLeaderMap =
+    tree:
+    builtins.concatMap (leader: lib.mapAttrsToList (mkLeader leader) (flattenTree tree)) [
+      {
+        leader = "<leader>";
+        mode = [
+          "n"
+          "v"
+        ];
+      }
+      {
+        leader = "<M- >";
+        mode = [
+          "n"
+          "v"
+          "i"
+        ];
+      }
+    ];
 
   inherit (main.universe) programming;
   inherit (main) universe;
@@ -34,7 +55,10 @@ in
       shiftwidth = 4;
     };
 
-    clipboard.register = [ "unnamedplus" "unnamed" ];
+    clipboard.register = [
+      "unnamedplus"
+      "unnamed"
+    ];
 
     globals = {
       doom_one_cursor_coloring = true;
@@ -51,50 +75,58 @@ in
     globals.mapleader = " ";
 
     autoCmd = [
-      { event = [ "TermOpen" ]; command = "setlocal nonumber norelativenumber"; }
+      {
+        event = [ "TermOpen" ];
+        command = "setlocal nonumber norelativenumber";
+      }
     ];
 
-    keymaps = [
-      {
-        key = "<Space>";
-        action = "<Nop>";
-        mode = [ "n" "v" ];
-        options = {
-          silent = true;
+    keymaps =
+      [
+        {
+          key = "<Space>";
+          action = "<Nop>";
+          mode = [
+            "n"
+            "v"
+          ];
+          options = {
+            silent = true;
+          };
+        }
+        {
+          key = "<C-w>n";
+          action = "<C-\\><C-n>";
+          mode = "t";
+        }
+      ]
+      ++ mkLeaderMap {
+        c = {
+          a.action.__raw = "vim.lsp.buf.code_action";
+          f.action = ":Format<Enter>";
+          t = {
+            f.action = ":FormatToggle<Enter>";
+          };
         };
-      }
-      {
-        key = "<C-w>n";
-        action = "<C-\\><C-n>";
-        mode = "t";
-      }
-    ] ++ mkLeaderMap {
-      c = {
-        a.action.__raw = "vim.lsp.buf.code_action";
-        f.action = ":Format<Enter>";
-        t = {
-          f.action = ":FormatToggle<Enter>";
+        w = {
+          q.action = ":close<Enter>";
+          d.action = ":close<Enter>";
+          v.action = ":vsplit<Enter>";
+          s.action = ":split<Enter>";
+          V.action = ":vsplit ";
+          S.action = ":split ";
+          n.action = ":next<Enter>";
+          p.action = ":previous<Enter>";
+        };
+        f = {
+          s.action = ":w<enter>";
+        };
+        q = {
+          q.action = ":q<Enter>";
+          Q.action = ":q!<Enter>";
+          x.action = ":x<Enter>";
         };
       };
-      w = {
-        q.action = ":close<Enter>";
-        d.action = ":close<Enter>";
-        v.action = ":vsplit<Enter>";
-        s.action = ":split<Enter>";
-        V.action = ":vsplit ";
-        S.action = ":split ";
-        n.action = ":next<Enter>";
-        p.action = ":previous<Enter>";
-      };
-      f = {
-        s.action = ":w<enter>";
-      };
-      q = {
-        q.action = ":q<Enter>";
-        Q.action = ":q!<Enter>";
-        x.action = ":x<Enter>";
-      };
-    };
 
     plugins = {
       autoclose = {
@@ -119,10 +151,16 @@ in
       neorg = {
         enable = true;
         settings = {
-          load = let empty = { __empty = null; }; in {
-            "core.defaults" = empty;
-            "core.concealer" = empty;
-          };
+          load =
+            let
+              empty = {
+                __empty = null;
+              };
+            in
+            {
+              "core.defaults" = empty;
+              "core.concealer" = empty;
+            };
         };
 
       };

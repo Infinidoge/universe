@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.our;
 let
@@ -58,7 +63,13 @@ in
 
       environment = {
         variables.LAPTOP = "True";
-        systemPackages = with pkgs; [ acpi brightnessctl ] ++ optional config.powerManagement.powertop.enable pkgs.powertop;
+        systemPackages =
+          with pkgs;
+          [
+            acpi
+            brightnessctl
+          ]
+          ++ optional config.powerManagement.powertop.enable pkgs.powertop;
       };
     })
 

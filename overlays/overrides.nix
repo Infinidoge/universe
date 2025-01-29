@@ -1,17 +1,20 @@
 inputs: final: prev:
 let
   mkPkgs = channel: channel.legacyPackages.${final.system};
-  mkPkgsUnfree = channel: import channel {
-    inherit (final) system;
-    config.allowUnfree = true;
-  };
+  mkPkgsUnfree =
+    channel:
+    import channel {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
 
   latest = mkPkgsUnfree inputs.latest;
   fork = mkPkgsUnfree inputs.fork;
   stable = mkPkgs inputs.stable;
   old-stable = mkPkgs inputs.old-stable;
 
-  versionFromInput = input:
+  versionFromInput =
+    input:
     let
       slice = a: b: builtins.substring a b input.lastModifiedDate;
     in

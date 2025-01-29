@@ -50,8 +50,15 @@ in
   security.pam.services.sshd.allowNullPassword = true;
 
   systemd.tmpfiles.settings."30-external" = {
-    "/srv/external".d = { user = "root"; group = "root"; };
-    "/srv/external/incoming".d = { user = "incoming"; group = "incoming"; mode = "0770"; };
+    "/srv/external".d = {
+      user = "root";
+      group = "root";
+    };
+    "/srv/external/incoming".d = {
+      user = "incoming";
+      group = "incoming";
+      mode = "0770";
+    };
   };
 
   # https://enotacoes.wordpress.com/2021/10/05/limiting-user-to-sshfs-or-sftp-of-one-directory-only/

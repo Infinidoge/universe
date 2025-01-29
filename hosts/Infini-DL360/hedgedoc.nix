@@ -1,4 +1,9 @@
-{ config, common, secrets, ... }:
+{
+  config,
+  common,
+  secrets,
+  ...
+}:
 let
   cfg = config.services.hedgedoc;
   domain = common.subdomain "md";
@@ -12,7 +17,10 @@ in
       protocolUseSSL = true;
       port = 4003;
 
-      db = { dialect = "sqlite"; storage = "/srv/hedgedoc/db.sqlite"; };
+      db = {
+        dialect = "sqlite";
+        storage = "/srv/hedgedoc/db.sqlite";
+      };
       uploadsPath = "/srv/hedgedoc/uploads";
 
       allowFreeURL = true;

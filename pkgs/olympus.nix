@@ -1,10 +1,11 @@
 # Taken from https://github.com/VergeDX/config-nixpkgs/blob/899f13750c9c1795d455eeee9cb28d3aa74a0866/packages/gui/olympus.nix
-{ stdenv
-, lib
-, fetchzip
-, unzip
-, makeDesktopItem
-, buildFHSEnv
+{
+  stdenv,
+  lib,
+  fetchzip,
+  unzip,
+  makeDesktopItem,
+  buildFHSEnv,
 }:
 let
   olympus = stdenv.mkDerivation rec {

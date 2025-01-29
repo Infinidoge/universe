@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -48,19 +53,25 @@ let
 
   savePath = "${cfg.stateDir}/saves/${cfg.saveName}.zip";
 
-  mkCmd = options: toString ([
-    "${lib.getExe cfg.package}"
-    "--config=${cfg.configFile}"
-    (optionalString (cfg.mods != [ ]) "--mod-directory=${modDir}")
-    (optionalString (cfg.mods != [ ]) "--mod-directory=${modDir}")
-    (optionalString (cfg.mapGenSettings != { }) "--map-gen-settings=${mapGenSettingsFile}")
-    (optionalString (cfg.mapSettings != { }) "--map-settings=${mapSettingsFile}")
-    "--server-settings=${
-      if (cfg.extraSettingsFile != null)
-      then "${cfg.stateDir}/server-settings.json"
-      else serverSettingsFile
-    }"
-  ] ++ options);
+  mkCmd =
+    options:
+    toString (
+      [
+        "${lib.getExe cfg.package}"
+        "--config=${cfg.configFile}"
+        (optionalString (cfg.mods != [ ]) "--mod-directory=${modDir}")
+        (optionalString (cfg.mods != [ ]) "--mod-directory=${modDir}")
+        (optionalString (cfg.mapGenSettings != { }) "--map-gen-settings=${mapGenSettingsFile}")
+        (optionalString (cfg.mapSettings != { }) "--map-settings=${mapSettingsFile}")
+        "--server-settings=${
+          if (cfg.extraSettingsFile != null) then
+            "${cfg.stateDir}/server-settings.json"
+          else
+            serverSettingsFile
+        }"
+      ]
+      ++ options
+    );
 in
 {
   disabledModules = [ "services/games/factorio.nix" ];
@@ -234,7 +245,9 @@ in
       extraSettings = mkOption {
         type = types.attrs;
         default = { };
-        example = { admins = [ "username" ]; };
+        example = {
+          admins = [ "username" ];
+        };
         description = lib.mdDoc ''
           Extra game configuration that will go into server-settings.json
         '';
@@ -338,18 +351,20 @@ in
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
 
-      preStart = ''
-        if [[ ! -e "${savePath}" ]]; then
-          ${mkCmd [
-            "--create=${savePath}"
-          ]}
-        fi
-      '' + (optionalString (cfg.extraSettingsFile != null) ''
-        echo ${lib.strings.escapeShellArg serverSettingsString} \
-          "$(cat ${cfg.extraSettingsFile})" \
-          | ${lib.getExe pkgs.jq} -s add \
-          > ${cfg.stateDir}/server-settings.json
-      '');
+      preStart =
+        ''
+          if [[ ! -e "${savePath}" ]]; then
+            ${mkCmd [
+              "--create=${savePath}"
+            ]}
+          fi
+        ''
+        + (optionalString (cfg.extraSettingsFile != null) ''
+          echo ${lib.strings.escapeShellArg serverSettingsString} \
+            "$(cat ${cfg.extraSettingsFile})" \
+            | ${lib.getExe pkgs.jq} -s add \
+            > ${cfg.stateDir}/server-settings.json
+        '');
 
       serviceConfig = {
         User = cfg.user;
@@ -362,11 +377,7 @@ in
         ExecStart = mkCmd [
           "--port=${toString cfg.port}"
           "--bind=${cfg.bind}"
-          (
-            if cfg.loadLatestSave
-            then "--start-server-load-latest"
-            else "--start-server=${savePath}"
-          )
+          (if cfg.loadLatestSave then "--start-server-load-latest" else "--start-server=${savePath}")
           (optionalString (cfg.admins != [ ]) "--server-adminlist=${serverAdminsFile}")
         ];
 
@@ -379,7 +390,12 @@ in
         ProtectControlGroups = true;
         ProtectKernelModules = true;
         ProtectKernelTunables = true;
-        RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" "AF_NETLINK" ];
+        RestrictAddressFamilies = [
+          "AF_UNIX"
+          "AF_INET"
+          "AF_INET6"
+          "AF_NETLINK"
+        ];
         RestrictRealtime = true;
         RestrictNamespaces = true;
         MemoryDenyWriteExecute = true;

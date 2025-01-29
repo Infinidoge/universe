@@ -1,16 +1,17 @@
-{ buildPythonPackage
-, fetchFromGitHub
+{
+  buildPythonPackage,
+  fetchFromGitHub,
 
-, cython
-, setuptools
-, setuptools_scm
+  cython,
+  setuptools,
+  setuptools_scm,
 
-, autobahn
-, ipykernel
-, jupyter
-, notebook
-, numpy
-, jupyterlab-vpython
+  autobahn,
+  ipykernel,
+  jupyter,
+  notebook,
+  numpy,
+  jupyterlab-vpython,
 }:
 
 buildPythonPackage {

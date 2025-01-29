@@ -3,7 +3,10 @@ with lib.our.disko;
 {
   boot.kernelPackages = pkgs.linuxPackages;
 
-  boot.zfs.extraPools = [ "zssd" "zhdd" ];
+  boot.zfs.extraPools = [
+    "zssd"
+    "zhdd"
+  ];
 
   disko.devices = {
     nodev."/" = mkTmpfs "64G";

@@ -1,4 +1,10 @@
-{ config, lib, private, pkgs, ... }:
+{
+  config,
+  lib,
+  private,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.our;
 let

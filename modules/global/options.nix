@@ -1,5 +1,10 @@
 # Heavily inspired by hlissner: https://github.com/hlissner/dotfiles/blob/master/modules/options.nix
-{ config, options, lib, ... }:
+{
+  config,
+  options,
+  lib,
+  ...
+}:
 with lib;
 with lib.our;
 let
@@ -40,7 +45,11 @@ in
     universe = {
       packages = packageListOpt;
       shellAliases = mkOpt (attrsOf str) { };
-      variables = mkOpt (attrsOf (oneOf [ (listOf str) str path ])) { };
+      variables = mkOpt (attrsOf (oneOf [
+        (listOf str)
+        str
+        path
+      ])) { };
       media.enable = mkBoolOpt false;
       minimal.enable = mkBoolOpt false;
     };

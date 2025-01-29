@@ -1,16 +1,17 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, yarnConfigHook
-, fetchYarnDeps
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  yarnConfigHook,
+  fetchYarnDeps,
 
-, jupyterlab
-, jupyter
-, jupyter-packaging
-, hatchling
-, hatch-jupyter-builder
-, hatch-nodejs-version
-, nodejs
+  jupyterlab,
+  jupyter,
+  jupyter-packaging,
+  hatchling,
+  hatch-jupyter-builder,
+  hatch-nodejs-version,
+  nodejs,
 }:
 
 buildPythonPackage rec {
@@ -35,7 +36,6 @@ buildPythonPackage rec {
         --replace-fail '"@myst-theme/frontmatter": "^0.9.0"' '"@myst-theme/frontmatter": "^0.13.2"'
   '';
 
-
   yarnOfflineCache = fetchYarnDeps {
     yarnLock = ./yarn.lock;
     hash = "sha256-ou3Tjml5VU1O14k/oIDufj3QV2sQYD8EzVGAPhF9RZI=";
@@ -45,7 +45,6 @@ buildPythonPackage rec {
     yarnConfigHook
     nodejs
   ];
-
 
   build-system = [
     hatchling
@@ -86,4 +85,3 @@ buildPythonPackage rec {
     maintainers = [ ];
   };
 }
-

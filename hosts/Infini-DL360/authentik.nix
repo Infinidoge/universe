@@ -1,4 +1,9 @@
-{ config, common, secrets, ... }:
+{
+  config,
+  common,
+  secrets,
+  ...
+}:
 let
   domain = common.subdomain "auth";
   ldap = common.subdomain "ldap";
@@ -32,7 +37,10 @@ in
     environmentFile = secrets.authentik-ldap;
   };
 
-  networking.firewall.allowedTCPPorts = [ 3389 6636 ];
+  networking.firewall.allowedTCPPorts = [
+    3389
+    6636
+  ];
 
   security.acme.certs.${ldap} = {
     group = "nginx";

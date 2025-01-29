@@ -1,4 +1,9 @@
-{ config, common, secrets, ... }:
+{
+  config,
+  common,
+  secrets,
+  ...
+}:
 let
   cfg = config.services.searx;
   domain = common.subdomain "search";

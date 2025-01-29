@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   users.users.root = {
     shell = pkgs.zsh;
     hashedPasswordFile = lib.mkIf config.modules.secrets.enable config.secrets.root-password;

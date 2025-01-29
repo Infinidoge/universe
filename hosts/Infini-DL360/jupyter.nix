@@ -1,11 +1,22 @@
-{ config, common, pkgs, ... }:
+{
+  config,
+  common,
+  pkgs,
+  ...
+}:
 let
   cfg = config.services.jupyter;
 
   mkPythonKernel = displayName: env: {
     inherit displayName;
     language = "python";
-    argv = [ "${env.interpreter}" "-m" "ipykernel_launcher" "-f" "{connection_file}" ];
+    argv = [
+      "${env.interpreter}"
+      "-m"
+      "ipykernel_launcher"
+      "-f"
+      "{connection_file}"
+    ];
     logo32 = "${env}/${env.sitePackages}/ipykernel/resources/logo-32x32.png";
     logo64 = "${env}/${env.sitePackages}/ipykernel/resources/logo-64x64.png";
   };
@@ -59,24 +70,32 @@ in
     notebookDir = "~/Notebooks";
 
     kernels = {
-      python3 = mkPythonKernel "Python 3" (pkgs.python3.withPackages (p: with p; [
-        ipykernel
+      python3 = mkPythonKernel "Python 3" (
+        pkgs.python3.withPackages (
+          p: with p; [
+            ipykernel
 
-        matplotlib
-        numpy
-        pandas
-        scipy
-      ]));
-      vpython = mkPythonKernel "VPython" (pkgs.python3.withPackages (p: with p; [
-        ipykernel
-        jupyterlab-vpython
+            matplotlib
+            numpy
+            pandas
+            scipy
+          ]
+        )
+      );
+      vpython = mkPythonKernel "VPython" (
+        pkgs.python3.withPackages (
+          p: with p; [
+            ipykernel
+            jupyterlab-vpython
 
-        vpython-jupyter
-        matplotlib
-        numpy
-        pandas
-        scipy
-      ]));
+            vpython-jupyter
+            matplotlib
+            numpy
+            pandas
+            scipy
+          ]
+        )
+      );
     };
   };
 

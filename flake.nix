@@ -29,7 +29,10 @@
     devshell.url = "github:numtide/devshell";
     disko.url = "github:nix-community/disko/latest";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-registry = { url = "github:NixOS/flake-registry"; flake = false; };
+    flake-registry = {
+      url = "github:NixOS/flake-registry";
+      flake = false;
+    };
     home-manager.url = "github:nix-community/home-manager";
     impermanence.url = "github:nix-community/impermanence";
     nix-index-database.url = "github:nix-community/nix-index-database";
@@ -56,7 +59,10 @@
     conduwuit.url = "github:girlbossceo/conduwuit";
 
     ## Vencord
-    vencord = { url = "github:Vendicated/Vencord"; flake = false; };
+    vencord = {
+      url = "github:Vendicated/Vencord";
+      flake = false;
+    };
 
     ## Qtile
     qtile.url = "github:qtile/qtile";
@@ -130,129 +136,146 @@
     universe-cli.inputs.systems.follows = "systems";
   };
 
-  outputs = inputs@{ flake-parts, nixpkgs, private, ... }: flake-parts.lib.mkFlake { inherit inputs; } ({ self, lib, ... }: {
-    systems = [ "x86_64-linux" ];
+  outputs =
+    inputs@{
+      flake-parts,
+      nixpkgs,
+      private,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { self, lib, ... }:
+      {
+        systems = [ "x86_64-linux" ];
 
-    debug = true;
+        debug = true;
 
-    perSystem = { pkgs, system, ... }: {
-      _module.args.pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [
-          self.overlays.overrides
-          self.overlays.patches
-        ];
-      };
-
-      treefmt.projectRootFile = "flake.nix";
-      treefmt.programs.nixfmt.enable = true;
-    };
-
-    flake = {
-      lib = import ./lib { inherit (nixpkgs) lib; };
-
-      users = self.lib.rakeLeaves ./users;
-
-      overlays = {
-        overrides = import ./overlays/overrides.nix inputs;
-        patches = import ./overlays/patches;
-      };
-
-      nixosConfigurations =
-        let
-          libOverlay = (lfinal: lprev: {
-            our = self.lib;
-            hm = inputs.home-manager.lib.hm;
-          });
-        in
-        lib.mapAttrs
-          (self.lib.mkHost {
-            specialArgs = {
-              lib = nixpkgs.lib.extend libOverlay;
-              inherit private self inputs;
+        perSystem =
+          { pkgs, system, ... }:
+          {
+            _module.args.pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+              overlays = [
+                self.overlays.overrides
+                self.overlays.patches
+              ];
             };
 
-            modules = [
-              self.users.root
-              self.users.infinidoge
-              {
-                nixpkgs.hostPlatform = "x86_64-linux";
-                system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-                nixpkgs.overlays = [
-                  (final: prev: {
-                    lib = prev.lib.extend libOverlay;
+            treefmt.projectRootFile = "flake.nix";
+            treefmt.programs.nixfmt.enable = true;
+          };
 
-                    inherit (inputs.home-manager.packages.${prev.system}) home-manager;
-                  })
-                  self.overlays.packages
-                  self.overlays.patches
-                  self.overlays.overrides
+        flake = {
+          lib = import ./lib { inherit (nixpkgs) lib; };
 
-                  # --- Domain-Specific Overlays
-                  inputs.agenix.overlays.default
-                  inputs.nix-minecraft.overlay
-                  inputs.qtile.overlays.default
-                  inputs.rust-overlay.overlays.default
-                  inputs.universe-cli.overlays.default
+          users = self.lib.rakeLeaves ./users;
+
+          overlays = {
+            overrides = import ./overlays/overrides.nix inputs;
+            patches = import ./overlays/patches;
+          };
+
+          nixosConfigurations =
+            let
+              libOverlay = (
+                lfinal: lprev: {
+                  our = self.lib;
+                  hm = inputs.home-manager.lib.hm;
+                }
+              );
+            in
+            lib.mapAttrs (self.lib.mkHost {
+              specialArgs = {
+                lib = nixpkgs.lib.extend libOverlay;
+                inherit private self inputs;
+              };
+
+              modules = [
+                self.users.root
+                self.users.infinidoge
+                {
+                  nixpkgs.hostPlatform = "x86_64-linux";
+                  system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+                  nixpkgs.overlays = [
+                    (final: prev: {
+                      lib = prev.lib.extend libOverlay;
+
+                      inherit (inputs.home-manager.packages.${prev.system}) home-manager;
+                    })
+                    self.overlays.packages
+                    self.overlays.patches
+                    self.overlays.overrides
+
+                    # --- Domain-Specific Overlays
+                    inputs.agenix.overlays.default
+                    inputs.nix-minecraft.overlay
+                    inputs.qtile.overlays.default
+                    inputs.rust-overlay.overlays.default
+                    inputs.universe-cli.overlays.default
+                  ];
+                  home-manager = {
+                    sharedModules = [
+                      inputs.impermanence.nixosModules.home-manager.impermanence
+                      inputs.nix-index-database.hmModules.nix-index
+                      inputs.nixvim.homeManagerModules.nixvim
+                    ] ++ (self.lib.leaves ./users/modules);
+                  };
+                }
+
+                # --- Universe Modules ---
+                ./secrets
+                private.nixosModules.secrets
+
+                # --- Library Modules ---
+                inputs.agenix.nixosModules.age
+                inputs.disko.nixosModules.disko
+                inputs.home-manager.nixosModules.home-manager
+                inputs.impermanence.nixosModules.impermanence
+                inputs.nix-index-database.nixosModules.nix-index
+                inputs.nixos-wsl.nixosModules.wsl
+
+                # --- Domain-Specific Modules ---
+                inputs.authentik-nix.nixosModules.default
+                inputs.lix-module.nixosModules.default
+                inputs.hydra.nixosModules.overlayNixpkgsForThisHydra
+                inputs.nix-minecraft.nixosModules.minecraft-servers
+              ] ++ (self.lib.leaves ./modules);
+            }) (self.lib.flattenLeaves ./hosts);
+
+          homeConfigurations = self.lib.mkHomeConfigurations {
+            inherit (self.nixosConfigurations)
+              "data.cs.purdue.edu"
+              vulcan
+              ;
+          };
+
+          hydraJobs = {
+            packages = lib.mapAttrs (
+              _: lib.filterAttrs (n: v: v ? meta -> v.meta ? broken -> !v.meta.broken)
+            ) self.packages;
+            nixosConfigurations.x86_64-linux =
+              lib.flip lib.genAttrs
+                (name: { toplevel = self.nixosConfigurations.${name}.config.system.build.toplevel; })
+                [
+                  "Infini-DESKTOP"
+                  "Infini-DL360"
+                  "Infini-FRAMEWORK"
+                  "Infini-OPTIPLEX"
+                  "Infini-SERVER"
+                  "hermes"
+                  "hestia"
                 ];
-                home-manager = {
-                  sharedModules = [
-                    inputs.impermanence.nixosModules.home-manager.impermanence
-                    inputs.nix-index-database.hmModules.nix-index
-                    inputs.nixvim.homeManagerModules.nixvim
-                  ] ++ (self.lib.leaves ./users/modules);
-                };
-              }
+          };
+        };
 
-              # --- Universe Modules ---
-              ./secrets
-              private.nixosModules.secrets
-
-              # --- Library Modules ---
-              inputs.agenix.nixosModules.age
-              inputs.disko.nixosModules.disko
-              inputs.home-manager.nixosModules.home-manager
-              inputs.impermanence.nixosModules.impermanence
-              inputs.nix-index-database.nixosModules.nix-index
-              inputs.nixos-wsl.nixosModules.wsl
-
-              # --- Domain-Specific Modules ---
-              inputs.authentik-nix.nixosModules.default
-              inputs.lix-module.nixosModules.default
-              inputs.hydra.nixosModules.overlayNixpkgsForThisHydra
-              inputs.nix-minecraft.nixosModules.minecraft-servers
-            ] ++ (self.lib.leaves ./modules);
-          })
-          (self.lib.flattenLeaves ./hosts);
-
-      homeConfigurations = self.lib.mkHomeConfigurations {
-        inherit (self.nixosConfigurations)
-          "data.cs.purdue.edu"
-          vulcan
-          ;
-      };
-
-      hydraJobs = {
-        packages = lib.mapAttrs (_: lib.filterAttrs (n: v: v ? meta -> v.meta ? broken -> !v.meta.broken)) self.packages;
-        nixosConfigurations.x86_64-linux = lib.flip lib.genAttrs (name: { toplevel = self.nixosConfigurations.${name}.config.system.build.toplevel; }) [
-          "Infini-DESKTOP"
-          "Infini-DL360"
-          "Infini-FRAMEWORK"
-          "Infini-OPTIPLEX"
-          "Infini-SERVER"
-          "hermes"
-          "hestia"
+        imports = [
+          ./pkgs
+          ./shell
+          ./templates
+          inputs.devshell.flakeModule
+          inputs.treefmt-nix.flakeModule
         ];
-      };
-    };
-
-    imports = [
-      ./pkgs
-      ./shell
-      ./templates
-      inputs.devshell.flakeModule
-      inputs.treefmt-nix.flakeModule
-    ];
-  });
+      }
+    );
 }

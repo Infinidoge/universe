@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   home-manager = {
     useUserPackages = lib.mkDefault true;
     useGlobalPkgs = true;

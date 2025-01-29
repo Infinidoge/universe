@@ -1,4 +1,9 @@
-{ config, common, inputs, ... }:
+{
+  config,
+  common,
+  inputs,
+  ...
+}:
 let
   domain = common.subdomain "matrix";
   cfg = config.services.conduwuit;

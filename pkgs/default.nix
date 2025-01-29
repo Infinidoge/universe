@@ -1,6 +1,7 @@
 { self, lib, ... }:
 {
-  perSystem = { pkgs, ... }:
+  perSystem =
+    { pkgs, ... }:
     let
       allPackages = import ./all-packages.nix { inherit pkgs; };
     in

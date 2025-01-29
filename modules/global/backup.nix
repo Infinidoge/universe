@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 # Borg Backup public key:
 # ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINhldH579ixPRSBtTjnzWoDCNyUxUSl1BjogWN3keYBR borg@universe
 # This is used to connect to my rsync.net
@@ -7,11 +12,7 @@ with lib.our;
 let
   append = root: path: (root + "/" + path);
 
-  excludes' = concatLists
-    (mapAttrsToList
-      (root: map (append root))
-      cfg.excludes
-    );
+  excludes' = concatLists (mapAttrsToList (root: map (append root)) cfg.excludes);
 
   commonArgs = {
     environment = {
@@ -36,12 +37,19 @@ let
     };
   };
 
-  mkJob = paths: commonArgs // {
-    inherit paths;
-    inherit (cfg) repo;
-    exclude = map (append paths) (excludes' ++ cfg.extraExcludes);
-    startAt = if cfg.backupTimes ? "${config.networking.hostName}" then "*-*-* ${cfg.backupTimes.${config.networking.hostName}}" else [ ];
-  };
+  mkJob =
+    paths:
+    commonArgs
+    // {
+      inherit paths;
+      inherit (cfg) repo;
+      exclude = map (append paths) (excludes' ++ cfg.extraExcludes);
+      startAt =
+        if cfg.backupTimes ? "${config.networking.hostName}" then
+          "*-*-* ${cfg.backupTimes.${config.networking.hostName}}"
+        else
+          [ ];
+    };
 
   cfg = config.modules.backups;
 in
@@ -106,11 +114,12 @@ in
     (mkIf cfg.enable {
       services.borgbackup.jobs = mapAttrs (_: mkJob) cfg.jobs;
 
-      systemd.timers = lib.mapAttrs'
-        (n: _: lib.nameValuePair "borgbackup-job-${n}" {
+      systemd.timers = lib.mapAttrs' (
+        n: _:
+        lib.nameValuePair "borgbackup-job-${n}" {
           requires = [ "network-online.target" ];
-        })
-        cfg.jobs;
+        }
+      ) cfg.jobs;
 
       persist.directories = [
         "/root/.cache/borg"

@@ -1,7 +1,8 @@
-{ stdenv
-, fetchFromGitHub
-, lib
-, wxGTK32
+{
+  stdenv,
+  fetchFromGitHub,
+  lib,
+  wxGTK32,
 }:
 
 stdenv.mkDerivation {

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   inherit (config.nixpkgs.hostPlatform) system;
@@ -32,8 +37,12 @@ in
 
   hardware = {
     enableRedistributableFirmware = mkDefault true;
-    cpu.intel.updateMicrocode = mkDefault (config.hardware.enableRedistributableFirmware && system == "x86_64-linux");
-    cpu.amd.updateMicrocode = mkDefault (config.hardware.enableRedistributableFirmware && system == "x86_64-linux");
+    cpu.intel.updateMicrocode = mkDefault (
+      config.hardware.enableRedistributableFirmware && system == "x86_64-linux"
+    );
+    cpu.amd.updateMicrocode = mkDefault (
+      config.hardware.enableRedistributableFirmware && system == "x86_64-linux"
+    );
   };
 
   users.mutableUsers = false;

@@ -1,4 +1,10 @@
-{ config, common, secrets, pkgs, ... }:
+{
+  config,
+  common,
+  secrets,
+  pkgs,
+  ...
+}:
 let
   cfg = config.services.forgejo;
   domain = common.subdomain "git";

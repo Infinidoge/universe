@@ -1,16 +1,17 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, yarnConfigHook
-, fetchYarnDeps
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  yarnConfigHook,
+  fetchYarnDeps,
 
-, jupyterlab
-, jupyter
-, jupyter-packaging
-, hatchling
-, hatch-jupyter-builder
-, hatch-nodejs-version
-, nodejs
+  jupyterlab,
+  jupyter,
+  jupyter-packaging,
+  hatchling,
+  hatch-jupyter-builder,
+  hatch-nodejs-version,
+  nodejs,
 }:
 
 buildPythonPackage rec {
@@ -29,7 +30,6 @@ buildPythonPackage rec {
     cp ${./yarn.lock} yarn.lock
   '';
 
-
   yarnOfflineCache = fetchYarnDeps {
     yarnLock = ./yarn.lock;
     hash = "sha256-z82r763EG+QGu2KbZ2PaKueAs9wrpTYul/O/O7It7lY=";
@@ -39,7 +39,6 @@ buildPythonPackage rec {
     yarnConfigHook
     nodejs
   ];
-
 
   build-system = [
     hatchling
@@ -65,7 +64,6 @@ buildPythonPackage rec {
     yarn --offline run build:prod
   '';
 
-
   # has no tests
   doCheck = false;
 
@@ -78,4 +76,3 @@ buildPythonPackage rec {
     maintainers = [ ];
   };
 }
-

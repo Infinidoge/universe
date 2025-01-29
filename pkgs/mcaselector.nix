@@ -1,10 +1,11 @@
-{ stdenv
-, lib
-, fetchurl
-, jre
-, gtk3
-, makeWrapper
-, wrapGAppsHook
+{
+  stdenv,
+  lib,
+  fetchurl,
+  jre,
+  gtk3,
+  makeWrapper,
+  wrapGAppsHook,
 }:
 
 let

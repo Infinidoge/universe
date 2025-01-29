@@ -7,14 +7,22 @@ let
   backup = uuid "dabfc36b-20d1-4b09-8f55-4f9df7499741";
   hydrus = uuid "2a025f29-4058-4a76-8f38-483f0925375d";
 
-  commonOptions = [ "autodefrag" "noatime" "ssd" ];
+  commonOptions = [
+    "autodefrag"
+    "noatime"
+    "ssd"
+  ];
 in
 {
   fileSystems = {
     "/" = {
       device = "none";
       fsType = "tmpfs";
-      options = [ "defaults" "size=28G" "mode=755" ];
+      options = [
+        "defaults"
+        "size=28G"
+        "mode=755"
+      ];
     };
 
     "/media/main" = {
