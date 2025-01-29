@@ -146,7 +146,7 @@
       };
 
       treefmt.projectRootFile = "flake.nix";
-      treefmt.programs.nixpkgs-fmt.enable = true;
+      treefmt.programs.nixfmt.enable = true;
     };
 
     flake = {
