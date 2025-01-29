@@ -43,6 +43,11 @@
       pull.rebase = true;
       push.autoSetupRemote = true;
       status.showUntrackedFiles = "all";
+      absorb = {
+        maxStack = 20;
+        oneFixupPerCommit = true;
+        autoStageIfNothingStaged = true;
+      };
     };
 
     aliases = {
