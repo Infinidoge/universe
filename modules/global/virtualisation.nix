@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.our;
 let
@@ -16,7 +21,8 @@ in
     };
 
     programs.dconf.enable = mkIf cfg.libvirtd.enable true;
-    environment.systemPackages = (optional cfg.libvirtd.enable pkgs.virt-manager)
+    environment.systemPackages =
+      (optional cfg.libvirtd.enable pkgs.virt-manager)
       ++ (optional cfg.docker.enable pkgs.docker-compose);
     persist.directories = optional cfg.libvirtd.enable "/var/lib/libvirt";
   };

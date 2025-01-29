@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -8,17 +13,27 @@ let
   group = config.users.groups.vaultwarden.name;
 
   # Convert name from camel case (e.g. disable2FARemember) to upper case snake case (e.g. DISABLE_2FA_REMEMBER).
-  nameToEnvVar = name:
+  nameToEnvVar =
+    name:
     let
       parts = builtins.split "([A-Z0-9]+)" name;
-      partsToEnvVar = parts: foldl'
-        (key: x:
-          let last = stringLength key - 1; in
-          if isList x then key + optionalString (key != "" && substring last 1 key != "_") "_" + head x
+      partsToEnvVar =
+        parts:
+        foldl' (
+          key: x:
+          let
+            last = stringLength key - 1;
+          in
+          if isList x then
+            key + optionalString (key != "" && substring last 1 key != "_") "_" + head x
           else if key != "" && elem (substring 0 1 x) lowerChars then # to handle e.g. [ "disable" [ "2FAR" ] "emember" ]
-            substring 0 last key + optionalString (substring (last - 1) 1 key != "_") "_" + substring last 1 key + toUpper x
-          else key + toUpper x) ""
-        parts;
+            substring 0 last key
+            + optionalString (substring (last - 1) 1 key != "_") "_"
+            + substring last 1 key
+            + toUpper x
+          else
+            key + toUpper x
+        ) "" parts;
     in
     if builtins.match "[A-Z0-9_]+" name != null then name else partsToEnvVar parts;
 
@@ -26,17 +41,24 @@ let
   # we can only check for values consistently after converting them to their corresponding environment variable name.
   configEnv =
     let
-      configEnv = concatMapAttrs
-        (name: value: optionalAttrs (value != null) {
+      configEnv = concatMapAttrs (
+        name: value:
+        optionalAttrs (value != null) {
           ${nameToEnvVar name} = if isBool value then boolToString value else toString value;
-        })
-        cfg.config;
+        }
+      ) cfg.config;
     in
-    { DATA_FOLDER = cfg.dataDir; } // optionalAttrs (!(configEnv ? WEB_VAULT_ENABLED) || configEnv.WEB_VAULT_ENABLED == "true") {
+    {
+      DATA_FOLDER = cfg.dataDir;
+    }
+    // optionalAttrs (!(configEnv ? WEB_VAULT_ENABLED) || configEnv.WEB_VAULT_ENABLED == "true") {
       WEB_VAULT_FOLDER = "${cfg.webVaultPackage}/share/vaultwarden/vault";
-    } // configEnv;
+    }
+    // configEnv;
 
-  configFile = pkgs.writeText "vaultwarden.env" (concatStrings (mapAttrsToList (name: value: "${name}=${value}\n") configEnv));
+  configFile = pkgs.writeText "vaultwarden.env" (
+    concatStrings (mapAttrsToList (name: value: "${name}=${value}\n") configEnv)
+  );
 
   vaultwarden = cfg.package.override { inherit (cfg) dbBackend; };
 
@@ -52,7 +74,11 @@ in
     enable = mkEnableOption (lib.mdDoc "vaultwarden");
 
     dbBackend = mkOption {
-      type = enum [ "sqlite" "mysql" "postgresql" ];
+      type = enum [
+        "sqlite"
+        "mysql"
+        "postgresql"
+      ];
       default = "sqlite";
       description = lib.mdDoc ''
         Which database backend vaultwarden will be using.
@@ -77,7 +103,13 @@ in
     };
 
     config = mkOption {
-      type = attrsOf (nullOr (oneOf [ bool int str ]));
+      type = attrsOf (
+        nullOr (oneOf [
+          bool
+          int
+          str
+        ])
+      );
       default = {
         ROCKET_ADDRESS = "::1"; # default to localhost
         ROCKET_PORT = 8222;
@@ -186,10 +218,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    assertions = [{
-      assertion = cfg.backupDir != null -> cfg.dbBackend == "sqlite";
-      message = "Backups for database backends other than sqlite will need customization";
-    }];
+    assertions = [
+      {
+        assertion = cfg.backupDir != null -> cfg.dbBackend == "sqlite";
+        message = "Backups for database backends other than sqlite will need customization";
+      }
+    ];
 
     users.users.vaultwarden = {
       inherit group;
@@ -218,11 +252,19 @@ in
       wantedBy = [ "multi-user.target" ];
     };
 
-    systemd.tmpfiles.settings."10-vaultwarden" = {
-      ${cfg.dataDir}.d = { inherit user group; mode = "0700"; };
-    } // optionalAttrs (cfg.backupDir != null) {
-      ${cfg.backupDir}.d = { inherit user group; mode = "0770"; };
-    };
+    systemd.tmpfiles.settings."10-vaultwarden" =
+      {
+        ${cfg.dataDir}.d = {
+          inherit user group;
+          mode = "0700";
+        };
+      }
+      // optionalAttrs (cfg.backupDir != null) {
+        ${cfg.backupDir}.d = {
+          inherit user group;
+          mode = "0770";
+        };
+      };
 
     systemd.services.backup-vaultwarden = mkIf (cfg.backupDir != null) {
       aliases = [ "backup-bitwarden_rs.service" ];

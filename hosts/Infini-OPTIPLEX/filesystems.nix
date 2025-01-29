@@ -3,7 +3,12 @@ let
   uuid = uuid: "/dev/disk/by-uuid/${uuid}";
   main = uuid "9d4bf2d8-f139-42e7-937a-541a7870d806";
   data = uuid "456cebd3-f800-4733-a783-90ed7c8978f7";
-  commonOptions = [ "autodefrag" "noatime" "ssd" "compress=zstd:1" ];
+  commonOptions = [
+    "autodefrag"
+    "noatime"
+    "ssd"
+    "compress=zstd:1"
+  ];
 
   mkMain' = options: {
     device = main;
@@ -26,7 +31,11 @@ in
     "/" = {
       device = "none";
       fsType = "tmpfs";
-      options = [ "defaults" "size=16G" "mode=755" ];
+      options = [
+        "defaults"
+        "size=16G"
+        "mode=755"
+      ];
     };
 
     "/media/main" = mkMain' [ ];

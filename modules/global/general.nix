@@ -1,4 +1,10 @@
-{ config, common, secrets, lib, ... }:
+{
+  config,
+  common,
+  secrets,
+  lib,
+  ...
+}:
 {
   programs = {
     # Enable dconf for programs that need it

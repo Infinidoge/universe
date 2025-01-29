@@ -1,4 +1,9 @@
-{ config, common, pkgs, ... }:
+{
+  config,
+  common,
+  pkgs,
+  ...
+}:
 
 {
   services.nginx.virtualHosts."thelounge.inx.moe" = common.nginx.ssl // {

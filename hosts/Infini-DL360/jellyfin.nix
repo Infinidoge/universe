@@ -25,9 +25,11 @@ in
     locations."/" = {
       proxyPass = jellyfin;
       recommendedProxySettings = false;
-      extraConfig = proxyConfig + ''
-        proxy_buffering off;
-      '';
+      extraConfig =
+        proxyConfig
+        + ''
+          proxy_buffering off;
+        '';
     };
 
     locations."= /web/" = {
@@ -51,5 +53,9 @@ in
     openFirewall = true;
   };
 
-  persist.directories = with config.services.jellyfin; [ dataDir cacheDir logDir ];
+  persist.directories = with config.services.jellyfin; [
+    dataDir
+    cacheDir
+    logDir
+  ];
 }

@@ -1,8 +1,9 @@
-{ lib
-, stdenvNoCC
-, fetchFromGitea
-, makeWrapper
-, jdk
+{
+  lib,
+  stdenvNoCC,
+  fetchFromGitea,
+  makeWrapper,
+  jdk,
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "ears-cli";
@@ -16,7 +17,10 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "sha256-3ov7wjw8nxjwrNRH0wHICbZjXR4j2DPkUl5WlxJZsLA=";
   };
 
-  nativeBuildInputs = [ jdk makeWrapper ];
+  nativeBuildInputs = [
+    jdk
+    makeWrapper
+  ];
 
   buildPhase = ''
     bash ./build.sh

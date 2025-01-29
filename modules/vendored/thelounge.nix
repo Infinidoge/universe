@@ -1,27 +1,42 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.services.thelounge;
-  configJsData = "module.exports = " + builtins.toJSON (
-    { inherit (cfg) public port; } // cfg.extraConfig
-  );
+  configJsData =
+    "module.exports = " + builtins.toJSON ({ inherit (cfg) public port; } // cfg.extraConfig);
   pluginManifest = {
-    dependencies = builtins.listToAttrs (builtins.map (pkg: { name = getName pkg; value = getVersion pkg; }) cfg.plugins);
+    dependencies = builtins.listToAttrs (
+      builtins.map (pkg: {
+        name = getName pkg;
+        value = getVersion pkg;
+      }) cfg.plugins
+    );
   };
   plugins = pkgs.runCommandLocal "thelounge-plugins" { } ''
     mkdir -p $out/node_modules
     echo ${escapeShellArg (builtins.toJSON pluginManifest)} >> $out/package.json
     ${concatMapStringsSep "\n" (pkg: ''
-    ln -s ${pkg}/lib/node_modules/${getName pkg} $out/node_modules/${getName pkg}
+      ln -s ${pkg}/lib/node_modules/${getName pkg} $out/node_modules/${getName pkg}
     '') cfg.plugins}
   '';
 in
 {
   disabledModules = [ "services/networking/thelounge.nix" ];
 
-  imports = [ (mkRemovedOptionModule [ "services" "thelounge" "private" ] "The option was renamed to `services.thelounge.public` to follow upstream changes.") ];
+  imports = [
+    (mkRemovedOptionModule [
+      "services"
+      "thelounge"
+      "private"
+    ] "The option was renamed to `services.thelounge.public` to follow upstream changes.")
+  ];
 
   options.services.thelounge = {
     enable = mkEnableOption (lib.mdDoc "The Lounge web IRC client");

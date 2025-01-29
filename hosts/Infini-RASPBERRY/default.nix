@@ -1,4 +1,10 @@
-{ inputs, config, lib, pkgs, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 {
   imports = [
@@ -13,8 +19,7 @@ with lib;
 
   nixpkgs.overlays = [
     (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
+      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
     })
   ];
 
@@ -31,7 +36,12 @@ with lib;
     kernelPackages = mkForce pkgs.linuxPackages_rpi4;
 
     # Removes ZFS >:(
-    supportedFilesystems = mkForce [ "btrfs" "ntfs" "vfat" "ext4" ];
+    supportedFilesystems = mkForce [
+      "btrfs"
+      "ntfs"
+      "vfat"
+      "ext4"
+    ];
 
     tmp.useTmpfs = true;
     # kernelParams = [

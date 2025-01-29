@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.steam;
@@ -8,7 +13,9 @@ let
 
   steam-gamescope =
     let
-      exports = builtins.attrValues (builtins.mapAttrs (n: v: "export ${n}=${v}") cfg.gamescopeSession.env);
+      exports = builtins.attrValues (
+        builtins.mapAttrs (n: v: "export ${n}=${v}") cfg.gamescopeSession.env
+      );
     in
     pkgs.writeShellScriptBin "steam-gamescope" ''
       ${builtins.concatStringsSep "\n" exports}
@@ -22,7 +29,10 @@ let
       Comment=A digital distribution platform
       Exec=${steam-gamescope}/bin/steam-gamescope
       Type=Application
-    '').overrideAttrs (_: { passthru.providedSessions = [ "steam" ]; });
+    '').overrideAttrs
+      (_: {
+        passthru.providedSessions = [ "steam" ];
+      });
 in
 {
   disabledModules = [ "programs/steam.nix" ];
@@ -46,29 +56,40 @@ in
           ];
         }
       '';
-      apply = steam: steam.override (prev: {
-        extraEnv = (lib.optionalAttrs (cfg.extraCompatPackages != [ ]) {
-          STEAM_EXTRA_COMPAT_TOOLS_PATHS = extraCompatPaths;
-        }) // (lib.optionalAttrs cfg.extest.enable {
-          LD_PRELOAD = "${pkgs.pkgsi686Linux.extest}/lib/libextest.so";
-        }) // (prev.extraEnv or { });
-        extraLibraries = pkgs:
-          let
-            prevLibs = if prev ? extraLibraries then prev.extraLibraries pkgs else [ ];
-            additionalLibs = with config.hardware.graphics;
-              if pkgs.stdenv.hostPlatform.is64bit
-              then [ package ] ++ extraPackages
-              else [ package32 ] ++ extraPackages32;
-          in
-          prevLibs ++ additionalLibs;
-        extraPkgs = p: (cfg.extraPackages ++ lib.optionals (prev ? extraPkgs) (prev.extraPkgs p));
-      } // lib.optionalAttrs (cfg.gamescopeSession.enable && gamescopeCfg.capSysNice)
-        {
-          buildFHSEnv = pkgs.buildFHSEnv.override {
-            # use the setuid wrapped bubblewrap
-            bubblewrap = "${config.security.wrapperDir}/..";
-          };
-        });
+      apply =
+        steam:
+        steam.override (
+          prev:
+          {
+            extraEnv =
+              (lib.optionalAttrs (cfg.extraCompatPackages != [ ]) {
+                STEAM_EXTRA_COMPAT_TOOLS_PATHS = extraCompatPaths;
+              })
+              // (lib.optionalAttrs cfg.extest.enable {
+                LD_PRELOAD = "${pkgs.pkgsi686Linux.extest}/lib/libextest.so";
+              })
+              // (prev.extraEnv or { });
+            extraLibraries =
+              pkgs:
+              let
+                prevLibs = if prev ? extraLibraries then prev.extraLibraries pkgs else [ ];
+                additionalLibs =
+                  with config.hardware.graphics;
+                  if pkgs.stdenv.hostPlatform.is64bit then
+                    [ package ] ++ extraPackages
+                  else
+                    [ package32 ] ++ extraPackages32;
+              in
+              prevLibs ++ additionalLibs;
+            extraPkgs = p: (cfg.extraPackages ++ lib.optionals (prev ? extraPkgs) (prev.extraPkgs p));
+          }
+          // lib.optionalAttrs (cfg.gamescopeSession.enable && gamescopeCfg.capSysNice) {
+            buildFHSEnv = pkgs.buildFHSEnv.override {
+              # use the setuid wrapped bubblewrap
+              bubblewrap = "${config.security.wrapperDir}/..";
+            };
+          }
+        );
       description = ''
         The Steam package to use. Additional libraries are added from the system
         configuration to ensure graphics work properly.
@@ -201,18 +222,24 @@ in
     programs.steam.extraPackages = cfg.fontPackages;
 
     programs.gamescope.enable = lib.mkDefault cfg.gamescopeSession.enable;
-    services.displayManager.sessionPackages = lib.mkIf cfg.gamescopeSession.enable [ gamescopeSessionFile ];
+    services.displayManager.sessionPackages = lib.mkIf cfg.gamescopeSession.enable [
+      gamescopeSessionFile
+    ];
 
     # optionally enable 32bit pulseaudio support if pulseaudio is enabled
     services.pulseaudio.support32Bit = config.services.pulseaudio.enable;
 
     hardware.steam-hardware.enable = true;
 
-    home.home.packages = [
-      cfg.package
-      cfg.package.run
-    ] ++ lib.optional cfg.gamescopeSession.enable steam-gamescope
-    ++ lib.optional cfg.protontricks.enable (cfg.protontricks.package.override { inherit extraCompatPaths; });
+    home.home.packages =
+      [
+        cfg.package
+        cfg.package.run
+      ]
+      ++ lib.optional cfg.gamescopeSession.enable steam-gamescope
+      ++ lib.optional cfg.protontricks.enable (
+        cfg.protontricks.package.override { inherit extraCompatPaths; }
+      );
 
     networking.firewall = lib.mkMerge [
       (lib.mkIf (cfg.remotePlay.openFirewall || cfg.localNetworkGameTransfers.openFirewall) {
@@ -221,7 +248,12 @@ in
 
       (lib.mkIf cfg.remotePlay.openFirewall {
         allowedTCPPorts = [ 27036 ];
-        allowedUDPPortRanges = [{ from = 27031; to = 27035; }];
+        allowedUDPPortRanges = [
+          {
+            from = 27031;
+            to = 27035;
+          }
+        ];
       })
 
       (lib.mkIf cfg.dedicatedServer.openFirewall {

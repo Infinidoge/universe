@@ -1,4 +1,10 @@
-{ pkgs, private, config, lib, ... }:
+{
+  pkgs,
+  private,
+  config,
+  lib,
+  ...
+}:
 
 {
   containers.torrenting = {

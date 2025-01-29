@@ -6,13 +6,22 @@ in
   persist = {
     directories = flatten [
       "/home"
-      { directory = "/etc/nixos"; user = "infinidoge"; }
-      { directory = "/etc/nixos-private"; user = "infinidoge"; }
+      {
+        directory = "/etc/nixos";
+        user = "infinidoge";
+      }
+      {
+        directory = "/etc/nixos-private";
+        user = "infinidoge";
+      }
 
       "/var/log"
       "/var/lib/nixos"
       "/var/lib/systemd/"
-      { directory = "/var/lib/tailscale"; mode = "0700"; }
+      {
+        directory = "/var/lib/tailscale";
+        mode = "0700";
+      }
 
       "/root/.ssh"
 

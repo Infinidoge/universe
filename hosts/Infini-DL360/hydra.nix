@@ -1,4 +1,10 @@
-{ config, common, secrets, pkgs, ... }:
+{
+  config,
+  common,
+  secrets,
+  pkgs,
+  ...
+}:
 let
   domain = common.subdomain "hydra";
 in
@@ -61,7 +67,12 @@ in
     {
       hostName = "localhost";
       system = "x86_64-linux";
-      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      supportedFeatures = [
+        "kvm"
+        "nixos-test"
+        "big-parallel"
+        "benchmark"
+      ];
       protocol = null;
       maxJobs = 32;
       speedFactor = 16;

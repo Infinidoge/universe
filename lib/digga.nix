@@ -4,63 +4,58 @@
 let
   flattenTree' =
     /*
-     *
-       Synopsis: flattenTree' _cond_ _sep_ _tree_
+      *
+        Synopsis: flattenTree' _cond_ _sep_ _tree_
 
-       Flattens a _tree_ of the shape that is produced by rakeLeaves.
-       _cond_ determines when to stop recursing
-       _sep_ is the separator to join the path with
+        Flattens a _tree_ of the shape that is produced by rakeLeaves.
+        _cond_ determines when to stop recursing
+        _sep_ is the separator to join the path with
 
-       Output Format:
-       An attrset with names in the spirit of the Reverse DNS Notation form
-       that fully preserve information about grouping from nesting.
+        Output Format:
+        An attrset with names in the spirit of the Reverse DNS Notation form
+        that fully preserve information about grouping from nesting.
 
-       Example input:
-       ```
-       {
-         a = {
-           b = {
-             c = <path>;
-           };
-         };
-       }
-       ```
+        Example input:
+        ```
+        {
+          a = {
+            b = {
+              c = <path>;
+            };
+          };
+        }
+        ```
 
-       Example output:
-       ```
-       {
-         "a.b.c" = <path>;
-       }
-       ```
-     *
-     */
-    cond:
-    sep:
-    tree:
+        Example output:
+        ```
+        {
+          "a.b.c" = <path>;
+        }
+        ```
+      *
+    */
+    cond: sep: tree:
     let
-      op = sum: path: val:
+      op =
+        sum: path: val:
         let
           pathStr = builtins.concatStringsSep sep path; # dot-based reverse DNS notation
         in
-        if cond val
-        then
-        # builtins.trace "${toString val} matches condition"
+        if cond val then
+          # builtins.trace "${toString val} matches condition"
           (sum // { "${pathStr}" = val; })
-        else if builtins.isAttrs val
-        then
-        # builtins.trace "${builtins.toJSON val} is an attrset"
-        # recurse into that attribute set
+        else if builtins.isAttrs val then
+          # builtins.trace "${builtins.toJSON val} is an attrset"
+          # recurse into that attribute set
           (recurse sum path val)
         else
-        # ignore that value
-        # builtins.trace "${toString path} is something else"
+          # ignore that value
+          # builtins.trace "${toString path} is something else"
           sum;
 
-      recurse = sum: path: val:
-        builtins.foldl'
-          (sum: key: op sum (path ++ [ key ]) val.${key})
-          sum
-          (builtins.attrNames val);
+      recurse =
+        sum: path: val:
+        builtins.foldl' (sum: key: op sum (path ++ [ key ]) val.${key}) sum (builtins.attrNames val);
     in
     recurse { } [ ] tree;
 
@@ -68,40 +63,41 @@ let
 
   rakeLeaves =
     /*
-     *
-       Synopsis: rakeLeaves _path_
+      *
+        Synopsis: rakeLeaves _path_
 
-       Recursively collect the nix files of _path_ into attrs.
+        Recursively collect the nix files of _path_ into attrs.
 
-       Output Format:
-       An attribute set where all `.nix` files and directories with `default.nix` in them
-       are mapped to keys that are either the file with .nix stripped or the folder name.
-       All other directories are recursed further into nested attribute sets with the same format.
+        Output Format:
+        An attribute set where all `.nix` files and directories with `default.nix` in them
+        are mapped to keys that are either the file with .nix stripped or the folder name.
+        All other directories are recursed further into nested attribute sets with the same format.
 
-       Example file structure:
-       ```
-       ./core/default.nix
-       ./base.nix
-       ./main/dev.nix
-       ./main/os/default.nix
-       ```
+        Example file structure:
+        ```
+        ./core/default.nix
+        ./base.nix
+        ./main/dev.nix
+        ./main/os/default.nix
+        ```
 
-       Example output:
-       ```
-       {
-       core = ./core;
-       base = base.nix;
-       main = {
-       dev = ./main/dev.nix;
-       os = ./main/os;
-       };
-       }
-       ```
-     *
-     */
+        Example output:
+        ```
+        {
+        core = ./core;
+        base = base.nix;
+        main = {
+        dev = ./main/dev.nix;
+        os = ./main/os;
+        };
+        }
+        ```
+      *
+    */
     dirPath:
     let
-      seive = file: type:
+      seive =
+        file: type:
         # Only rake `.nix` files or directories
         (type == "regular" && lib.hasSuffix ".nix" file) || (type == "directory");
 
@@ -111,12 +107,11 @@ let
           let
             path = dirPath + "/${file}";
           in
-          if
-            (type == "regular")
-            || (type == "directory" && builtins.pathExists (path + "/default.nix"))
-          then path
+          if (type == "regular") || (type == "directory" && builtins.pathExists (path + "/default.nix")) then
+            path
           # recurse on directories that don't contain a `default.nix`
-          else rakeLeaves path;
+          else
+            rakeLeaves path;
       };
 
       files = lib.filterAttrs seive (builtins.readDir dirPath);
@@ -125,42 +120,44 @@ let
 
   flattenLeaves = dir: flattenTree (rakeLeaves dir);
 
-  getFqdn = c:
+  getFqdn =
+    c:
     let
       net = c.config.networking;
       fqdn =
-        if (net ? domain) && (net.domain != null)
-        then "${net.hostName}.${net.domain}"
-        else net.hostName;
+        if (net ? domain) && (net.domain != null) then "${net.hostName}.${net.domain}" else net.hostName;
     in
     fqdn;
 in
 {
-  inherit rakeLeaves flattenTree flattenTree' flattenLeaves;
+  inherit
+    rakeLeaves
+    flattenTree
+    flattenTree'
+    flattenLeaves
+    ;
 
   leaves = dir: builtins.attrValues (flattenLeaves dir);
 
-  mkHomeConfigurations = systemConfigurations:
+  mkHomeConfigurations =
+    systemConfigurations:
     /*
-     *
-       Synopsis: mkHomeConfigurations _systemConfigurations_
+      *
+        Synopsis: mkHomeConfigurations _systemConfigurations_
 
-       Generate the `homeConfigurations` attribute expected by `home-manager` cli
-       from _nixosConfigurations_ or _darwinConfigurations_ in the form
-       _user@hostname_.
-     *
-     */
+        Generate the `homeConfigurations` attribute expected by `home-manager` cli
+        from _nixosConfigurations_ or _darwinConfigurations_ in the form
+        _user@hostname_.
+      *
+    */
     let
-      op = attrs: c:
+      op =
+        attrs: c:
         attrs
-        // (
-          lib.mapAttrs'
-            (user: v: {
-              name = "${user}@${getFqdn c}";
-              value = v.home;
-            })
-            c.config.home-manager.users
-        );
+        // (lib.mapAttrs' (user: v: {
+          name = "${user}@${getFqdn c}";
+          value = v.home;
+        }) c.config.home-manager.users);
       mkHmConfigs = lib.foldl op { };
     in
     mkHmConfigs (builtins.attrValues systemConfigurations);

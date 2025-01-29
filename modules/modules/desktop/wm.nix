@@ -1,4 +1,10 @@
-{ config, common, pkgs, lib, ... }:
+{
+  config,
+  common,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
 with lib.our;
 let
@@ -50,29 +56,34 @@ in
         '';
       };
 
-      home-manager.sharedModules = [{
-        xsession.enable = true;
-      }];
-
-      environment.systemPackages = with pkgs; flatten [
-        (with xorg; [
-          xwininfo
-          xprop
-        ])
-        xclip
-        xdotool
-
-        pavucontrol
-
-        common.wm.locker
+      home-manager.sharedModules = [
+        {
+          xsession.enable = true;
+        }
       ];
+
+      environment.systemPackages =
+        with pkgs;
+        flatten [
+          (with xorg; [
+            xwininfo
+            xprop
+          ])
+          xclip
+          xdotool
+
+          pavucontrol
+
+          common.wm.locker
+        ];
     }
     (mkIf cfg.qtile.enable {
       services.xserver.windowManager.qtile = {
         enable = true;
-        extraPackages = p: with p; [
-          qtile-extras
-        ];
+        extraPackages =
+          p: with p; [
+            qtile-extras
+          ];
       };
 
       info.env.wm = "qtile";

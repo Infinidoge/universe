@@ -4,7 +4,13 @@ let
   directory = "/srv/postgresql";
 in
 {
-  persist.directories = [{ inherit directory; user = "postgres"; group = "postgres"; }];
+  persist.directories = [
+    {
+      inherit directory;
+      user = "postgres";
+      group = "postgres";
+    }
+  ];
 
   services.postgresql = {
     enable = true;

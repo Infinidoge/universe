@@ -2,9 +2,11 @@ with builtins;
 let
   flatten = x: if isList x then concatMap (y: flatten y) x else [ x ];
   hasPrefix = pref: str: (substring 0 (stringLength pref) str == pref);
-  isValidKey = key: all (keyPrefix: !(hasPrefix keyPrefix key)) [
-    "sk-ssh-ed25519"
-  ];
+  isValidKey =
+    key:
+    all (keyPrefix: !(hasPrefix keyPrefix key)) [
+      "sk-ssh-ed25519"
+    ];
 
   systems = {
     Infini-DESKTOP = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID7uX1myj9ghv7wMoL038oGDCdScdyLd7RvYdnoioSBh root@Infini-DESKTOP";

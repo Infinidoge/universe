@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 # Modified from https://github.com/nix-community/impermanence/blob/master/home-manager.nix
 
@@ -14,54 +19,60 @@ in
 
     home.bindmounts = mkOption {
       default = { };
-      type = with types; attrsOf (
-        submodule ({ name, ... }: {
-          options =
+      type =
+        with types;
+        attrsOf (
+          submodule (
+            { name, ... }:
             {
-              directories = mkOption {
-                type = with types; listOf (submodule {
-                  options = {
-                    source = mkOption {
-                      type = with types; str;
-                    };
+              options = {
+                directories = mkOption {
+                  type =
+                    with types;
+                    listOf (submodule {
+                      options = {
+                        source = mkOption {
+                          type = with types; str;
+                        };
 
-                    target = mkOption {
-                      type = with types; str;
-                    };
-                  };
-                });
-                default = [ ];
-                description = ''
-                  A list of directories and target locations that you wish to bind-mount from the initial source.
-                '';
-              };
+                        target = mkOption {
+                          type = with types; str;
+                        };
+                      };
+                    });
+                  default = [ ];
+                  description = ''
+                    A list of directories and target locations that you wish to bind-mount from the initial source.
+                  '';
+                };
 
-              allowOther = mkOption {
-                type = with types; nullOr bool;
-                default = null;
-                example = true;
-                apply = x:
-                  if x == null then
-                    warn ''
-                      home.bindmounts."${name}".allowOther not set; assuming 'false'.
-                      See https://github.com/nix-community/impermanence#home-manager for more info.
-                    ''
-                      false
-                  else
-                    x;
-                description = ''
-                  Whether to allow other users, such as
-                  <literal>root</literal>, access to files through the
-                  bind mounted directories listed in
-                  <literal>directories</literal>. Requires the NixOS
-                  configuration parameter
-                  <literal>programs.fuse.userAllowOther</literal> to
-                  be <literal>true</literal>.
-                '';
+                allowOther = mkOption {
+                  type = with types; nullOr bool;
+                  default = null;
+                  example = true;
+                  apply =
+                    x:
+                    if x == null then
+                      warn ''
+                        home.bindmounts."${name}".allowOther not set; assuming 'false'.
+                        See https://github.com/nix-community/impermanence#home-manager for more info.
+                      '' false
+                    else
+                      x;
+                  description = ''
+                    Whether to allow other users, such as
+                    <literal>root</literal>, access to files through the
+                    bind mounted directories listed in
+                    <literal>directories</literal>. Requires the NixOS
+                    configuration parameter
+                    <literal>programs.fuse.userAllowOther</literal> to
+                    be <literal>true</literal>.
+                  '';
+                };
               };
-            };
-        })
-      );
+            }
+          )
+        );
     };
 
   };
@@ -69,11 +80,18 @@ in
   config = {
     systemd.user.services =
       let
-        mkBindMountService = persistentStoragePath: dir:
+        mkBindMountService =
+          persistentStoragePath: dir:
           let
             inherit (dir) source target;
-            targetDir = escapeShellArg (concatPaths [ persistentStoragePath source ]);
-            mountPoint = escapeShellArg (concatPaths [ config.home.homeDirectory target ]);
+            targetDir = escapeShellArg (concatPaths [
+              persistentStoragePath
+              source
+            ]);
+            mountPoint = escapeShellArg (concatPaths [
+              config.home.homeDirectory
+              target
+            ]);
             name = "bindMount-${sanitizeName targetDir}";
             bindfsOptions = concatStringsSep "," (
               optional (!cfg.${persistentStoragePath}.allowOther) "no-allow-other"
@@ -125,21 +143,25 @@ in
               Service = {
                 ExecStart = "${startScript}";
                 ExecStop = "${stopScript}";
-                Environment = "PATH=${makeBinPath [ pkgs.coreutils pkgs.util-linux pkgs.gnugrep pkgs.bindfs ]}:/run/wrappers/bin";
+                Environment = "PATH=${
+                  makeBinPath [
+                    pkgs.coreutils
+                    pkgs.util-linux
+                    pkgs.gnugrep
+                    pkgs.bindfs
+                  ]
+                }:/run/wrappers/bin";
               };
             };
           };
 
-        mkBindMountServicesForPath = persistentStoragePath:
-          listToAttrs (map
-            (mkBindMountService persistentStoragePath)
-            cfg.${persistentStoragePath}.directories
+        mkBindMountServicesForPath =
+          persistentStoragePath:
+          listToAttrs (
+            map (mkBindMountService persistentStoragePath) cfg.${persistentStoragePath}.directories
           );
       in
-      builtins.foldl'
-        recursiveUpdate
-        { }
-        (map mkBindMountServicesForPath persistentStoragePaths);
+      builtins.foldl' recursiveUpdate { } (map mkBindMountServicesForPath persistentStoragePaths);
 
     home.activation =
       let
@@ -148,17 +170,20 @@ in
         # The name of the activation script entry responsible for
         # reloading systemd user services. The name was initially
         # `reloadSystemD` but has been changed to `reloadSystemd`.
-        reloadSystemd =
-          if config.home.activation ? reloadSystemD then
-            "reloadSystemD"
-          else
-            "reloadSystemd";
+        reloadSystemd = if config.home.activation ? reloadSystemD then "reloadSystemD" else "reloadSystemd";
 
-        mkBindMount = persistentStoragePath: dir:
+        mkBindMount =
+          persistentStoragePath: dir:
           let
             inherit (dir) source target;
-            targetDir = escapeShellArg (concatPaths [ persistentStoragePath source ]);
-            mountPoint = escapeShellArg (concatPaths [ config.home.homeDirectory target ]);
+            targetDir = escapeShellArg (concatPaths [
+              persistentStoragePath
+              source
+            ]);
+            mountPoint = escapeShellArg (concatPaths [
+              config.home.homeDirectory
+              target
+            ]);
             mount = "${pkgs.util-linux}/bin/mount";
             bindfsOptions = concatStringsSep "," (
               optional (!cfg.${persistentStoragePath}.allowOther) "no-allow-other"
@@ -189,15 +214,18 @@ in
             fi
           '';
 
-        mkBindMountsForPath = persistentStoragePath:
-          concatMapStrings
-            (mkBindMount persistentStoragePath)
-            cfg.${persistentStoragePath}.directories;
+        mkBindMountsForPath =
+          persistentStoragePath:
+          concatMapStrings (mkBindMount persistentStoragePath) cfg.${persistentStoragePath}.directories;
 
-        mkUnmount = persistentStoragePath: dir:
+        mkUnmount =
+          persistentStoragePath: dir:
           let
             inherit (dir) target;
-            mountPoint = escapeShellArg (concatPaths [ config.home.homeDirectory target ]);
+            mountPoint = escapeShellArg (concatPaths [
+              config.home.homeDirectory
+              target
+            ]);
           in
           ''
             if [[ -n ''${mountedPaths[${mountPoint}]+x} ]]; then
@@ -218,39 +246,29 @@ in
             fi
           '';
 
-        mkUnmountsForPath = persistentStoragePath:
-          concatMapStrings
-            (mkUnmount persistentStoragePath)
-            cfg.${persistentStoragePath}.directories;
+        mkUnmountsForPath =
+          persistentStoragePath:
+          concatMapStrings (mkUnmount persistentStoragePath) cfg.${persistentStoragePath}.directories;
 
       in
       mkIf (any (path: cfg.${path}.directories != [ ]) persistentStoragePaths) {
-        createAndMountPersistentStoragePaths =
-          dag.entryBefore
-            [ "writeBoundary" ]
-            ''
-              declare -A mountedPaths
-              ${(concatMapStrings mkBindMountsForPath persistentStoragePaths)}
-            '';
+        createAndMountPersistentStoragePaths = dag.entryBefore [ "writeBoundary" ] ''
+          declare -A mountedPaths
+          ${(concatMapStrings mkBindMountsForPath persistentStoragePaths)}
+        '';
 
-        unmountPersistentStoragePaths =
-          dag.entryBefore
-            [ "createAndMountPersistentStoragePaths" ]
-            ''
-              unmountBindMounts() {
-              ${concatMapStrings mkUnmountsForPath persistentStoragePaths}
-              }
-              # Run the unmount function on error to clean up stray
-              # bind mounts
-              trap "unmountBindMounts" ERR
-            '';
+        unmountPersistentStoragePaths = dag.entryBefore [ "createAndMountPersistentStoragePaths" ] ''
+          unmountBindMounts() {
+          ${concatMapStrings mkUnmountsForPath persistentStoragePaths}
+          }
+          # Run the unmount function on error to clean up stray
+          # bind mounts
+          trap "unmountBindMounts" ERR
+        '';
 
-        runUnmountPersistentStoragePaths =
-          dag.entryBefore
-            [ reloadSystemd ]
-            ''
-              unmountBindMounts
-            '';
+        runUnmountPersistentStoragePaths = dag.entryBefore [ reloadSystemd ] ''
+          unmountBindMounts
+        '';
       };
   };
 

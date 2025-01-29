@@ -1,19 +1,20 @@
-{ buildPythonPackage
-, fetchFromGitHub
+{
+  buildPythonPackage,
+  fetchFromGitHub,
 
-, yarnConfigHook
-, fetchYarnDeps
-, hatchling
-, hatch-jupyter-builder
-, nodejs
+  yarnConfigHook,
+  fetchYarnDeps,
+  hatchling,
+  hatch-jupyter-builder,
+  nodejs,
 
-, jupyterlab
-, aiohttp
-, importlib-metadata
-, jupyter-server
-, simpervisor
-, tornado
-, traitlets
+  jupyterlab,
+  aiohttp,
+  importlib-metadata,
+  jupyter-server,
+  simpervisor,
+  tornado,
+  traitlets,
 }:
 
 buildPythonPackage {

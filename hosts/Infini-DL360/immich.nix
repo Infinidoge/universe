@@ -1,4 +1,9 @@
-{ config, pkgs, common, ... }:
+{
+  config,
+  pkgs,
+  common,
+  ...
+}:
 let
   domain = common.subdomain "photos";
   cfg = config.services.immich;

@@ -1,4 +1,11 @@
-{ config, common, secrets, lib, pkgs, ... }:
+{
+  config,
+  common,
+  secrets,
+  lib,
+  pkgs,
+  ...
+}:
 let
   domain = common.subdomain "bitwarden";
 in

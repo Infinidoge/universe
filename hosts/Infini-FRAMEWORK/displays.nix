@@ -13,12 +13,26 @@ in
 
   services.autorandr.profiles =
     let
-      scale = { x = scaleFactor'; y = scaleFactor'; };
+      scale = {
+        x = scaleFactor';
+        y = scaleFactor';
+      };
       config = {
-        framework = { mode = "2256x1504"; primary = true; inherit scale; };
-        portable-second = { mode = "1920x1080"; rotate = "left"; };
-        dock = { mode = "1280x1024"; };
-        dorm = { mode = "1920x1080"; };
+        framework = {
+          mode = "2256x1504";
+          primary = true;
+          inherit scale;
+        };
+        portable-second = {
+          mode = "1920x1080";
+          rotate = "left";
+        };
+        dock = {
+          mode = "1280x1024";
+        };
+        dorm = {
+          mode = "1920x1080";
+        };
       };
       fingerprints = {
         framework = "00ffffffffffff0009e5ca0b000000002f200104a51c137803de50a3544c99260f505400000001010101010101010101010101010101115cd01881e02d50302036001dbe1000001aa749d01881e02d50302036001dbe1000001a000000fe00424f452043510a202020202020000000fe004e4531333546424d2d4e34310a0073";
@@ -32,30 +46,57 @@ in
         config = lib.mapAttrs (_: v: lib.removeAttrs v [ "fingerprint" ]) config;
       };
     in
-    lib.mapAttrs (_: mkConfig) (with config'; {
-      main = {
-        eDP-1 = framework // { position = "0x0"; };
-      };
-      portable-second = {
-        eDP-1 = framework // { position = "1080x716"; };
-        DP-4 = portable-second // { position = "0x0"; };
-      };
-      docked = {
-        eDP-1 = framework // { position = "0x210"; };
-        DP-1-3 = dock // { position = "1805x0"; };
-      };
-      docked-alt = {
-        eDP-1 = framework // { position = "1080x716"; };
-        DP-4 = portable-second // { position = "0x0"; };
-        DP-1-3 = dock // { position = "2885x506"; };
-      };
-      dorm = {
-        eDP-1 = framework // { position = "1920x0"; };
-        DP-4 = dorm // { position = "0x0"; };
-      };
-      dorm-2 = {
-        eDP-1 = framework // { position = "1920x0"; };
-        DP-3 = dorm // { position = "0x0"; };
-      };
-    });
+    lib.mapAttrs (_: mkConfig) (
+      with config';
+      {
+        main = {
+          eDP-1 = framework // {
+            position = "0x0";
+          };
+        };
+        portable-second = {
+          eDP-1 = framework // {
+            position = "1080x716";
+          };
+          DP-4 = portable-second // {
+            position = "0x0";
+          };
+        };
+        docked = {
+          eDP-1 = framework // {
+            position = "0x210";
+          };
+          DP-1-3 = dock // {
+            position = "1805x0";
+          };
+        };
+        docked-alt = {
+          eDP-1 = framework // {
+            position = "1080x716";
+          };
+          DP-4 = portable-second // {
+            position = "0x0";
+          };
+          DP-1-3 = dock // {
+            position = "2885x506";
+          };
+        };
+        dorm = {
+          eDP-1 = framework // {
+            position = "1920x0";
+          };
+          DP-4 = dorm // {
+            position = "0x0";
+          };
+        };
+        dorm-2 = {
+          eDP-1 = framework // {
+            position = "1920x0";
+          };
+          DP-3 = dorm // {
+            position = "0x0";
+          };
+        };
+      }
+    );
 }

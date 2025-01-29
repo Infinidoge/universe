@@ -20,26 +20,32 @@ in
   config = mkIf cfg.enable {
     services.apcupsd = {
       enable = true;
-      configText = ''
-        UPSNAME UPS
-        UPSCLASS standalone
-        UPSMODE disable
-        NETSERVER on
-        NISPORT ${toString port}
+      configText =
+        ''
+          UPSNAME UPS
+          UPSCLASS standalone
+          UPSMODE disable
+          NETSERVER on
+          NISPORT ${toString port}
 
-        BATTERYLEVEL ${toString cfg.config.battery_level}
-        MINUTES ${toString cfg.config.minutes}
-      '' +
-      (if cfg.primary then ''
-        UPSTYPE usb
-        UPSCABLE usb
-        NISIP ${cfg.config.address}
-      '' else ''
-        UPSCABLE ether
-        UPSTYPE net
-        DEVICE ${cfg.config.address}:${toString port}
-        POLLTIME 10
-      '');
+          BATTERYLEVEL ${toString cfg.config.battery_level}
+          MINUTES ${toString cfg.config.minutes}
+        ''
+        + (
+          if cfg.primary then
+            ''
+              UPSTYPE usb
+              UPSCABLE usb
+              NISIP ${cfg.config.address}
+            ''
+          else
+            ''
+              UPSCABLE ether
+              UPSTYPE net
+              DEVICE ${cfg.config.address}:${toString port}
+              POLLTIME 10
+            ''
+        );
       hooks = cfg.config.hooks;
     };
     networking.firewall.allowedTCPPorts = mkIf cfg.primary [ port ];

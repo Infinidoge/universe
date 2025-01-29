@@ -1,4 +1,8 @@
-{ buildPythonPackage, fetchFromGitHub, hatchling }:
+{
+  buildPythonPackage,
+  fetchFromGitHub,
+  hatchling,
+}:
 
 buildPythonPackage {
   pname = "simpervisor";

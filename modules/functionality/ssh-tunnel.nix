@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.services.ssh-tunnel;
@@ -50,11 +55,13 @@ in
       local = mkParams "-L" cfg.forwards.local;
       remote = mkParams "-R" cfg.forwards.remote;
 
-      options = mkParams "-o" (mapAttrsToList (n: v: "${n}=${toString v}") {
-        ServerAliveInterval = 60;
-        ExitOnForwardFailure = "yes";
-        KbdInteractiveAuthentication = "no";
-      });
+      options = mkParams "-o" (
+        mapAttrsToList (n: v: "${n}=${toString v}") {
+          ServerAliveInterval = 60;
+          ExitOnForwardFailure = "yes";
+          KbdInteractiveAuthentication = "no";
+        }
+      );
     in
     {
       script = ''

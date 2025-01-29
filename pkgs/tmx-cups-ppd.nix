@@ -1,8 +1,9 @@
-{ stdenv
-, fetchurl
-, bintools
-, cups
-, autoPatchelfHook
+{
+  stdenv,
+  fetchurl,
+  bintools,
+  cups,
+  autoPatchelfHook,
 }:
 
 stdenv.mkDerivation rec {
@@ -14,7 +15,11 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-8WA6Q5z9//UJj20VHOsPA/nCCd50CcaHRVArtmTjeiQ=";
   };
 
-  buildInputs = [ bintools cups autoPatchelfHook ];
+  buildInputs = [
+    bintools
+    cups
+    autoPatchelfHook
+  ];
 
   buildPhase = ''
     ar p filter/tmx-cups_*_amd64.deb data.tar.gz \

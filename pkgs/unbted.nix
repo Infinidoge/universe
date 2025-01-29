@@ -1,9 +1,10 @@
 # Based on this example: https://git.marvid.fr/scolobb/nix-GINsim
-{ stdenv
-, fetchurl
-, makeWrapper
-, lib
-, jre
+{
+  stdenv,
+  fetchurl,
+  makeWrapper,
+  lib,
+  jre,
 }:
 stdenv.mkDerivation rec {
   pname = "unbted";

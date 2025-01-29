@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.our;
 let
@@ -13,27 +18,39 @@ in
   };
 
   config = mkMerge [
-    (mkIf (any' (with cfg; [ amdgpu nvidia intel ])) {
-      hardware.graphics = {
-        enable = true;
-        enable32Bit = true;
+    (mkIf
+      (any' (
+        with cfg;
+        [
+          amdgpu
+          nvidia
+          intel
+        ]
+      ))
+      {
+        hardware.graphics = {
+          enable = true;
+          enable32Bit = true;
 
-        extraPackages = with pkgs; flatten [
-          libvdpau-va-gl
-          vaapiVdpau
+          extraPackages =
+            with pkgs;
+            flatten [
+              libvdpau-va-gl
+              vaapiVdpau
 
-          (optionals cfg.intel [
-            intel-compute-runtime
-            intel-media-driver
-            vaapiIntel
-          ])
+              (optionals cfg.intel [
+                intel-compute-runtime
+                intel-media-driver
+                vaapiIntel
+              ])
 
-          (optionals cfg.nvidia [
-            nvidia-vaapi-driver
-          ])
-        ];
-      };
-    })
+              (optionals cfg.nvidia [
+                nvidia-vaapi-driver
+              ])
+            ];
+        };
+      }
+    )
 
     (mkIf cfg.amdgpu {
       boot.initrd.kernelModules = [ "amdgpu" ];

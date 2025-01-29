@@ -1,6 +1,10 @@
-{ main, lib, pkgs, ... }:
-lib.mkIf main.universe.media.enable
 {
+  main,
+  lib,
+  pkgs,
+  ...
+}:
+lib.mkIf main.universe.media.enable {
   services = {
     mpris-proxy.enable = true;
     playerctld.enable = true;

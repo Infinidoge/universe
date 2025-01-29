@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./filesystems.nix
@@ -11,7 +17,10 @@
 
   persist = {
     directories = [
-      { directory = "/var/lib/dnsmasq/"; user = "dnsmasq"; }
+      {
+        directory = "/var/lib/dnsmasq/";
+        user = "dnsmasq";
+      }
     ];
 
     files = [
@@ -82,7 +91,10 @@
       "sys-devices-pci0000:00-0000:00:02.0-drm-card0-card0\\x2deDP\\x2d1-intel_backlight.device"
       "sys-devices-pci0000:00-0000:00:02.0-drm-card1-card1\\x2deDP\\x2d1-intel_backlight.device"
     ];
-    after = [ "system-systemd\\x2dbacklight.slice" "systemd-backlight@backlight:intel_backlight.service" ];
+    after = [
+      "system-systemd\\x2dbacklight.slice"
+      "systemd-backlight@backlight:intel_backlight.service"
+    ];
     serviceConfig.Type = "oneshot";
     script = "${lib.getExe pkgs.brightnessctl} set 50%";
   };
@@ -99,8 +111,16 @@
     #}
     {
       hostName = "infini-dl360";
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
       protocol = "ssh-ng";
       maxJobs = 32;
       speedFactor = 16;
@@ -114,26 +134,33 @@
     address = [ "10.10.0.3/32" ];
     listenPort = 51820;
     privateKeyFile = "/home/infinidoge/tmp/bb-vpn.key";
-    peers = [{
-      publicKey = "SYpnrGvxx8l4w9c7KVRVW6GyNDr/iK+maPPMw/Ua7XY=";
-      allowedIPs = [ "10.9.0.0/24" ];
-      endpoint = "66.23.193.252:55555";
-      persistentKeepalive = 25;
-    }];
+    peers = [
+      {
+        publicKey = "SYpnrGvxx8l4w9c7KVRVW6GyNDr/iK+maPPMw/Ua7XY=";
+        allowedIPs = [ "10.9.0.0/24" ];
+        endpoint = "66.23.193.252:55555";
+        persistentKeepalive = 25;
+      }
+    ];
   };
 
   specialisation.router.configuration = {
     networking = {
       interfaces."enp0s13f0u1" = {
-        ipv4.addresses = [{
-          address = "192.168.100.1";
-          prefixLength = 24;
-        }];
+        ipv4.addresses = [
+          {
+            address = "192.168.100.1";
+            prefixLength = 24;
+          }
+        ];
       };
 
       firewall.interfaces."enp0s13f0u1" = {
         allowedTCPPorts = [ 53 ];
-        allowedUDPPorts = [ 53 67 ];
+        allowedUDPPorts = [
+          53
+          67
+        ];
       };
 
       nat = {
@@ -146,7 +173,10 @@
     services.dnsmasq = {
       enable = true;
       settings = {
-        server = [ "8.8.8.8" "1.1.1.1" ];
+        server = [
+          "8.8.8.8"
+          "1.1.1.1"
+        ];
         domain-needed = true;
         bogus-priv = true;
         no-resolv = true;
