@@ -79,6 +79,7 @@
       sw = "switch";
       st = "status -sb";
       rb = "rebase -i --autosquash";
+      arb = "absorb --and-rebase";
 
       # reset
       soft = "reset --soft";
