@@ -30,6 +30,10 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.binfmt.addEmulatedSystemsToNixSandbox = true;
 
+  home.home.packages = with pkgs; [
+    ungoogled-chromium
+  ];
+
   environment.enableDebugInfo = true;
 
   services.printing.drivers = [ pkgs.tmx-cups-ppd ];
