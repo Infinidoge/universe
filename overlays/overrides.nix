@@ -67,6 +67,7 @@ in
         jupyterlab-myst
         jupyterlab-vpython
         vpython-jupyter
+        jupyter-server-proxy
         ;
 
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
