@@ -162,18 +162,17 @@
     in
     {
       preHook = ''
-        ${tmux} -S /run/minecraft/friend-server.sock send-keys "say Server is backing up..." Enter
-        ${tmux} -S /run/minecraft/friend-server.sock send-keys save-off Enter
-        ${tmux} -S /run/minecraft/friend-server.sock send-keys save-all Enter
-        ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Server is backing up..." Enter
-        ${tmux} -S /run/minecraft/sister-server.sock send-keys save-off Enter
-        ${tmux} -S /run/minecraft/sister-server.sock send-keys save-all Enter
+        for sock in /run/minecraft/*.sock; do
+          ${tmux} -S $sock send-keys "say Server is backing up..." Enter
+          ${tmux} -S $sock send-keys save-off Enter
+          ${tmux} -S $sock send-keys save-all Enter
+        done
       '';
       postHook = ''
-        ${tmux} -S /run/minecraft/friend-server.sock send-keys save-on Enter
-        ${tmux} -S /run/minecraft/friend-server.sock send-keys "say Backup complete" Enter
-        ${tmux} -S /run/minecraft/sister-server.sock send-keys save-on Enter
-        ${tmux} -S /run/minecraft/sister-server.sock send-keys "say Backup complete" Enter
+        for sock in /run/minecraft/*.sock; do
+          ${tmux} -S $sock send-keys save-on Enter
+          ${tmux} -S $sock send-keys "say Backup complete" Enter
+        done
       '';
     };
 
