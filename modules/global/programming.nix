@@ -86,6 +86,7 @@ in
             isort
             jupyter
             mypy
+            parallel-ssh
             pip
             pyflakes
             pytest
