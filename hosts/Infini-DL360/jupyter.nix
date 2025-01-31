@@ -50,6 +50,7 @@ in
       jupyterlab-pygments
       jupyterlab-vim
       jupyterlab-vpython
+      jupyter-server-proxy
 
       # export
       nbconvert
