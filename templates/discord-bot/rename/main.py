@@ -10,17 +10,19 @@ from dotenv import find_dotenv, load_dotenv
 from .db import setup_db
 
 # Logger setup
+logging.basicConfig(
+    format="{asctime} {levelname:8} {name}: {message}",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    style="{",
+    stream=sys.stdout,
+    force=True,
+)
+
 logger_disnake = logging.getLogger("disnake")
 logger_disnake.setLevel(logging.WARNING)
 
 log = logging.getLogger("rename")
 log.setLevel(logging.DEBUG)
-
-formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
-handler = logging.StreamHandler(sys.stdout)
-handler.setFormatter(formatter)
-logger_disnake.addHandler(handler)
-log.addHandler(handler)
 
 
 if load_dotenv(find_dotenv(usecwd=True)):
