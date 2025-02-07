@@ -5,15 +5,16 @@ import sys
 from dotenv import find_dotenv, load_dotenv
 
 # Logger setup
+logging.basicConfig(
+    format="{asctime} {levelname:8} {name}: {message}",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    style="{",
+    stream=sys.stdout,
+    force=True,
+)
 
 log = logging.getLogger("rename")
 log.setLevel(logging.DEBUG)
-
-formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
-handler = logging.StreamHandler(sys.stdout)
-handler.setFormatter(formatter)
-log.addHandler(handler)
-
 
 if load_dotenv(find_dotenv(usecwd=True)):
     log.debug("Loaded .env")
