@@ -48,6 +48,7 @@
         oneFixupPerCommit = true;
         autoStageIfNothingStaged = true;
       };
+      protocol.file.allow = "always";
     };
 
     aliases = {
