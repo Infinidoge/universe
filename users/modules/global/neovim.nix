@@ -68,8 +68,18 @@ in
     };
 
     colorscheme = "doom-one";
+
     extraPlugins = with pkgs.vimPlugins; [
       doom-one-nvim
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "vim-xonsh";
+        src = pkgs.fetchFromGitHub {
+          owner = "meatballs";
+          repo = "vim-xonsh";
+          rev = "929f35e37ad7dbdec80b1effe295b89c9ac3f090";
+          hash = "sha256-ugHLu2Z9bTtQsIp4FQPKxgjVe9oZNjfQYrP+aHu+/uU=";
+        };
+      })
     ];
 
     globals.mapleader = " ";
