@@ -41,7 +41,7 @@ in
     # erdtree
     erd = "erd --human --hidden --no-git";
     et = "erd";
-    tree = "erd --suppress-size --layout inverted";
+    tree = "erd --suppress-size --layout inverted --sort name";
 
     # git
     g = "git";
