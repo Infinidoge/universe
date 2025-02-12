@@ -2,7 +2,12 @@
 
 {
   perSystem =
-    { pkgs, inputs', ... }:
+    {
+      config,
+      pkgs,
+      inputs',
+      ...
+    }:
     {
       devshells.default =
         let
