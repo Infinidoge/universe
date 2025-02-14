@@ -83,6 +83,7 @@ in
             tor-browser
             bitwarden
             qbittorrent
+            sqlitebrowser
           ])
         ];
     };
