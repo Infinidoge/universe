@@ -139,7 +139,7 @@
   networking.wg-quick.interfaces.wg0 = {
     address = [ "10.10.0.3/32" ];
     listenPort = 51820;
-    privateKeyFile = "/home/infinidoge/tmp/bb-vpn.key";
+    privateKeyFile = "/home/infinidoge/tmp/bb-vpn-geg.key";
     peers = [
       {
         publicKey = "SYpnrGvxx8l4w9c7KVRVW6GyNDr/iK+maPPMw/Ua7XY=";
