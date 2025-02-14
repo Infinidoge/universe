@@ -66,6 +66,8 @@
   hardware.uinput.enable = true;
   services.joycond.enable = true;
 
+  programs.kdeconnect.enable = true;
+
   hardware.printers.ensurePrinters = [
     {
       name = "EPSON-TM-m30";
