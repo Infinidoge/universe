@@ -34,6 +34,7 @@ in
 
   inherit (stable)
     nix-melt
+    bitwarden-cli
     ;
 
   gum = latest.gum.overrideAttrs (old: {
