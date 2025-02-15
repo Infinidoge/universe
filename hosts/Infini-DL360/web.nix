@@ -95,6 +95,14 @@ in
           root = "/srv/web/files.inx.moe";
         };
       };
+      "random.inx.moe" = ssl-inx // {
+        locations."/" = {
+          root = "/srv/web/files.inx.moe/subject";
+          extraConfig = ''
+            random_index on;
+          '';
+        };
+      };
       "old.inx.moe" = ssl-inx-optional // {
         locations."/" = {
           root = "/srv/web/inx.moe";
