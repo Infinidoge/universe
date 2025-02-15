@@ -141,7 +141,7 @@ in
     plugins = {
       autoclose = {
         enable = true;
-        options.disableWhenTouch = true;
+        settings.options.disable_when_touch = true;
       };
       comment.enable = true;
       cmp.enable = true;
