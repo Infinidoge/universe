@@ -9,7 +9,7 @@ let
   domain = common.subdomain "hydra";
 in
 {
-  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     locations."/" = {
       proxyPass = "http://localhost:${toString config.services.hydra.port}";
     };

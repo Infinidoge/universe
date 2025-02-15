@@ -27,7 +27,7 @@ in
     };
   };
 
-  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     locations."/".proxyPass = "http://localhost:5232";
   };
 }

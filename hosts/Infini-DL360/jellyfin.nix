@@ -13,7 +13,7 @@ let
   '';
 in
 {
-  services.nginx.virtualHosts."jellyfin.inx.moe" = common.nginx.ssl // {
+  services.nginx.virtualHosts."jellyfin.inx.moe" = common.nginx.ssl-inx // {
     extraConfig = ''
       client_max_body_size 20M;
     '';

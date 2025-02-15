@@ -43,7 +43,7 @@ in
 
   users.users.nginx.extraGroups = [ "searx" ];
 
-  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     locations."/" = {
       extraConfig = ''
         include ${config.services.nginx.package}/conf/uwsgi_params;

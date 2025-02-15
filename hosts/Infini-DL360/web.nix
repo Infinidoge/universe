@@ -6,7 +6,12 @@
   ...
 }:
 let
-  inherit (common.nginx) ssl ssl-optional;
+  inherit (common.nginx)
+    ssl
+    ssl-optional
+    ssl-inx
+    ssl-inx-optional
+    ;
 
   tryFiles = "$uri $uri.html $uri/ =404";
   websiteConfig = ''
@@ -56,12 +61,12 @@ in
     websites
     // redirects
     // {
-      "j.inx.moe" = ssl-optional // {
+      "j.inx.moe" = ssl-inx-optional // {
         locations."/" = {
           return = "302 $jump_link";
         };
       };
-      "blahaj.inx.moe" = ssl-optional // {
+      "blahaj.inx.moe" = ssl-inx-optional // {
         locations."/" = {
           tryFiles = "/Blahaj.png =404";
           root = ./static;
@@ -79,7 +84,7 @@ in
           return = "301 https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/";
         };
       };
-      "files.inx.moe" = ssl // {
+      "files.inx.moe" = ssl-inx // {
         locations."/" = {
           root = "/srv/web/files.inx.moe";
           extraConfig = ''
@@ -90,7 +95,7 @@ in
           root = "/srv/web/files.inx.moe";
         };
       };
-      "old.inx.moe" = ssl-optional // {
+      "old.inx.moe" = ssl-inx-optional // {
         locations."/" = {
           root = "/srv/web/inx.moe";
           inherit tryFiles;

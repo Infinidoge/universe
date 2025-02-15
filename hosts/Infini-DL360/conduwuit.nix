@@ -31,7 +31,7 @@ in
   networking.firewall.allowedTCPPorts = [ 8448 ];
 
   services.nginx.virtualHosts = {
-    ${domain} = common.nginx.ssl // {
+    ${domain} = common.nginx.ssl-inx // {
       locations."^~ /_matrix" = {
         proxyPass = host;
         recommendedProxySettings = false;
