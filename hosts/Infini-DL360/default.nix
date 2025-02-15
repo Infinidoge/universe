@@ -143,7 +143,11 @@
 
   security.acme.certs."inx.moe" = {
     group = "nginx";
-    extraDomainNames = [ "*.inx.moe" ];
+    extraDomainNames = [
+      "*.inx.moe"
+      "*.internal.inx.moe"
+      "*.tailnet.inx.moe"
+    ];
   };
 
   services.nginx.virtualHosts."*.inx.moe" = {
