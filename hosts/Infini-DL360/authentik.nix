@@ -1,16 +1,28 @@
 {
-  config,
+  pkgs,
   common,
   secrets,
+  inputs,
   ...
 }:
 let
   domain = common.subdomain "auth";
   ldap = common.subdomain "ldap";
+
+  authentikScope = (inputs.authentik-nix.lib.mkAuthentikScope { inherit pkgs; }).overrideScope (
+    final: prev: {
+      authentikComponents = prev.authentikComponents // {
+        docs = prev.authentikComponents.docs.overrideAttrs {
+          dontCheckForBrokenSymlinks = true;
+        };
+      };
+    }
+  );
 in
 {
   services.authentik = {
     enable = true;
+    inherit (authentikScope) authentikComponents;
     environmentFile = secrets.authentik;
     settings = {
       email = with common.email; {
