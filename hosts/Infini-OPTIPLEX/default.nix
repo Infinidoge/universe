@@ -9,13 +9,14 @@
 
   info.loc.purdue = true;
 
+  boot.loader.timeout = 1;
+
   modules = {
     hardware.form.desktop = true;
     hardware.gpu.intel = true;
     desktop.wm.enable = true;
   };
 
-  boot.loader.timeout = 1;
 
   persist = {
     directories = [
