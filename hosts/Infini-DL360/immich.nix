@@ -9,7 +9,7 @@ let
   cfg = config.services.immich;
 in
 {
-  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     extraConfig = ''
       client_max_body_size 5000M;
 

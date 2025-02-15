@@ -12,7 +12,7 @@ in
 {
   persist.directories = [ config.services.vaultwarden.dataDir ];
 
-  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
     };

@@ -28,7 +28,7 @@ in
     };
   };
 
-  services.nginx.virtualHosts.${domain} = common.nginx.ssl // {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     locations."/" = {
       proxyPass = "http://${cfg.settings.host}:${toString cfg.settings.port}";
     };

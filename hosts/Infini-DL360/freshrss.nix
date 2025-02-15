@@ -4,7 +4,7 @@ let
   domain = "freshrss.inx.moe";
 in
 {
-  services.nginx.virtualHosts.${domain} = common.nginx.ssl;
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx;
 
   services.freshrss = {
     enable = true;

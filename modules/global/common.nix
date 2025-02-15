@@ -6,16 +6,24 @@
     domain = "inx.moe";
     subdomain = subdomain: "${subdomain}.${domain}";
 
-    nginx = rec {
-      ssl-cert = {
+    nginx = {
+      ssl-optional = {
         enableACME = true;
         acmeRoot = null;
-      };
-      ssl-optional = ssl-cert // {
         addSSL = true;
       };
-      ssl = ssl-cert // {
+      ssl = {
+        enableACME = true;
+        acmeRoot = null;
         forceSSL = true;
+      };
+      ssl-inx = {
+        useACMEHost = domain;
+        forceSSL = true;
+      };
+      ssl-inx-optional = {
+        useACMEHost = domain;
+        addSSL = true;
       };
     };
 
