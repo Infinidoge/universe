@@ -54,11 +54,6 @@ in
     6636 # <- 636 port forwarded, LDAPS
   ];
 
-  security.acme.certs.${ldap} = {
-    group = "nginx";
-    webroot = null;
-  };
-
   systemd.services.authentik-worker.serviceConfig.LoadCredential = [
     "${ldap}.pem:/etc/secrets/ssl/ldap.inx.moe/fullchain.pem"
     "${ldap}.key:/etc/secrets/ssl/ldap.inx.moe/key.pem"
