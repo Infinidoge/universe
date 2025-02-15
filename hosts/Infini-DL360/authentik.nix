@@ -50,8 +50,8 @@ in
   };
 
   networking.firewall.allowedTCPPorts = [
-    3389
-    6636
+    3389 # <- 389 port forwarded, LDAP
+    6636 # <- 636 port forwarded, LDAPS
   ];
 
   security.acme.certs.${ldap} = {
