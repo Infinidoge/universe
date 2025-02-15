@@ -149,6 +149,20 @@
       }
     ];
   };
+  networking.wg-quick.interfaces.wg1 = {
+    address = [ "10.11.0.3/32" ];
+    listenPort = 51820;
+    privateKeyFile = "/home/infinidoge/tmp/bb-vpn-dfw.key";
+    mtu = 1300;
+    peers = [
+      {
+        publicKey = "uPejaHkvkjOAjm5s+ILbxmHnw2gh3A1Wtz++ijS5TmI=";
+        allowedIPs = [ "10.40.1.0/24" ];
+        endpoint = "104.167.215.168:51820";
+        persistentKeepalive = 25;
+      }
+    ];
+  };
 
   specialisation.router.configuration = {
     networking = {
