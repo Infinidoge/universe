@@ -71,21 +71,6 @@ in
         jupyter-server-proxy
         ;
 
-      ssh-python = latest.python3Packages.ssh-python.override {
-        inherit (pythonPrev) buildPythonPackage;
-      };
-      ssh2-python = latest.python3Packages.ssh2-python.override {
-        inherit (pythonPrev) buildPythonPackage;
-      };
-      parallel-ssh = latest.python3Packages.parallel-ssh.override {
-        inherit (pythonFinal)
-          buildPythonPackage
-          gevent
-          ssh-python
-          ssh2-python
-          ;
-      };
-
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
         doCheck = false;
       };
