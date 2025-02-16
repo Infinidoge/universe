@@ -81,6 +81,9 @@ in
         extraConfig = websiteConfig;
       };
     };
+    "tools.inx.moe" = ssl-inx // {
+      locations."/".root = "${pkgs.it-tools}/share";
+    };
   };
 
   services.uwsgi = {
