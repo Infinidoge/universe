@@ -5,14 +5,8 @@
   lib,
   ...
 }:
+with common.nginx;
 let
-  inherit (common.nginx)
-    ssl
-    ssl-optional
-    ssl-inx
-    ssl-inx-optional
-    ;
-
   tryFiles = "$uri $uri.html $uri/ =404";
   websiteConfig = ''
     error_page 403 /403.html;
@@ -25,28 +19,8 @@ let
     location ~ "/\..+" { deny all; }
   '';
 
-  mkWebsite =
-    name:
-    ssl
-    // {
-      locations."/" = {
-        root = "/srv/web/${name}";
-        inherit tryFiles;
-        extraConfig = websiteConfig;
-      };
-    };
-
-  mkRedirect = from: to: ssl-optional // { globalRedirect = to; };
-
-  websites = lib.genAttrs [
-    "inx.moe"
-    "stickers.inx.moe"
-  ] mkWebsite;
-
-  redirects = lib.mapAttrs mkRedirect {
-    "nitter.inx.moe" = "twitter.com";
-    "sweedish.fish" = "swedish.fish";
-  };
+  mkRedirect = to: ssl-optional // { globalRedirect = to; };
+  mkTmpRedirect = to: ssl-optional // { locations."/".return = "302 ${to}"; };
 in
 {
   services.nginx.commonHttpConfig = ''
@@ -57,63 +31,57 @@ in
     }
   '';
 
-  services.nginx.virtualHosts =
-    websites
-    // redirects
-    // {
-      "j.inx.moe" = ssl-inx-optional // {
-        locations."/" = {
-          return = "302 $jump_link";
-        };
-      };
-      "blahaj.inx.moe" = ssl-inx-optional // {
-        locations."/" = {
-          tryFiles = "/Blahaj.png =404";
-          root = ./static;
-        };
-        locations."/buy" = {
-          return = "301 https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/";
-        };
-      };
-      "swedish.fish" = ssl-optional // {
-        locations."/" = {
-          tryFiles = "/Blahaj.png =404";
-          root = ./static;
-        };
-        locations."/buy" = {
-          return = "301 https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/";
-        };
-      };
-      "files.inx.moe" = ssl-inx // {
-        locations."/" = {
-          root = "/srv/web/files.inx.moe";
-          extraConfig = ''
-            autoindex on;
-          '';
-        };
-        locations."/p/" = {
-          root = "/srv/web/files.inx.moe";
-        };
-      };
-      "random.inx.moe" = ssl-inx // {
-        locations."/" = {
-          root = "/srv/web/files.inx.moe/subject";
-          extraConfig = ''
-            random_index on;
-          '';
-        };
-      };
-      "old.inx.moe" = ssl-inx-optional // {
-        locations."/" = {
-          root = "/srv/web/inx.moe";
-          inherit tryFiles;
-          extraConfig = websiteConfig;
-        };
-      };
-      "foxy.software" = ssl-optional // {
-        locations."/".return = "301 https://inx.moe";
+  services.nginx.virtualHosts = {
+    "inx.moe" = ssl-inx // {
+      locations."/" = {
+        root = "/srv/web/inx.moe";
+        inherit tryFiles;
+        extraConfig = websiteConfig;
       };
     };
+    "nitter.inx.moe" = mkRedirect "twitter.com";
+    "sweedish.fish" = mkRedirect "swedish.fish";
+    "blahaj.inx.moe" = mkRedirect "swedish.fish";
+    "foxy.software" = mkTmpRedirect "https://inx.moe";
+    "j.inx.moe" = ssl-inx-optional // {
+      locations."/".return = "302 $jump_link";
+    };
+    "swedish.fish" = ssl-optional // {
+      locations."/" = {
+        tryFiles = "/Blahaj.png =404";
+        root = ./static;
+      };
+      locations."/buy" = {
+        return = "301 https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/";
+      };
+    };
+    "files.inx.moe" = ssl-inx // {
+      locations."/" = {
+        root = "/srv/web/files.inx.moe";
+        extraConfig = ''
+          autoindex on;
+        '';
+      };
+      locations."/p/" = {
+        root = "/srv/web/files.inx.moe";
+      };
+    };
+    "random.inx.moe" = ssl-inx // {
+      locations."/" = {
+        root = "/srv/web/files.inx.moe/subject";
+        extraConfig = ''
+          random_index on;
+        '';
+      };
+    };
+    "old.inx.moe" = ssl-inx-optional // {
+      locations."/" = {
+        root = "/srv/web/inx.moe";
+        inherit tryFiles;
+        extraConfig = websiteConfig;
+      };
+    };
+  };
 
   services.uwsgi = {
     enable = true;
