@@ -34,7 +34,7 @@ in
   services.nginx.virtualHosts = {
     "inx.moe" = ssl-inx // {
       locations."/" = {
-        root = "/srv/web/inx.moe";
+        root = "/srv/web/inx.moe/out"; # TODO: Make this less volatile
         inherit tryFiles;
         extraConfig = websiteConfig;
       };
