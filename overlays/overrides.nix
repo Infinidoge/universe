@@ -52,11 +52,11 @@ in
       VENCORD_REMOTE = "Vendicated/Vencord";
       VENCORD_HASH = builtins.substring 0 9 inputs.vencord.rev;
     };
-    pnpmDeps = final.pnpm.fetchDeps {
-      inherit (old) pname;
-      inherit src;
-      hash = "sha256-ZUwtNtOmxjhOBpYB7vuytunGBRSuVxdlQsceRmeyhhI=";
-    };
+    #pnpmDeps = latest.pnpm.fetchDeps {
+    #  inherit (old) pname;
+    #  inherit version src;
+    #  hash = "";
+    #};
   });
 
   schildichat-desktop = old-stable.schildichat-desktop.override { electron = final.electron; };
