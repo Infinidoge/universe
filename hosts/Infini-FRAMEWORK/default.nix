@@ -138,6 +138,7 @@
   networking.firewall.allowedUDPPorts = [ 51820 ];
 
   networking.wg-quick.interfaces.wg0 = {
+    autostart = false;
     address = [ "10.10.0.3/32" ];
     listenPort = 51820;
     privateKeyFile = "/home/infinidoge/tmp/bb-vpn-geg.key";
@@ -151,6 +152,7 @@
     ];
   };
   networking.wg-quick.interfaces.wg1 = {
+    autostart = false;
     address = [ "10.11.0.3/32" ];
     listenPort = 51820;
     privateKeyFile = "/home/infinidoge/tmp/bb-vpn-dfw.key";
