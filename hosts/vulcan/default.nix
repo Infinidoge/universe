@@ -10,6 +10,8 @@
 
   home-manager.useUserPackages = false;
 
+  universe.programming.all.enable = true;
+
   home =
     { main, config, ... }:
     {
@@ -29,7 +31,5 @@
         };
       };
       nix.settings.use-xdg-base-directories = true;
-
-      universe.programming.all.enable = true;
     };
 }
