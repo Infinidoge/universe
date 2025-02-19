@@ -43,7 +43,7 @@ in
         POP_SMTP_HOST = common.email.smtp.address;
         POP_SMTP_PORT = common.email.smtp.STARTTLS;
         POP_SMTP_USERNAME = common.email.withUser "infinidoge";
-        POP_SMTP_PASSWORD = "$(cat ${secrets.personal-smtp-password})";
+        POP_SMTP_PASSWORD = "$(cat ${secrets.smtp-personal})";
       };
 
       home.packages =
@@ -110,10 +110,22 @@ in
     adb.enable = config.info.graphical;
   };
 
+  age.rekey.masterIdentities = [
+    ./keys/primary_age.pub
+    ./keys/backup_age.pub
+  ];
+
+  age.secrets = {
+    password-infinidoge.rekeyFile = ./password.age;
+    smtp-personal.rekeyFile = ./smtp-personal.age;
+    smtp-personal.owner = "infinidoge";
+  };
+
+  user.hashedPasswordFile = mkIf config.modules.secrets.enable secrets.password-infinidoge;
+
   user = {
     name = "infinidoge";
     uid = 1000;
-    hashedPasswordFile = mkIf config.modules.secrets.enable config.secrets.infinidoge-password;
     description = "Infinidoge, primary user of the system";
     group = "users";
     isNormalUser = true;

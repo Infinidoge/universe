@@ -10,6 +10,8 @@
     ./hardware-configuration.nix
     ./disks.nix
 
+    ./secrets
+
     ./web.nix
 
     private.nixosModules.minecraft-servers
@@ -36,6 +38,8 @@
   system.stateVersion = "23.11";
 
   info.loc.purdue = true;
+
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjmvE76BcPwZSjeNGzlguDQC67Yxa3uyOf5ZmVDWNys root@Infini-DL360";
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.binfmt.addEmulatedSystemsToNixSandbox = true;

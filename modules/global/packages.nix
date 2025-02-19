@@ -17,7 +17,6 @@
     [
       universe-cli
 
-      agenix
       bat
       cloc
       cryptsetup

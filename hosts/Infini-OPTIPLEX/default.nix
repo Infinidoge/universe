@@ -9,6 +9,8 @@
 
   info.loc.purdue = true;
 
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG8fY684SPKeOUsJqaV6LJwwztWxztaU9nAHPBxBtyU root@Infini-OPTIPLEX";
+
   boot.loader.timeout = 1;
 
   modules = {

@@ -1,89 +1,29 @@
 {
   lib,
-  self,
   config,
   ...
 }:
 with lib;
 let
-  inherit (lib.our) mkOpt;
-  inherit (lib.types) bool attrsOf path;
-
-  mkSecret = name: nameValuePair (removeSuffix ".age" name) { file = "${./.}/${name}"; };
-  secrets = listToAttrs (map mkSecret (attrNames (import ./secrets.nix)));
-
-  withOwnerGroup =
-    name: secret:
-    secret
-    // {
-      owner = name;
-      group = name;
-      mode = "440";
-    };
-  withOwner = name: secret: secret // { owner = name; };
-  withGroup =
-    name: secret:
-    secret
-    // {
-      group = name;
-      mode = "440";
-    };
+  inherit (lib.our) mkOpt mkBoolOpt;
+  inherit (lib.types) attrsOf path;
+  inherit (lib.our.secrets) withGroup;
 in
 {
   options = {
-    modules.secrets.enable = mkOpt bool true;
+    modules.secrets.enable = mkBoolOpt true;
     secrets = mkOpt (attrsOf path) { };
   };
 
   config = mkIf config.modules.secrets.enable {
     _module.args.secrets = config.secrets;
     secrets = mapAttrs (n: v: v.path) config.age.secrets;
-    age.secrets = mkMerge [
-      {
-        inherit (secrets)
-          "infinidoge-password"
-          "root-password"
-          "borg-ssh-key"
-          "ovpn"
-          ;
-
-        "borg-password" = secrets."borg-password" // {
-          group = "borg";
-          mode = "440";
-        };
-        "binary-cache-private-key" =
-          secrets.binary-cache-private-key
-          // lib.optionalAttrs config.services.hydra.enable {
-            group = "hydra";
-            mode = "440";
-          };
-        "smtp-password" = withGroup "smtp" secrets."smtp-password";
-        "personal-smtp-password" = withOwner "infinidoge" secrets."personal-smtp-password";
-      }
-      (mkIf config.services.nginx.enable {
-        inherit (secrets) "cloudflare";
-      })
-      (mkIf config.services.vaultwarden.enable {
-        "vaultwarden" = withOwnerGroup "vaultwarden" secrets."vaultwarden";
-      })
-      (mkIf config.services.freshrss.enable {
-        "freshrss" = withOwnerGroup "freshrss" secrets."freshrss";
-      })
-      (mkIf config.services.hydra.enable {
-        inherit (secrets) hydra;
-      })
-      (mkIf config.services.hedgedoc.enable {
-        "hedgedoc" = withOwnerGroup "hedgedoc" secrets."hedgedoc";
-      })
-      (mkIf config.services.searx.enable {
-        inherit (secrets) searx;
-      })
-      (mkIf config.services.authentik.enable {
-        inherit (secrets) authentik authentik-ldap;
-      })
-      (mkIf config.services.radicale.enable {
-        radicale-ldap = withOwnerGroup "radicale" secrets.radicale-ldap;
-      })
-    ];
+    age.secrets = {
+      borg-ssh-key.rekeyFile = ./borg-ssh-key.age;
+      borg-password = withGroup "borg" ./borg-password.age;
+      binary-cache-private-key = withGroup "hydra" ./binary-cache-private-key.age;
+      smtp-noreply = withGroup "smtp" ./smtp-noreply.age;
+      dns-cloudflare.rekeyFile = ./dns-cloudflare.age;
+    };
   };
 }

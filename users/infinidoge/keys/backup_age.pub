@@ -1,0 +1,7 @@
+#       Serial: 26969244, Slot: 1
+#         Name: BACKUP_AGE
+#      Created: Wed, 19 Feb 2025 01:58:28 +0000
+#   PIN policy: Once   (A PIN is required once per session, if set)
+# Touch policy: Cached (A physical touch is required for decryption, and is cached for 15 seconds)
+#    Recipient: age1yubikey1q2dxqlvpp0jpjumgmm3rk952dqexy6r2ff4ul62luman3uga6s0l5llfumw
+AGE-PLUGIN-YUBIKEY-1NJZFKQVZUM4H93SSLXN5A

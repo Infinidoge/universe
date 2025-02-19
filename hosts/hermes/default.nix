@@ -8,6 +8,8 @@
   system.stateVersion = "24.11";
   networking.hostId = "deadbeef";
 
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0fWuozCHyPrkFKPcnqX1MyUAgnn2fJEpDSoD7bhDA4 root@Infini-STICK";
+
   boot.kernelPackages = pkgs.linuxPackages;
 
   modules = {

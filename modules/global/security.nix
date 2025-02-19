@@ -19,7 +19,7 @@ in
       defaults = {
         email = "infinidoge@inx.moe";
         dnsProvider = "cloudflare";
-        environmentFile = config.secrets.cloudflare;
+        environmentFile = config.secrets.dns-cloudflare;
       };
     };
     pki.certificateFiles = [
