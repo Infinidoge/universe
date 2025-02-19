@@ -57,7 +57,7 @@
     accounts = rec {
       noreply = {
         user = outgoing;
-        passwordeval = "cat ${secrets.smtp-password}";
+        passwordeval = "cat ${secrets.smtp-noreply}";
       };
       default = noreply // {
         from = withSubaddress "%U-%H";

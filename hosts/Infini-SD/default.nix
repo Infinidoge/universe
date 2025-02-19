@@ -7,6 +7,8 @@
 
   networking.hostId = "3275c7d3";
 
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8oViHNz64NG51uyll/q/hrSGwoHRgvYI3luD/IWTUT root@Infini-SD";
+
   boot.kernelPackages = pkgs.linuxPackages;
 
   hardware.infiniband = {

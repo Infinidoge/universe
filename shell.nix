@@ -24,9 +24,12 @@
           devshell.name = "universe";
           devshell.motd = "";
 
-          devshell.packages = [
+          devshell.packages = with pkgs; [
             pythonEnv
             inputs'.disko.packages.disko
+            config.agenix-rekey.package
+            age-plugin-fido2-hmac
+            age-plugin-yubikey
           ];
 
           env = [

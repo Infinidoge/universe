@@ -29,6 +29,38 @@
         "type": "github"
       }
     },
+    "agenix-rekey": {
+      "inputs": {
+        "devshell": [
+          "devshell"
+        ],
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "pre-commit-hooks": [
+          "git-hooks"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1739816852,
+        "narHash": "sha256-QG8aA6hWsi6pqaidaz5a5SL+dM1mT9LMWMrmc1hrOrU=",
+        "owner": "oddlama",
+        "repo": "agenix-rekey",
+        "rev": "5f56d711ffe2aca62cfeeada9ec56692a13b9061",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oddlama",
+        "repo": "agenix-rekey",
+        "type": "github"
+      }
+    },
     "authentik-nix": {
       "inputs": {
         "authentik-src": "authentik-src",
@@ -954,6 +986,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "agenix-rekey": "agenix-rekey",
         "authentik-nix": "authentik-nix",
         "blank": "blank",
         "conduwuit": "conduwuit",

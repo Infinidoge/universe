@@ -26,6 +26,7 @@
 
     ### Nix Libraries
     agenix.url = "github:ryantm/agenix";
+    agenix-rekey.url = "github:oddlama/agenix-rekey";
     devshell.url = "github:numtide/devshell";
     disko.url = "github:nix-community/disko/latest";
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -78,6 +79,11 @@
     systems.url = "github:nix-systems/default";
 
     ## Follow common
+    agenix-rekey.inputs.devshell.follows = "devshell";
+    agenix-rekey.inputs.flake-parts.follows = "flake-parts";
+    agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
+    agenix-rekey.inputs.pre-commit-hooks.follows = "git-hooks";
+    agenix-rekey.inputs.treefmt-nix.follows = "treefmt-nix";
     agenix.inputs.darwin.follows = "blank";
     agenix.inputs.home-manager.follows = "home-manager";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
@@ -222,13 +228,28 @@
                     ] ++ (self.lib.leaves ./users/modules);
                   };
                 }
+                (
+                  { config, pkgs, ... }:
+                  {
+                    age.rekey = {
+                      storageMode = "local";
+                      generatedSecretsDir = ./secrets/generated;
+                      localStorageDir = ./. + "/secrets/rekeyed/${config.networking.hostName}";
+                      agePlugins = with pkgs; [
+                        age-plugin-fido2-hmac
+                        age-plugin-yubikey
+                      ];
+                    };
+                  }
+                )
 
                 # --- Universe Modules ---
                 ./secrets
                 private.nixosModules.secrets
 
                 # --- Library Modules ---
-                inputs.agenix.nixosModules.age
+                inputs.agenix.nixosModules.default
+                inputs.agenix-rekey.nixosModules.default
                 inputs.disko.nixosModules.disko
                 inputs.home-manager.nixosModules.home-manager
                 inputs.impermanence.nixosModules.impermanence
@@ -273,6 +294,7 @@
           ./pkgs
           ./shell.nix
           ./templates
+          inputs.agenix-rekey.flakeModule
           inputs.devshell.flakeModule
           inputs.treefmt-nix.flakeModule
         ];

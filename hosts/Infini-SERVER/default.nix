@@ -9,6 +9,8 @@
 
   info.loc.home = true;
 
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8ptHWTesaUzglq01O8OVqeAGxFhXutUZpkgPpBFqzY root@Infini-SERVER";
+
   modules = {
     hardware = {
       # gpu.nvidia = true;
