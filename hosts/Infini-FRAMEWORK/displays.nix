@@ -68,7 +68,7 @@ in
             position = "0x0";
           };
           DP-1-3 = dock // {
-            position = "2256x0";
+            position = "1805x0";
           };
         };
         docked-alt = {
