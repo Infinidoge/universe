@@ -26,6 +26,7 @@
     ./jellyfin.nix
     ./jupyter.nix
     ./postgresql.nix
+    ./privoxy.nix
     ./radicale.nix
     ./searx.nix
     ./ssh.nix
