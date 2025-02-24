@@ -168,4 +168,10 @@
       }
     ];
   };
+
+  systemd.timers.systemd-hibernate = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    timerConfig.OnCalendar = "Mon..Fri,Sun *-*-* 01:00:00";
+  };
 }
