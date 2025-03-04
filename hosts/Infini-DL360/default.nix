@@ -16,6 +16,7 @@
     ./factorio.nix
     ./forgejo.nix
     ./freshrss.nix
+    ./grafana.nix
     ./hedgedoc.nix
     ./hydra.nix
     ./immich.nix
