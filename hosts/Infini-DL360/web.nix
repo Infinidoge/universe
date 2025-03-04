@@ -76,7 +76,10 @@ in
       };
     };
     "tools.inx.moe" = ssl-inx // {
-      locations."/".root = "${pkgs.it-tools}/share";
+      locations."/" = {
+        root = "${pkgs.it-tools}/share";
+        tryFiles = "$uri $uri/ $uri.html /index.html";
+      };
     };
   };
 
