@@ -7,6 +7,7 @@ with lib;
     openFirewall = mkDefault true;
     sftpServerExecutable = "internal-sftp";
     settings = {
+      PasswordAuthentication = false;
       X11Forwarding = mkDefault false;
       GatewayPorts = mkDefault "yes";
       ClientAliveInterval = 60;
