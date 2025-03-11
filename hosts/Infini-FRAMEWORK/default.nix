@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -14,9 +13,9 @@
 
   system.stateVersion = "23.05";
 
-  info.loc.purdue = true;
-
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7PmPq/7e+YIVAvIcs6EOJ3pZVJhinwus6ZauJ3aVp0 root@Infini-FRAMEWORK";
+
+  info.loc.purdue = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.binfmt.addEmulatedSystemsToNixSandbox = true;
@@ -68,8 +67,10 @@
     extraRemotes = [ "lvfs-testing" ];
     uefiCapsuleSettings.DisableCapsuleUpdateOnDisk = "true";
   };
-  systemd.services.fwupd-refresh.after = [ "network-online.target" ];
-  systemd.services.fwupd-refresh.requires = [ "network-online.target" ];
+  systemd.services.fwupd-refresh = {
+    after = [ "network-online.target" ];
+    requires = [ "network-online.target" ];
+  };
 
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
 
@@ -86,35 +87,6 @@
     serviceConfig.Type = "oneshot";
     script = "${lib.getExe pkgs.brightnessctl} set 50%";
   };
-
-  nix.buildMachines = [
-    #{
-    #  hostName = "infini-desktop";
-    #  system = "x86_64-linux";
-    #  supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-    #  protocol = "ssh-ng";
-    #  maxJobs = 16;
-    #  speedFactor = 8;
-    #  sshUser = "remotebuild";
-    #}
-    {
-      hostName = "infini-dl360";
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
-      supportedFeatures = [
-        "nixos-test"
-        "benchmark"
-        "big-parallel"
-        "kvm"
-      ];
-      protocol = "ssh-ng";
-      maxJobs = 32;
-      speedFactor = 16;
-      sshUser = "remotebuild";
-    }
-  ];
 
   networking.firewall.allowedUDPPorts = [ 51820 ];
 

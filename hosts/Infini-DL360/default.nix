@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   private,
@@ -9,10 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
-
     ./secrets
-
-    ./web.nix
 
     private.nixosModules.minecraft-servers
     ./authentik.nix
@@ -33,23 +29,23 @@
     ./thelounge.nix
     ./torrenting.nix
     ./vaultwarden.nix
+    ./web.nix
   ];
 
-  networking.hostId = "8fa7a57c";
   system.stateVersion = "23.11";
+
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjmvE76BcPwZSjeNGzlguDQC67Yxa3uyOf5ZmVDWNys root@Infini-DL360";
 
   info.loc.purdue = true;
 
-  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjmvE76BcPwZSjeNGzlguDQC67Yxa3uyOf5ZmVDWNys root@Infini-DL360";
+  networking.hostId = "8fa7a57c";
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.binfmt.addEmulatedSystemsToNixSandbox = true;
 
   nix.distributedBuilds = false;
 
-  modules = {
-    hardware.form.server = true;
-  };
+  modules.hardware.form.server = true;
 
   universe.programming.all.enable = true;
 
@@ -111,9 +107,7 @@
     "net.ipv6.conf.all.forwarding" = true;
   };
 
-  hardware.infiniband = {
-    enable = true;
-  };
+  hardware.infiniband.enable = true;
 
   services.fail2ban.enable = true;
 
@@ -158,8 +152,6 @@
     globalRedirect = "inx.moe";
     redirectCode = 302;
   };
-
-  services.minecraft-servers.servers.emd-server.autoStart = lib.mkForce false;
 
   services.borgbackup.jobs."persist" =
     let

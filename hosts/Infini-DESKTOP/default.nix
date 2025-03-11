@@ -12,9 +12,9 @@
 
   system.stateVersion = "21.11";
 
-  info.loc.home = true;
-
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID7uX1myj9ghv7wMoL038oGDCdScdyLd7RvYdnoioSBh root@Infini-DESKTOP";
+
+  info.loc.home = true;
 
   persist.directories = [
     "/srv"
