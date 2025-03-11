@@ -1,4 +1,11 @@
 {
+  persist.directories = [
+    {
+      directory = "/var/lib/dnsmasq/";
+      user = "dnsmasq";
+    }
+  ];
+
   specialisation.router.configuration = {
     networking = {
       interfaces."enp0s13f0u1" = {
