@@ -63,8 +63,12 @@ shu
 sobek
 thoth
 
-### used ###
-hermes
-hestia
-iris
-vulcan
+### used
+hermes | portable install
+hestia | storage server
+vulcan | Purdue Hackers server
+
+### pending
+enodia | router
+iris   | oracle cloud server
+lethe  | installer image/kexec binary
