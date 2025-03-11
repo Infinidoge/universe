@@ -39,16 +39,10 @@
 
   environment.enableDebugInfo = true;
 
-  services.printing.drivers = [ pkgs.tmx-cups-ppd ];
-
   modules = {
     hardware = {
       gpu.intel = true;
       form.laptop = true;
-
-      peripherals = {
-        printing.enable = true;
-      };
     };
     desktop = {
       wm.enable = true;
@@ -71,12 +65,9 @@
 
   programs.kdeconnect.enable = true;
 
+  services.printing.enable = true;
+
   hardware.printers.ensurePrinters = [
-    {
-      name = "EPSON-TM-m30";
-      deviceUri = "usb://EPSON/TM-m30II-NT?serial=5839394D0032780000";
-      model = "tm-m30-rastertotmt.ppd.gz";
-    }
     {
       name = "EPSON-TM-m30-remote";
       deviceUri = "ipp://100.101.102.18/printers/EPSON-TM-m30";
