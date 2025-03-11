@@ -57,13 +57,9 @@
 
   virtualisation.enable = true;
 
-  persist = {
-    directories = [
-      "/srv"
-    ];
-    files = [
-    ];
-  };
+  persist.directories = [
+    "/srv"
+  ];
 
   nix.settings.accept-flake-config = true;
 

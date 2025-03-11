@@ -16,14 +16,9 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID7uX1myj9ghv7wMoL038oGDCdScdyLd7RvYdnoioSBh root@Infini-DESKTOP";
 
-  persist = {
-    directories = [
-      "/srv"
-    ];
-
-    files = [
-    ];
-  };
+  persist.directories = [
+    "/srv"
+  ];
 
   modules = {
     hardware = {

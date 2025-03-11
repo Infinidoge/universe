@@ -50,12 +50,4 @@
       sshUser = "remotebuild";
     }
   ];
-
-  persist = {
-    directories = [
-    ];
-
-    files = [
-    ];
-  };
 }

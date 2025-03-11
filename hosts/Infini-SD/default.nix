@@ -44,13 +44,5 @@
     '';
   };
 
-  persist = {
-    directories = [
-    ];
-
-    files = [
-    ];
-  };
-
   system.stateVersion = "23.11";
 }

@@ -31,12 +31,7 @@
     avahi.reflector = true;
   };
 
-  persist = {
-    directories = [
-      "/srv"
-    ];
-
-    files = [
-    ];
-  };
+  persist.directories = [
+    "/srv"
+  ];
 }
