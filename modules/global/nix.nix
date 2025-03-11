@@ -157,4 +157,24 @@ in
     group = "remotebuild";
   };
   users.groups.remotebuild = { };
+
+  nix.buildMachines = [
+    {
+      hostName = "infini-dl360";
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
+      protocol = "ssh-ng";
+      maxJobs = 32;
+      speedFactor = 16;
+      sshUser = "remotebuild";
+    }
+  ];
 }

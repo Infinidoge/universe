@@ -1,12 +1,11 @@
 { pkgs, ... }:
 
 {
+  system.stateVersion = "24.11";
+
   modules.hardware.form.server = true;
   modules.secrets.enable = false;
-  info.loc.home = false;
   info.loc.purdue = true;
-
-  system.stateVersion = "24.11";
 
   home-manager.useUserPackages = false;
 

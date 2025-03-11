@@ -5,21 +5,17 @@
     ./filesystems.nix
   ];
 
-  networking.hostId = "3275c7d3";
+  system.stateVersion = "23.11";
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8oViHNz64NG51uyll/q/hrSGwoHRgvYI3luD/IWTUT root@Infini-SD";
 
+  networking.hostId = "3275c7d3";
+
+  modules.hardware.form.server = true;
+
   boot.kernelPackages = pkgs.linuxPackages;
 
-  hardware.infiniband = {
-    enable = true;
-  };
-
-  modules = {
-    hardware = {
-      form.server = true;
-    };
-  };
+  hardware.infiniband.enable = true;
 
   networking = {
     interfaces.eno4 = {
@@ -43,6 +39,4 @@
       echo "eth" > /sys/bus/pci/devices/0000:04:00.0/mlx4_port2
     '';
   };
-
-  system.stateVersion = "23.11";
 }

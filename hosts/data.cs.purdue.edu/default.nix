@@ -1,17 +1,15 @@
 {
-  private,
-  config,
   lib,
   pkgs,
+  private,
   ...
 }:
 
 {
+  system.stateVersion = "23.11";
+
   modules.hardware.form.server = true;
   modules.secrets.enable = false;
-  info.loc.home = false;
-
-  system.stateVersion = "23.11";
 
   networking = {
     domain = "cs.purdue.edu";

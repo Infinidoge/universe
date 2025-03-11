@@ -1,8 +1,8 @@
 {
   inputs,
   config,
-  lib,
   pkgs,
+  lib,
   ...
 }:
 with lib;
@@ -16,9 +16,7 @@ with lib;
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIwPqTFCztLbYFFUej42hRzzCBzG6BCZIb7zXi2cxeJp root@Infini-RASPBERRY";
 
-  modules = {
-    hardware.form.raspi = true;
-  };
+  modules.hardware.form.raspi = true;
 
   nixpkgs.overlays = [
     (final: super: {
@@ -62,17 +60,6 @@ with lib;
   fileSystems."/" = {
     device = "/dev/nmcblk0p2";
     fsType = "ext4";
-  };
-
-  home.programs.man.generateCaches = false;
-
-  documentation = {
-    enable = false;
-    doc.enable = false;
-    man.enable = false;
-    man.man-db.enable = false;
-    man.mandoc.enable = false;
-    nixos.enable = false;
   };
 
   hardware.deviceTree = {
