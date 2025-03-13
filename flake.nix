@@ -109,7 +109,7 @@
     #hydra.inputs.lix.follows = "lix";
     hydra.inputs.nix-eval-jobs.inputs.flake-parts.follows = "flake-parts";
     hydra.inputs.nix-eval-jobs.inputs.treefmt-nix.follows = "treefmt-nix";
-    hydra.inputs.nixpkgs.follows = "nixpkgs";
+    #hydra.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.flake-utils.follows = "flake-utils";
     lix-module.inputs.lix.follows = "lix";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
