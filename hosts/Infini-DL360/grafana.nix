@@ -14,6 +14,8 @@ in
     settings = {
       server = {
         inherit domain;
+        root_url = "https://${domain}";
+        http_port = 3101;
       };
       security = {
         admin_email = common.email.withUser "admin";
@@ -21,8 +23,9 @@ in
         secret_key = secret "secret_key";
       };
       auth = {
-        signout_redirect_url = "https://auth.inx.moe/application/o/grafana/end-session";
-        auto_login = "authentik";
+        signout_redirect_url = "https://auth.inx.moe/application/o/grafana/end-session/";
+        auto_login = "generic_oauth";
+        disable_login_form = true;
       };
       "auth.anonymous".enabled = true;
       "auth.basic".enabled = false;
@@ -35,7 +38,9 @@ in
         auth_url = "https://auth.inx.moe/application/o/authorize/";
         token_url = "https://auth.inx.moe/application/o/token/";
         api_url = "https://auth.inx.moe/application/o/userinfo/";
-        role_attribute_path = "contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'";
+        role_attribute_path = "contains(groups, 'Grafana Superadmins') && 'GrafanaAdmin' || contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'";
+        role_attribute_strict = true;
+        allow_assign_grafana_admin = true;
       };
       smtp = with common.email; {
         user = outgoing;
