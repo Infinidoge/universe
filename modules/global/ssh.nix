@@ -33,7 +33,7 @@ with lib;
   programs.ssh = {
     extraConfig = with common; ''
       CanonicalizeHostname yes
-      CanonicalDomains nodes.pyro.host tailnet.inx.moe
+      CanonicalDomains tailnet.inx.moe
 
       Host rsync.net
           Hostname ${rsyncnet.host}
@@ -45,9 +45,6 @@ with lib;
 
       Host inx.moe
           Port 245
-
-      Host *.nodes.pyro.host
-          Port 7976
     '';
   };
 
