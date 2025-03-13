@@ -36,5 +36,6 @@ in
 
   systemd.services.hedgedoc.serviceConfig = {
     ReadWritePaths = [ "-/srv/hedgedoc" ];
+    SystemCallFilter = [ "@chown" ];
   };
 }
