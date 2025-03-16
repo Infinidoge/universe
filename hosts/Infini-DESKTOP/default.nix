@@ -8,6 +8,7 @@
   imports = lib.lists.flatten [
     ./hardware-configuration.nix
     ./filesystems.nix
+    ./privoxy.nix
   ];
 
   system.stateVersion = "21.11";
