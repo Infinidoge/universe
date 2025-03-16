@@ -38,12 +38,30 @@ in
         };
       };
 
+      services.unison = {
+        enable = true;
+        pairs = {
+          "PrismLauncher" = mkIf (main.networking.hostName != "Infini-DL360") {
+            roots = [
+              "/home/infinidoge/.local/share/PrismLauncher"
+              "ssh://inx.moe/sync/PrismLauncher"
+            ];
+            commandOptions = {
+              ignore = [
+                "BelowPath cache"
+              ];
+            };
+          };
+        };
+      };
+
       home.sessionVariables = {
         KEYID = "0x30E7A4C03348641E";
         POP_SMTP_HOST = common.email.smtp.address;
         POP_SMTP_PORT = common.email.smtp.STARTTLS;
         POP_SMTP_USERNAME = common.email.withUser "infinidoge";
         POP_SMTP_PASSWORD = "$(cat ${secrets.smtp-personal})";
+        UNISON = "$HOME/.local/state/unison";
       };
 
       home.packages =
@@ -55,6 +73,7 @@ in
           ncdu
           peaclock
           pop
+          unison
 
           (lib.optionals (!main.universe.minimal.enable) [
             packwiz
