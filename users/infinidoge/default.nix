@@ -51,6 +51,8 @@ in
                 "BelowPath cache"
                 "BelowPath logs"
                 "BelowPath */logs"
+                "BelowPath meta"
+                "Path metacache"
               ];
             };
           };
