@@ -49,6 +49,8 @@ in
             commandOptions = {
               ignore = [
                 "BelowPath cache"
+                "BelowPath logs"
+                "BelowPath */logs"
               ];
             };
           };
