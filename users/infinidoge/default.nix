@@ -50,7 +50,7 @@ in
               ignore = [
                 "BelowPath cache"
                 "BelowPath logs"
-                "BelowPath */logs"
+                "BelowPath **/logs"
                 "BelowPath meta"
                 "Path metacache"
               ];
