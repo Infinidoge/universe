@@ -51,6 +51,7 @@ in
                 "BelowPath cache"
                 "BelowPath logs"
                 "BelowPath **/logs"
+                "Path **/*.log"
                 "BelowPath meta"
                 "Path metacache"
               ];
