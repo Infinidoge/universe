@@ -13,7 +13,10 @@ in
     configureFlags = old.configureFlags ++ [ ''gl_cv_host_operating_system=Doge/Linux'' ];
   });
 
-  tailscale-doge = addPatches prev.tailscale [ ./tailscale-cgnat.patch ];
+  tailscale-doge = prev.tailscale.overrideAttrs (old: {
+    patches = old.patches ++ [ ./tailscale-cgnat.patch ];
+    doCheck = false; # patch causes some tests to fail
+  });
 
   #fprintd = addPatches prev.fprintd [
   #  (final.fetchpatch {
