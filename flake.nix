@@ -122,15 +122,9 @@
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.inputs.flake-compat.follows = "blank";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.inputs.devshell.follows = "devshell";
-    nixvim.inputs.flake-compat.follows = "blank";
     nixvim.inputs.flake-parts.follows = "flake-parts";
-    nixvim.inputs.git-hooks.follows = "git-hooks";
-    nixvim.inputs.home-manager.follows = "home-manager";
-    nixvim.inputs.nix-darwin.follows = "blank";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.nuschtosSearch.follows = "blank";
-    nixvim.inputs.treefmt-nix.follows = "treefmt-nix";
     qtile.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
