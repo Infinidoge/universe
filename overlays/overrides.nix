@@ -24,6 +24,8 @@ in
   inherit latest fork stable;
 
   inherit (latest)
+    discord
+    discord-canary
     bitwarden-desktop
     factorio-headless
     hydrus
