@@ -15,7 +15,7 @@
   services.thelounge = {
     enable = true;
     dataDir = "/srv/thelounge";
-    plugins = with pkgs.theLoungePlugins; [
+    plugins = with pkgs.stable.theLoungePlugins; [
       themes.zenburn-monospace
       themes.dracula
       themes.discordapp
