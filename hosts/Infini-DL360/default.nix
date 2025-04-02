@@ -161,15 +161,17 @@
     {
       preHook = ''
         for sock in /run/minecraft/*.sock; do
-          ${tmux} -S $sock send-keys "say Server is backing up..." Enter
-          ${tmux} -S $sock send-keys save-off Enter
-          ${tmux} -S $sock send-keys save-all Enter
+          ${tmux} -S $sock send-keys "say Server is backing up..." Enter && \
+            ${tmux} -S $sock send-keys save-off Enter && \
+            ${tmux} -S $sock send-keys save-all Enter || \
+            echo "$sock failed to execute save"
         done
       '';
       postHook = ''
         for sock in /run/minecraft/*.sock; do
-          ${tmux} -S $sock send-keys save-on Enter
-          ${tmux} -S $sock send-keys "say Backup complete" Enter
+          ${tmux} -S $sock send-keys save-on Enter && \
+            ${tmux} -S $sock send-keys "say Backup complete" Enter || \
+            echo "$sock failed to reenable saving"
         done
       '';
     };
