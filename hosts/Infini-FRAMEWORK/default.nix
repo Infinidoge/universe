@@ -22,6 +22,7 @@
 
   home.home.packages = with pkgs; [
     ungoogled-chromium
+    sidequest
   ];
 
   environment.enableDebugInfo = true;
@@ -50,6 +51,10 @@
   hardware.uinput.enable = true;
   services.joycond.enable = true;
 
+  programs.alvr = {
+    enable = true;
+    openFirewall = true;
+  };
 
   services.printing.enable = true;
 
