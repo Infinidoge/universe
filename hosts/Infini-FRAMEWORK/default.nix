@@ -50,7 +50,6 @@
   hardware.uinput.enable = true;
   services.joycond.enable = true;
 
-  programs.kdeconnect.enable = true;
 
   services.printing.enable = true;
 
