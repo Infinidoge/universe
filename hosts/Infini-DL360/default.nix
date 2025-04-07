@@ -25,6 +25,7 @@
     ./postgresql.nix
     ./privoxy.nix
     ./radicale.nix
+    ./research.nix
     ./searx.nix
     ./ssh.nix
     ./thelounge.nix
