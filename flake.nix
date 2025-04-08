@@ -69,7 +69,7 @@
     qtile.url = "github:qtile/qtile";
 
     ## Authentik
-    authentik-nix.url = "github:nix-community/authentik-nix";
+    authentik-nix.url = "github:0x5a4/authentik-nix/fix-broken-cargo-fetch-tarball";
 
     ### Cleanup ###
     ## Common
