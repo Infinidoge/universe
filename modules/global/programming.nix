@@ -80,7 +80,7 @@ in
       ];
 
       python.packages = [
-        (python312.withPackages (
+        (python313.withPackages (
           p: with p; [
             black
             isort
