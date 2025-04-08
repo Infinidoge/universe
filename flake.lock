@@ -83,15 +83,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1743172544,
-        "narHash": "sha256-I6//hyls5T6Y93IgwbWn5izeT29o+yza4yRgBcmNars=",
-        "owner": "nix-community",
+        "lastModified": 1744133723,
+        "narHash": "sha256-Ea7LVXlxeMZu/Ol0/vswAjoFc+QbApdpJ8pKnClQshA=",
+        "owner": "0x5a4",
         "repo": "authentik-nix",
-        "rev": "b4916a86d4e650401e67dc03556eadb4a3cb248a",
+        "rev": "f4202fabebb9ae6e35e82f609ff5cb7e67fcc6f3",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "0x5a4",
+        "ref": "fix-broken-cargo-fetch-tarball",
         "repo": "authentik-nix",
         "type": "github"
       }
