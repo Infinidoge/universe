@@ -107,6 +107,8 @@ in
       proxyPass = "http://${cfg.settings.server.DOMAIN}:${toString cfg.settings.server.HTTP_PORT}";
       extraConfig = ''
         access_log /var/log/nginx/access.log combined if=$forgejo_access_log;
+        client_max_body_size 0;
+        proxy_request_buffering off;
       '';
     };
   };
