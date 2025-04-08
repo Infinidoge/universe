@@ -14,7 +14,7 @@ in
   });
 
   tailscale-doge = prev.tailscale.overrideAttrs (old: {
-    patches = old.patches ++ [ ./tailscale-cgnat.patch ];
+    patches = (old.patches or [ ]) ++ [ ./tailscale-cgnat.patch ];
     doCheck = false; # patch causes some tests to fail
   });
 
