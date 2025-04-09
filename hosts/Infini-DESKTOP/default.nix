@@ -64,7 +64,7 @@
   programs.minipro.enable = true;
 
   hardware.openrazer = {
-    enable = true;
+    enable = false; # https://github.com/NixOS/nixpkgs/issues/393664
     users = [ config.user.name ];
   };
 
