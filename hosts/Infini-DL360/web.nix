@@ -70,7 +70,7 @@ in
     };
     "old.inx.moe" = ssl-inx-optional // {
       locations."/" = {
-        root = "/srv/web/inx.moe";
+        root = "/srv/web/inx.moe/out";
         inherit tryFiles;
         extraConfig = websiteConfig;
       };
