@@ -4,7 +4,7 @@
     substituters = lib.flatten [
       (lib.optional (
         config.networking.hostName != "Infini-DESKTOP" && config.info.loc.home
-      ) "ssh://infini-desktop?priority=9")
+      ) "ssh-ng://infini-desktop?priority=9")
       "https://hydra.inx.moe?priority=10"
     ];
     trusted-public-keys = [
