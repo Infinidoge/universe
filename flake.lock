@@ -1081,11 +1081,11 @@
     "vencord": {
       "flake": false,
       "locked": {
-        "lastModified": 1743814386,
-        "narHash": "sha256-JDHw7FRMHmO4hV1zEzbzgqJ0rL1cxiX0DXeR0cj0MeA=",
+        "lastModified": 1744298045,
+        "narHash": "sha256-/CJt4CZ9R1xB72Zwc76te51Fb3q4KHuzDxP3jWGzW8E=",
         "owner": "Vendicated",
         "repo": "Vencord",
-        "rev": "d753478097294744398f84bb8c28fd6274b8195c",
+        "rev": "77bed92c575ced3228bf3e7ba8a1a6cd24362acf",
         "type": "github"
       },
       "original": {
