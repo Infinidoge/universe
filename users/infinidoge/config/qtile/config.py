@@ -90,7 +90,7 @@ class Apps:
         """
         Opens a file in the editor, with the given arguments
         """
-        return lazy.spawn(f"{cls.EDITOR} {' '.join(args)} {file_}")
+        return cls.open_in_terminal(f"{cls.EDITOR} {' '.join(args)} {file_}")
 
 
 class Keys:
