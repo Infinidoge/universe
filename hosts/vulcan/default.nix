@@ -32,5 +32,13 @@
         };
       };
       nix.settings.use-xdg-base-directories = true;
+
+      programs.zsh.initExtra = ''
+        stlas() {
+          user=$1
+          shift 1
+          exec sudo systemctl --machine ''${user}@.host "$@"
+        }
+      '';
     };
 }
