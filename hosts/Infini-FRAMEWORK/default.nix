@@ -92,38 +92,6 @@
     script = "${lib.getExe pkgs.brightnessctl} set 50%";
   };
 
-  networking.firewall.allowedUDPPorts = [ 51820 ];
-
-  networking.wg-quick.interfaces.wg0 = {
-    autostart = false;
-    address = [ "10.10.0.3/32" ];
-    listenPort = 51820;
-    privateKeyFile = "/home/infinidoge/tmp/bb-vpn-geg.key";
-    peers = [
-      {
-        publicKey = "SYpnrGvxx8l4w9c7KVRVW6GyNDr/iK+maPPMw/Ua7XY=";
-        allowedIPs = [ "10.9.0.0/24" ];
-        endpoint = "66.23.193.252:55555";
-        persistentKeepalive = 25;
-      }
-    ];
-  };
-  networking.wg-quick.interfaces.wg1 = {
-    autostart = false;
-    address = [ "10.11.0.3/32" ];
-    listenPort = 51820;
-    privateKeyFile = "/home/infinidoge/tmp/bb-vpn-dfw.key";
-    mtu = 1300;
-    peers = [
-      {
-        publicKey = "uPejaHkvkjOAjm5s+ILbxmHnw2gh3A1Wtz++ijS5TmI=";
-        allowedIPs = [ "10.40.1.0/24" ];
-        endpoint = "104.167.215.168:51820";
-        persistentKeepalive = 25;
-      }
-    ];
-  };
-
   systemd.timers.systemd-hibernate = {
     enable = true;
     wantedBy = [ "multi-user.target" ];
