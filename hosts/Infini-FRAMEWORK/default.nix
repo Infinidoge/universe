@@ -97,4 +97,6 @@
     wantedBy = [ "multi-user.target" ];
     timerConfig.OnCalendar = "Mon..Fri,Sun *-*-* 00:30:00";
   };
+
+  networking.proxy.default = "http://infini-dl360.tailnet.inx.moe:8118";
 }
