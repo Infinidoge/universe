@@ -25,6 +25,18 @@ in
 
       allowFreeURL = true;
       requireFreeURLAuthentication = true;
+
+      oauth2 = {
+        baseURL = "https://auth.inx.moe";
+        userProfileURL = "https://auth.inx.moe/application/o/userinfo/";
+        userProfileUsernameAttr = "preferred_username";
+        userProfileDisplayNameAttr = "name";
+        userProfileEmailAttr = "email";
+        tokenURL = "https://auth.inx.moe/application/o/token/";
+        authorizationURL = "https://auth.inx.moe/application/o/authorize/";
+        clientID = "W1nhnUi43GweNljV4ADGfZ9VKuH4aoN1cwCUNlFp";
+        scope = "openid email profile";
+      };
     };
   };
 
