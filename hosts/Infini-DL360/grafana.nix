@@ -30,7 +30,7 @@ in
       "auth.anonymous".enabled = true;
       "auth.basic".enabled = false;
       "auth.generic_oauth" = {
-        name = "authentik";
+        name = "INX Central";
         enabled = true;
         client_id = "yL4qqsKyc5i9mhvVUNFHcQyTGaYWxnqtMvceg0kY";
         client_secret = secret "client_secret";
