@@ -32,7 +32,12 @@ rec {
     in
     coercedTo packageListType flatten (listOf package);
 
+  coercedPackageListFunction =
+    with types;
+    coercedTo coercedPackageList (v: (_: v)) (functionTo coercedPackageList);
+
   packageListOpt = mkOpt coercedPackageList [ ];
+  packageListFunctionOpt = mkOpt coercedPackageListFunction [ ];
 
   addPackageLists = lib.mapAttrs (
     name: value:
