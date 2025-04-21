@@ -50,6 +50,7 @@ in
         gdb
         clang-tools
         binutils
+        valgrind
       ];
 
       csharp.packages = [
