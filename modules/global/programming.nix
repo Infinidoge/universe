@@ -6,7 +6,7 @@
 }:
 let
   inherit (lib) flip;
-  inherit (lib.our) mkBoolOpt' addPackageLists;
+  inherit (lib.our) mkBoolOpt' packageListFunctionOpt addPackageLists;
 
   cfg = config.universe.programming;
 
@@ -24,7 +24,10 @@ in
       java.enable = programmingOpt "Java";
       lua.enable = programmingOpt "Lua";
       nim.enable = programmingOpt "Nim";
-      python.enable = programmingOpt' "Python" true;
+      python = {
+        enable = programmingOpt' "Python" true;
+        pythonPackages = packageListFunctionOpt;
+      };
       racket.enable = programmingOpt "Racket";
       rust.enable = programmingOpt "Rust";
       zig.enable = programmingOpt "Zig";
@@ -79,19 +82,20 @@ in
         nim
       ];
 
+      python.pythonPackages = (
+        p: with p; [
+          black
+          isort
+          jupyter
+          mypy
+          parallel-ssh
+          pip
+          pyflakes
+          pytest
+        ]
+      );
       python.packages = [
-        (python313.withPackages (
-          p: with p; [
-            black
-            isort
-            jupyter
-            mypy
-            parallel-ssh
-            pip
-            pyflakes
-            pytest
-          ]
-        ))
+        (python313.withPackages cfg.python.pythonPackages)
         pipenv
         ruff
       ];
