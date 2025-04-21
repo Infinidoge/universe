@@ -78,6 +78,7 @@ in
           ncdu
           peaclock
           pop
+          reflex
           unison
 
           (lib.optionals (!main.universe.minimal.enable) [
