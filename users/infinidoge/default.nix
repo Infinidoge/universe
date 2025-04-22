@@ -74,6 +74,7 @@ in
         flatten [
           bitwarden-cli
           bsd-finger
+          gramma
           jmtpfs
           ncdu
           peaclock
