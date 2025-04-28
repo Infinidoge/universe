@@ -113,6 +113,12 @@ in
       ++ mkLeaderMap {
         c = {
           a.action.__raw = "vim.lsp.buf.code_action";
+          l = {
+            d.action.__raw = "vim.diagnostic.open_float";
+            "[".action.__raw = "vim.diagnostic.goto_prev";
+            "]".action.__raw = "vim.diagnostic.goto_next";
+            l.action.__raw = "vim.diagnostic.setloclist";
+          };
           f.action = ":Format<Enter>";
           t = {
             f.action = ":FormatToggle<Enter>";
