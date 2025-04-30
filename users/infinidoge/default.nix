@@ -84,6 +84,7 @@ in
             gramma
             jmtpfs
             packwiz
+            presenterm
             toot
           ])
 
