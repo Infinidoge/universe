@@ -74,8 +74,6 @@ in
         flatten [
           bitwarden-cli
           bsd-finger
-          gramma
-          jmtpfs
           ncdu
           peaclock
           pop
@@ -83,6 +81,8 @@ in
           unison
 
           (lib.optionals (!main.universe.minimal.enable) [
+            gramma
+            jmtpfs
             packwiz
             toot
           ])
