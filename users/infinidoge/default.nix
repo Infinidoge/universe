@@ -77,6 +77,7 @@ in
           ncdu
           peaclock
           pop
+          qrencode
           reflex
           unison
 
