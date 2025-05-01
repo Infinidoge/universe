@@ -159,7 +159,17 @@ in
       hydra = {
         enable = true;
       };
-      image.enable = universe.media.enable;
+      image = {
+        inherit (universe.media) enable;
+        settings = {
+          integrations = {
+            markdown = {
+              only_render_image_at_cursor = true;
+              only_render_image_at_cursor_mode = "popup";
+            };
+          };
+        };
+      };
       lsp-format.enable = true;
       mkdnflow = {
         enable = true;
