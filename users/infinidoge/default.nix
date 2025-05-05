@@ -22,20 +22,19 @@ in
         ./config
       ];
 
-      programs = {
-        git = {
-          userEmail = "infinidoge@inx.moe";
-          userName = "Infinidoge";
-          extraConfig = {
-            gpg.format = "ssh";
-            commit.gpgsign = true;
-            user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
-          };
+      programs.git = {
+        userEmail = "infinidoge@inx.moe";
+        userName = "Infinidoge";
+        extraConfig = {
+          gpg.format = "ssh";
+          commit.gpgsign = true;
+          user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
         };
-        firefox = {
-          enable = main.info.graphical;
-          package = pkgs.firefox-devedition;
-        };
+      };
+
+      programs.firefox = {
+        enable = main.info.graphical;
+        package = pkgs.firefox-devedition;
       };
 
       services.unison = {
@@ -68,52 +67,6 @@ in
         POP_SMTP_PASSWORD = "$(cat ${secrets.smtp-personal})";
         UNISON = "$HOME/.local/state/unison";
       };
-
-      home.packages =
-        with pkgs;
-        flatten [
-          bitwarden-cli
-          bsd-finger
-          ncdu
-          peaclock
-          pop
-          qrencode
-          reflex
-          unison
-
-          (lib.optionals (!main.universe.minimal.enable) [
-            gramma
-            jmtpfs
-            packwiz
-            presenterm
-            toot
-          ])
-
-          (ifGraphical [
-            speedcrunch
-            (discord-canary.override {
-              withVencord = true;
-              withOpenASAR = true;
-              withTTS = false;
-            })
-          ])
-
-          (lib.optionals (!main.universe.minimal.enable && main.info.graphical) [
-            (discord.override {
-              withVencord = true;
-              withOpenASAR = true;
-              withTTS = false;
-            })
-            schildichat-desktop
-            signal-desktop
-            teams-for-linux
-            thunderbird
-            tor-browser
-            bitwarden
-            qbittorrent
-            sqlitebrowser
-          ])
-        ];
     };
 
   systemd.user.tmpfiles.users.infinidoge.rules = mkIf config.universe.media.enable [
