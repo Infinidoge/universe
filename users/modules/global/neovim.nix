@@ -150,7 +150,14 @@ in
         settings.options.disable_when_touch = true;
       };
       comment.enable = true;
-      cmp.enable = true;
+      cmp = {
+        enable = true;
+        autoEnableSources = true;
+        settings.sources = [
+          { name = "nvim_lsp"; }
+          { name = "path"; }
+        ];
+      };
       cursorline.enable = true;
       direnv.enable = true;
       fidget.enable = true;
