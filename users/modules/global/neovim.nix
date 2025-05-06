@@ -146,7 +146,7 @@ in
 
     plugins = {
       autoclose = {
-        enable = true;
+        enable = false;
         settings.options.disable_when_touch = true;
       };
       comment.enable = true;
@@ -175,7 +175,7 @@ in
         enable = true;
       };
       nix.enable = true;
-      # nvim-autopairs.enable = true;
+      nvim-autopairs.enable = true;
       vim-surround.enable = true;
       todo-comments.enable = true;
       treesitter-context.enable = false;
