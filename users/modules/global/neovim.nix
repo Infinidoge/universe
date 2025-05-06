@@ -149,15 +149,37 @@ in
         enable = false;
         settings.options.disable_when_touch = true;
       };
-      comment.enable = true;
-      cmp = {
+      blink-cmp = {
         enable = true;
-        autoEnableSources = true;
-        settings.sources = [
-          { name = "nvim_lsp"; }
-          { name = "path"; }
-        ];
+        settings = {
+          completion = {
+            accept = {
+              auto_brackets = {
+                enabled = true;
+              };
+            };
+          };
+          keymap = {
+            preset = "default";
+            "<Up>" = [
+              "select_prev"
+              "fallback"
+            ];
+            "<Down>" = [
+              "select_next"
+              "fallback"
+            ];
+            "<CR>" = [
+              "accept"
+              "fallback"
+            ];
+          };
+          signature = {
+            enabled = true;
+          };
+        };
       };
+      comment.enable = true;
       cursorline.enable = true;
       direnv.enable = true;
       fidget.enable = true;
