@@ -174,22 +174,6 @@ in
       mkdnflow = {
         enable = true;
       };
-      neorg = {
-        enable = true;
-        settings = {
-          load =
-            let
-              empty = {
-                __empty = null;
-              };
-            in
-            {
-              "core.defaults" = empty;
-              "core.concealer" = empty;
-            };
-        };
-
-      };
       nix.enable = true;
       # nvim-autopairs.enable = true;
       vim-surround.enable = true;
