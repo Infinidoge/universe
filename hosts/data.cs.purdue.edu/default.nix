@@ -11,6 +11,8 @@
   modules.hardware.form.server = true;
   modules.secrets.enable = false;
 
+  universe.minimal.enable = true;
+
   networking = {
     domain = "cs.purdue.edu";
     hostName = "data";
