@@ -40,22 +40,25 @@ in
       services.unison = {
         enable = true;
         pairs = {
-          "PrismLauncher" = mkIf (main.networking.hostName != "Infini-DL360") {
-            roots = [
-              "/home/infinidoge/.local/share/PrismLauncher"
-              "ssh://inx.moe/sync/PrismLauncher"
-            ];
-            commandOptions = {
-              ignore = [
-                "BelowPath cache"
-                "BelowPath logs"
-                "BelowPath **/logs"
-                "Path **/*.log"
-                "BelowPath meta"
-                "Path metacache"
-              ];
-            };
-          };
+          "PrismLauncher" =
+            mkIf
+              (main.networking.hostName != "Infini-DL360" && main.modules.desktop.gaming.prismlauncher.enable)
+              {
+                roots = [
+                  "/home/infinidoge/.local/share/PrismLauncher"
+                  "ssh://inx.moe/sync/PrismLauncher"
+                ];
+                commandOptions = {
+                  ignore = [
+                    "BelowPath cache"
+                    "BelowPath logs"
+                    "BelowPath **/logs"
+                    "Path **/*.log"
+                    "BelowPath meta"
+                    "Path metacache"
+                  ];
+                };
+              };
         };
       };
 
