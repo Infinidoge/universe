@@ -50,7 +50,7 @@ let
     location ~ "/\..+" { deny all; }
 
     add_header Content-Security-Policy "${cspString}";
-    add_header X-Content-Type-Options "nosniff;";
+    add_header X-Content-Type-Options "nosniff";
   '';
 
   mkRedirect = to: ssl-optional // { globalRedirect = to; };
@@ -73,7 +73,7 @@ in
         extraConfig =
           websiteConfig
           + ''
-            add_header Strict-Transport-Security "max-age=2592000;";
+            add_header Strict-Transport-Security "max-age=15768000;";
           '';
       };
     };
