@@ -8,6 +8,37 @@
 with common.nginx;
 let
   tryFiles = "$uri $uri.html $uri/ =404";
+  csp = rec {
+    default-src = [
+      "'self'"
+      "'unsafe-inline'"
+    ];
+    frame-ancestors = [
+      "'self'"
+    ];
+    script-src = default-src ++ [
+      "storage.ko-fi.com"
+    ];
+    style-src = default-src ++ [
+      "fonts.googleapis.com"
+    ];
+    img-src = [
+      "'self'"
+      "storage.ko-fi.com"
+    ];
+    font-src = [
+      "'self'"
+      "fonts.gstatic.com"
+    ];
+    frame-src = [
+      "'self'"
+      "github.com"
+    ];
+  };
+  cspString = lib.concatStringsSep " " (
+    lib.mapAttrsToList (kind: locations: "${kind} ${lib.concatStringsSep " " locations};") csp
+  );
+
   websiteConfig = ''
     error_page 403 /403.html;
     error_page 404 /404.html;
@@ -18,7 +49,7 @@ let
     location ~* "\.(nix|lock)" { deny all; }
     location ~ "/\..+" { deny all; }
 
-    add_header Content-Security-Policy "default-src 'self' inx.moe files.inx.moe; frame-ancestors 'self' https://inx.moe; script-src 'self' inx.moe files.inx.moe storage.ko-fi.com; frame-src 'self' inx.moe files.inx.moe github.com;";
+    add_header Content-Security-Policy "${cspString}";
     add_header X-Content-Type-Options "nosniff;";
   '';
 
