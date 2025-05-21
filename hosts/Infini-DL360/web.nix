@@ -17,6 +17,9 @@ let
     location = /template.html { deny all; }
     location ~* "\.(nix|lock)" { deny all; }
     location ~ "/\..+" { deny all; }
+
+    add_header Content-Security-Policy "default-src 'self' inx.moe files.inx.moe; frame-ancestors 'self' https://inx.moe; script-src 'self' inx.moe files.inx.moe storage.ko-fi.com; frame-src 'self' inx.moe files.inx.moe github.com;";
+    add_header X-Content-Type-Options "nosniff;";
   '';
 
   mkRedirect = to: ssl-optional // { globalRedirect = to; };
@@ -36,7 +39,11 @@ in
       locations."/" = {
         root = "/srv/web/inx.moe/out"; # TODO: Make this less volatile
         inherit tryFiles;
-        extraConfig = websiteConfig;
+        extraConfig =
+          websiteConfig
+          + ''
+            add_header Strict-Transport-Security "max-age=2592000;";
+          '';
       };
     };
     "nitter.inx.moe" = mkRedirect "twitter.com";
