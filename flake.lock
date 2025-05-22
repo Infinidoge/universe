@@ -492,11 +492,11 @@
     },
     "latest": {
       "locked": {
-        "lastModified": 1746105568,
-        "narHash": "sha256-L1rhMaN2dhRqnX6qFsjn7SLVK3GphRh56IBARJ8hOQ8=",
+        "lastModified": 1747925835,
+        "narHash": "sha256-adyF8Ua9opp2d6UwU9PXGAwVcLnff+H++lqdfl4Uh5k=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "86371bdb566ab7d45f01a2334193a101995a02f4",
+        "rev": "6ac3a69b20136871f6bd33d98b69627dc907a6e8",
         "type": "github"
       },
       "original": {
@@ -1081,11 +1081,11 @@
     "vencord": {
       "flake": false,
       "locked": {
-        "lastModified": 1747093138,
-        "narHash": "sha256-lut3+ctEXkOdByAbzZvwYGNnz27NkK3E69Cqch6bHXs=",
+        "lastModified": 1747859341,
+        "narHash": "sha256-vSjqZFDi+x+xMnBo6GYbCig3GXIHnKCSPlDF9GvVBS8=",
         "owner": "Vendicated",
         "repo": "Vencord",
-        "rev": "92ff9c1ca4dfb787178cdfdd1d4178ac113b9188",
+        "rev": "bbeaa461e5f63e1347e43be279d5d25d4f0d8777",
         "type": "github"
       },
       "original": {
