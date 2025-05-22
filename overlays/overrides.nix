@@ -29,6 +29,7 @@ in
     bitwarden-desktop
     factorio-headless
     hydrus
+    presenterm
     ;
 
   inherit (fork)
@@ -45,14 +46,6 @@ in
       hash = "sha256-Ib7ZbRJ4hOdV+bfNQSQwYcDsHh/gWyweTV69UhG8DY0=";
     };
     vendorHash = "sha256-tg1cJoHy5gE/45IIN+wxltQOhr8voToWyBss0+dUhg4=";
-  });
-
-  presenterm = latest.presenterm.overrideAttrs (old: {
-    src = old.src.override {
-      rev = "60f6208594779611236e63592ffdba5d7fcfa4d3";
-      hash = "sha256-qefRNOJkCtnrLtMBW8twP+GcWObPtEBYXQBdAwQ4bMo=";
-      tag = null;
-    };
   });
 
   vencord = latest.vencord.overrideAttrs (old: rec {
