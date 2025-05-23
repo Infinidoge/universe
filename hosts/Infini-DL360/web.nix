@@ -119,39 +119,11 @@ in
         tryFiles = "$uri $uri/ $uri.html /index.html";
       };
     };
-    "lamp.inx.moe" = ssl-inx // {
-      locations."/" = {
-        proxyPass = "http://localhost:48080";
-      };
-    };
   };
 
   services.uwsgi = {
     enable = true;
     plugins = [ "python3" ];
     instance.type = "emperor";
-  };
-
-  services.httpd.enable = true;
-  services.httpd.virtualHosts."lamp.inx.moe" = rec {
-    listen = [
-      {
-        ip = "127.0.0.1";
-        port = 48080;
-      }
-    ];
-
-    adminAddr = "webmaster@inx.moe";
-    documentRoot = "/srv/web/lamp.inx.moe";
-
-    extraConfig = ''
-      AddHandler cgi-script .cgi
-
-      <Directory "${documentRoot}">
-          AllowOverride All
-          Options All
-          Require all granted
-      </Directory>
-    '';
   };
 }
