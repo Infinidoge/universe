@@ -135,6 +135,7 @@ in
       "systemd-journal"
       "video"
       "wheel"
+      "wwwrun"
     ];
     shell = pkgs.zsh;
 
