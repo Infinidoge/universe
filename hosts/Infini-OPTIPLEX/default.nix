@@ -30,4 +30,20 @@
     defaultShared = true;
     openFirewall = true;
   };
+
+  services.httpd = {
+    enable = true;
+    virtualHosts."infini-optiplex.tailnet.inx.moe" = rec {
+      documentRoot = "/srv/seppo";
+      extraConfig = ''
+        AddHandler cgi-script .cgi
+
+        <Directory "${documentRoot}">
+            AllowOverride All
+            Options All
+            Require all granted
+        </Directory>
+      '';
+    };
+  };
 }
