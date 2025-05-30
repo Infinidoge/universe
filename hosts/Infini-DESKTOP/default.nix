@@ -56,8 +56,12 @@
   home.home.packages = with pkgs; [
     arduino
     hydrus
-    sidequest
     razergenie # TODO: replace with polychromatic
+
+    sidequest
+    unityhub
+    vrc-get
+    blender
   ];
 
   programs.ns-usbloader.enable = true;
