@@ -57,6 +57,9 @@ in
                     "BelowPath meta"
                     "Path metacache"
                   ];
+                  sshargs = [
+                    "-o ControlMaster=no"
+                  ];
                 };
               };
         };
