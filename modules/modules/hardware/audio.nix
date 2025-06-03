@@ -27,7 +27,7 @@ in
       easyeffects
     ];
 
-    security.rtkit.enable = true;
+    security.rtkit.enable = false; # FIXME: https://github.com/NixOS/nixpkgs/issues/392992
 
     persist.directories = [
       "/var/lib/alsa"
