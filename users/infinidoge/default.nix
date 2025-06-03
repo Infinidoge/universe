@@ -133,6 +133,7 @@ in
       "libvirtd"
       "minecraft"
       "nginx"
+      "pipewire"
       "plugdev"
       "smtp"
       "systemd-journal"
