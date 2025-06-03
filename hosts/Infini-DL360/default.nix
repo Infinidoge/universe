@@ -23,6 +23,7 @@
     ./jellyfin.nix
     ./jupyter.nix
     ./minecraft.nix
+    ./murmur.nix
     ./postgresql.nix
     ./privoxy.nix
     ./radicale.nix
