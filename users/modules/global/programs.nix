@@ -87,6 +87,7 @@ in
             withOpenASAR = true;
             withTTS = false;
           })
+          mumble
           schildichat-desktop
           signal-desktop
           teams-for-linux
