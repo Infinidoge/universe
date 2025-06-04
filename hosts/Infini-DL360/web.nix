@@ -103,7 +103,11 @@ in
     "random.inx.moe" = ssl-inx // {
       locations."/" = {
         root = "/srv/web/files.inx.moe/subject";
-        extraConfig = "random_index on;";
+        extraConfig = ''
+          random_index on;
+          etag off;
+          add_header Cache-Control 'no-cache, no-store, max-age=0';
+        '';
       };
     };
     "old.inx.moe" = ssl-inx-optional // {
