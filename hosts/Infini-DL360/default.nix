@@ -197,12 +197,4 @@
   ];
 
   services.printing.enable = true;
-
-  hardware.printers.ensurePrinters = [
-    {
-      name = "EPSON-TM-m30-remote";
-      deviceUri = "ipp://100.101.102.18/printers/EPSON-TM-m30";
-      model = "raw";
-    }
-  ];
 }
