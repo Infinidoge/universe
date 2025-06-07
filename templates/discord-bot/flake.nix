@@ -2,7 +2,7 @@
   description = "Template for Python-based Discord bots";
 
   inputs = {
-    nixpkgs.url = "github:Infinidoge/nixpkgs/feat/disnake";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     devshell.url = "github:numtide/devshell";
     pyproject-nix.url = "github:nix-community/pyproject.nix";
