@@ -2,9 +2,7 @@
 let
   cfg = config.services.openssh;
 
-  neofetchConfig = pkgs.substituteAll {
-    src = ./neofetch.conf;
-
+  neofetchConfig = pkgs.replaceVars ./neofetch.conf {
     inherit (config.info) model;
   };
 in
