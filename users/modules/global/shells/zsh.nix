@@ -17,7 +17,7 @@
     #  [[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
     #'';
 
-    initExtra = ''
+    initContent = ''
       ${pkgs.kitty}/bin/kitty + complete setup zsh | source /dev/stdin
       ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
