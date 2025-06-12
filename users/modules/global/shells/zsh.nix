@@ -13,9 +13,9 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    initExtraFirst = ''
-      [[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
-    '';
+    #initExtraFirst = ''
+    #  [[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
+    #'';
 
     initExtra = ''
       ${pkgs.kitty}/bin/kitty + complete setup zsh | source /dev/stdin
