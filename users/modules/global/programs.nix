@@ -73,6 +73,7 @@ in
       communication.minimal = [
         (ifGraphical [
           (discord-canary.override {
+            inherit (pkgs) vencord;
             withVencord = true;
             withOpenASAR = true;
             withTTS = false;
