@@ -55,6 +55,9 @@ in
       VENCORD_REMOTE = "Vendicated/Vencord";
       VENCORD_HASH = builtins.substring 0 9 inputs.vencord.rev;
     };
+    postPatch = ''
+      sed -i '/export const CspPolicies/a "inx.moe": ImageScriptsAndCssSrc,' src/main/csp/index.ts
+    '';
     #pnpmDeps = latest.pnpm.fetchDeps {
     #  inherit (old) pname;
     #  inherit version src;
