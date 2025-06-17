@@ -85,7 +85,7 @@
   };
 
   systemd.timers.systemd-hibernate = {
-    enable = true;
+    enable = false;
     wantedBy = [ "multi-user.target" ];
     timerConfig.OnCalendar = "Mon..Fri,Sun *-*-* 00:30:00";
   };
