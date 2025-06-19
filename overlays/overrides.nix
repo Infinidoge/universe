@@ -33,6 +33,7 @@ in
     ;
 
   inherit (fork)
+    discordchatexporter-cli
     ;
 
   inherit (stable)
