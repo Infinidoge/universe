@@ -67,6 +67,8 @@
       pfl = "push --force-with-lease";
       pu = "pull";
       pua = "pull --autostash";
+      pup = "!git pull && git push";
+      puap = "!git pull --autostash && git push";
       b = "branch";
       ba = "branch -a";
       bd = "branch -d";
