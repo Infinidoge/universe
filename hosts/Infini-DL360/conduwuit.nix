@@ -6,7 +6,7 @@
 }:
 let
   domain = common.subdomain "matrix";
-  cfg = config.services.conduwuit;
+  cfg = config.services.conduwuit-vendor;
   host = "http://localhost:${toString cfg.settings.global.port}";
 in
 {
