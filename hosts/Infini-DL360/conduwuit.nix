@@ -12,7 +12,7 @@ in
 {
   persist.directories = [ "/var/lib/private/conduwuit" ];
 
-  services.conduwuit = {
+  services.conduwuit-vendor = {
     enable = true;
     package = inputs.conduwuit.packages.x86_64-linux.default;
     settings = {
