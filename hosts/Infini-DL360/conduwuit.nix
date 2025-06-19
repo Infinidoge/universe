@@ -6,13 +6,13 @@
 }:
 let
   domain = common.subdomain "matrix";
-  cfg = config.services.conduwuit;
+  cfg = config.services.conduwuit-vendor;
   host = "http://localhost:${toString cfg.settings.global.port}";
 in
 {
   persist.directories = [ "/var/lib/private/conduwuit" ];
 
-  services.conduwuit = {
+  services.conduwuit-vendor = {
     enable = true;
     package = inputs.conduwuit.packages.x86_64-linux.default;
     settings = {
