@@ -100,6 +100,12 @@ in
         root = "/srv/web/files.inx.moe";
       };
     };
+    "archive.inx.moe" = ssl-inx // {
+      locations."/" = {
+        root = "/srv/web/archive.inx.moe";
+        extraConfig = "expires max;";
+      };
+    };
     "random.inx.moe" = ssl-inx // {
       locations."/" = {
         root = "/srv/web/files.inx.moe/subject";
@@ -130,4 +136,6 @@ in
     plugins = [ "python3" ];
     instance.type = "emperor";
   };
+
+  storage.directories = [ "/srv/web/archive.inx.moe" ];
 }
