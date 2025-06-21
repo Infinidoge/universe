@@ -48,6 +48,7 @@
 
     ## Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    drasl.url = "github:unmojang/drasl";
 
     ## Rust
     rust-overlay.url = "github:oxalica/rust-overlay";
@@ -100,6 +101,7 @@
     conduwuit.inputs.nixpkgs.follows = "nixpkgs";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    drasl.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-utils.inputs.systems.follows = "systems";
     git-hooks.inputs.flake-compat.follows = "blank";
@@ -254,6 +256,7 @@
                 inputs.lix-module.nixosModules.default
                 inputs.hydra.nixosModules.overlayNixpkgsForThisHydra
                 inputs.nix-minecraft.nixosModules.minecraft-servers
+                inputs.drasl.nixosModules.drasl
               ] ++ (self.lib.leaves ./modules);
             }) (self.lib.flattenLeaves ./hosts);
 

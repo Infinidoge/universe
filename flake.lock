@@ -130,6 +130,27 @@
         "type": "github"
       }
     },
+    "buildNodeModules": {
+      "inputs": {
+        "nixpkgs": [
+          "drasl",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1707354861,
+        "narHash": "sha256-L10H5hh9S6y20c7AKuKJ2h9BczODqpTCoGEZBDPJhd0=",
+        "owner": "adisbladis",
+        "repo": "buildNodeModules",
+        "rev": "76c7c56dd9dcea355a8e2ebd0f228a8f2d1e1ee8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "adisbladis",
+        "repo": "buildNodeModules",
+        "type": "github"
+      }
+    },
     "complement": {
       "flake": false,
       "locked": {
@@ -260,6 +281,27 @@
         "owner": "nix-community",
         "ref": "latest",
         "repo": "disko",
+        "type": "github"
+      }
+    },
+    "drasl": {
+      "inputs": {
+        "buildNodeModules": "buildNodeModules",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1745600873,
+        "narHash": "sha256-pVUWppj3u0qOa1G06X/2ettNHmTsl01TrjTh8y18ZGw=",
+        "owner": "unmojang",
+        "repo": "drasl",
+        "rev": "8ff0a07efc4fb8ab2a0509407caccbd16934661d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "unmojang",
+        "repo": "drasl",
         "type": "github"
       }
     },
@@ -901,6 +943,7 @@
         "conduwuit": "conduwuit",
         "devshell": "devshell",
         "disko": "disko",
+        "drasl": "drasl",
         "flake-parts": "flake-parts",
         "flake-registry": "flake-registry",
         "flake-utils": "flake-utils",

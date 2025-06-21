@@ -13,6 +13,7 @@
     private.nixosModules.minecraft-servers
     ./authentik.nix
     ./conduwuit.nix
+    ./drasl.nix
     ./factorio.nix
     ./forgejo.nix
     ./freshrss.nix
