@@ -12,6 +12,9 @@ let
     filterAttrs
     mapAttrs'
     ;
+
+  authorizedKeysFiles =
+    users: lib.concatStringsSep " " (map (u: "/etc/ssh/authorized_keys.d/${u}") users);
 in
 {
   nix = {
@@ -152,10 +155,20 @@ in
     description = "Unprivledged user for Nix remote builds";
     isSystemUser = true;
     shell = pkgs.bashInteractive;
-    openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
     group = "remotebuild";
   };
   users.groups.remotebuild = { };
+
+  services.openssh.extraConfig = ''
+    Match user remotebuild
+      AuthorizedKeysFile ${
+        authorizedKeysFiles [
+          "infinidoge"
+          "root"
+          "%u"
+        ]
+      }
+  '';
 
   nix.buildMachines = [
     {
