@@ -120,6 +120,7 @@ in
   universe.packages = with pkgs; [
     nix-diff
     nix-du
+    nix-inspect
     nix-melt
     nix-output-monitor
     nix-tree
