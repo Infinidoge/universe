@@ -45,6 +45,7 @@
     lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
     lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
     hydra.url = "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz";
+    nil.url = "github:oxalica/nil";
 
     ## Minecraft
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
@@ -117,6 +118,7 @@
     lix.inputs.flake-compat.follows = "blank";
     lix.inputs.nixpkgs.follows = "nixpkgs";
     lix.inputs.pre-commit-hooks.follows = "git-hooks";
+    nil.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.flake-compat.follows = "blank";
     nix-minecraft.inputs.flake-utils.follows = "flake-utils";
@@ -210,6 +212,7 @@
 
                     # --- Domain-Specific Overlays
                     inputs.agenix.overlays.default
+                    inputs.nil.overlays.default
                     inputs.nix-minecraft.overlay
                     inputs.qtile.overlays.default
                     inputs.rust-overlay.overlays.default
