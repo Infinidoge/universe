@@ -15,6 +15,7 @@ rec {
   tmx-cups-ppd = pkgs.callPackage ./tmx-cups-ppd.nix { };
   unbted = pkgs.callPackage ./unbted.nix { };
   unmap = pkgs.callPackage ./unmap { };
+  unsup = pkgs.callPackage ./unsup.nix { };
   vpython-jupyter = pkgs.python3Packages.callPackage ./vpython-jupyter.nix {
     inherit jupyterlab-vpython;
   };
