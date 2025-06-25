@@ -236,6 +236,7 @@ in
           # Try nixd
           nil_ls = {
             enable = true;
+            package = pkgs.nil;
             extraOptions = {
               settings.nil.formatting.command = [ "nixfmt" ];
             };
