@@ -63,6 +63,7 @@
   ];
 
   nix.settings.accept-flake-config = true;
+  nix.gc.automatic = false;
 
   networking = {
     firewall = {
