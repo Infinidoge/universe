@@ -1,17 +1,25 @@
 { pkgs, ... }:
+let
+  ram = amount: [
+    "-Xmx${amount}"
+    "-Xms${amount}"
+  ];
+  common = [ "-XX:+UseNUMA" ];
+  java8 = common ++ [ "-XX:UseG1GC" ];
+  java17 = common ++ [ "-XX:+UseZGC" ];
+  java21 = java17 ++ [ "-XX:+ZGenerational" ];
 
+  unsup = [ "-javaagent:${pkgs.unsup}" ];
+
+  withJava21 = minecraft: minecraft.override { jre_headless = pkgs.openjdk21; };
+  withVersion = loaderVersion: minecraft: minecraft.override { inherit loaderVersion; };
+
+  inherit (pkgs) minecraftServers;
+in
 {
   services.minecraft-servers.servers.hackcraft = {
     enable = true;
-    jvmOpts = [
-      "-Xmx8G"
-      "-Xms8G"
-
-      "-XX:+UseZGC"
-      "-XX:+ZGenerational"
-      "-XX:+UseNUMA"
-      "-javaagent:unsup-1.1-beta1.jar"
-    ];
+    jvmOpts = java21 ++ (ram "8G") ++ unsup;
     serverProperties = {
       motd = "Hacking, and perhaps, even crafting!";
       difficulty = "normal";
