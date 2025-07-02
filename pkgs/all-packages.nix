@@ -1,6 +1,7 @@
 { pkgs }:
 rec {
   bytecode-viewer = pkgs.callPackage ./bytecode-viewer.nix { };
+  dropout-dl = pkgs.callPackage ./dropout-dl.nix { };
   ears-cli = pkgs.callPackage ./ears-cli.nix { };
   fw-ectool = pkgs.callPackage ./fw-ectool.nix { };
   hexagon = pkgs.callPackage ./hexagon.nix { };
