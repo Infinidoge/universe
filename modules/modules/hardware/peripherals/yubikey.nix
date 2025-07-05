@@ -17,7 +17,7 @@ in
     home.home.packages = with pkgs; [
       yubikey-manager
       yubikey-personalization
-      yubikey-personalization-gui
+      # yubikey-personalization-gui # Archived upstream
       yubico-piv-tool
       yubioath-flutter
     ];
