@@ -65,8 +65,8 @@ in
 
     gc = {
       automatic = lib.mkDefault true;
-      options = "--delete-older-than 7d";
-      dates = "weekly";
+      options = lib.mkDefault "--delete-older-than 7d";
+      dates = lib.mkDefault "weekly";
     };
 
     optimise.automatic = true;
