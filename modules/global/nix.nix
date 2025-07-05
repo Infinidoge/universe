@@ -190,4 +190,14 @@ in
       sshUser = "remotebuild";
     }
   ];
+
+  home-manager.sharedModules = [
+    {
+      nix.gc = {
+        automatic = lib.mkDefault config.nix.gc.automatic;
+        frequency = lib.mkDefault config.nix.gc.dates;
+        options = lib.mkDefault config.nix.gc.options;
+      };
+    }
+  ];
 }
