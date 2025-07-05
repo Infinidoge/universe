@@ -85,4 +85,11 @@ in
   ];
 
   python-grip = fork.python3Packages.grip;
+
+  # BUG: https://github.com/NixOS/nixpkgs/issues/418451
+  gnome2 = prev.gnome2.overrideScope (
+    _: _: {
+      GConf = null;
+    }
+  );
 }
