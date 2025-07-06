@@ -195,7 +195,7 @@ in
     {
       nix.gc = {
         automatic = lib.mkDefault config.nix.gc.automatic;
-        frequency = lib.mkDefault config.nix.gc.dates;
+        frequency = lib.mkDefault "weekly";
         options = lib.mkDefault config.nix.gc.options;
       };
     }
