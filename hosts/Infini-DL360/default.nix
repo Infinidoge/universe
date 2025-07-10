@@ -11,6 +11,7 @@
     ./secrets
 
     private.nixosModules.minecraft-servers
+    private.nixosModules.wireguard
     ./authentik.nix
     ./conduwuit.nix
     ./drasl.nix
@@ -35,6 +36,7 @@
     ./torrenting.nix
     ./vaultwarden.nix
     ./web.nix
+    ./wireguard.nix
   ];
 
   system.stateVersion = "23.11";
