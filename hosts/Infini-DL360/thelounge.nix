@@ -23,6 +23,8 @@
     port = 9786;
     extraConfig = {
       reverseProxy = true;
+      prefetch = true;
+      fileUpload.enable = true;
     };
   };
 }
