@@ -854,11 +854,11 @@
     },
     "private": {
       "locked": {
-        "lastModified": 1752609660,
-        "narHash": "sha256-NKTYLfyLHPoegSQM8C/q48MePKWVGd+iSW9upyHP2hM=",
+        "lastModified": 1753118082,
+        "narHash": "sha256-8hyOTjc1FttR/pu8A+TLpOU51g/Ne2+uc9w64JR+zzE=",
         "ref": "refs/heads/master",
-        "rev": "7f78b3e2b28934ca39ac2584c14a23ffe168e0b6",
-        "revCount": 57,
+        "rev": "41b9df31ff0db950c3fdda8600c40275e0edc441",
+        "revCount": 59,
         "type": "git",
         "url": "ssh://git@github.com/Infinidoge/universe-private"
       },
