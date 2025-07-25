@@ -1,20 +1,18 @@
 {
   config,
   common,
-  inputs,
   ...
 }:
 let
   domain = common.subdomain "matrix";
-  cfg = config.services.conduwuit-vendor;
+  cfg = config.services.matrix-continuwuity;
   host = "http://localhost:${toString cfg.settings.global.port}";
 in
 {
-  persist.directories = [ "/var/lib/private/conduwuit" ];
+  persist.directories = [ "/var/lib/private/continuwuity" ];
 
-  services.conduwuit-vendor = {
+  services.matrix-continuwuity = {
     enable = true;
-    package = inputs.conduwuit.packages.x86_64-linux.default;
     settings = {
       global = {
         allow_registration = false;
