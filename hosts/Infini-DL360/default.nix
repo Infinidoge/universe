@@ -13,7 +13,7 @@
     private.nixosModules.minecraft-servers
     private.nixosModules.wireguard
     ./authentik.nix
-    ./conduwuit.nix
+    ./continuwuity.nix
     ./drasl.nix
     ./factorio.nix
     ./forgejo.nix
