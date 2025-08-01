@@ -206,6 +206,29 @@
         "type": "github"
       }
     },
+    "copyparty": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753651064,
+        "narHash": "sha256-k405QhnJ0kpX2/EvBDX5SdWTbkhhQKHaRGwsLwiPPCk=",
+        "owner": "9001",
+        "repo": "copyparty",
+        "rev": "d197e754b9691f9c4277278396b230c98c3bd228",
+        "type": "github"
+      },
+      "original": {
+        "owner": "9001",
+        "repo": "copyparty",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1739936662,
@@ -854,11 +877,11 @@
     },
     "private": {
       "locked": {
-        "lastModified": 1753118082,
-        "narHash": "sha256-8hyOTjc1FttR/pu8A+TLpOU51g/Ne2+uc9w64JR+zzE=",
+        "lastModified": 1754018037,
+        "narHash": "sha256-zG6wWTKBorCaFvD8X0jQV8R6JLuJ/NBEDTo2GAE7v1g=",
         "ref": "refs/heads/master",
-        "rev": "41b9df31ff0db950c3fdda8600c40275e0edc441",
-        "revCount": 59,
+        "rev": "31e2ac721e711ba2e8fe7af135beeaf3aac4ce23",
+        "revCount": 60,
         "type": "git",
         "url": "ssh://git@github.com/Infinidoge/universe-private"
       },
@@ -961,6 +984,7 @@
         "authentik-nix": "authentik-nix",
         "blank": "blank",
         "conduwuit": "conduwuit",
+        "copyparty": "copyparty",
         "devshell": "devshell",
         "disko": "disko",
         "drasl": "drasl",
