@@ -14,6 +14,7 @@
     private.nixosModules.wireguard
     ./authentik.nix
     ./continuwuity.nix
+    ./copyparty.nix
     ./drasl.nix
     ./factorio.nix
     ./forgejo.nix

@@ -91,15 +91,6 @@ in
       };
       locations."/buy".return = "301 https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/";
     };
-    "files.inx.moe" = ssl-inx // {
-      locations."/" = {
-        root = "/srv/web/files.inx.moe";
-        extraConfig = "autoindex on;";
-      };
-      locations."/p/" = {
-        root = "/srv/web/files.inx.moe";
-      };
-    };
     "archive.inx.moe" = ssl-inx // {
       locations."/" = {
         root = "/srv/web/archive.inx.moe";

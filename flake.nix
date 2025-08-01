@@ -72,6 +72,9 @@
     ## Authentik
     authentik-nix.url = "github:nix-community/authentik-nix";
 
+    # Misc
+    copyparty.url = "github:9001/copyparty";
+
     ### Cleanup ###
     ## Common
     blank.url = "github:divnix/blank";
@@ -100,6 +103,8 @@
     conduwuit.inputs.flake-compat.follows = "blank";
     conduwuit.inputs.flake-utils.follows = "flake-utils";
     conduwuit.inputs.nixpkgs.follows = "nixpkgs";
+    copyparty.inputs.flake-utils.follows = "flake-utils";
+    copyparty.inputs.nixpkgs.follows = "nixpkgs";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     drasl.inputs.nixpkgs.follows = "nixpkgs";
@@ -212,6 +217,7 @@
 
                     # --- Domain-Specific Overlays
                     inputs.agenix.overlays.default
+                    inputs.copyparty.overlays.default
                     inputs.nil.overlays.default
                     inputs.nix-minecraft.overlay
                     inputs.qtile.overlays.default
@@ -260,6 +266,7 @@
                 inputs.hydra.nixosModules.overlayNixpkgsForThisHydra
                 inputs.nix-minecraft.nixosModules.minecraft-servers
                 inputs.drasl.nixosModules.drasl
+                inputs.copyparty.nixosModules.default
               ] ++ (self.lib.leaves ./modules);
             }) (self.lib.flattenLeaves ./hosts);
 
