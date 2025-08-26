@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.services.openssh;
 
@@ -63,7 +68,7 @@ in
 
   # https://enotacoes.wordpress.com/2021/10/05/limiting-user-to-sshfs-or-sftp-of-one-directory-only/
   # https://github.com/NixOS/nixpkgs/blob/d603719ec6e294f034936c0d0dc06f689d91b6c3/nixos/modules/services/networking/ssh/sshd.nix#L663
-  services.openssh.extraConfig = ''
+  services.openssh.extraConfig = lib.mkBefore ''
     XAuthLocation ${pkgs.xorg.xauth}/bin/xauth
 
     Match user infinidoge
