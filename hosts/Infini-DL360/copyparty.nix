@@ -49,6 +49,8 @@ in
       proxyPass = "http://localhost:3923";
       proxyWebsockets = true;
       extraConfig = ''
+        client_max_body_size 0;
+
         auth_request /outpost.goauthentik.io/auth/nginx;
         auth_request_set $auth_cookie $upstream_http_set_cookie;
         add_header Set-Cookie $auth_cookie;
@@ -61,6 +63,8 @@ in
     locations."/outpost.goauthentik.io" = {
       proxyPass = "${authentik_internal}/outpost.goauthentik.io";
       extraConfig = ''
+        client_max_body_size 0;
+
         proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
         add_header Set-Cookie $auth_cookie;
         auth_request_set $auth_cookie $upstream_http_set_cookie;
