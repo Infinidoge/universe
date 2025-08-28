@@ -151,61 +151,6 @@
         "type": "github"
       }
     },
-    "complement": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1741891349,
-        "narHash": "sha256-YvrzOWcX7DH1drp5SGa+E/fc7wN3hqFtPbqPjZpOu1Q=",
-        "owner": "girlbossceo",
-        "repo": "complement",
-        "rev": "e587b3df569cba411aeac7c20b6366d03c143745",
-        "type": "github"
-      },
-      "original": {
-        "owner": "girlbossceo",
-        "ref": "main",
-        "repo": "complement",
-        "type": "github"
-      }
-    },
-    "conduwuit": {
-      "inputs": {
-        "attic": [
-          "blank"
-        ],
-        "cachix": [
-          "blank"
-        ],
-        "complement": "complement",
-        "crane": "crane",
-        "fenix": "fenix",
-        "flake-compat": [
-          "blank"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "liburing": "liburing",
-        "nix-filter": "nix-filter",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rocksdb": "rocksdb"
-      },
-      "locked": {
-        "lastModified": 1744169934,
-        "narHash": "sha256-5YyHmPUUrXXrczWayji9327knihVTKnmjX+vX6+p6d0=",
-        "owner": "girlbossceo",
-        "repo": "conduwuit",
-        "rev": "d8311a5ff672fdc4729d956af5e3af8646b0670d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "girlbossceo",
-        "repo": "conduwuit",
-        "type": "github"
-      }
-    },
     "copyparty": {
       "inputs": {
         "flake-utils": [
@@ -230,22 +175,6 @@
       }
     },
     "crane": {
-      "locked": {
-        "lastModified": 1739936662,
-        "narHash": "sha256-x4syUjNUuRblR07nDPeLDP7DpphaBVbUaSoeZkFbGSk=",
-        "owner": "ipetkov",
-        "repo": "crane",
-        "rev": "19de14aaeb869287647d9461cbd389187d8ecdb7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ipetkov",
-        "ref": "master",
-        "repo": "crane",
-        "type": "github"
-      }
-    },
-    "crane_2": {
       "inputs": {
         "nixpkgs": [
           "universe-cli",
@@ -325,29 +254,6 @@
       "original": {
         "owner": "unmojang",
         "repo": "drasl",
-        "type": "github"
-      }
-    },
-    "fenix": {
-      "inputs": {
-        "nixpkgs": [
-          "conduwuit",
-          "nixpkgs"
-        ],
-        "rust-analyzer-src": "rust-analyzer-src"
-      },
-      "locked": {
-        "lastModified": 1740724364,
-        "narHash": "sha256-D1jLIueJx1dPrP09ZZwTrPf4cubV+TsFMYbpYYTVj6A=",
-        "owner": "nix-community",
-        "repo": "fenix",
-        "rev": "edf7d9e431cda8782e729253835f178a356d3aab",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "main",
-        "repo": "fenix",
         "type": "github"
       }
     },
@@ -570,23 +476,6 @@
         "type": "github"
       }
     },
-    "liburing": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1740613216,
-        "narHash": "sha256-NpPOBqNND3Qe9IwqYs0mJLGTmIx7e6FgUEBAnJ+1ZLA=",
-        "owner": "axboe",
-        "repo": "liburing",
-        "rev": "e1003e496e66f9b0ae06674869795edf772d5500",
-        "type": "github"
-      },
-      "original": {
-        "owner": "axboe",
-        "ref": "master",
-        "repo": "liburing",
-        "type": "github"
-      }
-    },
     "lix": {
       "inputs": {
         "flake-compat": [
@@ -681,22 +570,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "nil",
-        "type": "github"
-      }
-    },
-    "nix-filter": {
-      "locked": {
-        "lastModified": 1731533336,
-        "narHash": "sha256-oRam5PS1vcrr5UPgALW0eo1m/5/pls27Z/pabHNy2Ms=",
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "rev": "f7653272fd234696ae94229839a99b73c9ab7de0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "ref": "main",
-        "repo": "nix-filter",
         "type": "github"
       }
     },
@@ -960,30 +833,12 @@
         "type": "github"
       }
     },
-    "rocksdb": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1741308171,
-        "narHash": "sha256-YdBvdQ75UJg5ffwNjxizpviCVwVDJnBkM8ZtGIduMgY=",
-        "owner": "girlbossceo",
-        "repo": "rocksdb",
-        "rev": "3ce04794bcfbbb0d2e6f81ae35fc4acf688b6986",
-        "type": "github"
-      },
-      "original": {
-        "owner": "girlbossceo",
-        "ref": "v9.11.1",
-        "repo": "rocksdb",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
         "agenix-rekey": "agenix-rekey",
         "authentik-nix": "authentik-nix",
         "blank": "blank",
-        "conduwuit": "conduwuit",
         "copyparty": "copyparty",
         "devshell": "devshell",
         "disko": "disko",
@@ -1015,23 +870,6 @@
         "treefmt-nix": "treefmt-nix",
         "universe-cli": "universe-cli",
         "vencord": "vencord"
-      }
-    },
-    "rust-analyzer-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1740691488,
-        "narHash": "sha256-Fs6vBrByuiOf2WO77qeMDMTXcTGzrIMqLBv+lNeywwM=",
-        "owner": "rust-lang",
-        "repo": "rust-analyzer",
-        "rev": "fe3eda77d3a7ce212388bda7b6cec8bffcc077e5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rust-lang",
-        "ref": "nightly",
-        "repo": "rust-analyzer",
-        "type": "github"
       }
     },
     "rust-overlay": {
@@ -1122,7 +960,7 @@
     },
     "universe-cli": {
       "inputs": {
-        "crane": "crane_2",
+        "crane": "crane",
         "devshell": [
           "devshell"
         ],
