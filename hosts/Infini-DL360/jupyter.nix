@@ -2,6 +2,7 @@
   config,
   common,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -97,6 +98,18 @@ in
           ]
         )
       );
+      sage = {
+        displayName = "SageMath ${pkgs.sageWithDoc.version}";
+        language = "sage";
+        argv = [
+          (lib.getExe pkgs.sageWithDoc)
+          "--python"
+          "-m"
+          "sage.repl.ipython_kernel"
+          "-f"
+          "{connection_file}"
+        ];
+      };
     };
   };
 
