@@ -57,9 +57,6 @@
     ## Neovim
     nixvim.url = "github:nix-community/nixvim";
 
-    ## Conduwuit
-    conduwuit.url = "github:girlbossceo/conduwuit";
-
     ## Vencord
     vencord = {
       url = "github:Vendicated/Vencord";
@@ -98,11 +95,6 @@
     authentik-nix.inputs.nixpkgs.follows = "nixpkgs";
     authentik-nix.inputs.poetry2nix.inputs.treefmt-nix.follows = "treefmt-nix";
     authentik-nix.inputs.systems.follows = "systems";
-    conduwuit.inputs.attic.follows = "blank";
-    conduwuit.inputs.cachix.follows = "blank";
-    conduwuit.inputs.flake-compat.follows = "blank";
-    conduwuit.inputs.flake-utils.follows = "flake-utils";
-    conduwuit.inputs.nixpkgs.follows = "nixpkgs";
     copyparty.inputs.flake-utils.follows = "flake-utils";
     copyparty.inputs.nixpkgs.follows = "nixpkgs";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
