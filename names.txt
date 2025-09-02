@@ -27,11 +27,10 @@ persephone
 phobos
 poseidon
 psyche
-syx
+styx
 thanatos
 tyche
 zephyros
-zues
 
 bacchus
 ceres
