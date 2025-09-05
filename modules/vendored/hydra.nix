@@ -4,14 +4,11 @@
   lib,
   ...
 }:
-
-with lib;
-
 let
 
   cfg = config.services.hydra;
 
-  inherit (cfg) baseDir;
+  inherit (cfg) baseDir; # DIFF
 
   hydraConf = pkgs.writeScript "hydra.conf" cfg.extraConfig;
 
@@ -24,11 +21,10 @@ let
   env =
     {
       NIX_REMOTE = "daemon";
-      SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt"; # Remove in 16.03
       PGPASSFILE = "${baseDir}/pgpass";
-      NIX_REMOTE_SYSTEMS = concatStringsSep ":" cfg.buildMachinesFiles;
+      NIX_REMOTE_SYSTEMS = lib.concatStringsSep ":" cfg.buildMachinesFiles;
     }
-    // optionalAttrs (cfg.smtpHost != null) {
+    // lib.optionalAttrs (cfg.smtpHost != null) {
       EMAIL_SENDER_TRANSPORT = "SMTP";
       EMAIL_SENDER_TRANSPORT_host = cfg.smtpHost;
     }
@@ -43,7 +39,7 @@ let
       COLUMNS = "80";
       PGPASSFILE = "${baseDir}/pgpass-www"; # grrr
     }
-    // (optionalAttrs cfg.debugServer { DBIC_TRACE = "1"; });
+    // (lib.optionalAttrs cfg.debugServer { DBIC_TRACE = "1"; });
 
   localDB = "dbi:Pg:dbname=hydra;user=hydra;";
 
@@ -51,8 +47,8 @@ let
 
   hydra-package =
     let
-      makeWrapperArgs = concatStringsSep " " (
-        mapAttrsToList (key: value: "--set-default \"${key}\" \"${value}\"") hydraEnv
+      makeWrapperArgs = lib.concatStringsSep " " (
+        lib.mapAttrsToList (key: value: "--set-default \"${key}\" \"${value}\"") hydraEnv
       );
     in
     pkgs.buildEnv rec {
@@ -66,7 +62,7 @@ let
         fi
         mkdir -p "$out/bin"
 
-        for path in ${concatStringsSep " " paths}; do
+        for path in ${lib.concatStringsSep " " paths}; do
           if [ -d "$path/bin" ]; then
             cd "$path/bin"
             for prg in *; do
@@ -85,23 +81,23 @@ let
 in
 
 {
-  disabledModules = [ "services/continuous-integration/hydra/default.nix" ];
+  disabledModules = [ "services/continuous-integration/hydra/default.nix" ]; # DIFF
 
   ###### interface
   options = {
 
     services.hydra = {
 
-      enable = mkOption {
-        type = types.bool;
+      enable = lib.mkOption {
+        type = lib.types.bool;
         default = false;
         description = ''
           Whether to run Hydra services.
         '';
       };
 
-      dbi = mkOption {
-        type = types.str;
+      dbi = lib.mkOption {
+        type = lib.types.str;
         default = localDB;
         example = "dbi:Pg:dbname=hydra;host=postgres.example.org;user=foo;";
         description = ''
@@ -114,33 +110,35 @@ in
         '';
       };
 
-      package = mkPackageOption pkgs "hydra_unstable" { };
+      # BEGIN DIFF
+      package = lib.mkPackageOption pkgs "hydra_unstable" { };
 
-      baseDir = mkOption {
-        type = types.path;
+      baseDir = lib.mkOption {
+        type = lib.types.path;
         default = "/var/lib/hydra";
         description = ''
           Hydra's data directory
         '';
       };
 
-      environmentFile = mkOption {
-        type = types.nullOr types.path;
+      environmentFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
         default = null;
         description = ''
           An environment file to pass to hydra services
         '';
       };
+      # END DIFF
 
-      hydraURL = mkOption {
-        type = types.str;
+      hydraURL = lib.mkOption {
+        type = lib.types.str;
         description = ''
           The base URL for the Hydra webserver instance. Used for links in emails.
         '';
       };
 
-      listenHost = mkOption {
-        type = types.str;
+      listenHost = lib.mkOption {
+        type = lib.types.str;
         default = "*";
         example = "localhost";
         description = ''
@@ -149,39 +147,39 @@ in
         '';
       };
 
-      port = mkOption {
-        type = types.port;
+      port = lib.mkOption {
+        type = lib.types.port;
         default = 3000;
         description = ''
           TCP port the web server should listen to.
         '';
       };
 
-      minimumDiskFree = mkOption {
-        type = types.int;
+      minimumDiskFree = lib.mkOption {
+        type = lib.types.int;
         default = 0;
         description = ''
           Threshold of minimum disk space (GiB) to determine if the queue runner should run or not.
         '';
       };
 
-      minimumDiskFreeEvaluator = mkOption {
-        type = types.int;
+      minimumDiskFreeEvaluator = lib.mkOption {
+        type = lib.types.int;
         default = 0;
         description = ''
           Threshold of minimum disk space (GiB) to determine if the evaluator should run or not.
         '';
       };
 
-      notificationSender = mkOption {
-        type = types.str;
+      notificationSender = lib.mkOption {
+        type = lib.types.str;
         description = ''
           Sender email address used for email notifications.
         '';
       };
 
-      smtpHost = mkOption {
-        type = types.nullOr types.str;
+      smtpHost = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
         default = null;
         example = "localhost";
         description = ''
@@ -189,67 +187,67 @@ in
         '';
       };
 
-      tracker = mkOption {
-        type = types.str;
+      tracker = lib.mkOption {
+        type = lib.types.str;
         default = "";
         description = ''
           Piece of HTML that is included on all pages.
         '';
       };
 
-      logo = mkOption {
-        type = types.nullOr types.path;
+      logo = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
         default = null;
         description = ''
           Path to a file containing the logo of your Hydra instance.
         '';
       };
 
-      debugServer = mkOption {
-        type = types.bool;
+      debugServer = lib.mkOption {
+        type = lib.types.bool;
         default = false;
         description = "Whether to run the server in debug mode.";
       };
 
-      maxServers = mkOption {
-        type = types.int;
+      maxServers = lib.mkOption {
+        type = lib.types.int;
         default = 25;
         description = "Maximum number of starman workers to spawn.";
       };
 
-      minSpareServers = mkOption {
-        type = types.int;
+      minSpareServers = lib.mkOption {
+        type = lib.types.int;
         default = 4;
         description = "Minimum number of spare starman workers to keep.";
       };
 
-      maxSpareServers = mkOption {
-        type = types.int;
+      maxSpareServers = lib.mkOption {
+        type = lib.types.int;
         default = 5;
         description = "Maximum number of spare starman workers to keep.";
       };
 
-      extraConfig = mkOption {
-        type = types.lines;
+      extraConfig = lib.mkOption {
+        type = lib.types.lines;
         description = "Extra lines for the Hydra configuration.";
       };
 
-      extraEnv = mkOption {
-        type = types.attrsOf types.str;
+      extraEnv = lib.mkOption {
+        type = lib.types.attrsOf lib.types.str;
         default = { };
         description = "Extra environment variables for Hydra.";
       };
 
-      gcRootsDir = mkOption {
-        type = types.path;
+      gcRootsDir = lib.mkOption {
+        type = lib.types.path;
         default = "/nix/var/nix/gcroots/hydra";
         description = "Directory that holds Hydra garbage collector roots.";
       };
 
-      buildMachinesFiles = mkOption {
-        type = types.listOf types.path;
-        default = optional (config.nix.buildMachines != [ ]) "/etc/nix/machines";
-        defaultText = literalExpression ''optional (config.nix.buildMachines != []) "/etc/nix/machines"'';
+      buildMachinesFiles = lib.mkOption {
+        type = lib.types.listOf lib.types.path;
+        default = lib.optional (config.nix.buildMachines != [ ]) "/etc/nix/machines";
+        defaultText = lib.literalExpression ''lib.optional (config.nix.buildMachines != []) "/etc/nix/machines"'';
         example = [
           "/etc/nix/machines"
           "/var/lib/hydra/provisioner/machines"
@@ -257,8 +255,8 @@ in
         description = "List of files containing build machines.";
       };
 
-      useSubstitutes = mkOption {
-        type = types.bool;
+      useSubstitutes = lib.mkOption {
+        type = lib.types.bool;
         default = false;
         description = ''
           Whether to use binary caches for downloading store paths. Note that
@@ -276,7 +274,7 @@ in
 
   ###### implementation
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     assertions = [
       {
         assertion = cfg.maxServers != 0 && cfg.maxSpareServers != 0 && cfg.minSpareServers != 0;
@@ -284,7 +282,7 @@ in
       }
       {
         assertion = cfg.minSpareServers < cfg.maxSpareServers;
-        message = "services.hydra.minSpareServers cannot be bigger than servives.hydra.maxSpareServers";
+        message = "services.hydra.minSpareServers cannot be bigger than services.hydra.maxSpareServers";
       }
     ];
 
@@ -321,42 +319,48 @@ in
       base_uri = ${cfg.hydraURL}
       notification_sender = ${cfg.notificationSender}
       max_servers = ${toString cfg.maxServers}
-      ${optionalString (cfg.logo != null) ''
+      ${lib.optionalString (cfg.logo != null) ''
         hydra_logo = ${cfg.logo}
       ''}
       gc_roots_dir = ${cfg.gcRootsDir}
       use-substitutes = ${if cfg.useSubstitutes then "1" else "0"}
     '';
 
+    # BEGIN DIFF
     environment.systemPackages = [
       hydra-package
       pkgs.git
     ];
+    # END DIFF
 
     environment.variables = hydraEnv;
 
-    nix.settings = mkMerge [
+    nix.settings = lib.mkMerge [
       {
         keep-outputs = true;
         keep-derivations = true;
-        extra-trusted-users = [
-          "hydra"
-          "hydra-queue-runner"
-          "hydra-www"
-        ];
+        trusted-users = [ "hydra-queue-runner" ];
       }
 
-      (mkIf (versionOlder (getVersion config.nix.package.out) "2.4pre") {
+      (lib.mkIf (lib.versionOlder (lib.getVersion config.nix.package.out) "2.4pre") {
         # The default (`true') slows Nix down a lot since the build farm
         # has so many GC roots.
         gc-check-reachability = false;
       })
     ];
 
+    systemd.slices.system-hydra = {
+      description = "Hydra CI Server Slice";
+      documentation = [
+        "file://${cfg.package}/share/doc/hydra/index.html"
+        "https://nixos.org/hydra/manual/"
+      ];
+    };
+
     systemd.services.hydra-init = {
       wantedBy = [ "multi-user.target" ];
-      requires = optional haveLocalDB "postgresql.service";
-      after = optional haveLocalDB "postgresql.service";
+      requires = lib.optional haveLocalDB "postgresql.service";
+      after = lib.optional haveLocalDB "postgresql.service";
       environment = env // {
         HYDRA_DBI = "${env.HYDRA_DBI};application_name=hydra-init";
       };
@@ -368,18 +372,18 @@ in
 
         ln -sf ${hydraConf} ${baseDir}/hydra.conf
 
-        mkdir -m 0700 -p ${baseDir}/www
+        mkdir -m 0700 ${baseDir}/www || true
         chown hydra-www:hydra ${baseDir}/www
 
-        mkdir -m 0700 -p ${baseDir}/queue-runner
-        mkdir -m 0750 -p ${baseDir}/build-logs
-        mkdir -m 0750 -p ${baseDir}/runcommand-logs
-        chown hydra-queue-runner.hydra \
+        mkdir -m 0700 ${baseDir}/queue-runner || true
+        mkdir -m 0750 ${baseDir}/build-logs || true
+        mkdir -m 0750 ${baseDir}/runcommand-logs || true
+        chown hydra-queue-runner:hydra \
           ${baseDir}/queue-runner \
           ${baseDir}/build-logs \
           ${baseDir}/runcommand-logs
 
-        ${optionalString haveLocalDB ''
+        ${lib.optionalString haveLocalDB ''
           if ! [ -e ${baseDir}/.db-created ]; then
             runuser -u ${config.services.postgresql.superUser} ${config.services.postgresql.package}/bin/createuser hydra
             runuser -u ${config.services.postgresql.superUser} ${config.services.postgresql.package}/bin/createdb -- -O hydra hydra
@@ -400,22 +404,21 @@ in
 
         # Move legacy hydra-www roots.
         if [ -e /nix/var/nix/gcroots/per-user/hydra-www/hydra-roots ]; then
-          find /nix/var/nix/gcroots/per-user/hydra-www/hydra-roots/ -type f \
-            | xargs -r mv -f -t ${cfg.gcRootsDir}/
+          find /nix/var/nix/gcroots/per-user/hydra-www/hydra-roots/ -type f -print0 \
+            | xargs -0 -r mv -f -t ${cfg.gcRootsDir}/
           rmdir /nix/var/nix/gcroots/per-user/hydra-www/hydra-roots
         fi
 
         chown hydra:hydra ${cfg.gcRootsDir}
         chmod 2775 ${cfg.gcRootsDir}
       '';
-      serviceConfig = {
-        ExecStart = "${hydra-package}/bin/hydra-init";
-        PermissionsStartOnly = true;
-        User = "hydra";
-        Type = "oneshot";
-        RemainAfterExit = true;
-        EnvironmentFile = optional (cfg.environmentFile != null) cfg.environmentFile;
-      };
+      serviceConfig.ExecStart = "${hydra-package}/bin/hydra-init";
+      serviceConfig.PermissionsStartOnly = true;
+      serviceConfig.User = "hydra";
+      serviceConfig.Type = "oneshot";
+      serviceConfig.RemainAfterExit = true;
+      serviceConfig.Slice = "system-hydra.slice";
+      serviceConfig.EnvironmentFile = lib.optional (cfg.environmentFile != null) cfg.environmentFile; # DIFF
     };
 
     systemd.services.hydra-server = {
@@ -430,18 +433,19 @@ in
         ExecStart =
           "@${hydra-package}/bin/hydra-server hydra-server -f -h '${cfg.listenHost}' "
           + "-p ${toString cfg.port} --min_spare_servers ${toString cfg.minSpareServers} --max_spare_servers ${toString cfg.maxSpareServers} "
-          + "--max_servers ${toString cfg.maxServers} --max_requests 100 ${optionalString cfg.debugServer "-d"}";
+          + "--max_servers ${toString cfg.maxServers} --max_requests 100 ${lib.optionalString cfg.debugServer "-d"}";
         User = "hydra-www";
         PermissionsStartOnly = true;
         Restart = "always";
-        EnvironmentFile = optional (cfg.environmentFile != null) cfg.environmentFile;
+        Slice = "system-hydra.slice";
+        EnvironmentFile = lib.optional (cfg.environmentFile != null) cfg.environmentFile; # DIFF
       };
     };
 
     systemd.services.hydra-queue-runner = {
       wantedBy = [ "multi-user.target" ];
       requires = [ "hydra-init.service" ];
-      wants = [ "network-online.target" ];
+      wants = [ "network-online.target" ]; # DIFF
       after = [
         "hydra-init.service"
         "network.target"
@@ -464,11 +468,12 @@ in
         ExecStopPost = "${hydra-package}/bin/hydra-queue-runner --unlock";
         User = "hydra-queue-runner";
         Restart = "always";
+        Slice = "system-hydra.slice";
 
         # Ensure we can get core dumps.
         LimitCORE = "infinity";
         WorkingDirectory = "${baseDir}/queue-runner";
-        EnvironmentFile = optional (cfg.environmentFile != null) cfg.environmentFile;
+        EnvironmentFile = lib.optional (cfg.environmentFile != null) cfg.environmentFile; # DIFF
       };
     };
 
@@ -495,7 +500,8 @@ in
         User = "hydra";
         Restart = "always";
         WorkingDirectory = baseDir;
-        EnvironmentFile = optional (cfg.environmentFile != null) cfg.environmentFile;
+        Slice = "system-hydra.slice";
+        EnvironmentFile = lib.optional (cfg.environmentFile != null) cfg.environmentFile; # DIFF
       };
     };
 
@@ -508,6 +514,7 @@ in
       serviceConfig = {
         ExecStart = "@${hydra-package}/bin/hydra-update-gc-roots hydra-update-gc-roots";
         User = "hydra";
+        Slice = "system-hydra.slice";
       };
       startAt = "2,14:15";
     };
@@ -521,7 +528,8 @@ in
       serviceConfig = {
         ExecStart = "@${hydra-package}/bin/hydra-send-stats hydra-send-stats";
         User = "hydra";
-        EnvironmentFile = optional (cfg.environmentFile != null) cfg.environmentFile;
+        Slice = "system-hydra.slice";
+        EnvironmentFile = lib.optional (cfg.environmentFile != null) cfg.environmentFile; # DIFF
       };
     };
 
@@ -530,6 +538,7 @@ in
       requires = [ "hydra-init.service" ];
       after = [ "hydra-init.service" ];
       restartTriggers = [ hydraConf ];
+      path = [ pkgs.zstd ];
       environment = env // {
         PGPASSFILE = "${baseDir}/pgpass-queue-runner";
         HYDRA_DBI = "${env.HYDRA_DBI};application_name=hydra-notify";
@@ -540,7 +549,8 @@ in
         User = "hydra-queue-runner";
         Restart = "always";
         RestartSec = 5;
-        EnvironmentFile = optional (cfg.environmentFile != null) cfg.environmentFile;
+        Slice = "system-hydra.slice";
+        EnvironmentFile = lib.optional (cfg.environmentFile != null) cfg.environmentFile; # DIFF
       };
     };
 
@@ -558,22 +568,34 @@ in
         fi
       '';
       startAt = "*:0/5";
+      serviceConfig.Slice = "system-hydra.slice";
     };
 
     # Periodically compress build logs. The queue runner compresses
     # logs automatically after a step finishes, but this doesn't work
     # if the queue runner is stopped prematurely.
     systemd.services.hydra-compress-logs = {
-      path = [ pkgs.bzip2 ];
+      path = [
+        pkgs.bzip2
+        pkgs.zstd
+      ];
       script = ''
-        find /var/lib/hydra/build-logs -type f -name "*.drv" -mtime +3 -size +0c | xargs -r bzip2 -v -f
+        set -eou pipefail
+        compression=$(sed -nr 's/compress_build_logs_compression = ()/\1/p' ${baseDir}/hydra.conf)
+        if [[ $compression == "" || $compression == bzip2 ]]; then
+          compressionCmd=(bzip2)
+        elif [[ $compression == zstd ]]; then
+          compressionCmd=(zstd --rm)
+        fi
+        find ${baseDir}/build-logs -ignore_readdir_race -type f -name "*.drv" -mtime +3 -size +0c -print0 | xargs -0 -r "''${compressionCmd[@]}" --force --quiet
       '';
       startAt = "Sun 01:45";
+      serviceConfig.Slice = "system-hydra.slice";
     };
 
-    services.postgresql.enable = mkIf haveLocalDB true;
+    services.postgresql.enable = lib.mkIf haveLocalDB true;
 
-    services.postgresql.identMap = optionalString haveLocalDB ''
+    services.postgresql.identMap = lib.optionalString haveLocalDB ''
       hydra-users hydra hydra
       hydra-users hydra-queue-runner hydra
       hydra-users hydra-www hydra
@@ -582,7 +604,7 @@ in
       hydra-users postgres postgres
     '';
 
-    services.postgresql.authentication = optionalString haveLocalDB ''
+    services.postgresql.authentication = lib.optionalString haveLocalDB ''
       local hydra all ident map=hydra-users
     '';
 
