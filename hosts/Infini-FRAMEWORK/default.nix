@@ -91,4 +91,6 @@
   };
 
   #networking.proxy.default = "http://infini-dl360.tailnet.inx.moe:8118";
+
+  nix.gc.automatic = false; # Disable for NixCon
 }
