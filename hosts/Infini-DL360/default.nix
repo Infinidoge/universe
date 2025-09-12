@@ -208,4 +208,6 @@
   ];
 
   services.printing.enable = true;
+
+  boot.supportedFilesystems.nfs = true;
 }
