@@ -7,6 +7,12 @@
     shell = pkgs.bash;
   };
 
+  users.users.alina = {
+    description = "Cutest woofer";
+    isNormalUser = true;
+    shell = pkgs.nushell;
+  };
+
   services.openssh.extraConfig = ''
     Match user mistergij
       DisableForwarding yes
