@@ -22,9 +22,9 @@
         echo "Not in a git repository"
         exit 1
       elif [[ $# -eq 0 ]] then
-        git ls-files | fzf --filepath-word --multi | xargs $EDITOR
+        git ls-files | fzf --filepath-word --multi | xargs -r $EDITOR
       else
-        git ls-files | fzf --filepath-word --multi -1 -q "$*" | xargs $EDITOR
+        git ls-files | fzf --filepath-word --multi -1 -q "$*" | xargs -r $EDITOR
       fi
     '')
   ];
