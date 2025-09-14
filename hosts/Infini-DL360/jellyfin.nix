@@ -58,4 +58,8 @@ in
     cacheDir
     logDir
   ];
+
+  storage.directories = [
+    "/srv/media"
+  ];
 }
