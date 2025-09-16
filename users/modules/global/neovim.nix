@@ -205,6 +205,7 @@ in
       };
       nix.enable = true;
       nvim-autopairs.enable = true;
+      oil.enable = true;
       otter.enable = true;
       vim-surround.enable = true;
       todo-comments.enable = true;
