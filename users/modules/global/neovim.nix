@@ -245,6 +245,10 @@ in
           nimls.enable = programming.nim.enable;
           pylsp = {
             enable = programming.python.enable;
+            filetypes = [
+              "python"
+              "xonsh"
+            ];
             settings = {
               plugins = {
                 autopep8.enable = false;
