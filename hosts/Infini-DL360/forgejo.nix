@@ -74,6 +74,7 @@ in
       name = "Local Privileged";
       url = "https://${domain}";
       token = common.forgejo.actions.user_token;
+      settings.runner.capacity = 16;
       labels = [
         "local:host"
       ];
@@ -93,6 +94,7 @@ in
       name = "Local";
       url = "https://${domain}";
       token = common.forgejo.actions.global_token;
+      settings.runner.capacity = 16;
       labels = [
         "docker:docker://gitea/runner-images:ubuntu-latest"
         "ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"
