@@ -33,12 +33,20 @@ in
           rh = "*";
           A = [ "infinidoge" ];
         };
+        flags = {
+          chmod_f = "664";
+          chmod_d = "775";
+        };
       };
       "/p" = {
         path = "/srv/web/files.inx.moe/p";
         access = {
           h = "*";
           A = [ "infinidoge" ];
+        };
+        flags = {
+          chmod_f = "664";
+          chmod_d = "775";
         };
       };
     };
