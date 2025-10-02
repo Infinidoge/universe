@@ -16,6 +16,9 @@ in
       e2ts = true;
       ansi = true;
 
+      shr = "/share";
+      shr-adm = [ "infinidoge" ];
+
       # OAuth2
       idp-h-usr = "X-authentik-username";
       idp-h-key = private.variables.copyparty-key;
