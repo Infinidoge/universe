@@ -123,6 +123,7 @@ in
       "adbusers"
       "bluetooth"
       "borg"
+      "copyparty"
       "dialout"
       "disk"
       "docker"
