@@ -15,6 +15,7 @@ in
       e2dsa = true;
       e2ts = true;
       ansi = true;
+      re-maxage = 3600;
 
       shr = "/share";
       shr-adm = [ "infinidoge" ];
