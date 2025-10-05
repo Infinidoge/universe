@@ -24,6 +24,10 @@ in
       idp-h-usr = "X-authentik-username";
       idp-h-key = private.variables.copyparty-key;
       xff-src = "lan";
+      idp-adm = [ "infinidoge" ];
+      idp-login = "https://files.inx.moe/oauth/authorize";
+      idp-login-t = "Login with INX Central";
+      auth-ord = "idp,pw,ipu";
 
       # BUG: These are not properly set in the copyparty module, as changing any settings removes them from default
       no-reload = true;
