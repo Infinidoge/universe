@@ -17,6 +17,7 @@ in
       ansi = true;
       stats = true;
       re-maxage = 3600;
+      df = "30";
 
       shr = "/share";
       shr-adm = [ "infinidoge" ];
