@@ -15,6 +15,7 @@ let
     ];
     frame-ancestors = [
       "'self'"
+      "ring.purduehackers.com"
     ];
     script-src = default-src ++ [
       "storage.ko-fi.com"
