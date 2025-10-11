@@ -202,6 +202,7 @@
                       lib = prev.lib.extend libOverlay;
 
                       inherit (inputs.home-manager.packages.${prev.system}) home-manager;
+                      inherit (inputs.qtile.packages.${prev.system}) qtile;
                     })
                     self.overlays.packages
                     self.overlays.patches
@@ -212,7 +213,6 @@
                     inputs.copyparty.overlays.default
                     inputs.nil.overlays.default
                     inputs.nix-minecraft.overlay
-                    inputs.qtile.overlays.default
                     inputs.rust-overlay.overlays.default
                     inputs.universe-cli.overlays.default
                   ];
