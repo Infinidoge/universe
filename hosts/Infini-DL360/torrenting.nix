@@ -25,7 +25,7 @@
 
     config = {
       system.stateVersion = "25.05";
-      nixpkgs.pkgs = pkgs; # Reuse system nixpkgs
+      nixpkgs.pkgs = lib.mkForce pkgs; # Reuse system nixpkgs
 
       networking.useHostResolvConf = lib.mkForce false;
       services.resolved.enable = true;
