@@ -92,4 +92,16 @@ in
       GConf = null;
     }
   );
+
+  # BUG: https://github.com/NixOS/nixpkgs/issues/449062
+  libutp = prev.libutp.overrideAttrs (
+    final: prev: {
+      cmakeFlags = (prev.cmakeFlags or [ ]) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
+    }
+  );
+  transmission_3 = prev.transmission_3.overrideAttrs (
+    final: prev: {
+      cmakeFlags = (prev.cmakeFlags or [ ]) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
+    }
+  );
 }
