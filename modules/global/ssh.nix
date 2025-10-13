@@ -45,6 +45,10 @@ with lib;
 
       Host inx.moe
           Port 245
+
+      Host plug-mirror
+          Hostname plug-mirror.rcac.purdue.edu
+          IdentityAgent none
     '';
   };
 
