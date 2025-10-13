@@ -18,6 +18,8 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
+  cmakeFlags = [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
+
   installPhase = ''
     install -m555 -D -t $out/bin dropout-dl
   '';
