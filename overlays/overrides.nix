@@ -66,7 +66,7 @@ in
     #};
   });
 
-  schildichat-desktop = old-stable.schildichat-desktop.override { electron = final.electron_35; };
+  schildichat-desktop = old-stable.schildichat-desktop.override { electron = final.electron; };
 
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pythonFinal: pythonPrev: {
