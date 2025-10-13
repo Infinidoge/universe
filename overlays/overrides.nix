@@ -56,14 +56,17 @@ in
       VENCORD_REMOTE = "Vendicated/Vencord";
       VENCORD_HASH = builtins.substring 0 9 inputs.vencord.rev;
     };
-    postPatch = ''
+    postPatch = old.postPatch + ''
       sed -i '/export const CspPolicies/a "inx.moe": ImageScriptsAndCssSrc,' src/main/csp/index.ts
     '';
-    #pnpmDeps = latest.pnpm.fetchDeps {
-    #  inherit (old) pname;
-    #  inherit version src;
-    #  hash = "";
-    #};
+    #pnpmDeps =
+    #  (latest.pnpm_10.fetchDeps {
+    #    inherit (old) pname;
+    #    inherit version src;
+    #    fetcherVersion = 2;
+    #    hash = "";
+    #  }).overrideAttrs
+    #    { inherit (old) patches postPatch; };
   });
 
   schildichat-desktop = old-stable.schildichat-desktop.override { electron = final.electron; };
