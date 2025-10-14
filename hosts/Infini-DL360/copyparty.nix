@@ -25,10 +25,13 @@ in
       shr = "/share";
       shr-adm = [ "infinidoge" ];
 
+      xff-src = "lan";
+      xff-hdr = "x-forwarded-for";
+      rproxy = 1;
+
       # OAuth2
       idp-h-usr = "X-authentik-username";
       idp-h-key = private.variables.copyparty-key;
-      xff-src = "lan";
       idp-adm = [ "infinidoge" ];
       idp-login = "https://files.inx.moe/oauth/authorize";
       idp-login-t = "Login with INX Central";
