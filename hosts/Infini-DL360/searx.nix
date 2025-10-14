@@ -11,7 +11,7 @@ in
 {
   services.searx = {
     enable = true;
-    runInUwsgi = true;
+    configureUwsgi = true;
     redisCreateLocally = true;
     environmentFile = secrets."searx";
     uwsgiConfig = {
