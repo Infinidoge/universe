@@ -86,4 +86,9 @@ in
 
   # For permission to access smtp password
   users.groups.smtp = { };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    # BUG: https://github.com/NixOS/nixpkgs/issues/437865
+    "qtwebengine-5.15.19"
+  ];
 }
