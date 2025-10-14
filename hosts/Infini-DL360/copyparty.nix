@@ -74,6 +74,11 @@ in
       proxyWebsockets = true;
       extraConfig = ''
         client_max_body_size 0;
+        proxy_buffering off;
+        proxy_request_buffering off;
+        proxy_buffers 32 8k;
+        proxy_buffer_size 16k;
+        proxy_busy_buffers_size 24k;
 
         auth_request /outpost.goauthentik.io/auth/nginx;
         auth_request_set $auth_cookie $upstream_http_set_cookie;
