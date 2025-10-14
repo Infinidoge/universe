@@ -8,6 +8,8 @@ let
   authentik_internal = config.services.nginx.virtualHosts."auth.inx.moe".locations."/".proxyPass;
 in
 {
+  persist.directories = [ "/var/cache/copyparty" ];
+
   services.copyparty = {
     enable = true;
 
