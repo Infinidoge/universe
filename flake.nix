@@ -221,7 +221,8 @@
                       inputs.impermanence.nixosModules.home-manager.impermanence
                       inputs.nix-index-database.hmModules.nix-index
                       inputs.nixvim.homeManagerModules.nixvim
-                    ] ++ (self.lib.leaves ./users/modules);
+                    ]
+                    ++ (self.lib.leaves ./users/modules);
                   };
                 }
                 (
@@ -259,7 +260,8 @@
                 inputs.nix-minecraft.nixosModules.minecraft-servers
                 inputs.drasl.nixosModules.drasl
                 inputs.copyparty.nixosModules.default
-              ] ++ (self.lib.leaves ./modules);
+              ]
+              ++ (self.lib.leaves ./modules);
             }) (self.lib.flattenLeaves ./hosts);
 
           homeConfigurations = self.lib.mkHomeConfigurations {
