@@ -219,8 +219,8 @@
                   home-manager = {
                     sharedModules = [
                       inputs.impermanence.nixosModules.home-manager.impermanence
-                      inputs.nix-index-database.hmModules.nix-index
-                      inputs.nixvim.homeManagerModules.nixvim
+                      inputs.nix-index-database.homeModules.nix-index
+                      inputs.nixvim.homeModules.nixvim
                     ]
                     ++ (self.lib.leaves ./users/modules);
                   };
