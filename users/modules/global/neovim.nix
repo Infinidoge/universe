@@ -94,58 +94,57 @@ in
       }
     ];
 
-    keymaps =
-      [
-        {
-          key = "<Space>";
-          action = "<Nop>";
-          mode = [
-            "n"
-            "v"
-          ];
-          options = {
-            silent = true;
-          };
-        }
-        {
-          key = "<C-w>n";
-          action = "<C-\\><C-n>";
-          mode = "t";
-        }
-      ]
-      ++ mkLeaderMap {
-        c = {
-          a.action.__raw = "vim.lsp.buf.code_action";
-          l = {
-            d.action.__raw = "vim.diagnostic.open_float";
-            "[".action.__raw = "vim.diagnostic.goto_prev";
-            "]".action.__raw = "vim.diagnostic.goto_next";
-            l.action.__raw = "vim.diagnostic.setloclist";
-          };
-          f.action = ":Format<Enter>";
-          t = {
-            f.action = ":FormatToggle<Enter>";
-          };
+    keymaps = [
+      {
+        key = "<Space>";
+        action = "<Nop>";
+        mode = [
+          "n"
+          "v"
+        ];
+        options = {
+          silent = true;
         };
-        w = {
-          q.action = ":close<Enter>";
-          d.action = ":close<Enter>";
-          v.action = ":vsplit<Enter>";
-          s.action = ":split<Enter>";
-          V.action = ":vsplit ";
-          S.action = ":split ";
-          n.action = ":next<Enter>";
-          p.action = ":previous<Enter>";
+      }
+      {
+        key = "<C-w>n";
+        action = "<C-\\><C-n>";
+        mode = "t";
+      }
+    ]
+    ++ mkLeaderMap {
+      c = {
+        a.action.__raw = "vim.lsp.buf.code_action";
+        l = {
+          d.action.__raw = "vim.diagnostic.open_float";
+          "[".action.__raw = "vim.diagnostic.goto_prev";
+          "]".action.__raw = "vim.diagnostic.goto_next";
+          l.action.__raw = "vim.diagnostic.setloclist";
         };
-        f = {
-          s.action = ":w<enter>";
-        };
-        q = {
-          q.action = ":q<Enter>";
-          Q.action = ":q!<Enter>";
-          x.action = ":x<Enter>";
+        f.action = ":Format<Enter>";
+        t = {
+          f.action = ":FormatToggle<Enter>";
         };
       };
+      w = {
+        q.action = ":close<Enter>";
+        d.action = ":close<Enter>";
+        v.action = ":vsplit<Enter>";
+        s.action = ":split<Enter>";
+        V.action = ":vsplit ";
+        S.action = ":split ";
+        n.action = ":next<Enter>";
+        p.action = ":previous<Enter>";
+      };
+      f = {
+        s.action = ":w<enter>";
+      };
+      q = {
+        q.action = ":q<Enter>";
+        Q.action = ":q!<Enter>";
+        x.action = ":x<Enter>";
+      };
+    };
 
     plugins = {
       autoclose = {
