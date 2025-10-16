@@ -75,7 +75,7 @@ in
       "192.168.137.0/24" # Rack network
       "128.46.0.0/16" # Purdue
     ];
-    bantime = "24h";
+    bantime = "1h";
     bantime-increment = {
       enable = true;
       multipliers = "1 2 4 8 16 32 64";
