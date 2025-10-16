@@ -53,6 +53,8 @@ in
       mouse = "a";
       tabstop = 4;
       shiftwidth = 4;
+      spell = true;
+      spelllang = [ "en_us" ];
     };
 
     clipboard.register = [
@@ -177,8 +179,25 @@ in
           signature = {
             enabled = true;
           };
+          sources = {
+            default = [
+              "lsp"
+              "path"
+              "snippets"
+              "buffer"
+              "spell"
+            ];
+            providers = {
+              spell = {
+                module = "blink-cmp-spell";
+                name = "Spell";
+                score_offset = 100;
+              };
+            };
+          };
         };
       };
+      blink-cmp-spell.enable = true;
       comment.enable = true;
       cursorline.enable = true;
       direnv.enable = true;
