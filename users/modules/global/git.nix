@@ -63,7 +63,7 @@
       caa = "commit -a --amend";
       can = "commit --amend --no-edit";
       caan = "commit -a --amend --no-edit";
-      caanpfl = "!g caan && g pfl";
+      caanpfl = "!git caan && git pfl";
       p = "push";
       pfl = "push --force-with-lease";
       pu = "pull";
