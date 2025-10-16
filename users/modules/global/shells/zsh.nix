@@ -36,9 +36,9 @@
       }
     '';
 
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
 
-    history.path = "$HOME/${dotDir}/.zsh_history";
+    history.path = "${dotDir}/.zsh_history";
 
     shellAliases = builtins.removeAttrs (
       main.environment.shellAliases
