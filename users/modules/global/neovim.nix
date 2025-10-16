@@ -55,6 +55,7 @@ in
       shiftwidth = 4;
       spell = true;
       spelllang = [ "en_us" ];
+      spellsuggest = "best,5";
     };
 
     clipboard.register = [
