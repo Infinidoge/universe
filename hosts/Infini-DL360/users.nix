@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, private, ... }:
 
 {
+  imports = [ private.nixosModules.private-users ];
+
   users.users.mistergij = {
     description = "Account for hosting DnD World bots";
     isNormalUser = true;
