@@ -694,8 +694,8 @@ def init_widget_list(main=True, laptop=False):
         *optional_list(main, main_widgets + optional_list(laptop, laptop_widgets)),
         # Widgets found on the powerline of all screens
         [
-            widget.CurrentLayoutIcon(padding=0, scale=0.7),
-            widget.CurrentLayout(padding=5),
+            widget.CurrentLayout(mode='both', icon_first=True, padding=2),
+            widget.Sep(linewidth=0, padding=2),
         ],
         [
             widget.Clock(
