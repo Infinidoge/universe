@@ -25,6 +25,9 @@ in
       re-maxage = 3600;
       df = "30";
 
+      chmod-f = "664";
+      chmod-d = "775";
+
       shr = "/share";
       shr-adm = [ "infinidoge" ];
 
@@ -52,20 +55,12 @@ in
           rh = "*";
           A = [ "infinidoge" ];
         };
-        flags = {
-          chmod_f = "664";
-          chmod_d = "775";
-        };
       };
       "/p" = {
         path = "/srv/web/files.inx.moe/p";
         access = {
           h = "*";
           A = [ "infinidoge" ];
-        };
-        flags = {
-          chmod_f = "664";
-          chmod_d = "775";
         };
       };
     };
