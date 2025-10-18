@@ -614,36 +614,19 @@ def init_widget_list(main=True, laptop=False):
     """
 
     interfaces = run_command(
-        # fmt:off
-        "ifconfig -s"
-        " | awk {'print $1'}"
-        " | grep -Ev -e Iface -e lo -e vir.+ -e docker.+ -e tailscale.+"
-        " | tac"
-        # fmt:on
+        "ip -j link | jq -r '.[] | select(.operstate == \"UP\") | .ifname'"
     ).splitlines()
 
     wireless_interfaces = list(filter(lambda x: x.startswith("w"), interfaces))
 
-    network_widgets = sum(
-        [
-            [
-                *optional_list(
-                    i != 0,
-                    [
-                        widget.Sep(linewidth=2, padding=3),
-                    ],
-                ),
-                widget.TextBox(text=f"{interface}:", padding=2),
-                widget.Net(
-                    interface=interface,
-                    format="{down} ↓↑ {up}",
-                    padding=5,
-                ),
-            ]
-            for i, interface in enumerate(interfaces)
-        ],
-        [],
-    )
+    network_widgets =  [
+        widget.Net(
+            interface=interface,
+            format="{interface}: {down:.1f}{down_suffix} ↓↑ {up:.1f}{up_suffix}",
+            padding=5,
+        )
+        for i, interface in enumerate(interfaces)
+    ]
 
     main_widgets = [
         *(
@@ -651,7 +634,7 @@ def init_widget_list(main=True, laptop=False):
             if len(wireless_interfaces)
             else []
         ),
-        *([network_widgets] if len(network_widgets) else []),
+        *[network_widgets],
         [
             widget.TextBox(text="󰍛", padding=1, fontsize=18),
             widget.Memory(padding=5, measure_mem="G", format="{MemUsed:.1f}{mm}/{MemTotal:.1f}{mm}"),
