@@ -63,8 +63,21 @@ in
           A = [ "infinidoge" ];
         };
       };
+      "/p/media" = {
+        path = "/srv/media";
+        access = {
+          A = [ "infinidoge" ];
+        };
+        flags = {
+          gid = 994; # jellyfin
+        };
+      };
     };
   };
+
+  users.users.copyparty.extraGroups = [
+    "jellyfin"
+  ];
 
   services.nginx.virtualHosts."files.inx.moe" = common.nginx.ssl-inx // {
     locations."/" = {
