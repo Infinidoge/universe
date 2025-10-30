@@ -27,6 +27,7 @@
     ./jupyter.nix
     ./minecraft.nix
     ./murmur.nix
+    ./pds.nix
     ./postgresql.nix
     ./privoxy.nix
     ./radicale.nix
