@@ -25,5 +25,18 @@ in
       smtp-noreply = withGroup "smtp" ./smtp-noreply.age;
       dns-cloudflare.rekeyFile = ./dns-cloudflare.age;
     };
+
+    age.generators = {
+      envfile =
+        {
+          lib,
+          decrypt,
+          deps,
+          ...
+        }:
+        lib.concatMapAttrsStringSep "\n" (name: secret: ''
+          printf '${name}="%s"\n' $(${decrypt} ${lib.escapeShellArg secret.file})
+        '') deps;
+    };
   };
 }
