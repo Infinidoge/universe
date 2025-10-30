@@ -34,6 +34,26 @@ in
         '';
     };
 
+    PDS_EMAIL_SMTP_URL = {
+      intermediary = true;
+      generator.dependencies.password = config.age.secrets.smtp-noreply;
+      generator.script =
+        {
+          pkgs,
+          lib,
+          decrypt,
+          deps,
+          ...
+        }:
+        ''
+          echo -n "smtps://"
+          ${lib.getExe pkgs.python3} -c \
+            "import urllib.parse as p; \
+            print(p.quote(\"${common.email.outgoing}:$(${decrypt} ${lib.escapeShellArg deps.password.file})\", safe=\":\"), end=\"\")"
+          echo -n "@${common.email.smtp.address}"
+        '';
+    };
+
     pds-env = {
       owner = "pds";
       group = "pds";
@@ -44,6 +64,7 @@ in
             PDS_JWT_SECRET
             PDS_ADMIN_PASSWORD
             PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX
+            PDS_EMAIL_SMTP_URL
             ;
         };
       };
@@ -58,6 +79,7 @@ in
       PDS_HOSTNAME = domain;
       PDS_PORT = 3131;
       PDS_ADMIN_EMAIL = "admin@inx.moe";
+      PDS_EMAIL_FROM_ADDRESS = common.email.withSubaddress "pds";
     };
   };
 
