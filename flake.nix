@@ -164,6 +164,9 @@
 
             treefmt.projectRootFile = "flake.nix";
             treefmt.programs.nixfmt.enable = true;
+
+            # Home Manager configurations are extracted from NixOS hosts, ignore
+            agenix-rekey.homeConfigurations = { };
           };
 
         flake = {
