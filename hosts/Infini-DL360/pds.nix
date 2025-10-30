@@ -61,7 +61,7 @@ in
     };
   };
 
-  services.nginx.virtualHosts.${domain} = {
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     locations."/" = {
       proxyPass = "http://localhost:${toString cfg.settings.PDS_PORT}";
       proxyWebsockets = true;
