@@ -22,6 +22,7 @@
 - [ ] Backup postgres database as a borgbackup dump
 - [ ] Add Xonsh
 - [ ] Setup GNOME Keyring and Nheko
+- [ ] Implement a copyparty auto-file hook to sort uploads into (Ref: https://github.com/9001/copyparty/blob/hovudstraum/bin/hooks/reloc-by-ext.py)
 
 # Move to Wayland
 - [ ] https://sr.ht/~emersion/kanshi/
@@ -54,6 +55,7 @@
 - [ ] LSP support
 - [ ] Fix Nix indenting
 - [ ] Borrow from [Ersei's config](https://git.sr.ht/~fd/nix-configs/tree/main/item/home/common/nvim)
+- [ ] Replace NixVim with LazyVim?
 
 # Issues pending fixes
 
