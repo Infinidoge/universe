@@ -19,6 +19,8 @@ let
 in
 
 {
+  persist.directories = [ "/var/lib/private/drasl" ];
+
   services.drasl = {
     enable = true;
     settings = {
