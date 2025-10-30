@@ -98,6 +98,17 @@ in
             position = "0x0";
           };
         };
+        dorm-alt = {
+          eDP-1 = framework // {
+            position = "1080x716";
+          };
+          DP-4 = portable-second // {
+            position = "0x0";
+          };
+          DP-1 = dorm // {
+            position = "2885x716";
+          };
+        };
       }
     );
 }
