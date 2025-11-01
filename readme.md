@@ -28,16 +28,6 @@ Miscellaneous scripts that I use elsewhere as part of my configuration.
 
 Each of the devices that my configuration is setup to target.
 Each host is a directory under `/hosts`, with the `default.nix` file defining the host.
-In each of the hosts that I particularly care for is a `readme.org` file containing source blocks.
-These source blocks are tangled to the respective bash scripts, which are used for provisioning a device with that configuration.
-
-Summary of what the scripts do
-
-- `prep.bash /path/to/dev/disk`: Partitions and formats the given disk.
-- `install.bash /path/to/dev/disk`: Mounts the file systems, then runs all commands for an installation, including cloning the configuration into `/etc/nixos`
-- `bare_install.bash`: Just runs `nixos-install`
-- `mount.bash /path/to/dev/disk`: Mounts the file systems as in `install.bash`.
-- `data_setup.bash /path/to/dev/disk`: Partitions the disk as a separate data storage; Used for Infini-SERVER.
 
 ### `/lib`
 
@@ -65,56 +55,14 @@ Modules that create some sort of new functionality.
 
 Definitions that apply globally across all devices.
 
-- `backup.nix`: Borg-backup-based automatic backups for all of my devices
-- `boot.nix`: Sets up the bootloader. In my case: Grub.
-- Each file in the `caches` folder is a definition for a binary cache.
-- `common.nix`: Commonly reused definitions, through the `common` config option
-- `defaults.nix`: Overrides NixOS defaults, on account of `stateVersion` changes
-- `general.nix`: Broad general things that apply globally.
-- `graphical.nix`: Global configuration that applies to graphical environments
-- `home-manager.nix` defines default home-manager configurations that apply to all users
-- `kmscon.nix`: Setup for my preferred TTY: kmscon.
-- `locale.nix`: Sets up various locale-related things like keymap, compose key, timezone, etc.
-- `networking.nix`: Networking related settings, such as setting up tailscale, avahi, and DNS.
-- `nix.nix` defines Nix settings, like allowed users, garbage collection, etc. Also installs some Nix-related packages
-- `options.nix` defines shortcut options used throughout the configuration.
-- `packages.nix`: Packages that should be installed on everything.
-- `persist.nix`: Global setup for my persistent impermanence folders, from my standard `/persist` folder.
-- `security.nix`: Various security related settings.
-- `shell.nix`: Shell-related settings like aliases.
-- `ssh.nix`: SSH-related settings
-- `virtualisation.nix`: Setup for virtualisation, namely docker and libvirtd
-
 #### `/modules/modules`
 
 Modules that simplify the setup of things between devices.
 Differs from `global` in that they are gated behind options rather than applying globally.
 
-- `desktop`: Things related to the desktop experience
-  - `gaming.nix`: Sets up gaming related software
-  - `wm.nix`: Sets up my window manager of choice: Qtile
-- `hardware`: Modules that setup hardware
-  - `audio.nix`: Sets up audio by enabling sound and enabling pipewire and related software.
-  - `form.nix`: Settings that are form-specific. Forms are desktop, laptop, portable, raspberry pi, and server.
-  - `gpu.nix`: GPU-specific settings, primarily with regards to setting up drivers and installing software necessary for hardware acceleration.
-  - `wireless.nix`: Sets up wireless communication, namely WiFi and Bluetooth.
-  - `peripherals`: Modules that setup peripherals like mice or printers.
-    - `printing.nix`: Sets up printing with the printing service.
-    - `yubikey.nix`: Sets up yubikey-related software and settings
-- `services`: Sets up services.
-  - `apcupsd.nix`: Sets up apcupsd to manage my UPS.
-
 #### `/modules/vendored`
 
 These are modules taken from Nixpkgs or elsewhere that I vendor into my configuration so I can make deeper changes to them, while not using import-from-derivation type patching. Usually to change it so I can set an explicit directory to store files in.
-
-- `conduit.nix`: Modified to allow selecting a file storage location
-- `factorio.nix`: Modified primarily to allow setting map generation settings
-- `hydra.nix`: Modified to allow selecting a file storage location and specify an environment file.
-- `jellyfin.nix`: Modified to allow selecting file storage locations
-- `steam.nix`: Modified to put Steam's packages into user packages instead of system packages
-- `thelounge.nix`: Modified to allow selecting a file storage location
-- `vaultwarden.nix`: Modified to allow selecting a file storage location
 
 ### `/overlays`
 
@@ -132,23 +80,13 @@ Some may be upstreamed in the future, however some don't generally belong in Nix
 - `all-packages.nix`: Collects the packages and applies `callPackage`.
 - `patches`: Any patches necessary for packages go here. Doesn't necessarily exist.
 
-Packages themselves:
-
-- `bytecode-viewer.nix`: A viewer for Java bytecode
-- `ears-cli.nix`: A CLI for working with Ears-format skins
-- `fw-ectool.nix`: The ectool for Framework laptops
-- `hexagon.nix`: A runner/compiler for Hex Casting spells.
-- `mcaselector.nix`: A wrapper around the MCASelector jar so it runs on Nix.
-- `nix-modrinth-prefetch.nix`: A prefetcher for Modrinth mods.
-- `olympus.nix`: The olympus mod manager/installer for Celeste
-- `sim65.nix`: The Sim65 65c02 simulator and debugger. Not well tested.
-- `substitute-subset.nix`: `substituteAll` for a limited subset of files.
-- `unbted.nix`: An NBT editor for Minecraft.
-
 ### `/secrets`
 
 Contains and handles all secrets for the configuration.
-Managed using `agenix`.
+Managed using `agenix-rekey`.
+`/secrets/generated` are generated and stored, `/secrets/rekeyed` are the secrets keyed per host.
+
+Hosts and users have their own relevant secrets.
 
 ### `/shell`
 
@@ -172,33 +110,6 @@ Modules that add new home manager functionality.
 ##### `/users/modules/global`
 
 Home Manager gettings that are set globally.
-
-- `direnv.nix`
-- `flameshot.nix`
-- `git.nix`
-- `gpg.nix`
-- `htop.nix`
-- `keychain.nix`
-- `kitty.nix`
-- `mpris.nix`
-- `neovim.nix`
-- `obs-studio.nix`
-- `programming.nix`: Packages/configuration for various programming languages.
-- `rofi.nix`
-- `shells`: Per-shell settings
-  - `all.nix`: Imports all other shells
-  - `common.nix`: Common things for all shells, imported by each shell
-  - `bash.nix`
-  - `fish.nix`
-  - `ion.nix`
-  - `nushell.nix`
-  - `zsh.nix`
-- `ssh.nix`
-- `starship.nix`
-- `theming.nix`
-- `tmux.nix`
-- `vim.nix`
-- `zoxide.nix`
 
 #### `/users/root`
 
