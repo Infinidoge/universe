@@ -38,6 +38,7 @@ in
     factorio-headless
     hydrus
     presenterm
+    flameshot
     ;
 
   inherit (fork)
