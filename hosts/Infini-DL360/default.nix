@@ -122,21 +122,20 @@
 
   services.fail2ban.enable = true;
 
-  environment.etc."fail2ban/filter.d/nginx-url-probe.local".text = lib.mkDefault (
-    lib.mkAfter ''
-      [Definition]
-      failregex = ^<HOST>.*GET.*(\.php|admin|wp\-).* HTTP/\d.\d\" 404.*$
-    ''
-  );
-
-  services.fail2ban.jails.nginx-url-probe.settings = {
+  services.fail2ban.jails.nginx-url-probe = {
     enabled = true;
-    filter = "nginx-url-probe";
-    logpath = "/var/log/nginx/access.log";
-    action = "%(action_)s[blocktype=DROP]";
-    backend = "auto";
-    maxretry = 5;
-    findtime = 600;
+    filter = {
+      Definition = {
+        failregex = ''^<HOST>.*GET.*(\.php|admin|wp\-).* HTTP/\d.\d\" 404.*$'';
+      };
+    };
+    settings = {
+      logpath = "/var/log/nginx/access.log";
+      port = "80,443";
+      backend = "auto";
+      maxretry = 5;
+      findtime = 600;
+    };
   };
 
   services.nginx.enable = true;
