@@ -1,0 +1,264 @@
+#!/usr/bin/env bash
+# NOTE: https://gist.github.com/tom-galvin/6c19fe907945d735c045
+# mapwacom script
+
+MAPWACOM=$(basename $0)
+
+EXIT_CODE_BAD_DEVICE=82
+EXIT_CODE_NO_SUCH_DEVICE=80
+EXIT_CODE_NO_SUCH_SCREEN=81
+EXIT_CODE_MISSING_DEPS=83
+EXIT_CODE_USAGE=64
+
+ENTIRE_SCREEN_NAME="desktop"
+
+# Checks the command $1 exists.
+check_tool_exists() {
+	command -v $1 >/dev/null 2>&1 || {
+		echo "$MAPWACOM requires $1 to run." 1>&2
+		echo "Ensure you have it installed first." 1>&2
+		exit $EXIT_CODE_MISSING_DEPS
+	}
+}
+
+# Displays usage information.
+usage_info() {
+	echo "Usage: $MAPWACOM [OPTIONS] | [[-d DEVICENAME]... -s SCREENNAME]..."
+	echo ""
+	echo "OPTIONS"
+	echo "    -h, --help"
+	echo "        Shows this message."
+	echo "    --list-devices"
+	echo "        Lists all present Wacom device names."
+	echo "    --list-screens"
+	echo "        Lists all screens that devices may be mapped to."
+	echo "        The special screen 'desktop' represents the entire X display."
+	echo "    --debug"
+	echo "        Prints debug information."
+	echo "    -d DEVICENAME, --device=DEVICENAME"
+	echo "        Specifies a device name which should be mapped to a screen."
+	echo "    --device-regex=DEVICEPATTERN"
+	echo "        Specifies a grep-style regex pattern, which will specify all"
+	echo "        devices whose names matches the given pattern."
+	echo "        This is equivalent to specifying the --device option on every"
+	echo "        device matching the given expression."
+	echo "    -s SCREENNAME, --screen=SCREENNAME"
+	echo "        Maps all previously specified devices to the given screen name."
+	echo "        This ensures that the device-to-screen mapping remains of the"
+	echo "        same proportion as the device area itself by, if necessary,"
+	echo "        letter-boxing the device area to fit the screen area inside it."
+	echo ""
+	echo "EXAMPLES"
+	echo "    $MAPWACOM --list-devices"
+	echo "        Lists all Wacom devices on this computer."
+	echo "    $MAPWACOM -d \"Wacom Bamboo stylus\" -d \"Wacom Bamboo eraser\" -s \"DVI-I-2\""
+	echo "        Maps the \"Wacom Bamboo stylus\" and \"Wacom Bamboo eraser\""
+	echo "        devices to the screen named \"DVI-I-2\"."
+	echo "    $MAPWACOM --device-regex=\"Wacom Bamboo [se].*\" --screen=\"DVI-I-2\""
+	echo "        Equivalent in functionality to the example above, but usigng the"
+	echo "        regex device specifier instead. There may be some creating use"
+	echo "        case of this option that might be useful."
+	echo "    $MAPWACOM -d \"device 1\" -d \"device 2\" -s \"screen 1\" -d \"device 3\" -s \"screen 2\""
+	echo "        Maps devices 1 and 2 to screen 1, and device 3 to screen 2."
+	echo "        This demonstrates the behaviour of the device and screen options."
+}
+
+# Loads the arrays (ALL_DEVICES, ALL_SCREENS) containing the names of all valid
+# Wacom devices and screen names,
+load_all_devices_and_screens() {
+	readarray -t ALL_DEVICES < <(xsetwacom --list devices | sed 's/[ \t]*id:.*$//')
+	readarray -t ALL_SCREENS < <(xrandr -q --current | sed -n 's/^\([^ ]\+\) connected.*/\1/p')
+	ALL_SCREENS+=("$ENTIRE_SCREEN_NAME")
+}
+
+# Lists ALL_DEVICES to stdout.
+list_all_devices() {
+	for DEVICE in "${ALL_DEVICES[@]}"; do
+		echo "$DEVICE"
+	done
+}
+
+# Lists ALL_SCREENS to stdout.
+list_all_screens() {
+	for SCREEN in "${ALL_SCREENS[@]}"; do
+		echo "$SCREEN"
+	done
+}
+
+# Succeeds if $1 is a valid device name; fails otherwise.
+valid_device() {
+	for DEVICE in "${ALL_DEVICES[@]}"; do
+		if [ "$DEVICE" == "$1" ]; then
+			return 0
+		fi
+	done
+	return 1
+}
+
+# Succeeds if $1 is a valid device name; fails otherwise.
+valid_screen() {
+	for SCREEN in "${ALL_SCREENS[@]}"; do
+		if [ "$SCREEN" == "$1" ]; then
+			return 0
+		fi
+	done
+	return 1
+}
+
+# Adds device $1 to the device list.
+add_device() {
+	[ $SHOW_DEBUG -ne 0 ] && echo "Adding device '$1'."
+	if valid_device "$1"; then
+		DEVICES+=("$1")
+	else
+		echo "Device '$1' does not exist." 1>&2
+		echo "Run '$MAPWACOM --list-devices' to see available devices." 1>&2
+		exit $EXIT_CODE_NO_SUCH_DEVICE
+	fi
+}
+
+# Adds all devices matching the regex pattern $1 to the device list.
+add_device_regex() {
+	COUNT=0
+	for DEVICE in "${ALL_DEVICES[@]}"; do
+		if echo "$DEVICE" | grep "$1" 1>/dev/null; then
+			add_device "$DEVICE"
+			COUNT=$(( $COUNT + 1 ))
+		fi
+	done
+	[ $SHOW_DEBUG -ne 0 ] && echo "Added $COUNT devices matching '$1'."
+}
+
+# Clears the device list.
+clear_devices() {
+	DEVICES=()
+}
+
+# Maps device $1 to screen $2.
+map_device_to_screen() {
+	[ $SHOW_DEBUG -ne 0 ] && echo "Mapping '$1' to '$2'."
+
+	if xsetwacom --set "$1" ResetArea 2>&1 | grep "does not exist" 1>/dev/null 2>/dev/null; then
+		echo "Device '$1' is not an input device or is otherwise not supported."
+		echo "Its area cannot be reset via: xsetwacom --set \"$1\" ResetArea"
+		if [ $EXIT_ON_BAD_DEVICE -ne 0 ]; then
+			exit $EXIT_CODE_BAD_DEVICE
+		else
+			return $EXIT_CODE_BAD_DEVICE
+		fi
+	fi
+	AREA_INFO=$(xsetwacom --get "$1" Area 2>&1)
+	if echo "${AREA_INFO}" | grep "does not exist" 1>/dev/null 2>/dev/null; then
+		echo "Device '$1' is not an input device or is otherwise not supported."
+		echo "Its area cannot be obtained via: xsetwacom --get \"$1\" Area"
+		if [ $EXIT_ON_BAD_DEVICE -ne 0 ]; then
+			exit $EXIT_CODE_BAD_DEVICE
+		else
+			return $EXIT_CODE_BAD_DEVICE
+		fi
+	fi
+	read AREASX AREASY AREAX AREAY <<< `xsetwacom --get "$1" Area`
+
+	[ $SHOW_DEBUG -ne 0 ] && echo "Device '$1' area ${AREAX}x${AREAY}."
+
+	if [ "$2" = "$ENTIRE_SCREEN_NAME" ]; then
+		LINE=`xrandr -q --current | sed -n 's/^Screen 0:.*, current \([0-9]\+\) x \([0-9]\+\),.*/\1 \2/p'`
+		read WIDTH HEIGHT <<< "$LINE"
+	else
+		LINE=`xrandr -q --current | sed -n "s/^$2"' connected.* \([0-9]\+x[0-9]\++[0-9]\++[0-9]\+\).*/\1/p'`
+		read WIDTH HEIGHT <<< `echo "${LINE}" | sed -n 's/\([0-9]\+\)x\([0-9]\+\)+\([0-9]\+\)+\([0-9]\+\)/\1 \2/p'`
+	fi
+	[ $SHOW_DEBUG -ne 0 ] && echo "Screen '$2' size ${WIDTH}x${HEIGHT}."
+
+	RATIOAREAY=$(( AREAX * HEIGHT / WIDTH ))
+	RATIOAREAX=$(( AREAY * WIDTH / HEIGHT ))
+
+	if [ "$AREAY" -gt "$RATIOAREAY" ]; then
+		NEWAREAX="$AREAX"
+		NEWAREAY="$RATIOAREAY"
+	else
+		NEWAREAX="$RATIOAREAX"
+		NEWAREAY="$AREAY"
+	fi
+
+	xsetwacom --set "$1" Area 0 0 "$NEWAREAX" "$NEWAREAY"
+	if [ "$2" = "$ENTIRE_SCREEN_NAME" ]; then
+		xsetwacom --set "$1" MapToOutput "$ENTIRE_SCREEN_NAME"
+	else
+		xsetwacom --set "$1" MapToOutput "$LINE"
+	fi
+}
+
+# Maps all devices in the device list to screen $1.
+map_devices_to_screen() {
+	if valid_screen "$1"; then
+		for DEVICE in "${DEVICES[@]}"; do
+			map_device_to_screen "$DEVICE" "$1"
+		done
+	else
+		echo "Screen '$1' does not exist." 1>&2
+		echo "Run '$MAPWACOM --list-screens' to see available screens." 1>&2
+		exit $EXIT_CODE_NO_SUCH_SCREEN
+	fi
+}
+
+check_tool_exists xrandr
+check_tool_exists xsetwacom
+load_all_devices_and_screens
+
+if [ $# -eq 0 ]; then
+	usage_info
+	exit
+fi
+
+clear_devices
+SHOW_DEBUG=0
+EXIT_ON_BAD_DEVICE=0 # If we try to map a device that doesn't support it, exit script
+
+while [ $# -gt 0 ]; do
+	OPT="$1"
+	shift
+	case $OPT in
+		"-h"|"-?"|"--help")
+			usage_info
+			exit
+			;;
+		"--debug")
+			echo "$OPT option set; debug information will be displayed."
+			SHOW_DEBUG=1
+			;;
+		"--list-devices")
+			list_all_devices
+			;;
+		"--list-screens")
+			list_all_screens
+			;;
+		"-d"|"--device")
+			add_device "$1"
+			shift
+			;;
+		"--device="*)
+			add_device "${OPT#*=}"
+			;;
+		"--device-regex")
+			add_device_regex "$1"
+			shift
+			;;
+		"--device-regex="*)
+			add_device_regex "${OPT#*=}"
+			;;
+		"-s"|"--screen")
+			map_devices_to_screen "$1"
+			shift
+			clear_devices
+			;;
+		"--screen="*)
+			map_devices_to_screen "${OPT#*=}"
+			clear_devices
+			;;
+		*)
+			echo "Unknown option $OPT." 1>&2
+			exit $EXIT_CODE_USAGE
+			;;
+	esac
+done
