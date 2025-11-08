@@ -3,7 +3,6 @@ apollo
 area
 ariadne
 artemis
-athena
 boreas
 circe
 deimos
@@ -39,7 +38,6 @@ juno
 jupiter
 mars
 mercury
-minerva
 neptune
 pluto
 venus
@@ -63,11 +61,13 @@ sobek
 thoth
 
 ### used
-hermes | portable install
-hestia | storage server
-vulcan | Purdue Hackers server
+hermes  | portable install
+hestia  | storage server
+vulcan  | Purdue Hackers server
+athena  | fairphone
+minerva | s10
 
 ### pending
-enodia | router
-iris   | oracle cloud server
-lethe  | installer image/kexec binary
+enodia  | router
+iris    | oracle cloud server
+lethe   | installer image/kexec binary
