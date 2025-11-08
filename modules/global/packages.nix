@@ -11,6 +11,10 @@
   # Remove all default packages
   environment.defaultPackages = lib.mkForce [ ];
 
+  home.home.sessionPath = [
+    "\${UNIVERSE_FLAKE_ROOT:-/etc/nixos}/bin"
+  ];
+
   # Packages wanted everywhere
   universe.packages =
     with pkgs;
