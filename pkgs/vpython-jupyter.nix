@@ -4,7 +4,7 @@
 
   cython,
   setuptools,
-  setuptools_scm,
+  setuptools-scm,
 
   autobahn,
   ipykernel,
@@ -29,7 +29,7 @@ buildPythonPackage {
   build-system = [
     cython
     setuptools
-    setuptools_scm
+    setuptools-scm
   ];
   dependencies = [
     autobahn
