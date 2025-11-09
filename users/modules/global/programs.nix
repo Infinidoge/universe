@@ -60,7 +60,7 @@ in
         presenterm
         toot
         (ifGraphical [
-          bitwarden
+          bitwarden-desktop
           qbittorrent
           sqlitebrowser
         ])

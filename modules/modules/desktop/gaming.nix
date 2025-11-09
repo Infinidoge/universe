@@ -63,7 +63,7 @@ in
         (mkIf cfg.lutris.enable cfg.lutris.package)
         (mkIf cfg.olympus.enable cfg.olympus.package)
         (mkIf cfg.puzzles.enable cfg.puzzles.package)
-        (mkIf cfg.steam.enable protonup)
+        (mkIf cfg.steam.enable protonup-ng)
         (mkIf cfg.steam.enable wineWowPackages.stable)
       ];
 
