@@ -22,14 +22,12 @@ in
         ./config
       ];
 
-      programs.git = {
-        userEmail = "infinidoge@inx.moe";
-        userName = "Infinidoge";
-        extraConfig = {
-          gpg.format = "ssh";
-          commit.gpgsign = true;
-          user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
-        };
+      programs.git.settings = {
+        user.email = "infinidoge@inx.moe";
+        user.name = "Infinidoge";
+        gpg.format = "ssh";
+        commit.gpgsign = true;
+        user.signingkey = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
       };
 
       programs.firefox = {
