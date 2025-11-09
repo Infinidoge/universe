@@ -35,7 +35,7 @@
 
     lfs.enable = true;
 
-    extraConfig = {
+    settings = {
       branch.sort = "-committerdate";
       commit.verbose = true;
       init.defaultBranch = "master";
@@ -49,64 +49,64 @@
         autoStageIfNothingStaged = true;
       };
       protocol.file.allow = "always";
-    };
 
-    aliases = {
-      a = "add -p";
-      ai = "add -i";
-      an = "add -N";
-      co = "checkout";
-      cob = "checkout -b";
-      f = "fetch -p";
-      c = "commit";
-      ca = "commit -a";
-      caa = "commit -a --amend";
-      can = "commit --amend --no-edit";
-      caan = "commit -a --amend --no-edit";
-      caanpfl = "!git caan && git pfl";
-      p = "push";
-      pfl = "push --force-with-lease";
-      pu = "pull";
-      pua = "pull --autostash";
-      pup = "!git pull && git push";
-      puap = "!git pull --autostash && git push";
-      b = "branch";
-      ba = "branch -a";
-      bd = "branch -d";
-      bD = "branch -D";
-      d = "diff";
-      dc = "diff --cached";
-      ds = "diff --staged";
-      dh = "diff HEAD~1 HEAD";
-      r = "restore -p";
-      rs = "restore --staged -p";
-      sw = "switch";
-      st = "status -sb";
-      rb = "rebase -i --autosquash";
-      rbc = "rebase --continue";
-      rbs = "rebase --skip";
-      rba = "rebase --abort";
-      rbe = "rebase --edit-todo";
-      arb = "absorb --and-rebase";
+      aliases = {
+        a = "add -p";
+        ai = "add -i";
+        an = "add -N";
+        co = "checkout";
+        cob = "checkout -b";
+        f = "fetch -p";
+        c = "commit";
+        ca = "commit -a";
+        caa = "commit -a --amend";
+        can = "commit --amend --no-edit";
+        caan = "commit -a --amend --no-edit";
+        caanpfl = "!git caan && git pfl";
+        p = "push";
+        pfl = "push --force-with-lease";
+        pu = "pull";
+        pua = "pull --autostash";
+        pup = "!git pull && git push";
+        puap = "!git pull --autostash && git push";
+        b = "branch";
+        ba = "branch -a";
+        bd = "branch -d";
+        bD = "branch -D";
+        d = "diff";
+        dc = "diff --cached";
+        ds = "diff --staged";
+        dh = "diff HEAD~1 HEAD";
+        r = "restore -p";
+        rs = "restore --staged -p";
+        sw = "switch";
+        st = "status -sb";
+        rb = "rebase -i --autosquash";
+        rbc = "rebase --continue";
+        rbs = "rebase --skip";
+        rba = "rebase --abort";
+        rbe = "rebase --edit-todo";
+        arb = "absorb --and-rebase";
 
-      # reset
-      soft = "reset --soft";
-      hard = "reset --hard";
-      s1ft = "soft HEAD~1";
-      h1rd = "hard HEAD~1";
+        # reset
+        soft = "reset --soft";
+        hard = "reset --hard";
+        s1ft = "soft HEAD~1";
+        h1rd = "hard HEAD~1";
 
-      # logging
-      lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-      plog = "log --graph --pretty='format:%C(red)%d%C(reset) %C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'";
-      rank = "shortlog -sn --no-merges";
+        # logging
+        lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+        plog = "log --graph --pretty='format:%C(red)%d%C(reset) %C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'";
+        rank = "shortlog -sn --no-merges";
 
-      # delete merged branches
-      bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d";
+        # delete merged branches
+        bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d";
 
-      root = "rev-parse --show-toplevel";
-      fzf = "!git-fzf";
-      edit = "!git-fzf-edit";
-      e = "edit";
+        root = "rev-parse --show-toplevel";
+        fzf = "!git-fzf";
+        edit = "!git-fzf-edit";
+        e = "edit";
+      };
     };
   };
 
