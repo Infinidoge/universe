@@ -22,7 +22,10 @@ Some parts of Digga's library is replicated in [lib/digga.nix](./lib/digga.nix) 
 
 Miscellaneous scripts that I use elsewhere as part of my configuration.
 
+- `addtovpn`: A helper script for provisioning keys for my wireguard VPN
 - `bwrap.bash`: A bubble-wrap script used for running Nix on systems where it shouldn't be. See https://ersei.net/en/blog/its-nixin-time
+- `format-json`: Simple script for formatting a json file in-place with jq
+- `mapwacom`: A script to properly map a wacom tablet to a display
 
 ### `/hosts`
 
