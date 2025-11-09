@@ -50,7 +50,7 @@
       };
       protocol.file.allow = "always";
 
-      aliases = {
+      alias = {
         a = "add -p";
         ai = "add -i";
         an = "add -N";
