@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+tmpfile=$(mktemp --suffix json)
+file=$1
+
+cat $file | jq > $tmpfile
+mv $tmpfile $file
+
