@@ -5,7 +5,7 @@
   jre,
   gtk3,
   makeWrapper,
-  wrapGAppsHook,
+  wrapGAppsHook3,
 }:
 
 let
@@ -26,7 +26,7 @@ stdenv.mkDerivation (self: rec {
   nativeBuildInputs = [
     gtk3
     makeWrapper
-    wrapGAppsHook
+    wrapGAppsHook3
   ];
 
   installPhase = ''
