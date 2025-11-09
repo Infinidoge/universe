@@ -36,12 +36,12 @@ in
             with pkgs;
             flatten [
               libvdpau-va-gl
-              vaapiVdpau
+              libva-vdpau-driver
 
               (optionals cfg.intel [
                 intel-compute-runtime
                 intel-media-driver
-                vaapiIntel
+                intel-vaapi-driver
               ])
 
               (optionals cfg.nvidia [

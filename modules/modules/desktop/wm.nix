@@ -87,7 +87,7 @@ in
 
       fonts.packages = with pkgs; [
         powerline-fonts
-        ubuntu_font_family
+        ubuntu-classic
       ];
     })
   ]);
