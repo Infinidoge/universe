@@ -19,14 +19,6 @@ let
       slice = a: b: builtins.substring a b input.lastModifiedDate;
     in
     "0-unstable-${slice 0 5}-${slice 5 7}-${slice 7 9}";
-
-  addCmakeMinimum =
-    pkg:
-    pkg.overrideAttrs (
-      _: prev: {
-        cmakeFlags = (prev.cmakeFlags or [ ]) ++ [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
-      }
-    );
 in
 {
   inherit latest fork stable;
@@ -96,20 +88,4 @@ in
     })
   ];
 
-  python-grip = fork.python3Packages.grip;
-
-  # BUG: https://github.com/NixOS/nixpkgs/issues/418451
-  gnome2 = prev.gnome2.overrideScope (
-    _: _: {
-      GConf = null;
-    }
-  );
-
-  # BUG: https://github.com/NixOS/nixpkgs/issues/445447
-  libutp = addCmakeMinimum prev.libutp;
-  transmission_3 = addCmakeMinimum prev.transmission_3;
-  xss-lock = addCmakeMinimum prev.xss-lock;
-  halibut = addCmakeMinimum prev.halibut;
-  libvdpau-va-gl = addCmakeMinimum prev.libvdpau-va-gl;
-  intel-graphics-compiler = addCmakeMinimum prev.intel-graphics-compiler;
 }
