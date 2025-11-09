@@ -88,4 +88,9 @@ in
     })
   ];
 
+  # BUG: https://github.com/NixOS/nixpkgs/issues/358845
+  # Weirdly, only a problem at evaluation
+  openjfx = prev.openjfx.override { gradle_7 = final.gradle_8; };
+  openjfx17 = prev.openjfx17.override { gradle_7 = final.gradle_8; };
+  openjfx21 = prev.openjfx21.override { gradle_7 = final.gradle_8; };
 }
