@@ -63,17 +63,16 @@ in
         };
       };
 
-      home.sessionVariables =
-        {
-          KEYID = "0x30E7A4C03348641E";
-          POP_SMTP_HOST = common.email.smtp.address;
-          POP_SMTP_PORT = common.email.smtp.STARTTLS;
-          POP_SMTP_USERNAME = common.email.withUser "infinidoge";
-          UNISON = "$HOME/.local/state/unison";
-        }
-        // lib.optionalAttrs main.modules.secrets.enable {
-          POP_SMTP_PASSWORD = "$(cat ${secrets.smtp-personal})";
-        };
+      home.sessionVariables = {
+        KEYID = "0x30E7A4C03348641E";
+        POP_SMTP_HOST = common.email.smtp.address;
+        POP_SMTP_PORT = common.email.smtp.STARTTLS;
+        POP_SMTP_USERNAME = common.email.withUser "infinidoge";
+        UNISON = "$HOME/.local/state/unison";
+      }
+      // lib.optionalAttrs main.modules.secrets.enable {
+        POP_SMTP_PASSWORD = "$(cat ${secrets.smtp-personal})";
+      };
     };
 
   systemd.user.tmpfiles.users.infinidoge.rules = mkIf config.universe.media.enable [
