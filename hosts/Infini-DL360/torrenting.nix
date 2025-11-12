@@ -8,7 +8,7 @@
 
 {
   containers.torrenting = {
-    autoStart = true;
+    autoStart = false;
     enableTun = true;
     ephemeral = true;
     privateNetwork = true;
