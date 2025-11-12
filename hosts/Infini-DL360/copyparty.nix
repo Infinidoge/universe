@@ -106,7 +106,8 @@ in
       '';
     };
     locations."/outpost.goauthentik.io" = {
-      proxyPass = "${authentik_internal}/outpost.goauthentik.io";
+      #proxyPass = "${authentik_internal}/outpost.goauthentik.io";
+      proxyPass = "http://127.0.0.1:9000/outpost.goauthentik.io";
       extraConfig = ''
         client_max_body_size 0;
 
