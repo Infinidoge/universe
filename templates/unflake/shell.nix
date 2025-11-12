@@ -1,6 +1,6 @@
 let
   pkgs = import <nixpkgs> { };
-  devshell = import <devshell> { };
+  devshell = import <devshell> { nixpkgs = pkgs; };
 in
 
 devshell.mkShell {
