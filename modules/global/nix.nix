@@ -56,7 +56,12 @@ in
       sandbox = true;
       use-xdg-base-directories = true;
 
-      flake-registry = "${inputs.flake-registry}/flake-registry.json";
+      # Remove global flake registry
+      flake-registry = pkgs.writers.writeJSON "registry.json" {
+        flakes = [ ];
+        version = 2;
+      };
+
       secret-key-files = mkIf config.modules.secrets.enable config.secrets.binary-cache-private-key;
 
       min-free = 536870912; # 0.5 gibi bytes
