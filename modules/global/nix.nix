@@ -73,6 +73,8 @@ in
       ];
     };
 
+    nixPath = config.nix.settings.nix-path;
+
     gc = {
       automatic = lib.mkDefault true;
       options = lib.mkDefault "--delete-older-than 7d";
