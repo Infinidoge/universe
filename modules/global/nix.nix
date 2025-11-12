@@ -17,6 +17,11 @@ let
     users: lib.concatStringsSep " " (map (u: "/etc/ssh/authorized_keys.d/${u}") users);
 in
 {
+  nixpkgs.flake = {
+    setNixPath = false;
+    setFlakeRegistry = false;
+  };
+
   nix = {
     channel.enable = false;
 
