@@ -71,11 +71,9 @@ in
       locations."/" = {
         root = "/srv/web/inx.moe/out"; # TODO: Make this less volatile
         inherit tryFiles;
-        extraConfig =
-          websiteConfig
-          + ''
-            add_header Strict-Transport-Security "max-age=15768000;";
-          '';
+        extraConfig = websiteConfig + ''
+          add_header Strict-Transport-Security "max-age=15768000;";
+        '';
       };
     };
     "nitter.inx.moe" = mkRedirect "twitter.com";
