@@ -284,7 +284,7 @@
                 [
                   "Infini-DESKTOP"
                   "Infini-DL360"
-                  "Infini-FRAMEWORK"
+                  "artemis"
                   "Infini-OPTIPLEX"
                   "Infini-SERVER"
                   "hermes"

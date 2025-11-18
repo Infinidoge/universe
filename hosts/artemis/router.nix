@@ -54,7 +54,7 @@
         expand-hosts = true;
 
         no-hosts = true;
-        address = "/infini-framework.lan/192.168.100.1";
+        address = "/artemis.lan/192.168.100.1";
       };
     };
 

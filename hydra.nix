@@ -11,7 +11,7 @@ in
     nixosConfigurations.x86_64-linux = lib.flip lib.genAttrs getTopLevel [
       "Infini-DESKTOP"
       "Infini-DL360"
-      "Infini-FRAMEWORK"
+      "artemis"
       "Infini-OPTIPLEX"
       "Infini-SERVER"
       "hermes"
