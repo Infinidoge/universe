@@ -9,6 +9,7 @@ rec {
   jupyterlab-myst = pkgs.python3Packages.callPackage ./jupyterlab-myst { };
   jupyterlab-vim = pkgs.python3Packages.callPackage ./jupyterlab-vim { };
   mcaselector = pkgs.callPackage ./mcaselector.nix { };
+  makerom = pkgs.callPackage ./makerom.nix { };
   nix-modrinth-prefetch = pkgs.callPackage ./nix-modrinth-prefetch.nix { };
   olympus = pkgs.callPackage ./olympus.nix { };
   sim65 = pkgs.callPackage ./sim65.nix { };
