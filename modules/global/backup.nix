@@ -81,7 +81,7 @@ in
       };
 
       modules.backups.backupTimes = {
-        "Infini-FRAMEWORK" = "00:00";
+        "artemis" = "00:00";
         "Infini-OPTIPLEX" = "01:00";
         "Infini-SERVER" = "02:00";
         "Infini-DESKTOP" = "03:00";
