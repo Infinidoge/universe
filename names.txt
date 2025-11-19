@@ -2,7 +2,6 @@ aphrodite
 apollo
 area
 ariadne
-artemis
 boreas
 circe
 deimos
@@ -66,6 +65,7 @@ hestia  | storage server
 vulcan  | Purdue Hackers server
 athena  | fairphone
 minerva | s10
+artemis | framework laptop
 
 ### pending
 enodia  | router
