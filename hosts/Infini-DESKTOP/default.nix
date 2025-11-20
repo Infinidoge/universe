@@ -79,4 +79,13 @@
   };
 
   networking.firewall.allowedUDPPorts = [ 51820 ];
+
+  services.openssh.extraConfig = lib.mkBefore ''
+    XAuthLocation ${pkgs.xorg.xauth}/bin/xauth
+
+    Match user infinidoge
+      X11Forwarding yes
+      X11UseLocalhost no
+  '';
+
 }
