@@ -69,5 +69,5 @@ artemis | framework laptop
 
 ### pending
 enodia  | router
-iris    | oracle cloud server
+iris    | cloud server
 lethe   | installer image/kexec binary
