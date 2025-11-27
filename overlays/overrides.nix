@@ -31,6 +31,7 @@ in
     hydrus
     presenterm
     flameshot
+    immich
     ;
 
   inherit (fork)
