@@ -10,8 +10,8 @@
 
     admins = [ "Infinidoge" ];
 
-    saveName = "hacktorio_space_age";
-    game-name = "Hacktorio 3: Space Age";
+    saveName = "hacktorio_space_age_2";
+    game-name = "Hacktorio 4: Space Age 2";
     game-password = private.variables.factorio-password;
   };
 }
