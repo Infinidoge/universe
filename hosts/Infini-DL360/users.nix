@@ -15,8 +15,17 @@
     shell = pkgs.nushell;
   };
 
+  users.users.solonovamax = {
+    description = "Solo, Does programming sometimes";
+    isNormalUser = true;
+    shell = pkgs.bash;
+  };
+
   services.openssh.extraConfig = ''
     Match user mistergij
+      DisableForwarding yes
+
+    Match user solonovamax
       DisableForwarding yes
   '';
 }
