@@ -10,7 +10,7 @@
   };
 
   users.users.alina = {
-    description = "Cutest woofer";
+    description = "Alina, Cutest woofer";
     isNormalUser = true;
     shell = pkgs.nushell;
   };
