@@ -20,6 +20,7 @@ lib.mkIf main.universe.media.enable {
 
   home.packages = with pkgs; [
     audacity
+    bespokesynth
     feishin
     id3v2
     imv
