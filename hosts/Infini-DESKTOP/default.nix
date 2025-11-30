@@ -88,4 +88,9 @@
       X11UseLocalhost no
   '';
 
+  services.sunshine = {
+    enable = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
 }
