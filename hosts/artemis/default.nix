@@ -23,6 +23,7 @@
   home.home.packages = with pkgs; [
     ungoogled-chromium
     sidequest
+    moonlight-qt
   ];
 
   environment.enableDebugInfo = true;
