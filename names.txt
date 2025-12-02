@@ -1,9 +1,10 @@
 aphrodite
 apollo
-area
+ares
 ariadne
 boreas
 circe
+daedalus
 deimos
 demeter
 dionysus
@@ -20,11 +21,13 @@ khione
 morpheus
 nemesis
 nike
+nyx
 pan
 persephone
 phobos
 poseidon
 psyche
+selene
 styx
 thanatos
 tyche
@@ -35,10 +38,11 @@ ceres
 diana
 juno
 jupiter
+luna
 mars
 mercury
 neptune
-pluto
+nox
 venus
 vesta
 
@@ -51,6 +55,7 @@ heket
 horus
 isis
 khepri
+nephthys
 osiris
 ra
 sekhmet
@@ -71,3 +76,4 @@ artemis | framework laptop
 enodia  | router
 iris    | cloud server
 lethe   | installer image/kexec binary
+pluto   | home server
