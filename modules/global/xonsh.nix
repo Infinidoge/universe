@@ -9,6 +9,7 @@ in
       p: with p; [
         parallel-ssh
         cfg.package.xontribs.xonsh-direnv
+        requests
       ];
     config = ''
       xontrib load direnv
