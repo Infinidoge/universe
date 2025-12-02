@@ -13,6 +13,7 @@ in
       ];
     config = ''
       xontrib load direnv
+      execx($(zoxide init xonsh --cmd cd), 'exec', __xonsh__.ctx, filename='zoxide')
 
       if $TERM != "dumb":
           execx($(starship init xonsh))
