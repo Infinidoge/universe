@@ -39,7 +39,7 @@ in
       HBOX_OPTIONS_TRUST_PROXY = "true";
 
       HBOX_MAILER_HOST = common.email.smtp.address;
-      HBOX_MAILER_PORT = common.email.smtp.STARTTLS;
+      HBOX_MAILER_PORT = toString common.email.smtp.STARTTLS;
       HBOX_MAILER_USERNAME = common.email.outgoing;
       HBOX_MAILER_FROM = common.email.withSubaddress "homebox";
 
