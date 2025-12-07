@@ -89,6 +89,20 @@ in
     })
   ];
 
+  homebox = latest.homebox.overrideAttrs (o: rec {
+    version = "0.22.0-rc.2";
+    src = o.src.override {
+      tag = "v${version}";
+      hash = "sha256-ZU0uOisSW4yeI0ZLFICVk84hBzoZqCoyRlwaqzXssp4=";
+    };
+    pnpmDeps = o.pnpmDeps.override {
+      inherit version;
+      src = "${src}/frontend";
+      hash = "sha256-Pz0USL9/kLPFFBo3uWtZTcgSyuuf3uaFqHTwIJh4i1c=";
+    };
+    vendorHash = "sha256-xxR0cl0+vDGVoblGSFwvJGZFm5KNp9ZhAchdUl1DbFI=";
+  });
+
   # BUG: https://github.com/NixOS/nixpkgs/issues/358845
   # Weirdly, only a problem at evaluation
   openjfx = prev.openjfx.override { gradle_7 = final.gradle_8; };
