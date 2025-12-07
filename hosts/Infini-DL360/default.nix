@@ -21,6 +21,7 @@
     ./freshrss.nix
     ./grafana.nix
     ./hedgedoc.nix
+    ./homebox.nix
     ./hydra.nix
     ./immich.nix
     ./jellyfin.nix
