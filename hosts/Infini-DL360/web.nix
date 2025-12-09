@@ -77,7 +77,6 @@ in
       };
     };
     "nitter.inx.moe" = mkRedirect "twitter.com";
-    "sweedish.fish" = mkRedirect "swedish.fish";
     "blahaj.inx.moe" = mkRedirect "swedish.fish";
     "foxy.software" = mkTmpRedirect "https://inx.moe";
     "j.inx.moe" = ssl-inx-optional // {
