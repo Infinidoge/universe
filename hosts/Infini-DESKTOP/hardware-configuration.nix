@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   boot.initrd.availableKernelModules = [
@@ -18,4 +18,7 @@
   };
 
   hardware.nvidia.open = true;
+
+  # BUG: https://github.com/NixOS/nixpkgs/issues/467814
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 }
