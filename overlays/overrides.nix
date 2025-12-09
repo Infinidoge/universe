@@ -1,10 +1,12 @@
 inputs: final: prev:
 let
-  mkPkgs = channel: channel.legacyPackages.${final.system};
+  inherit (prev.stdenv.hostPlatform) system;
+
+  mkPkgs = channel: channel.legacyPackages.${system};
   mkPkgsUnfree =
     channel:
     import channel {
-      inherit (final) system;
+      inherit system;
       config.allowUnfree = true;
     };
 
