@@ -28,7 +28,6 @@ in
     discord-canary
     bitwarden-desktop
     factorio-headless
-    hydrus
     presenterm
     flameshot
     immich
@@ -108,4 +107,13 @@ in
   openjfx = prev.openjfx.override { gradle_7 = final.gradle_8; };
   openjfx17 = prev.openjfx17.override { gradle_7 = final.gradle_8; };
   openjfx21 = prev.openjfx21.override { gradle_7 = final.gradle_8; };
+
+  # BUG: https://github.com/NixOS/nixpkgs/issues/464244
+  hydrus = latest.hydrus.overrideAttrs (o: {
+    doCheck = false;
+    doInstallCheck = false;
+    propagatedBuildInputs = builtins.filter (
+      dep: dep != latest.python3Packages.psd-tools
+    ) o.propagatedBuildInputs;
+  });
 }
