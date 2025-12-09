@@ -113,8 +113,8 @@
     lix-module.inputs.lix.follows = "lix";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix.inputs.flake-compat.follows = "blank";
-    lix.inputs.nixpkgs.follows = "nixpkgs";
-    lix.inputs.pre-commit-hooks.follows = "git-hooks";
+    lix.inputs.nixpkgs.follows = "nixpkgs"; # TODO: pin to blank
+    lix.inputs.pre-commit-hooks.follows = "git-hooks"; # TODO: pin to blank
     nil.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.flake-compat.follows = "blank";
