@@ -6,7 +6,6 @@
     extra-experimental-features = [
       "nix-command"
       "flakes"
-      "no-url-literals"
       "pipe-operator"
     ];
   };

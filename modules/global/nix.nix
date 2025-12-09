@@ -43,7 +43,6 @@ in
       experimental-features = [
         "flakes"
         "nix-command"
-        "no-url-literals"
         "pipe-operator"
       ];
 
