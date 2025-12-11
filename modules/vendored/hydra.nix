@@ -111,7 +111,7 @@ in
       };
 
       # BEGIN DIFF
-      package = lib.mkPackageOption pkgs "hydra_unstable" { };
+      package = lib.mkPackageOption pkgs "hydra" { };
 
       baseDir = lib.mkOption {
         type = lib.types.path;
