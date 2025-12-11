@@ -99,4 +99,26 @@
   home.home.sessionVariables = {
     QT_XCB_TABLET_LEGACY_COORDINATES = "true";
   };
+
+  networking.wireless.interfaces = [ "wlp170s0" ];
+
+  networking.wlanInterfaces = {
+    wlp170s0.device = "wlp170s0";
+
+    wlp170s0-ap0 = {
+      device = "wlp170s0";
+      mac = "02:00:00:00:00:01";
+    };
+
+    wlp170s0-adhoc0 = {
+      type = "ibss";
+      device = "wlp170s0";
+      mac = "02:00:00:00:00:02";
+    };
+
+    wlp170s0-p2p0 = {
+      device = "wlp170s0";
+      mac = "02:00:00:00:00:03";
+    };
+  };
 }
