@@ -51,6 +51,9 @@ in
 
       services.xserver.displayManager = {
         lightdm.enable = true;
+        setupCommands = ''
+          ${lib.getExe pkgs.autorandr} -c
+        '';
       };
 
       home-manager.sharedModules = [
