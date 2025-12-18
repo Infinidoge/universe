@@ -118,4 +118,6 @@ in
       dep: dep != latest.python3Packages.psd-tools
     ) o.propagatedBuildInputs;
   });
+
+  hydra = prev.hydra.override { stdenv = final.clangStdenv; };
 }
