@@ -120,4 +120,12 @@ in
   });
 
   hydra = prev.hydra.override { stdenv = final.clangStdenv; };
+
+  bespokesynth = prev.bespokesynth.overrideAttrs (o: {
+    src = final.fetchFromGitHub {
+      inherit (o.src) owner repo fetchSubmodules;
+      rev = "7df1d9236514772a7ab8a038846c8ef0515bfec1";
+      hash = "sha256-LsTqUrAlTZuJ0sXOh/vNyOxM3troHALYqK54hI3bw0g=";
+    };
+  });
 }
