@@ -119,8 +119,6 @@ in
     ) o.propagatedBuildInputs;
   });
 
-  hydra = prev.hydra.override { stdenv = final.clangStdenv; };
-
   bespokesynth = prev.bespokesynth.overrideAttrs (o: {
     src = final.fetchFromGitHub {
       inherit (o.src) owner repo fetchSubmodules;
