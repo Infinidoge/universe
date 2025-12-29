@@ -3,27 +3,30 @@
   common,
   secrets,
   pkgs,
+  lib,
   ...
 }:
 let
+  cfg = config.services.hydra-dev;
   domain = common.subdomain "hydra";
 in
 {
+  persist.directories = [ "/var/lib/hydra" ];
+
   services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     locations."/" = {
-      proxyPass = "http://localhost:${toString config.services.hydra.port}";
+      proxyPass = "http://127.0.0.1:${toString cfg.port}";
     };
   };
 
-  services.hydra = {
+  services.hydra-dev = {
     enable = true;
+    package = lib.mkForce pkgs.hydra;
     port = 3333;
-    baseDir = "/srv/hydra";
     hydraURL = "https://${domain}";
     notificationSender = common.email.withSubaddress "hydra";
     smtpHost = common.email.smtp.address;
     useSubstitutes = true;
-    environmentFile = config.secrets.hydra;
     extraConfig = ''
       binary_cache_secret_key_file = ${secrets.binary-cache-private-key}
       allow_import_from_derivation = true
@@ -36,6 +39,10 @@ in
 
   systemd.services.hydra-queue-runner.path = [ pkgs.msmtp ];
   systemd.services.hydra-server.path = [ pkgs.msmtp ];
+
+  systemd.services.hydra-notify.serviceConfig.EnvironmentFile = config.secrets.hydra;
+  systemd.services.hydra-queue-runner.serviceConfig.EnvironmentFile = config.secrets.hydra;
+  systemd.services.hydra-server.serviceConfig.EnvironmentFile = config.secrets.hydra;
 
   users.users = {
     hydra.extraGroups = [ "smtp" ];
