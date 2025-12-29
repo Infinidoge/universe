@@ -37,6 +37,8 @@ in
         lib.concatMapAttrsStringSep "\n" (name: secret: ''
           printf '${name}="%s"\n' $(${decrypt} ${lib.escapeShellArg secret.file})
         '') deps;
+
+      hex32 = { pkgs, ... }: "${pkgs.openssl}/bin/openssl rand -hex 32";
     };
   };
 }
