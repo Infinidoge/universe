@@ -211,6 +211,7 @@
                     # --- Domain-Specific Overlays
                     inputs.agenix.overlays.default
                     inputs.copyparty.overlays.default
+                    inputs.hydra.overlays.default
                     inputs.nil.overlays.default
                     inputs.nix-minecraft.overlay
                     inputs.rust-overlay.overlays.default
@@ -256,7 +257,7 @@
                 # --- Domain-Specific Modules ---
                 inputs.authentik-nix.nixosModules.default
                 inputs.lix-module.nixosModules.default
-                inputs.hydra.nixosModules.overlayNixpkgsForThisHydra
+                inputs.hydra.nixosModules.hydra
                 inputs.nix-minecraft.nixosModules.minecraft-servers
                 inputs.drasl.nixosModules.drasl
                 inputs.copyparty.nixosModules.default
