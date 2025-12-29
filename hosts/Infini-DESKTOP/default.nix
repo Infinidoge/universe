@@ -93,4 +93,9 @@
     capSysAdmin = true;
     openFirewall = true;
   };
+
+  services.xserver.wacom.enable = true;
+  home.home.sessionVariables = {
+    QT_XCB_TABLET_LEGACY_COORDINATES = "true";
+  };
 }
