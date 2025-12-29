@@ -1,4 +1,5 @@
 {
+  withRoot = rekeyFile: { inherit rekeyFile; };
   withOwnerGroup = name: rekeyFile: {
     owner = name;
     group = name;
