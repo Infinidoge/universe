@@ -106,7 +106,7 @@ in
       ];
 
       environment.variables = {
-        inherit (commonArgs.environment) BORG_RSH BORG_REMOTE_PATH;
+        inherit (commonArgs.environment) BORG_REMOTE_PATH;
         BORG_REPO = cfg.repo;
         BORG_PASSCOMMAND = commonArgs.encryption.passCommand;
       };
