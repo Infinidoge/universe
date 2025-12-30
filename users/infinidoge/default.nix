@@ -126,6 +126,7 @@ in
       "docker"
       "factorio"
       "forgejo"
+      "garage"
       "incoming"
       "jellyfin"
       "libvirtd"
