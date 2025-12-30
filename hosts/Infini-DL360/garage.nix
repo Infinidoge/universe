@@ -13,6 +13,12 @@ let
     useACMEHost = "garage.inx.moe";
     forceSSL = true;
   };
+
+  secretCommon = {
+    owner = "garage";
+    group = "garage";
+    mode = "440";
+  };
 in
 {
   storage.directories = [
@@ -20,18 +26,15 @@ in
   ];
 
   age.secrets = {
-    admin_token_file = {
-      group = "garage";
+    admin_token_file = secretCommon // {
       rekeyFile = ./secrets/garage-admin-token.age;
       generator.script = "base64";
     };
-    metrics_token_file = {
-      group = "garage";
+    metrics_token_file = secretCommon // {
       rekeyFile = ./secrets/garage-metrics-token.age;
       generator.script = "base64";
     };
-    rpc_secret_file = {
-      group = "garage";
+    rpc_secret_file = secretCommon // {
       rekeyFile = ./secrets/garage-rpc-secret.age;
       generator.script = "hex32";
     };
@@ -47,6 +50,9 @@ in
       metadata_snapshots_dir = "${baseDir}/snapshots";
 
       db_engine = "sqlite";
+
+      # Calm down Garage, it's group readable
+      allow_world_readable_secrets = true;
 
       # No clustering yet, but just in case
       inherit (secrets) rpc_secret_file;
