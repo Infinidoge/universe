@@ -21,17 +21,17 @@ in
 
   age.secrets = {
     admin_token_file = {
-      owner = "garage";
+      group = "garage";
       rekeyFile = ./secrets/garage-admin-token.age;
       generator.script = "base64";
     };
     metrics_token_file = {
-      owner = "garage";
+      group = "garage";
       rekeyFile = ./secrets/garage-metrics-token.age;
       generator.script = "base64";
     };
     rpc_secret_file = {
-      owner = "garage";
+      group = "garage";
       rekeyFile = ./secrets/garage-rpc-secret.age;
       generator.script = "hex32";
     };
