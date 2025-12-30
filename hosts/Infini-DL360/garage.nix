@@ -21,14 +21,17 @@ in
 
   age.secrets = {
     admin_token_file = {
+      owner = "garage";
       rekeyFile = ./secrets/garage-admin-token.age;
       generator.script = "base64";
     };
     metrics_token_file = {
+      owner = "garage";
       rekeyFile = ./secrets/garage-metrics-token.age;
       generator.script = "base64";
     };
     rpc_secret_file = {
+      owner = "garage";
       rekeyFile = ./secrets/garage-rpc-secret.age;
       generator.script = "hex32";
     };
@@ -49,6 +52,7 @@ in
       inherit (secrets) rpc_secret_file;
       rpc_bind_addr = "[::]:3901";
       rpc_public_addr = "127.0.0.1:3901";
+      replication_factor = 1;
 
       s3_api = {
         s3_region = "garage";
@@ -77,17 +81,17 @@ in
     "s3.garage.inx.moe" = ssl-garage // {
       serverAliases = [ "*.s3.garage.inx.moe" ];
       locations."/" = {
-        proxyPass = cfg.s3_api.api_bind_addr;
+        proxyPass = "http://${cfg.s3_api.api_bind_addr}";
         extraConfig = ''
           proxy_max_temp_file_size 0;
         '';
       };
     };
     "*.web.garage.inx.moe" = ssl-garage // {
-      locations."/".proxyPass = cfg.s3_web.bind_addr;
+      locations."/".proxyPass = "http://${cfg.s3_web.bind_addr}";
     };
     "admin.garage.inx.moe" = ssl-garage // {
-      locations."/".proxyPass = cfg.admin.api_bind_addr;
+      locations."/".proxyPass = "http://${cfg.admin.api_bind_addr}";
     };
   };
 
@@ -99,5 +103,18 @@ in
       "*.web.garage.inx.moe"
       "admin.garage.inx.moe"
     ];
+  };
+
+  users.users.garage = {
+    group = "garage";
+    isSystemUser = true;
+  };
+  users.groups.garage = { };
+
+  systemd.services.garage.serviceConfig = {
+    DynamicUser = false;
+    User = "garage";
+    Group = "garage";
+    ReadWritePaths = [ cfg.metadata_snapshots_dir ];
   };
 }
