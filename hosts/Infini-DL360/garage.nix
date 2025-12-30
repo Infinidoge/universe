@@ -15,7 +15,7 @@ let
   };
 in
 {
-  persist.directories = [
+  storage.directories = [
     baseDir
   ];
 
