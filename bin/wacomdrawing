@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+xsetwacom -s --set "Wacom Intuos BT S Pad pad" Button 1 "key ctrl z"
+xsetwacom -s --set "Wacom Intuos BT S Pad pad" Button 8 "key ctrl alt +space"
+
+if [ "$1" != "" ]; then
+  mapwacom -d "Wacom Intuos BT S Pen stylus" -s $1
+fi
