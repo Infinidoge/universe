@@ -13,7 +13,7 @@ in
       "Infini-DL360"
       "artemis"
       "Infini-OPTIPLEX"
-      "Infini-SERVER"
+      "pluto"
       "hermes"
       "hestia"
     ];
