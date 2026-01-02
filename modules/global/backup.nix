@@ -83,7 +83,7 @@ in
       modules.backups.backupTimes = {
         "artemis" = "00:00";
         "Infini-OPTIPLEX" = "01:00";
-        "Infini-SERVER" = "02:00";
+        "pluto" = "02:00";
         "apophis" = "03:00";
         "Infini-DL360" = "04:00";
       };
