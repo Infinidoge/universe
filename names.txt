@@ -47,7 +47,6 @@ venus
 vesta
 
 anubis
-apophis
 bast
 hapi
 hathor
@@ -71,9 +70,10 @@ vulcan  | Purdue Hackers server
 athena  | fairphone
 minerva | s10
 artemis | framework laptop
+apophis | desktop
+pluto   | home server
 
 ### pending
 enodia  | router
 iris    | cloud server
 lethe   | installer image/kexec binary
-pluto   | home server
