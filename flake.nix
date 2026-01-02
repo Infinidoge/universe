@@ -280,7 +280,7 @@
               lib.flip lib.genAttrs
                 (name: { toplevel = self.nixosConfigurations.${name}.config.system.build.toplevel; })
                 [
-                  "Infini-DESKTOP"
+                  "apophis"
                   "Infini-DL360"
                   "artemis"
                   "Infini-OPTIPLEX"

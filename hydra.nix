@@ -9,7 +9,7 @@ in
   flake.hydraJobs = {
     packages = lib.mapAttrs isBroken self.packages;
     nixosConfigurations.x86_64-linux = lib.flip lib.genAttrs getTopLevel [
-      "Infini-DESKTOP"
+      "apophis"
       "Infini-DL360"
       "artemis"
       "Infini-OPTIPLEX"
