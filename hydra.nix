@@ -10,7 +10,7 @@ in
     packages = lib.mapAttrs isBroken self.packages;
     nixosConfigurations.x86_64-linux = lib.flip lib.genAttrs getTopLevel [
       "apophis"
-      "Infini-DL360"
+      "daedalus"
       "artemis"
       "Infini-OPTIPLEX"
       "pluto"

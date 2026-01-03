@@ -45,7 +45,7 @@
 
   system.stateVersion = "23.11";
 
-  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjmvE76BcPwZSjeNGzlguDQC67Yxa3uyOf5ZmVDWNys root@Infini-DL360";
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjmvE76BcPwZSjeNGzlguDQC67Yxa3uyOf5ZmVDWNys root@daedalus";
 
   info.loc.purdue = true;
 
