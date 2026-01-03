@@ -4,7 +4,6 @@ ares
 ariadne
 boreas
 circe
-daedalus
 deimos
 demeter
 dionysus
@@ -64,14 +63,15 @@ sobek
 thoth
 
 ### used
-hermes  | portable install
-hestia  | storage server
-vulcan  | Purdue Hackers server
-athena  | fairphone
-minerva | s10
-artemis | framework laptop
-apophis | desktop
-pluto   | home server
+hermes   | portable install
+hestia   | storage server
+vulcan   | Purdue Hackers server
+athena   | fairphone
+minerva  | s10
+artemis  | framework laptop
+apophis  | desktop
+pluto    | home server
+daedalus | primary server
 
 ### pending
 enodia  | router
