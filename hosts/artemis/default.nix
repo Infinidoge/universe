@@ -91,7 +91,7 @@
     timerConfig.OnCalendar = "Mon..Fri,Sun *-*-* 00:30:00";
   };
 
-  #networking.proxy.default = "http://infini-dl360.tailnet.inx.moe:8118";
+  #networking.proxy.default = "http://daedalus.tailnet.inx.moe:8118";
 
   nix.gc.automatic = false; # Disable for NixCon
 

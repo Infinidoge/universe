@@ -40,7 +40,7 @@ in
         pairs = {
           "PrismLauncher" =
             mkIf
-              (main.networking.hostName != "Infini-DL360" && main.modules.desktop.gaming.prismlauncher.enable)
+              (main.networking.hostName != "daedalus" && main.modules.desktop.gaming.prismlauncher.enable)
               {
                 roots = [
                   "/home/infinidoge/.local/share/PrismLauncher"

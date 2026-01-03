@@ -184,7 +184,7 @@ in
 
   nix.buildMachines = [
     {
-      hostName = "infini-dl360";
+      hostName = "daedalus";
       systems = [
         "x86_64-linux"
         "aarch64-linux"

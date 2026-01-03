@@ -281,7 +281,7 @@
                 (name: { toplevel = self.nixosConfigurations.${name}.config.system.build.toplevel; })
                 [
                   "apophis"
-                  "Infini-DL360"
+                  "daedalus"
                   "artemis"
                   "Infini-OPTIPLEX"
                   "pluto"
