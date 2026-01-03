@@ -5,8 +5,6 @@
     enableDefaultConfig = false;
     matchBlocks."*" = {
       addKeysToAgent = "yes";
-      controlMaster = "auto";
-      controlPersist = "1m";
     };
   };
 
