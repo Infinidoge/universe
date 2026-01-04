@@ -41,6 +41,7 @@ in
       idp-adm = [ "infinidoge" ];
       idp-login = "https://files.inx.moe/oauth/authorize";
       idp-login-t = "Login with INX Central";
+      idp-store = 3;
       auth-ord = "pw,idp,ipu";
 
       no-reload = true;
