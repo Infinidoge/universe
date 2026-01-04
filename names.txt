@@ -1,6 +1,7 @@
 aphrodite
 apollo
 ares
+argus
 ariadne
 boreas
 circe
