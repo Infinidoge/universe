@@ -97,7 +97,7 @@ in
     };
     "random.inx.moe" = ssl-inx // {
       locations."/" = {
-        root = "/srv/web/files.inx.moe/subject";
+        root = "/srv/files/subject";
         extraConfig = ''
           random_index on;
           etag off;
