@@ -43,21 +43,25 @@ in
       idp-login-t = "Login with INX Central";
       auth-ord = "pw,idp,ipu";
 
-      # BUG: These are not properly set in the copyparty module, as changing any settings removes them from default
       no-reload = true;
       hist = "/var/cache/copyparty";
     };
 
+    globalExtraConfig = ''
+      # imperatively managed file for extra users and their directories
+      c: /var/lib/copyparty/users.conf
+    '';
+
     volumes = {
       "/" = {
-        path = "/srv/web/files.inx.moe";
+        path = "/srv/files";
         access = {
           rh = "*";
           A = [ "infinidoge" ];
         };
       };
       "/p" = {
-        path = "/srv/web/files.inx.moe/p";
+        path = "/srv/files/p";
         access = {
           h = "*";
           A = [ "infinidoge" ];
@@ -70,6 +74,13 @@ in
         };
         flags = {
           gid = 994; # jellyfin
+        };
+      };
+      "/usr" = {
+        path = "/srv/files/usr";
+        access = {
+          rh = "*";
+          A = [ "infinidoge" ];
         };
       };
     };
