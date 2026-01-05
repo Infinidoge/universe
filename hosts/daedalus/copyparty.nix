@@ -19,6 +19,8 @@ in
     enable = true;
 
     settings = {
+      http-only = true; # handled by reverse proxy
+      no-dav = true;
       e2dsa = true;
       e2ts = true;
       ansi = true;
