@@ -1,7 +1,9 @@
 {
+  pkgs,
   common,
   config,
   private,
+  lib,
   ...
 }:
 let
@@ -90,6 +92,15 @@ in
   users.users.copyparty.extraGroups = [
     "jellyfin"
   ];
+
+  systemd.services.copyparty.description = lib.mkForce "copyparty file server";
+  systemd.services.copyparty.serviceConfig = {
+    RuntimeDirectoryMode = lib.mkForce "0770";
+    StateDirectoryMode = lib.mkForce "0770";
+    ExecReload = "${pkgs.util-linux}/bin/kill -s USR1 $MAINPID";
+    SyslogIdentifier = "copyparty";
+    LogsDirectory = "copyparty";
+  };
 
   services.nginx.virtualHosts."files.inx.moe" = common.nginx.ssl-inx // {
     extraConfig = ''
