@@ -25,6 +25,7 @@ in
       e2ts = true;
       ansi = true;
       stats = true;
+      usernames = true;
       no-robots = true;
       re-maxage = 3600;
       df = "30";
