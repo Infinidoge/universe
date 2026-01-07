@@ -1,4 +1,9 @@
-{ main, ... }:
+{
+  config,
+  lib,
+  main,
+  ...
+}:
 
 {
   services.dunst = {
@@ -15,6 +20,7 @@
         idle_threshold = 300;
         follow = "mouse";
         enable_posix_regex = true;
+        dmenu = "${lib.getExe config.programs.rofi.package} -p notification -dmenu";
       };
       urgency_low = {
         background = "#222222";
