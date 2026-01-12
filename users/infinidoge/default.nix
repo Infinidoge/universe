@@ -92,10 +92,6 @@ in
     desktop.wm.qtile.enable = true;
   };
 
-  programs = {
-    adb.enable = config.info.graphical;
-  };
-
   age.rekey.masterIdentities = [
     ./keys/primary_age.pub
     ./keys/backup_age.pub
