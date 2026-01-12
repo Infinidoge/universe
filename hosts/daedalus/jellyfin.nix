@@ -25,11 +25,9 @@ in
     locations."/" = {
       proxyPass = jellyfin;
       recommendedProxySettings = false;
-      extraConfig =
-        proxyConfig
-        + ''
-          proxy_buffering off;
-        '';
+      extraConfig = proxyConfig + ''
+        proxy_buffering off;
+      '';
     };
 
     locations."= /web/" = {
