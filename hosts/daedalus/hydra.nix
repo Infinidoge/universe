@@ -21,7 +21,17 @@ in
 
   services.hydra-dev = {
     enable = true;
-    package = lib.mkForce pkgs.hydra;
+    # FIX: https://git.lix.systems/lix-project/hydra/pulls/76
+    package = lib.mkForce (
+      pkgs.hydra.overrideAttrs (o: {
+        patches = (o.patches or [ ]) ++ [
+          (pkgs.fetchpatch {
+            url = "https://git.lix.systems/lix-project/hydra/pulls/76.patch";
+            hash = "sha256-iobDVN9b2k52Ei/z1EQt1xrNhfIUvK3vXVIIYek2PtI=";
+          })
+        ];
+      })
+    );
     port = 3333;
     hydraURL = "https://${domain}";
     notificationSender = common.email.withSubaddress "hydra";
