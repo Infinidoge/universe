@@ -39,8 +39,7 @@ in
         enable = true;
         pairs = {
           "PrismLauncher" =
-            mkIf
-              (main.networking.hostName != "daedalus" && main.modules.desktop.gaming.prismlauncher.enable)
+            mkIf (main.networking.hostName != "daedalus" && main.modules.desktop.gaming.prismlauncher.enable)
               {
                 roots = [
                   "/home/infinidoge/.local/share/PrismLauncher"
