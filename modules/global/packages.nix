@@ -73,7 +73,10 @@
         pandoc
         yt-dlp
       ]
-    ));
+    ))
+    ++ (lib.optionals config.info.graphical [
+      android-tools
+    ]);
 
   environment.systemPackages =
     config.universe.packages
