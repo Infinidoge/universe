@@ -212,4 +212,14 @@
   services.printing.enable = true;
 
   boot.supportedFilesystems.nfs = true;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-ocl
+      intel-vaapi-driver
+      libva-vdpau-driver
+      vpl-gpu-rt
+    ];
+  };
 }
