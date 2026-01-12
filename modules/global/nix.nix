@@ -135,7 +135,7 @@ in
     nix-melt
     nix-output-monitor
     nix-tree
-    nixfmt-rfc-style
+    nixfmt
     nixpkgs-fmt
     nvd
 
