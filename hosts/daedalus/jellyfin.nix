@@ -49,6 +49,25 @@ in
     dataDir = "/srv/jellyfin";
     logDir = "/var/log/jellyfin";
     openFirewall = true;
+
+    hardwareAcceleration = {
+      enable = true;
+      type = "qsv";
+      device = "/dev/dri/renderD128";
+    };
+
+    transcoding = {
+      enableHardwareEncoding = true;
+      hardwareEncodingCodecs = {
+        av1 = true;
+        hevc = true;
+      };
+      hardwareDecodingCodecs = {
+        av1 = true;
+        h264 = true;
+        hevc = true;
+      };
+    };
   };
 
   persist.directories = with config.services.jellyfin; [
