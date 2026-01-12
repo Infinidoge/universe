@@ -106,6 +106,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     hydra.inputs.lix.follows = "lix";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
+    impermanence.inputs.home-manager.follows = "home-manager";
+    impermanence.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.flake-utils.follows = "flake-utils";
     lix-module.inputs.lix.follows = "lix";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
@@ -121,7 +123,7 @@
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.inputs.nuschtosSearch.follows = "blank";
+    nixvim.inputs.systems.follows = "systems";
     qtile.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
