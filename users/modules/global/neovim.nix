@@ -231,7 +231,7 @@ in
       treesitter-context.enable = false;
       treesitter = {
         enable = true;
-        folding = false;
+        folding.enable = false;
         settings = {
           highlight.enable = true;
           indent.enable = true;
