@@ -66,7 +66,11 @@
     qtile.url = "github:qtile/qtile";
 
     ## Authentik
-    authentik-nix.url = "github:nix-community/authentik-nix";
+    #authentik-nix.url = "github:nix-community/authentik-nix";
+    # FIX: Build failure
+    # https://github.com/nix-community/authentik-nix/issues/83
+    # https://github.com/nix-community/authentik-nix/pull/85
+    authentik-nix.url = "github:Pentusha/authentik-nix";
 
     # Misc
     copyparty.url = "github:9001/copyparty";
