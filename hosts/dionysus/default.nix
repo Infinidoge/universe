@@ -7,7 +7,7 @@
 
   system.stateVersion = "23.05";
 
-  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG8fY684SPKeOUsJqaV6LJwwztWxztaU9nAHPBxBtyU root@Infini-OPTIPLEX";
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG8fY684SPKeOUsJqaV6LJwwztWxztaU9nAHPBxBtyU root@dionysus";
 
   info.loc.purdue = true;
 
@@ -24,7 +24,7 @@
     listenAddresses = [
       "localhost:631"
       "100.101.102.18:631"
-      "infini-optiplex:631"
+      "dionysus:631"
     ];
     allowFrom = [ "all" ];
     defaultShared = true;
@@ -33,7 +33,7 @@
 
   services.httpd = {
     enable = true;
-    virtualHosts."infini-optiplex.tailnet.inx.moe" = rec {
+    virtualHosts."dionysus.tailnet.inx.moe" = rec {
       documentRoot = "/srv/seppo";
       extraConfig = ''
         AddHandler cgi-script .cgi

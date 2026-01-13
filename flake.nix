@@ -288,7 +288,7 @@
                   "apophis"
                   "daedalus"
                   "artemis"
-                  "Infini-OPTIPLEX"
+                  "dionysus"
                   "pluto"
                   "hermes"
                   "hestia"
