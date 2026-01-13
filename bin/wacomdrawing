@@ -1,8 +1,92 @@
-#!/usr/bin/env bash
+#!/usr/bin/env xonsh
+# vim: set ft=xonsh:
 
-xsetwacom -s --set "Wacom Intuos BT S Pad pad" Button 1 "key ctrl z"
-xsetwacom -s --set "Wacom Intuos BT S Pad pad" Button 8 "key ctrl alt +space"
+from dataclasses import dataclass
+import re
 
-if [ "$1" != "" ]; then
-  mapwacom -d "Wacom Intuos BT S Pen stylus" -s $1
-fi
+DEVICE = "Wacom Intuos BT S"
+PAD = f"{DEVICE} Pad pad"
+PEN = f"{DEVICE} Pen stylus"
+
+if len($ARGS) == 2:
+    SCREEN = $ARG1
+else:
+    SCREEN = "desktop"
+
+def tablet_set(device, *args):
+    return $(xsetwacom set @(device) @(args))
+
+def tablet_get(device, *args, shell=False):
+    return $(xsetwacom @("-s" if shell else []) get @(device) @(args))
+
+@dataclass
+class TabletArea:
+    x1: int
+    y1: int
+    x2: int
+    y2: int
+
+def get_area():
+    raw = tablet_get(PEN, "Area")
+    return TabletArea(*map(int, raw.split(" ")))
+
+def set_area(new_area: TabletArea):
+    tablet_set(PEN, "Area", new_area.x1, new_area.y1, new_area.x2, new_area.y2)
+
+
+@dataclass
+class ScreenArea:
+    width: int
+    height: int
+
+
+def get_screen_area(screen):
+    screens = $(xrandr -q --current).split("\n")
+    screens = filter(lambda s: not s.startswith(" "), screens)
+
+    if screen == "desktop":
+        screen = next(filter(lambda s: s.startswith("Screen 0"), screens))
+        raw_area = re.search(r"current (\d+) x (\d+)", screen).groups()
+    else:
+        screen = next(filter(lambda s: s.startswith(screen), screens))
+        raw_area = re.search(r"(\d+)x(\d+)\+\d+\+\d+", screen).groups()
+
+    return ScreenArea(*map(int, raw_area))
+
+
+def get_resized_area(area: TabletArea, screen_area: ScreenArea):
+
+    ratio_y = area.x2 * screen_area.height // screen_area.width
+    ratio_x = area.y2 * screen_area.width // screen_area.height
+
+    if area.y2 > ratio_y:
+        new_area = TabletArea(0, 0, area.x2, ratio_y)
+    else:
+        new_area = TabletArea(0, 0, ratio_x, area.y2)
+
+    offset_x = (area.x2 - new_area.x2) // 2
+    offset_y = (area.y2 - new_area.y2) // 2
+
+    new_area.x1 += offset_x
+    new_area.x2 += offset_x
+    new_area.y1 += offset_y
+    new_area.y2 += offset_y
+
+    return new_area
+
+# Reset to get the full tablet area
+tablet_set(PEN, "ResetArea")
+
+
+area = get_area() # Get full tablet area
+screen_area = get_screen_area(SCREEN) # Get screen area
+
+# Calculate resized and centered area
+new_area = get_resized_area(area, screen_area)
+
+# Apply resized area
+set_area(new_area)
+
+# Various personal settings
+tablet_set(PAD, "Button", 1, "key ctrl z")
+tablet_set(PAD, "Button", 8, "key ctrl alt +space")
