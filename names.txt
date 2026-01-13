@@ -7,7 +7,6 @@ boreas
 circe
 deimos
 demeter
-dionysus
 enyo
 eris
 eros
@@ -73,6 +72,7 @@ artemis  | framework laptop
 apophis  | desktop
 pluto    | home server
 daedalus | primary server
+dionysus | optiplex
 
 ### pending
 enodia  | router

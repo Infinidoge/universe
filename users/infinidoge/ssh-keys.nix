@@ -4,7 +4,7 @@
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAn6zCdIucse6eGvT3hFm7Unw9Qg6E37mAUE7HHL2d58 infinidoge@apophis"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwo8TGBe91mmkc/QonsXtTBKCJtsAGz3YzphDZlzmaO infinidoge@artemis"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbNOMgVDM/hJQgzd1ff5uuouDtTLOAgmTt57cNNySif infinidoge@pluto"
-  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfpzp4nROMc3nuSu+/ivkm0koyn2Da5NtVbYl+Rg+O1 infinidoge@Infini-OPTIPLEX"
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfpzp4nROMc3nuSu+/ivkm0koyn2Da5NtVbYl+Rg+O1 infinidoge@dionysus"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAjPn04o81mf4obA0zaXbyQlsYbXL3sZa4aNxmDlFDZe infinidoge@Infini-STICK"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIAFZRE0BLE8pPixrwNu8oqtL+MEhkePNnc8/kWrYsOm infinidoge@Infini-SD"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIUIcQljnMxXsLU8RO33kqFRqEOgQi7U0x+UFG4Caskk infinidoge@daedalus"
