@@ -40,7 +40,7 @@ in
     (mkIf cfg.wifi.enable {
       networking.wireless = {
         enable = true;
-        userControlled.enable = true;
+        userControlled = true;
         fallbackToWPA2 = mkDefault false;
       };
       environment.systemPackages = [ pkgs.wpa_supplicant_gui ];
