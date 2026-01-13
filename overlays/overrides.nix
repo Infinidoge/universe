@@ -104,12 +104,6 @@ in
     vendorHash = "sha256-xxR0cl0+vDGVoblGSFwvJGZFm5KNp9ZhAchdUl1DbFI=";
   });
 
-  # BUG: https://github.com/NixOS/nixpkgs/issues/358845
-  # Weirdly, only a problem at evaluation
-  openjfx = prev.openjfx.override { gradle_7 = final.gradle_8; };
-  openjfx17 = prev.openjfx17.override { gradle_7 = final.gradle_8; };
-  openjfx21 = prev.openjfx21.override { gradle_7 = final.gradle_8; };
-
   # BUG: https://github.com/NixOS/nixpkgs/issues/464244
   hydrus = latest.hydrus.overrideAttrs (o: {
     doCheck = false;
