@@ -87,6 +87,8 @@ new_area = get_resized_area(area, screen_area)
 # Apply resized area
 set_area(new_area)
 
+tablet_set(PEN, "MapToOutput", SCREEN)
+
 # Various personal settings
 tablet_set(PAD, "Button", 1, "key ctrl z")
 tablet_set(PAD, "Button", 8, "key ctrl alt +space")
