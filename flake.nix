@@ -20,7 +20,7 @@
 
     ### Configuration Components ###
     private.url = "git+ssh://git@github.com/Infinidoge/universe-private";
-    universe-cli.url = "github:Infinidoge/universe-cli";
+    universe-cli.url = "git+ssh://git@inx.moe/Infinidoge/universe-cli";
 
     ### Nix Libraries
     agenix.url = "github:ryantm/agenix";
@@ -133,10 +133,8 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     universe-cli.inputs.devshell.follows = "devshell";
     universe-cli.inputs.flake-parts.follows = "flake-parts";
-    universe-cli.inputs.flake-utils.follows = "flake-utils";
     universe-cli.inputs.nixpkgs.follows = "nixpkgs";
     universe-cli.inputs.rust-overlay.follows = "rust-overlay";
-    universe-cli.inputs.systems.follows = "systems";
   };
 
   outputs =
