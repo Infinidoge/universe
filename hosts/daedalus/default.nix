@@ -40,6 +40,7 @@
     ./users.nix
     ./vaultwarden.nix
     ./web.nix
+    ./weblate.nix
     ./wireguard.nix
   ];
 
