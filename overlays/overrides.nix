@@ -33,6 +33,7 @@ in
     presenterm
     flameshot
     immich
+    weblate
     ;
 
   inherit (fork)
