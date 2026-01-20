@@ -95,6 +95,15 @@ in
       SOCIAL_AUTH_GITHUB_SCOPE = ["user:email"]
       with open("/etc/secrets/weblate/github.key") as f:
         SOCIAL_AUTH_GITHUB_SECRET = f.read().rstrip("\n")
+
+      LOGGING["loggers"]["weblate"]["handlers"].append("console")
+      LOGGING["loggers"]["social"]["handlers"].append("console")
+      LOGGING["loggers"]["django.server"]["handlers"].append("console")
+      LOGGING["loggers"]["django.request"]["handlers"].append("console")
+      #LOGGING["loggers"]["weblate"]["level"] = "DEBUG"
+      #LOGGING["loggers"]["social"]["level"] = "DEBUG"
+      #LOGGING["loggers"]["django.server"]["level"] = "DEBUG"
+      #LOGGING["loggers"]["django.request"]["level"] = "DEBUG"
     '';
   };
 
