@@ -42,17 +42,17 @@ in
       user = outgoing;
       from = withSubaddress "weblate";
       host = smtp.address;
-      port = smtp.SSLTLS;
+      port = smtp.STARTTLS;
       passwordFile = secrets.smtp-noreply;
     };
 
     extraConfig = ''
-      IP_BEHIND_REVERSE_PROXY = True
+      ADMINS += (("Infinidoge", "infinidoge@inx.moe"),)
 
       AUTHENTICATION_BACKENDS = (
-        "social_core.backends.saml.SAMLAuth",
-        "social_core.backends.github.GitHubOAuth2",
         "social_core.backends.email.EmailAuth",
+        "social_core.backends.saml.SAMLAuth",
+        "social_core.backends.github.GithubOAuth2",
         "weblate.accounts.auth.WeblateUserBackend",
       )
 
@@ -66,17 +66,20 @@ in
 
       SOCIAL_AUTH_SAML_SP_ENTITY_ID = "https://${domain}/accounts/metadata/saml/"
       SOCIAL_AUTH_SAML_ENABLED_IDPS = {
-        "inxcentral": {
-          "entity_id": "https://auth.inx.moe/application/saml/weblate/sso/binding/redirect/",
+        "weblate": {
+          "entity_id": "https://auth.inx.moe/application/saml/weblate/sso/binding/redirect",
           "url": "https://auth.inx.moe/application/saml/weblate/sso/binding/redirect/",
           "x509cert": authentik_cert,
+          "attr_email": "urn:oid:0.9.2342.19200300.100.1.3",
+          "attr_username": "urn:oid:0.9.2342.19200300.100.1.1",
+          "attr_full_name": "urn:oid:2.5.4.3",
         }
       }
       SOCIAL_AUTH_SAML_ORG_INFO = {
         "en-US": {
-          "name": "inxcentral",
-          "displayname": "INX Central",
-          "url": "https://auth.inx.moe",
+          "name": "inxweblate",
+          "displayname": "INX Weblate",
+          "url": "https://weblate.inx.moe",
         }
       }
       SOCIAL_AUTH_SAML_TECHNICAL_CONTACT = {
