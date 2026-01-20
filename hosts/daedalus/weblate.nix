@@ -1,10 +1,17 @@
 {
+  pkgs,
   lib,
   common,
   secrets,
   ...
 }:
 let
+  python = pkgs.python3.override {
+    packageOverrides = final: prev: {
+      django = prev.django_5;
+    };
+  };
+
   domain = common.subdomain "weblate";
 in
 {
@@ -19,6 +26,14 @@ in
 
   services.weblate = {
     enable = true;
+    package = pkgs.weblate.overridePythonAttrs (old: {
+      dependencies =
+        old.dependencies
+        # TODO: PR as an optional-dependencies set
+        ++ (with python.pkgs; [
+          python3-saml
+        ]);
+    });
     localDomain = domain;
     djangoSecretKeyFile = secrets.weblate-secret-key;
 
