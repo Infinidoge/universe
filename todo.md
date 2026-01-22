@@ -1,7 +1,5 @@
 # TODO
 
-- [x] Move programming languages to home-manager
-- [x] Add tool for `universe-cli cd`
 - [ ] Import modules with haumea
 - [ ] Reorganize modules to separate ones defining options and ones providing config
   - Move config into global, move global into root?
@@ -44,12 +42,6 @@
 - [ ] Collect host keys from host folders
 - [ ] Bundle secrets with services?
 - [ ] Bundle secrets with hosts?
-
-# Certificate Authority
-- [ ] SSH CA
-  - https://vriska.dev/trusting-ssh-keys-using-a-centralized-hardware-secret/
-- [x] SSL CA
-- [ ] Signing server?
 
 # NixVim
 - [ ] LSP support
