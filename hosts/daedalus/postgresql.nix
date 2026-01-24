@@ -17,6 +17,7 @@ in
     package = pkgs.postgresql_16;
     dataDir = "${directory}/${cfg.package.psqlSchema}";
     settings = {
+      max_connections = 64;
       max_locks_per_transaction = 1024;
     };
   };
