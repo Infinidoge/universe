@@ -65,7 +65,7 @@
   ];
 
   programs.ns-usbloader.enable = true;
-  programs.minipro.enable = true;
+  programs.minipro.enable = false; # FIX: minipro build failure
 
   hardware.openrazer = {
     enable = false; # https://github.com/NixOS/nixpkgs/issues/393664
