@@ -6,7 +6,7 @@
   ...
 }:
 let
-  python = pkgs.python3.override {
+  python = pkgs.latest.python3.override {
     packageOverrides = final: prev: {
       django = prev.django_5;
     };
