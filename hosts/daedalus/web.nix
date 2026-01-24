@@ -3,6 +3,7 @@
   common,
   pkgs,
   lib,
+  self,
   ...
 }:
 with common.nginx;
@@ -116,6 +117,18 @@ in
       locations."/" = {
         root = "${pkgs.it-tools}/share";
         tryFiles = "$uri $uri/ $uri.html /index.html";
+      };
+    };
+
+    "boot.inx.moe" = ssl-inx // {
+      locations."/" = {
+        root = pkgs.symlinkJoin {
+          name = "netboot-with-script";
+          paths = [
+            self.nixosConfigurations.lethe.config.system.build.netboot
+            self.nixosConfigurations.lethe.config.system.build.netbootIpxeScript
+          ];
+        };
       };
     };
   };
