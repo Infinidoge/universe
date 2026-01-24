@@ -182,7 +182,7 @@ in
       }
   '';
 
-  nix.buildMachines = [
+  nix.buildMachines = lib.mkIf (config.networking.hostName != "daedalus") [
     {
       hostName = "daedalus";
       systems = [
