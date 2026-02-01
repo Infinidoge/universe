@@ -40,6 +40,7 @@
       commit.verbose = true;
       init.defaultBranch = "master";
       merge.ignore.driver = "true";
+      merge.tool = "nvimdiff";
       pull.rebase = true;
       push.autoSetupRemote = true;
       status.showUntrackedFiles = "all";
