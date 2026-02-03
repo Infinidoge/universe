@@ -85,15 +85,15 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1768160794,
-        "narHash": "sha256-J7kRUDkNPtmL2Se4voIMXbCkCVPZAnLTgtCaHs2E2Zc=",
-        "owner": "Pentusha",
+        "lastModified": 1769348998,
+        "narHash": "sha256-nP4gw7bdwYGa+TQEvpMrYrp6/wsGklrC2cmIUjP4HNI=",
+        "owner": "nix-community",
         "repo": "authentik-nix",
-        "rev": "1981227096e155ce36897c920641dd4ae8aaf683",
+        "rev": "eee255ff2ffd90477889740a56ee75cf7020886e",
         "type": "github"
       },
       "original": {
-        "owner": "Pentusha",
+        "owner": "nix-community",
         "repo": "authentik-nix",
         "type": "github"
       }
@@ -101,16 +101,16 @@
     "authentik-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1768172416,
-        "narHash": "sha256-qVlhrxHqcVFKrOwEl/DxdgSltMLiWp+ztBrjCW+Uu6k=",
-        "owner": "goauthentik",
+        "lastModified": 1768596569,
+        "narHash": "sha256-HDTbQB/sMhYh2b95dQwzF8OgrwLWdl4hVmx6wtDcgE8=",
+        "owner": "ma27",
         "repo": "authentik",
-        "rev": "e44cf378d7e17d517cb07a69fb725b8d926795b9",
+        "rev": "72ad5fe320f2201fc2a37372d4c9cb46377a58e5",
         "type": "github"
       },
       "original": {
-        "owner": "goauthentik",
-        "ref": "version-2025.10",
+        "owner": "ma27",
+        "ref": "2025.12.1-dependency-fix",
         "repo": "authentik",
         "type": "github"
       }
