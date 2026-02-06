@@ -23,6 +23,7 @@ let
     ];
     style-src = default-src ++ [
       "fonts.googleapis.com"
+      "maxcdn.bootstrapcdn.com"
     ];
     img-src = [
       "'self'"
