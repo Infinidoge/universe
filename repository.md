@@ -18,7 +18,7 @@
 The location in a commit message represents where the change affects.
 
 - A host (`apophis`, etc.)
-- A module (Just use the module name, not including `module` or `functionality` as a prefix, to reduce length)
+- A module
 - A profile
 - `pkgs`
 - `overlays`
