@@ -3,22 +3,38 @@
   lib,
   config,
   modulesPath,
+  nixos,
   ...
 }:
 {
-  imports = [
+  imports = with nixos; [
+    base
+    common
+    home-manager
+    kmscon
+    locale
+    networking
+    nix
+    options
+    ssh
+    state-version
+    # tailscale # TODO: ephemeral tailscale setup
+    filesystems.btrfs
+    filesystems.encrypted
+    filesystems.windows
+    filesystems.zfs
+    shells.xonsh
+    shells.zsh
+
     (modulesPath + "/installer/netboot/netboot.nix")
     (modulesPath + "/installer/scan/detected.nix")
     (modulesPath + "/installer/scan/not-detected.nix")
 
-    ./latest-zfs-kernel.nix
     ./netboot.nix
     ./kexec
   ];
 
   system.stateVersion = config.system.nixos.release;
-
-  modules.backups.enable = false;
 
   hardware.enableAllHardware = true;
 
@@ -55,22 +71,6 @@
     disko
   ];
 
-  boot.supportedFilesystems = lib.mkMerge [
-    [
-      "btrfs"
-      "ntfs"
-      "vfat"
-    ]
-    (lib.mkIf (lib.meta.availableOn pkgs.stdenv.hostPlatform config.boot.zfs.package) {
-      zfs = lib.mkDefault true;
-    })
-    {
-      bcachefs = lib.mkDefault true;
-    }
-  ];
-
-  boot.zfs.package = pkgs.zfs_unstable;
-
   boot.initrd.systemd.emergencyAccess = true;
 
   boot.kernelParams = [
@@ -79,8 +79,6 @@
     "zswap.compressor=zstd"
     "zswap.zpool=zsmalloc"
   ];
-
-  networking.hostId = lib.mkDefault "8425e349";
 
   services.openssh.settings.PermitRootLogin = lib.mkDefault "yes";
 

@@ -1,6 +1,37 @@
-{ ... }:
+{ nixos, ... }:
 {
-  imports = [
+  imports = with nixos; [
+    base
+    backups
+    borg
+    common
+    email
+    extra
+    graphical
+    grub
+    home-manager
+    kmscon
+    locale
+    man
+    networking
+    nginx
+    nix
+    options
+    persist
+    qtile
+    rsyncnet
+    secrets
+    ssh
+    state-version
+    tailscale
+    filesystems.btrfs
+    hardware.audio
+    hardware.gpu.intel
+    hardware.receipt-printer
+    locations.purdue
+    shells.xonsh
+    shells.zsh
+
     ./hardware-configuration.nix
     ./filesystems.nix
   ];
@@ -9,15 +40,7 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG8fY684SPKeOUsJqaV6LJwwztWxztaU9nAHPBxBtyU root@dionysus";
 
-  info.loc.purdue = true;
-
   boot.loader.timeout = 1;
-
-  modules = {
-    hardware.form.desktop = true;
-    hardware.gpu.intel = true;
-    desktop.wm.enable = true;
-  };
 
   services.printing = {
     enable = true;

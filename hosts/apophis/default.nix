@@ -2,10 +2,51 @@
   config,
   pkgs,
   lib,
+  nixos,
   ...
 }:
 {
-  imports = lib.lists.flatten [
+  imports = with nixos; [
+    base
+    backups
+    borg
+    common
+    email
+    extra
+    graphical
+    grub
+    home-manager
+    kmscon
+    locale
+    man
+    networking
+    nix
+    options
+    persist
+    qtile
+    rsyncnet
+    secrets
+    ssh
+    state-version
+    tailscale
+    virtualisation
+    filesystems.btrfs
+    filesystems.encrypted
+    filesystems.windows
+    hardware.audio
+    hardware.bluetooth
+    hardware.fingerprint
+    hardware.receipt-printer
+    hardware.wifi
+    hardware.yubikey
+    hardware.gpu.nvidia
+    programs.android
+    programs.games
+    programs.media
+    programs.obs
+    shells.xonsh
+    shells.zsh
+
     ./hardware-configuration.nix
     ./filesystems.nix
     ./privoxy.nix
@@ -15,43 +56,15 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID7uX1myj9ghv7wMoL038oGDCdScdyLd7RvYdnoioSBh root@apophis";
 
-  info.loc.home = true;
-
   persist.directories = [
     "/srv"
   ];
 
-  modules = {
-    hardware = {
-      gpu.nvidia = true;
-      wireless.enable = true;
-      form.desktop = true;
-    };
-    services = {
-      apcupsd = {
-        enable = true;
-        primary = true;
-        config = {
-          address = "0.0.0.0";
-        };
-      };
-    };
-    desktop = {
-      wm.enable = true;
-      gaming.enableAll = true;
-      gaming.olympus.enable = false; # Build is currently broken
-    };
-
-    backups.extraExcludes = [
-      "/home/infinidoge/Hydrus"
-    ];
-  };
+  backups.persist.extraExcludes = [
+    "/home/infinidoge/Hydrus"
+  ];
 
   services.printing.enable = true;
-
-  virtualisation.enable = true;
-
-  universe.programming.all.enable = true;
 
   home.home.packages = with pkgs; [
     arduino
@@ -98,4 +111,29 @@
   home.home.sessionVariables = {
     QT_XCB_TABLET_LEGACY_COORDINATES = "true";
   };
+
+  services.apcupsd = {
+    enable = true;
+    configText = ''
+      UPSNAME UPS
+      UPSCLASS standalone
+      UPSMODE disable
+      NETSERVER on
+      NISPORT 3551
+
+      BATTERYLEVEL 35
+      MINUTES 5
+
+      UPSTYPE usb
+      UPSCABLE usb
+      NISIP 0.0.0.0
+    '';
+
+    # Other device config:
+    # UPSCABLE ether
+    # UPSTYPE net
+    # DEVICE ipaddress:3551
+    # POLLTIME 10
+  };
+  networking.firewall.allowedTCPPorts = [ 3551 ];
 }

@@ -6,8 +6,6 @@
   modules.hardware.form.server = true;
   modules.secrets.enable = false;
   modules.backups.enable = false;
-  info.loc.home = false;
-  info.loc.purdue = true;
 
   home-manager.useUserPackages = false;
 

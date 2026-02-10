@@ -170,6 +170,9 @@
           lib = import ./lib { inherit (nixpkgs) lib; };
 
           users = self.lib.rakeLeaves ./users;
+          nixos = self.lib.rakeLeaves ./nixos;
+          home = self.lib.rakeLeaves ./home;
+          vendored = self.lib.rakeLeaves ./vendored;
 
           overlays = {
             overrides = import ./overlays/overrides.nix inputs;
@@ -189,6 +192,7 @@
               specialArgs = {
                 lib = nixpkgs.lib.extend libOverlay;
                 inherit private self inputs;
+                inherit (self) nixos home;
               };
 
               modules = [
@@ -218,11 +222,13 @@
                     inputs.universe-cli.overlays.default
                   ];
                   home-manager = {
+                    extraSpecialArgs = {
+                      inherit (self) home;
+                    };
                     sharedModules = [
                       inputs.nix-index-database.homeModules.nix-index
                       inputs.nixvim.homeModules.nixvim
-                    ]
-                    ++ (self.lib.leaves ./users/modules);
+                    ];
                   };
                 }
                 (
@@ -241,7 +247,6 @@
                 )
 
                 # --- Universe Modules ---
-                ./secrets
                 private.nixosModules.secrets
 
                 # --- Library Modules ---
@@ -260,8 +265,13 @@
                 inputs.nix-minecraft.nixosModules.minecraft-servers
                 inputs.drasl.nixosModules.drasl
                 inputs.copyparty.nixosModules.default
-              ]
-              ++ (self.lib.leaves ./modules);
+
+                # --- Vendored Modules ---
+                self.vendored.nixos.factorio
+                self.vendored.nixos.steam
+                self.vendored.nixos.thelounge
+                self.vendored.nixos.vaultwarden
+              ];
             }) (self.lib.flattenLeaves ./hosts);
 
           homeConfigurations = self.lib.mkHomeConfigurations {
