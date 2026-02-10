@@ -25,6 +25,8 @@ rec {
       example = true;
     };
 
+  mkAliasOpt = mkOpt types.attrs { };
+
   coercedPackageList =
     with types;
     let

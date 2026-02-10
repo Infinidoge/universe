@@ -2,10 +2,41 @@
   lib,
   pkgs,
   private,
+  nixos,
   ...
 }:
 {
-  imports = [
+  imports = with nixos; [
+    base
+    backups
+    borg
+    common
+    email
+    extra
+    grub
+    home-manager
+    kmscon
+    locale
+    man
+    networking
+    nginx
+    nix
+    options
+    persist
+    rsyncnet
+    secrets
+    ssh
+    state-version
+    tailscale
+    virtualisation
+    filesystems.btrfs
+    filesystems.encrypted
+    filesystems.zfs
+    hardware.gpu.intel
+    locations.purdue
+    shells.xonsh
+    shells.zsh
+
     ./hardware-configuration.nix
     ./disks.nix
     ./secrets
@@ -48,22 +79,15 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjmvE76BcPwZSjeNGzlguDQC67Yxa3uyOf5ZmVDWNys root@daedalus";
 
-  info.loc.purdue = true;
-
-  networking.hostId = "8fa7a57c";
+  # TODO: Force-import ZFS with hashed hostname hostId
+  networking.hostId = lib.mkForce "8fa7a57c";
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.binfmt.addEmulatedSystemsToNixSandbox = true;
 
   nix.distributedBuilds = false;
 
-  modules.hardware.form.server = true;
-
-  universe.programming.all.enable = true;
-
   boot.loader.timeout = 5;
-
-  virtualisation.enable = true;
 
   persist.directories = [
     "/srv"
@@ -124,6 +148,15 @@
   hardware.infiniband.enable = true;
 
   services.fail2ban.enable = true;
+  services.fail2ban = {
+    bantime = "1h";
+    bantime-increment = {
+      enable = true;
+      multipliers = "1 2 4 8 16 32 64";
+      maxtime = "168h"; # Do not ban for more than 1 week
+      overalljails = true; # Calculate the bantime based on all the violations
+    };
+  };
 
   services.fail2ban.jails.nginx-url-probe = {
     enabled = true;
@@ -143,7 +176,7 @@
 
   services.nginx.enable = true;
 
-  modules.backups.excludes = {
+  backups.persist.excludes = {
     "/var/log/" = [
       "nginx/access.log"
     ];
@@ -205,22 +238,7 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    ffmpeg-full
-    imagemagick
-  ];
-
   services.printing.enable = true;
 
   boot.supportedFilesystems.nfs = true;
-
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-ocl
-      intel-vaapi-driver
-      libva-vdpau-driver
-      vpl-gpu-rt
-    ];
-  };
 }

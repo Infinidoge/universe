@@ -1,10 +1,55 @@
 {
   pkgs,
   lib,
+  nixos,
   ...
 }:
 {
-  imports = [
+  imports = with nixos; [
+    base
+    backups
+    borg
+    common
+    email
+    extra
+    graphical
+    grub
+    home-manager
+    kmscon
+    locale
+    man
+    networking
+    nginx
+    nix
+    options
+    persist
+    qtile
+    rsyncnet
+    secrets
+    ssh
+    state-version
+    tailscale
+    virtualisation
+    filesystems.btrfs
+    filesystems.encrypted
+    filesystems.windows
+    filesystems.zfs
+    hardware.audio
+    hardware.bluetooth
+    hardware.fingerprint
+    hardware.laptop
+    hardware.receipt-printer
+    hardware.wifi
+    hardware.yubikey
+    hardware.gpu.intel
+    locations.purdue
+    programs.android
+    programs.games
+    programs.media
+    programs.obs
+    shells.xonsh
+    shells.zsh
+
     ./hardware-configuration.nix
     ./filesystems.nix
     ./displays.nix
@@ -14,8 +59,6 @@
   system.stateVersion = "23.05";
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7PmPq/7e+YIVAvIcs6EOJ3pZVJhinwus6ZauJ3aVp0 root@artemis";
-
-  info.loc.purdue = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.binfmt.addEmulatedSystemsToNixSandbox = true;
@@ -28,25 +71,7 @@
 
   environment.enableDebugInfo = true;
 
-  modules = {
-    hardware = {
-      gpu.intel = true;
-      form.laptop = true;
-    };
-    desktop = {
-      wm.enable = true;
-      gaming = {
-        steam.enable = true;
-        prismlauncher.enable = true;
-        puzzles.enable = true;
-      };
-    };
-  };
-
-  universe.programming.all.enable = true;
-
   services.fprintd.enable = true;
-  virtualisation.enable = true;
 
   programs.ns-usbloader.enable = true;
   hardware.uinput.enable = true;
