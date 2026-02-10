@@ -10,6 +10,7 @@
     unrar-wrapper
     whois
     yq
+    htmlq
 
     bitwarden-cli
     bsd-finger
