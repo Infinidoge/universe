@@ -662,29 +662,6 @@
         "type": "github"
       }
     },
-    "nixos-wsl": {
-      "inputs": {
-        "flake-compat": [
-          "blank"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1765841014,
-        "narHash": "sha256-55V0AJ36V5Egh4kMhWtDh117eE3GOjwq5LhwxDn9eHg=",
-        "owner": "nix-community",
-        "repo": "NixOS-WSL",
-        "rev": "be4af8042e7a61fa12fda58fe9a3b3babdefe17b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NixOS-WSL",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1705033721,
@@ -900,7 +877,6 @@
         "nix-index-database": "nix-index-database",
         "nix-minecraft": "nix-minecraft",
         "nixos-hardware": "nixos-hardware",
-        "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
         "old-stable": "old-stable",

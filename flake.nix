@@ -32,7 +32,6 @@
     impermanence.url = "github:nix-community/impermanence";
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
     treefmt-nix.url = "github:numtide/treefmt-nix";
 
     ### Domain-Specific Flake Inputs ###
@@ -115,8 +114,6 @@
     nix-minecraft.inputs.flake-compat.follows = "blank";
     nix-minecraft.inputs.flake-utils.follows = "flake-utils";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-wsl.inputs.flake-compat.follows = "blank";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.systems.follows = "systems";
@@ -252,7 +249,6 @@
                 inputs.home-manager.nixosModules.home-manager
                 inputs.impermanence.nixosModules.impermanence
                 inputs.nix-index-database.nixosModules.nix-index
-                inputs.nixos-wsl.nixosModules.wsl
 
                 # --- Domain-Specific Modules ---
                 inputs.authentik-nix.nixosModules.default
