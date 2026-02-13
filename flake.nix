@@ -28,10 +28,6 @@
     devshell.url = "github:numtide/devshell";
     disko.url = "github:nix-community/disko/latest";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-registry = {
-      url = "github:NixOS/flake-registry";
-      flake = false;
-    };
     home-manager.url = "github:nix-community/home-manager";
     impermanence.url = "github:nix-community/impermanence";
     nix-index-database.url = "github:nix-community/nix-index-database";
