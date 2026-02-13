@@ -1,7 +1,7 @@
 { common, ... }:
 {
   common.rsyncnet = rec {
-    account = "de3418";
+    account = "de3482";
     user = "${account}s1";
     host = "${account}.rsync.net";
   };
