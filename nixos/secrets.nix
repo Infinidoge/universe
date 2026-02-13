@@ -2,7 +2,9 @@
   self,
   lib,
   config,
+  pkgs,
   secrets,
+  inputs,
   ...
 }:
 let
@@ -12,11 +14,29 @@ let
 in
 {
   imports = [
+    inputs.agenix.nixosModules.default
+    inputs.agenix-rekey.nixosModules.default
+
     { options.secrets = mkOpt (attrsOf path) { }; }
   ];
 
   _module.args.secrets = config.secrets;
   secrets = lib.mapAttrs (_: v: v.path) config.age.secrets;
+
+  age.rekey = {
+    storageMode = "local";
+    generatedSecretsDir = "${self}/secrets/generated";
+    localStorageDir = "${self}/secrets/rekeyed/${config.networking.hostName}";
+    agePlugins = with pkgs; [
+      age-plugin-fido2-hmac
+      age-plugin-yubikey
+    ];
+  };
+
+  age.rekey.masterIdentities = [
+    "${self}/users/infinidoge/keys/primary_age.pub"
+    "${self}/users/infinidog./keys/backup_age.pub"
+  ];
 
   age.secrets = {
     password-infinidoge.rekeyFile = "${self}/secrets/password-infinidoge.age";

@@ -224,27 +224,11 @@
                     ];
                   };
                 }
-                (
-                  { config, pkgs, ... }:
-                  {
-                    age.rekey = {
-                      storageMode = "local";
-                      generatedSecretsDir = ./secrets/generated;
-                      localStorageDir = ./. + "/secrets/rekeyed/${config.networking.hostName}";
-                      agePlugins = with pkgs; [
-                        age-plugin-fido2-hmac
-                        age-plugin-yubikey
-                      ];
-                    };
-                  }
-                )
 
                 # --- Universe Modules ---
                 private.nixosModules.secrets
 
                 # --- Library Modules ---
-                inputs.agenix.nixosModules.default
-                inputs.agenix-rekey.nixosModules.default
                 inputs.disko.nixosModules.disko
                 inputs.home-manager.nixosModules.home-manager
                 inputs.impermanence.nixosModules.impermanence
