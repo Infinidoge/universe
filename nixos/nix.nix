@@ -83,25 +83,21 @@ in
 
     optimise.automatic = true;
 
-    registry =
-      let
-        flakes = filterAttrs (n: v: v ? outputs) inputs;
-      in
-      (mapAttrs' (n: v: {
-        name = if n == "self" then "universe" else n;
-        value = {
-          flake = v;
-        };
-      }) flakes)
-      // {
-        nixpkgs-git = {
-          exact = false;
-          from.id = "local";
-          from.type = "indirect";
-          to.url = "file:///nix/nixpkgs";
-          to.type = "git";
-        };
+    registry = {
+      nixpkgs.flake = inputs.nixpkgs;
+      latest.flake = inputs.latest;
+      devshell.flake = inputs.devshell;
+      flake-parts.flake = inputs.flake-parts;
+      universe = {
+        to.url = "file:///etc/nixos";
+        to.type = "git";
       };
+      local = {
+        exact = false;
+        to.url = "file:///nix/nixpkgs";
+        to.type = "git";
+      };
+    };
 
     distributedBuilds = mkDefault true;
     extraOptions = ''
