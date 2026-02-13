@@ -4,6 +4,7 @@
   config,
   modulesPath,
   nixos,
+  inputs,
   ...
 }:
 {
@@ -35,6 +36,10 @@
   ];
 
   system.stateVersion = config.system.nixos.release;
+
+  nix.registry = lib.mkForce {
+    nixpkgs.flake = inputs.nixpkgs;
+  };
 
   hardware.enableAllHardware = true;
 
