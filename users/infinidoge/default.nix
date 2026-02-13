@@ -69,11 +69,6 @@
     monospace = [ "DejaVuSansMono" ];
   };
 
-  age.rekey.masterIdentities = [
-    ./keys/primary_age.pub
-    ./keys/backup_age.pub
-  ];
-
   user = {
     name = "infinidoge";
     uid = 1000;
