@@ -54,7 +54,6 @@ in
       weekly = 4;
       monthly = -1;
     };
-
   };
 
   systemd.timers."borgbackup-job-persist".requires = [ "network-online.target" ];
