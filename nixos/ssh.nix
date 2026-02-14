@@ -45,7 +45,8 @@ in
       X11Forwarding = lib.mkDefault false;
       GatewayPorts = lib.mkDefault "yes";
       ClientAliveInterval = 60;
-      TCPKeepAlive = true;
+      ClientAliveCountMax = 30;
+      TCPKeepAlive = "no";
       TrustedUserCAKeys = "${sshCAKeyFile}";
     };
     hostKeys = lib.mkDefault [
