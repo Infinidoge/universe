@@ -23,6 +23,7 @@
   ];
 
   home-manager.sharedModules = with home; [
+    shells.fish
     shells.ion
     shells.nushell
     dotfiles.black
