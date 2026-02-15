@@ -44,6 +44,7 @@
     private.nixosModules.minecraft-servers
     private.nixosModules.wireguard
     ./authentik.nix
+    ./boot.nix
     ./continuwuity.nix
     ./copyparty.nix
     ./drasl.nix
