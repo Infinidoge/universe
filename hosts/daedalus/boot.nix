@@ -41,8 +41,8 @@ let
     ];
     embedScript = pkgs.writeText "autostart.ipxe" ''
       #!ipxe
-      ifconf
-      chain --replace https://boot.inx.moe/main.ipxe
+      ifconf || shell
+      chain --replace https://boot.inx.moe/main.ipxe || shell
     '';
   };
 in
@@ -59,7 +59,7 @@ in
           ${link ipxe "ipxe-efi.iso"}
 
           ${script "main.ipxe" ''
-            chain --replace https://boot.inx.moe/lethe/netboot.ipxe
+            chain --replace https://boot.inx.moe/lethe/netboot.ipxe || shell
           ''}
 
           ${section "lethe" ''
