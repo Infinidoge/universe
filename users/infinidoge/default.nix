@@ -1,8 +1,4 @@
 {
-  config,
-  common,
-  secrets,
-  lib,
   pkgs,
   ...
 }:
@@ -10,25 +6,6 @@
   home =
     { config, home, ... }:
     {
-      imports = with home; [
-        bash
-        direnv
-        fish
-        git
-        gpg
-        htop
-        neovim
-        nix-index
-        ssh
-        starship
-        tealdeer
-        tmux
-        vim
-        zoxide
-        zsh
-        dotfiles.neofetch
-      ];
-
       programs.git.settings = {
         user.email = "infinidoge@inx.moe";
         user.name = "Infinidoge";

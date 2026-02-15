@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  home,
   ...
 }:
 let
@@ -309,7 +310,23 @@ in
   # Disable man cache
   # I don't use it, and it takes ages on rebuild
   documentation.man.generateCaches = lib.mkForce false;
-  home-manager.sharedModules = [
+  home-manager.sharedModules = with home; [
     { programs.man.generateCaches = lib.mkForce false; }
+
+    shells.bash
+    shells.zsh
+    direnv
+    git
+    gpg
+    htop
+    neovim
+    nix-index
+    ssh
+    starship
+    tealdeer
+    tmux
+    vim
+    zoxide
+    dotfiles.neofetch
   ];
 }
