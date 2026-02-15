@@ -37,6 +37,10 @@
 
   system.stateVersion = config.system.nixos.release;
 
+  boot.initrd.systemd = {
+    enable = true;
+  };
+
   nix.registry = lib.mkForce {
     nixpkgs.flake = inputs.nixpkgs;
   };
