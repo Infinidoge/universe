@@ -80,6 +80,8 @@
     disko
   ];
 
+  services.kmscon.autologinUser = "infinidoge";
+
   boot.initrd.systemd.emergencyAccess = true;
 
   boot.kernelParams = [
