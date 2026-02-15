@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, home, ... }:
 {
   environment.systemPackages = with pkgs; [
     binutils
@@ -20,5 +20,21 @@
     qrencode
     reflex
     unison
+  ];
+
+  home-manager.sharedModules = with home; [
+    ion
+    nushell
+    dotfiles.black
+
+    programming.base
+    programming.c
+    programming.html
+    programming.java
+    programming.latex
+    programming.nim
+    programming.python
+    programming.racket
+    programming.rust
   ];
 }
