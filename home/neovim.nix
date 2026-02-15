@@ -224,21 +224,12 @@ in
       };
       ts-autotag.enable = true;
       ts-context-commentstring.enable = true;
-      typst-vim.enable = true;
 
-      #nvim-jdtls.enable = true;
-
+      # individual language servers enabled in home/programming/
       lsp = {
         enable = true;
         servers = {
-          clangd.enable = true;
-          hls = {
-            enable = true;
-            installGhc = false;
-          };
-          lua_ls.enable = true;
           marksman.enable = true;
-          # Try nixd
           nil_ls = {
             enable = true;
             package = pkgs.nil;
@@ -246,36 +237,6 @@ in
               settings.nil.formatting.command = [ "nixfmt" ];
             };
           };
-          nimls.enable = true;
-          pylsp = {
-            enable = true;
-            filetypes = [
-              "python"
-              "xonsh"
-            ];
-            settings = {
-              plugins = {
-                autopep8.enable = false;
-                ruff = {
-                  formatEnabled = true;
-                  enable = true;
-                  format = [ "I" ];
-                  extendSelect = [ "I" ];
-
-                  lineLength = 120;
-                  select = [ "F" ];
-                };
-                rope.enable = true;
-                rope_completion.enable = true;
-              };
-            };
-          };
-          rust_analyzer = {
-            enable = true;
-            installRustc = false;
-            installCargo = false;
-          };
-          typst_lsp.enable = false;
         };
       };
     };

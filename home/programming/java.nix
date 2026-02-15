@@ -7,4 +7,6 @@
   ];
 
   programs.java.enable = true;
+
+  # consider setting up jdtls in neovim
 }
