@@ -23,8 +23,8 @@
   ];
 
   home-manager.sharedModules = with home; [
-    ion
-    nushell
+    shells.ion
+    shells.nushell
     dotfiles.black
 
     programming.base
