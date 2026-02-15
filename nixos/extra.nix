@@ -31,6 +31,7 @@
     programming.c
     programming.html
     programming.java
+    programming.lua
     programming.latex
     programming.nim
     programming.python
