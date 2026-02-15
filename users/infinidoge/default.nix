@@ -17,11 +17,8 @@
         git
         gpg
         htop
-        ion
         neovim
         nix-index
-        nushell
-        rofi
         ssh
         starship
         tealdeer
@@ -29,17 +26,7 @@
         vim
         zoxide
         zsh
-        dotfiles.black
         dotfiles.neofetch
-        programming.base
-        programming.c
-        programming.html
-        programming.java
-        programming.latex
-        programming.nim
-        programming.python
-        programming.racket
-        programming.rust
       ];
 
       programs.git.settings = {
