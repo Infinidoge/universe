@@ -154,15 +154,12 @@
       }
     },
     "crane": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_3"
-      },
       "locked": {
-        "lastModified": 1711407199,
-        "narHash": "sha256-A/nB4j3JHL51ztlMQdfKw6y8tUJJzai3bLsZUEEaBxY=",
+        "lastModified": 1771121070,
+        "narHash": "sha256-aIlv7FRXF9q70DNJPI237dEDAznSKaXmL5lfK/Id/bI=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "7e468a455506f2e65550e08dfd45092f0857a009",
+        "rev": "a2812c19f1ed2e5ed5ce2ef7109798b575c180e1",
         "type": "github"
       },
       "original": {
@@ -710,22 +707,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1768395095,
-        "narHash": "sha256-ZhuYJbwbZT32QA95tSkXd9zXHcdZj90EzHpEXBMabaw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "13868c071cc73a5e9f610c47d7bb08e5da64fdd5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixvim": {
       "inputs": {
         "flake-parts": [
@@ -978,11 +959,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768272833,
-        "narHash": "sha256-WNGZ5cxhKdjzzZlvipk7wZmRlL3bRvahMsZ+4IXwOk8=",
+        "lastModified": 1771201690,
+        "narHash": "sha256-sNFR9KuM6sHjpE3kZ+lBvtvmkuRpqs/KTOjISM4exvo=",
         "ref": "refs/heads/master",
-        "rev": "73bbf15799c976c10ee2970205fdb8cd323f2d8e",
-        "revCount": 30,
+        "rev": "7a76cf7409a87c08d5bbe03a91c04c4d0c2ef999",
+        "revCount": 32,
         "type": "git",
         "url": "ssh://git@inx.moe/Infinidoge/universe-cli"
       },
