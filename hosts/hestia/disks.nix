@@ -44,6 +44,5 @@ with lib.our.disko;
     "/persist"
     "/storage"
     "/etc/ssh"
-    "/home"
   ];
 }
