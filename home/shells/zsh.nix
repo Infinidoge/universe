@@ -18,7 +18,7 @@
     #'';
 
     initContent = ''
-      if which kitty; then
+      if which kitty > /dev/null; then
         source <(kitty + complete setup zsh)
       fi
       ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
