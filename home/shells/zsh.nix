@@ -18,7 +18,9 @@
     #'';
 
     initContent = ''
-      ${pkgs.kitty}/bin/kitty + complete setup zsh | source /dev/stdin
+      if which kitty; then
+        source <(kitty + complete setup zsh)
+      fi
       ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
       functions -c precmd precmd_any_nix_shell
