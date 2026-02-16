@@ -2,6 +2,7 @@
   config,
   common,
   secrets,
+  private,
   pkgs,
   ...
 }:
@@ -10,6 +11,10 @@ let
   domain = common.subdomain "git";
 in
 {
+  imports = [
+    private.nixosModules.forgejo
+  ];
+
   persist.directories = [ "/var/lib/private/gitea-runner/" ];
 
   services.forgejo = {
