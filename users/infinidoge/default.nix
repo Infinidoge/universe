@@ -19,10 +19,6 @@
       };
     };
 
-  systemd.user.tmpfiles.users.infinidoge.rules = [
-    "L+ /home/infinidoge/.local/share/jellyfinmediaplayer/scripts/mpris.so - - - - ${pkgs.mpvScripts.mpris}/share/mpv/scripts/mpris.so"
-  ];
-
   fonts.packages = with pkgs; [
     nerd-fonts.dejavu-sans-mono
     nerd-fonts.symbols-only
