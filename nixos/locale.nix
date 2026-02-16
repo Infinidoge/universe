@@ -15,8 +15,6 @@ in
     options = "compose:ralt,caps:hyper";
   };
 
-  services.libinput.enable = true;
-
   i18n.defaultLocale = cfg.locale;
 
   time.timeZone = cfg.timezone;
