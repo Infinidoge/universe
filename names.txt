@@ -73,8 +73,8 @@ apophis  | desktop
 pluto    | home server
 daedalus | primary server
 dionysus | optiplex
+lethe   | installer image/kexec binary
 
 ### pending
 enodia  | router
 iris    | cloud server
-lethe   | installer image/kexec binary
