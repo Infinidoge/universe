@@ -18,7 +18,17 @@ rec {
     device = "/dev/disk/by-id/${id}";
     content = {
       type = "gpt";
-    } // content;
+    }
+    // content;
+  };
+
+  mkDisk' = device: content: {
+    type = "disk";
+    inherit device;
+    content = {
+      type = "gpt";
+    }
+    // content;
   };
 
   mkESP' = mountOptions: size: mountpoint: {
@@ -49,7 +59,8 @@ rec {
       content = {
         inherit mountpoint;
         type = "btrfs";
-      } // content';
+      }
+      // content';
     }
     // base;
   mkBtrfsPart = size: mkBtrfsPart' { inherit size; };
@@ -75,7 +86,8 @@ rec {
       content = {
         type = "zfs";
         inherit pool;
-      } // content;
+      }
+      // content;
     }
     // base;
   mkZPart = size: mkZPart' { inherit size; } { };
@@ -111,13 +123,22 @@ rec {
     inherit mountpoint mountOptions;
     options = {
       mountpoint = "legacy";
-    } // options;
+    }
+    // options;
   };
   mkZfs = mkZfs' defaultMountOptions;
 
   mkZvol = size: content: {
     type = "zfs_volume";
     inherit size content;
+  };
+
+  mkSwap = size: content: {
+    inherit size;
+    content = {
+      type = "swap";
+    }
+    // content;
   };
 
   markNeededForBoot = flip genAttrs (_: {
