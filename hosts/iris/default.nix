@@ -29,7 +29,7 @@
 
   system.stateVersion = "25.11";
 
-  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC9YYD1suxAUYmkLvcbGZJEoKWnC/9PObkn5cNINIajM root@iris";
+  age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFIoWjMflyhZKTk0DZ2rlqdr2jVLSMWsua4GdRclpRBV root@iris";
 
   boot.loader.timeout = 1;
 
