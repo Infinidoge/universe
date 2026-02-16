@@ -5,6 +5,7 @@
   modulesPath,
   nixos,
   inputs,
+  self,
   ...
 }:
 {
@@ -48,6 +49,11 @@
   specialisation.iso.configuration = {
     imports = [
       (modulesPath + "/installer/cd-dvd/iso-image.nix")
+    ];
+
+    # Include system to be installed directly in the ISO to save building step
+    isoImage.storeContents = [
+      self.nixosConfigurations.iris.config.system.build.toplevel
     ];
 
     # EFI booting
