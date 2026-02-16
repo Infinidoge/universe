@@ -1,22 +1,25 @@
-{ pkgs, lib, ... }:
+{ lib, ... }:
 with lib.our.disko;
+let
+  mountOptions = defaultMountOptions ++ [
+    "autodefrag"
+    "compress=zstd:3"
+  ];
+in
 {
-  boot.kernelPackages = pkgs.linuxPackages;
-
-  boot.zfs.extraPools = [ "tank" ];
-
   disko.devices = {
-    nodev."/" = mkTmpfs "2G";
+    nodev."/" = mkTmpfs "1G";
     disk = {
-      main = mkDisk "wwn-0x6034a134b1c4432588a23b05f3802d24" {
+      main = mkDisk' "/dev/vda" {
         partitions = {
           boot = mkESP "64M" "/boot/efi";
           main = mkBtrfsPart "100%" "/media/main" {
-            subvolumes = mkBtrfsSubvols {
+            subvolumes = mkBtrfsSubvols' mountOptions {
               "/boot" = { };
               "/etc/ssh" = { };
               "/persist" = { };
               "/nix" = { };
+              "/swap" = { };
             };
           };
         };
@@ -27,6 +30,5 @@ with lib.our.disko;
   fileSystems = markNeededForBoot [
     "/persist"
     "/etc/ssh"
-    "/home"
   ];
 }
