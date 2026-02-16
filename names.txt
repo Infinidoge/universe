@@ -74,7 +74,7 @@ pluto    | home server
 daedalus | primary server
 dionysus | optiplex
 lethe   | installer image/kexec binary
+iris    | cloud server
 
 ### pending
 enodia  | router
-iris    | cloud server
