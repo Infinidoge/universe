@@ -51,7 +51,15 @@ in
     locations."/" = {
       root =
         let
-          lethe = self.nixosConfigurations.lethe.config.system.build;
+          lethe = self.nixosConfigurations.lethe.config;
+          netboot = lethe.specialisation.netboot.configuration;
+          iso = lethe.specialisation.iso.configuration;
+
+          build = {
+            lethe = lethe.system.build;
+            netboot = netboot.system.build;
+            iso = iso.system.build;
+          };
         in
         pkgs.runCommandLocal "netboot-directory" { } ''
           mkdir $out && cd $out
@@ -63,14 +71,15 @@ in
           ''}
 
           ${section "lethe" ''
-            ${link lethe.netboot "initrd"}
-            ${link lethe.netboot "bzImage"}
-            ${link lethe.netbootIpxeScript "netboot.ipxe"}
+            ${link build.netboot.netboot "initrd"}
+            ${link build.netboot.netboot "bzImage"}
+            ${link build.netboot.netbootIpxeScript "netboot.ipxe"}
             ${script "netboot-logs.ipxe" ''
-              kernel bzImage init=${lethe.toplevel}/init initrd=initrd zswap.enabled=1 zswap.max_pool_percent=50 zswap.compressor=zstd zswap.zpool=zsmalloc nohibernate loglevel=7 lsm=landlock,yama,bpf
+              kernel bzImage init=${build.lethe.toplevel}/init initrd=initrd zswap.enabled=1 zswap.max_pool_percent=50 zswap.compressor=zstd zswap.zpool=zsmalloc nohibernate loglevel=7 lsm=landlock,yama,bpf
               initrd initrd
               boot
             ''}
+            ln -s ${build.iso.isoImage}/iso/${iso.image.baseName}.iso installer.iso
           ''}
         '';
     };

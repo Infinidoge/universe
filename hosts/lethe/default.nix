@@ -27,13 +27,35 @@
     shells.xonsh
     shells.zsh
 
-    (modulesPath + "/installer/netboot/netboot.nix")
     (modulesPath + "/installer/scan/detected.nix")
     (modulesPath + "/installer/scan/not-detected.nix")
 
+  ];
+
+  fileSystems."/" = lib.mkImageMediaOverride {
+    fsType = "tmpfs";
+    options = [ "mode=0755" ];
+  };
+
+  boot.loader.grub.enable = false;
+
+  specialisation.netboot.configuration.imports = [
+    (modulesPath + "/installer/netboot/netboot.nix")
     ./netboot.nix
     ./kexec
   ];
+
+  specialisation.iso.configuration = {
+    imports = [
+      (modulesPath + "/installer/cd-dvd/iso-image.nix")
+    ];
+
+    # EFI booting
+    isoImage.makeEfiBootable = true;
+    # USB booting
+    isoImage.makeUsbBootable = true;
+
+  };
 
   system.stateVersion = config.system.nixos.release;
 
