@@ -35,7 +35,7 @@ in
 
   age.rekey.masterIdentities = [
     "${self}/users/infinidoge/keys/primary_age.pub"
-    "${self}/users/infinidog./keys/backup_age.pub"
+    "${self}/users/infinidoge/keys/backup_age.pub"
   ];
 
   age.secrets = {
