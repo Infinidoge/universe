@@ -35,6 +35,17 @@
 
   boot.initrd.systemd.enable = true;
 
+  networking.interfaces.enp3s0.ipv4.addresses = [
+    {
+      address = "45.8.201.122";
+      prefixLength = 24;
+    }
+  ];
+  networking.defaultGateway = {
+    address = "45.8.201.1";
+    interface = "enp3s0";
+  };
+
   zramSwap.enable = true;
 
   boot.kernelParams = [
