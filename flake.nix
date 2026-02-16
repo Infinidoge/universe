@@ -226,7 +226,6 @@
                 }
 
                 # --- Universe Modules ---
-                private.nixosModules.secrets
 
                 # --- Library Modules ---
                 inputs.disko.nixosModules.disko
