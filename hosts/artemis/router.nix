@@ -10,7 +10,7 @@
     networking = {
       bridges.br0.interfaces = [
         "enp0s13f0u1"
-        "wlp170s0-ap0"
+        #"wlp170s0-ap0"
       ];
       interfaces."br0".ipv4.addresses = [
         {
@@ -34,25 +34,25 @@
       };
     };
 
-    networking.wireless.extraConfig = ''
-      freq_list=2462
-    '';
+    #networking.wireless.extraConfig = ''
+    #  freq_list=2462
+    #'';
 
-    services.hostapd = {
-      enable = true;
-      radios."wlp170s0-ap0" = {
-        band = "2g";
-        channel = 11;
-        networks."wlp170s0-ap0" = {
-          ssid = "Artemis";
-          authentication = {
-            mode = "wpa2-sha1";
-            # If you find me IRL, enjoy the WiFi I guess
-            wpaPassword = "jointhehunt";
-          };
-        };
-      };
-    };
+    #services.hostapd = {
+    #  enable = true;
+    #  radios."wlp170s0-ap0" = {
+    #    band = "2g";
+    #    channel = 11;
+    #    networks."wlp170s0-ap0" = {
+    #      ssid = "Artemis";
+    #      authentication = {
+    #        mode = "wpa2-sha1";
+    #        # If you find me IRL, enjoy the WiFi I guess
+    #        wpaPassword = "jointhehunt";
+    #      };
+    #    };
+    #  };
+    #};
 
     services.dnsmasq = {
       enable = true;
