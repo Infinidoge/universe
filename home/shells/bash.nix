@@ -4,7 +4,9 @@
     enable = true;
     enableVteIntegration = true;
     initExtra = ''
-      source <(${lib.getExe config.programs.kitty.package} + complete setup bash)
+      if which kitty; then
+        source <(kitty + complete setup bash)
+      fi
     '';
   };
 }
