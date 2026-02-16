@@ -243,7 +243,6 @@
 
                 # --- Vendored Modules ---
                 self.vendored.nixos.factorio
-                self.vendored.nixos.steam
                 self.vendored.nixos.thelounge
                 self.vendored.nixos.vaultwarden
               ];
