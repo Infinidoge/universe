@@ -10,12 +10,10 @@
   common.nginx = {
     ssl = {
       enableACME = true;
-      acmeRoot = null;
       forceSSL = true;
     };
     ssl-optional = {
       enableACME = true;
-      acmeRoot = null;
       addSSL = true;
     };
     ssl-inx = {
