@@ -25,6 +25,8 @@
 
     ./hardware-configuration.nix
     ./disks.nix
+
+    ./dns.nix
   ];
 
   system.stateVersion = "25.11";
