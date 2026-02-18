@@ -48,4 +48,5 @@
   };
 
   age.secrets.dns-cloudflare.rekeyFile = "${self}/secrets/dns-cloudflare.age";
+  age.secrets.dns-universe.rekeyFile = "${self}/secrets/dns-universe.age";
 }
