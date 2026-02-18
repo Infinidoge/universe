@@ -1,5 +1,6 @@
 {
   self,
+  lib,
   pkgs,
   common,
   secrets,
@@ -54,8 +55,7 @@
     recommendedProxySettings = true;
   };
 
-  age.secrets.dns-universe.rekeyFile = "${self}/secrets/dns-universe.age";
-  age.secrets.dns-universe.group = "named";
+  age.secrets.dns-universe = lib.our.secrets.withGroup "named" "${self}/secrets/dns-universe.age";
 
   # Ensure named group exists
   users.groups.named = { };
