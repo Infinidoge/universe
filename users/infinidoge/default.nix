@@ -50,6 +50,7 @@
       "jellyfin"
       "libvirtd"
       "minecraft"
+      "named"
       "nginx"
       "pipewire"
       "plugdev"
