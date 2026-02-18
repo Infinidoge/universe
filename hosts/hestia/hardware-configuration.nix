@@ -21,5 +21,5 @@
   ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  info.model = "Dell R330";
+  info.model = "HPE ProLiant DL360 Gen 9";
 }
