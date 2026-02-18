@@ -12,7 +12,7 @@
     enable = true;
     ipv4Only = true;
     extraConfig = ''
-      include ${secrets.dns-universe};
+      include "${secrets.dns-universe}";
     '';
     zones = {
       "inx.moe" = {
