@@ -1,4 +1,9 @@
 {
+  persist.directories = [
+    "/etc/bind"
+    "/srv"
+  ];
+
   services.bind = {
     enable = true;
     zones = {
