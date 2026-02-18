@@ -1,5 +1,6 @@
 {
   self,
+  pkgs,
   common,
   secrets,
   ...
@@ -30,8 +31,14 @@
     acceptTerms = true;
     defaults = {
       email = "infinidoge@inx.moe";
-      dnsProvider = "cloudflare";
-      environmentFile = secrets.dns-cloudflare;
+      dnsProvider = "rfc2136";
+      group = "named";
+      environmentFile = pkgs.writeText "acme-env.txt" ''
+        RFC2136_NAMESERVER=ns1.inx.moe
+      '';
+      credentialFiles = {
+        RFC2136_TSIG_SECRET_FILE = secrets.dns-universe;
+      };
     };
   };
 
@@ -47,6 +54,9 @@
     recommendedProxySettings = true;
   };
 
-  age.secrets.dns-cloudflare.rekeyFile = "${self}/secrets/dns-cloudflare.age";
   age.secrets.dns-universe.rekeyFile = "${self}/secrets/dns-universe.age";
+  age.secrets.dns-universe.group = "named";
+
+  # Ensure named group exists
+  users.groups.named = { };
 }
