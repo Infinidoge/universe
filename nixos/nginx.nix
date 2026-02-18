@@ -41,10 +41,22 @@
         RFC2136_TSIG_SECRET_FILE = secrets.dns-universe;
       };
     };
+    certs."inx.moe" = {
+      group = "nginx";
+      extraDomainNames = [
+        "*.inx.moe"
+        "*.internal.inx.moe"
+        "*.tailnet.inx.moe"
+      ];
+    };
   };
 
   persist.directories = [
     "/var/lib/acme"
+  ];
+
+  backups.persist.extraExcludes = [
+    "/var/log/nginx/*"
   ];
 
   services.nginx = {

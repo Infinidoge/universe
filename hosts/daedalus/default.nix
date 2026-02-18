@@ -178,22 +178,9 @@
   services.nginx.enable = true;
 
   backups.persist.excludes = {
-    "/var/log/" = [
-      "nginx/access.log"
-    ];
-
     # Very large fungible files
     "/srv/media/" = [
       "shows/Dimension 20 Fantasy High"
-    ];
-  };
-
-  security.acme.certs."inx.moe" = {
-    group = "nginx";
-    extraDomainNames = [
-      "*.inx.moe"
-      "*.internal.inx.moe"
-      "*.tailnet.inx.moe"
     ];
   };
 
