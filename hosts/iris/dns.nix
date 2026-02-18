@@ -9,6 +9,7 @@
 
   services.bind = {
     enable = true;
+    ipv4Only = true;
     zones = {
       "inx.moe" = {
         master = true;
