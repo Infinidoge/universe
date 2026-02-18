@@ -28,6 +28,15 @@
           };
         '';
       };
+      "challenge.inx.moe" = {
+        master = true;
+        file = "/srv/dns/challenge.inx.moe";
+        extraConfig = ''
+          update-policy {
+            grant _1.universe. zonesub ANY;
+          };
+        '';
+      };
     };
   };
 }
