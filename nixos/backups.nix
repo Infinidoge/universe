@@ -17,6 +17,7 @@ let
     "pluto" = "02:00";
     "apophis" = "03:00";
     "daedalus" = "04:00";
+    "iris" = "05:00";
   };
 in
 {
