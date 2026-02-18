@@ -40,7 +40,6 @@
       };
     };
     certs."inx.moe" = {
-      group = "nginx";
       extraDomainNames = [
         "*.inx.moe"
         "*.internal.inx.moe"
@@ -64,6 +63,8 @@
     recommendedGzipSettings = true;
     recommendedProxySettings = true;
   };
+
+  users.users.nginx.extraGroups = [ "named" ];
 
   age.secrets.dns-universe = lib.our.secrets.withGroup "named" "${self}/secrets/dns-universe.age";
 
