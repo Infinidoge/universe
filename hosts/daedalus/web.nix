@@ -13,6 +13,7 @@ let
     default-src = [
       "'self'"
       "'unsafe-inline'"
+      "files.inx.moe"
     ];
     frame-ancestors = [
       "'self'"
@@ -25,11 +26,10 @@ let
       "fonts.googleapis.com"
       "maxcdn.bootstrapcdn.com"
     ];
-    img-src = [
-      "'self'"
+    img-src = default-src ++ [
       "storage.ko-fi.com"
     ];
-    font-src = [
+    font-src = default-src ++ [
       "'self'"
       "fonts.gstatic.com"
     ];
@@ -37,6 +37,7 @@ let
       "'self'"
       "github.com"
     ];
+    media-src = default-src;
   };
   cspString = lib.concatStringsSep " " (
     lib.mapAttrsToList (kind: locations: "${kind} ${lib.concatStringsSep " " locations};") csp
