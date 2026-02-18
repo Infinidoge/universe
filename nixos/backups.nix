@@ -60,17 +60,15 @@ in
   systemd.timers."borgbackup-job-persist".requires = [ "network-online.target" ];
 
   backups.persist.excludes = {
-    "/home/infinidoge" = [
+    "/home/*" = [
       ".cache"
       "*/cache2"
       "*/Cache"
       ".local/share/Steam"
       ".local/share/Trash"
     ];
-    "/var/log/journal/**" = [
-      "system.journal"
-      "user-1000.journal"
-    ];
   };
-
+  backups.persist.extraExcludes = [
+    "/var/log/journal/**"
+  ];
 }
