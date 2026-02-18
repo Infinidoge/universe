@@ -36,7 +36,7 @@
         RFC2136_NAMESERVER=ns1.inx.moe
       '';
       credentialFiles = {
-        RFC2136_TSIG_SECRET_FILE = secrets.dns-universe;
+        RFC2136_TSIG_FILE = secrets.dns-universe;
       };
     };
     certs."inx.moe" = {
