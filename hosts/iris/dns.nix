@@ -4,7 +4,7 @@
     zones = {
       "inx.moe" = {
         master = true;
-        file = "/srv/dns/testing.inx.moe";
+        file = "/srv/dns/inx.moe";
       };
     };
   };
