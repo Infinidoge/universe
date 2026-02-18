@@ -16,7 +16,7 @@ in
     BORG_RSH = "ssh -i ${secrets.borg-ssh-key}"; # private key for automated backups
     BORG_REMOTE_PATH = "/usr/local/bin/borg1/borg1";
     BORG_PASSCOMMAND = "cat ${secrets.borg-password}";
-    BORG_REPO = "${common.rsyncnet.host}:backups/hosts";
+    BORG_REPO = "rsync.net:backups/hosts";
   };
 
   environment.systemPackages = with pkgs; [ borgbackup ];
