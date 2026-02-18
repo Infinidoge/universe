@@ -33,6 +33,8 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKZFQ7Gg/N1wthHRuGQQCUcc5cMYFT5ARl5afEXD64ww root@iris";
 
+  info.model = "Pyro Eco VPS";
+
   boot.loader.timeout = 1;
 
   boot.initrd.systemd.enable = true;
