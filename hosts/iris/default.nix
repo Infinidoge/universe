@@ -62,7 +62,7 @@
   swapDevices = [
     {
       device = "/swap/swapfile";
-      size = 8 * 1024;
+      size = 6 * 1024;
       priority = 2; # zram swap priority is 5
     }
   ];
