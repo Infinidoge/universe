@@ -6,13 +6,9 @@
   ...
 }:
 let
+  inherit (common.nginx) ssl-inx;
   cfg = config.services.garage.settings;
   baseDir = "/srv/garage";
-
-  ssl-garage = {
-    useACMEHost = "garage.inx.moe";
-    forceSSL = true;
-  };
 
   secretCommon = {
     owner = "garage";
@@ -84,7 +80,7 @@ in
   };
 
   services.nginx.virtualHosts = {
-    "s3.garage.inx.moe" = ssl-garage // {
+    "s3.garage.inx.moe" = ssl-inx // {
       serverAliases = [ "*.s3.garage.inx.moe" ];
       locations."/" = {
         proxyPass = "http://${cfg.s3_api.api_bind_addr}";
@@ -93,23 +89,21 @@ in
         '';
       };
     };
-    "*.web.garage.inx.moe" = ssl-garage // {
+    "*.web.garage.inx.moe" = ssl-inx // {
       locations."/".proxyPass = "http://${cfg.s3_web.bind_addr}";
     };
-    "admin.garage.inx.moe" = ssl-garage // {
+    "admin.garage.inx.moe" = ssl-inx // {
       locations."/".proxyPass = "http://${cfg.admin.api_bind_addr}";
     };
   };
 
-  security.acme.certs."garage.inx.moe" = {
-    group = "nginx";
-    extraDomainNames = [
-      "s3.garage.inx.moe"
-      "*.s3.garage.inx.moe"
-      "*.web.garage.inx.moe"
-      "admin.garage.inx.moe"
-    ];
-  };
+  # FIXME: Separate certs out more by handling _acme-challenge better.
+  security.acme.certs."inx.moe".extraDomainNames = [
+    "s3.garage.inx.moe"
+    "*.s3.garage.inx.moe"
+    "*.web.garage.inx.moe"
+    "admin.garage.inx.moe"
+  ];
 
   users.users.garage = {
     group = "garage";
