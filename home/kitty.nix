@@ -14,6 +14,6 @@
   };
 
   home.shellAliases = {
-    icat = "kitty +kitten icat";
+    icat = "kitten icat";
   };
 }
