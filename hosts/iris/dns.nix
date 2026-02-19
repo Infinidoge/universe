@@ -1,4 +1,25 @@
-{ secrets, ... }:
+{ lib, secrets, ... }:
+let
+  mkZone =
+    file: config:
+    {
+      inherit file;
+      master = true;
+      extraConfig = ''
+        update-policy {
+          grant _1.universe. zonesub ANY;
+        };
+      '';
+    }
+    // config;
+
+  mkPrimaryZone = lib.flip mkZone {
+    slaves = [
+      "216.218.133.2" # slave.dns.he.net
+      "128.210.6.103" # daedalus
+    ];
+  };
+in
 {
   persist.directories = [
     "/etc/bind"
@@ -15,28 +36,8 @@
       include "${secrets.dns-universe}";
     '';
     zones = {
-      "inx.moe" = {
-        master = true;
-        file = "/srv/dns/inx.moe";
-        slaves = [
-          "216.218.133.2" # slave.dns.he.net
-          "128.210.6.103" # daedalus
-        ];
-        extraConfig = ''
-          update-policy {
-            grant _1.universe. zonesub ANY;
-          };
-        '';
-      };
-      "challenge.inx.moe" = {
-        master = true;
-        file = "/srv/dns/challenge.inx.moe";
-        extraConfig = ''
-          update-policy {
-            grant _1.universe. zonesub ANY;
-          };
-        '';
-      };
+      "inx.moe" = mkPrimaryZone "/srv/dns/inx.moe";
+      "challenge.inx.moe" = mkZone "/srv/dns/challenge.inx.moe" { };
     };
   };
 }
