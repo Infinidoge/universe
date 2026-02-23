@@ -19,7 +19,7 @@
     old-stable.url = "github:NixOS/nixpkgs/nixos-23.05"; # HACK: For schildichat
 
     ### Configuration Components ###
-    private.url = "git+ssh://git@github.com/Infinidoge/universe-private";
+    private.url = "git+ssh://git@inx.moe/Infinidoge/universe-private";
     universe-cli.url = "git+ssh://git@inx.moe/Infinidoge/universe-cli";
 
     ### Nix Libraries
