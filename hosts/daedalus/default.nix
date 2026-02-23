@@ -68,7 +68,6 @@
     ./searx.nix
     ./ssh.nix
     ./thelounge.nix
-    ./torrenting.nix
     ./users.nix
     ./vaultwarden.nix
     ./web.nix

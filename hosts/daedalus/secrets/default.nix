@@ -11,7 +11,6 @@ in
     freshrss = withOwnerGroup "freshrss" ./freshrss.age;
     hedgedoc = withOwnerGroup "hedgedoc" ./hedgedoc.age;
     hydra = withGroup "hydra" ./hydra.age;
-    ovpn.rekeyFile = ./ovpn.age;
     radicale-ldap = withOwnerGroup "radicale" ./radicale-ldap.age;
     searx.rekeyFile = ./searx.age;
     vaultwarden.rekeyFile = ./vaultwarden.age;
