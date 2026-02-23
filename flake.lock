@@ -751,17 +751,17 @@
     },
     "private": {
       "locked": {
-        "lastModified": 1771226911,
-        "narHash": "sha256-zc6vbFSG3OTA3oLPwSV+CpiXibaJCT79AipC2gD348w=",
+        "lastModified": 1771806250,
+        "narHash": "sha256-CUKhsfPLKCGToXzFiaPaoTd8MayjCZinUJzO+5PUgGc=",
         "ref": "refs/heads/master",
-        "rev": "6ff07aef00d6177659b52c2868ef615669c19263",
-        "revCount": 70,
+        "rev": "e7df7ee81e6b9daf436726349d1731f01a351eac",
+        "revCount": 76,
         "type": "git",
-        "url": "ssh://git@github.com/Infinidoge/universe-private"
+        "url": "ssh://git@inx.moe/Infinidoge/universe-private"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/Infinidoge/universe-private"
+        "url": "ssh://git@inx.moe/Infinidoge/universe-private"
       }
     },
     "pyproject-build-systems": {
