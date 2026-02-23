@@ -9,12 +9,10 @@
 let
   cfg = config.services.forgejo;
   domain = common.subdomain "git";
+
+  vars = private.variables.forgejo;
 in
 {
-  imports = [
-    private.nixosModules.forgejo
-  ];
-
   persist.directories = [ "/var/lib/private/gitea-runner/" ];
 
   services.forgejo = {
@@ -78,7 +76,7 @@ in
       enable = true;
       name = "Local Privileged";
       url = "https://${domain}";
-      token = common.forgejo.actions.user_token;
+      token = vars.actions.user_token;
       settings.runner.capacity = 16;
       labels = [
         "local:host"
@@ -98,7 +96,7 @@ in
       enable = true;
       name = "Local";
       url = "https://${domain}";
-      token = common.forgejo.actions.global_token;
+      token = vars.actions.global_token;
       settings.runner.capacity = 16;
       labels = [
         "docker:docker://gitea/runner-images:ubuntu-latest"
