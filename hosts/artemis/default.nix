@@ -63,6 +63,13 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.binfmt.addEmulatedSystemsToNixSandbox = true;
 
+  boot.kernelParams = [
+    "zswap.enabled=1"
+    "zswap.compressor=zstd"
+    "zswap.max_pool_percent=30"
+    "zswap.shrinker_enabled=1"
+  ];
+
   home.home.packages = with pkgs; [
     ungoogled-chromium
     sidequest
