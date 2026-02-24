@@ -146,4 +146,17 @@
       mac = "02:00:00:00:00:03";
     };
   };
+
+  services.btrfs.autoScrub.fileSystems = [ "/media/main" ];
+
+  services.beesd.filesystems.main = {
+    spec = "/media/main";
+    hashTableSizeMB = 4096;
+    extraOptions = [
+      "--throttle-factor"
+      "1.0"
+      "--loadavg-target"
+      "5.0"
+    ];
+  };
 }
