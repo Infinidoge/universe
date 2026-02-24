@@ -52,12 +52,10 @@
     interface = "enp3s0";
   };
 
-  zramSwap.enable = true;
-
   boot.kernelParams = [
     "zswap.enabled=1"
     "zswap.compressor=zstd"
-    "zswap.max_pool_percent=20"
+    "zswap.max_pool_percent=50"
     "zswap.shrinker_enabled=1"
   ];
 
