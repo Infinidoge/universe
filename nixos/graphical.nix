@@ -19,7 +19,7 @@
   };
 
   # FIXME: detangle
-  home.services.gpg-agent.pinentry.package = pkgs.pinentry-qt;
+  home.services.gpg-agent.pinentry.package = pkgs.pinentry-rofi;
 
   home-manager.sharedModules = with home; [
     rofi
