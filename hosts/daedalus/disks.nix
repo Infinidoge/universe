@@ -51,4 +51,9 @@ with lib.our.disko;
     "/etc/ssh"
     "/etc/secrets"
   ];
+
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/media/store" ];
+  };
 }
