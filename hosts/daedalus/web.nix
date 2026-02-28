@@ -59,6 +59,14 @@ let
 
   mkRedirect = to: ssl-optional // { globalRedirect = to; };
   mkTmpRedirect = to: ssl-optional // { locations."/".return = "302 ${to}"; };
+
+  serveFile = file: {
+    tryFiles = "/${baseNameOf file} =404";
+    root = pkgs.runCommandLocal "served-file" { } ''
+      mkdir -p $out
+      cp ${file} $out/${baseNameOf file}
+    '';
+  };
 in
 {
   services.nginx.commonHttpConfig = ''
@@ -86,10 +94,7 @@ in
       locations."/".return = "302 $jump_link";
     };
     "swedish.fish" = ssl-optional // {
-      locations."/" = {
-        tryFiles = "/Blahaj.png =404";
-        root = ./static;
-      };
+      locations."/" = serveFile ./static/Blahaj.png;
       locations."/buy".return = "301 https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/";
     };
     "archive.inx.moe" = ssl-inx // {
