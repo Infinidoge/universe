@@ -60,6 +60,7 @@ in
     ];
 
     globals = {
+      clipboard = "osc52";
       doom_one_cursor_coloring = true;
       doom_one_terminal_colors = true;
       doom_one_italic_comments = false;
