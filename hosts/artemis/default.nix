@@ -154,8 +154,10 @@
     };
   };
 
-  services.btrfs.autoScrub.fileSystems = [ "/media/main" ];
-
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/media/main" ];
+  };
   services.beesd.filesystems.main = {
     spec = "/media/main";
     hashTableSizeMB = 4096;
