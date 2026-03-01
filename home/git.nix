@@ -53,7 +53,7 @@
       };
       protocol.file.allow = "always";
 
-      # TODO: setup difft (difftastic) as external diff tool
+      diff.external = "difft";
 
       alias = {
         a = "add -p";
