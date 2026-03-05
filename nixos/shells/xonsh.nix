@@ -4,12 +4,14 @@ let
   inherit (cfg.package) xontribs;
 in
 {
+  # BUG: https://github.com/prompt-toolkit/python-prompt-toolkit/issues/1933
   programs.xonsh = {
     enable = true;
     extraPackages =
       p: with p; [
-        parallel-ssh
         xontribs.xonsh-direnv
+
+        parallel-ssh
         requests
       ];
     config = ''
