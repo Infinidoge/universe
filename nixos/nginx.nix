@@ -56,6 +56,18 @@
     "/var/log/nginx/*"
   ];
 
+  networking.firewall =
+    let
+      ports = [
+        80
+        443
+      ];
+    in
+    {
+      allowedTCPPorts = ports; # Standard HTTP/HTTPS
+      allowedUDPPorts = ports; # QUIC
+    };
+
   services.nginx = {
     enable = true;
     recommendedTlsSettings = true;
