@@ -9,6 +9,8 @@ let
   secret = secret: "$__file{/etc/secrets/grafana/${secret}}";
 in
 {
+  persist.directories = [ "/var/lib/grafana" ];
+
   services.grafana = {
     enable = true;
     settings = {
