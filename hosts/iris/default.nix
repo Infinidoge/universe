@@ -27,6 +27,7 @@
     ./disks.nix
 
     ./dns.nix
+    ./grafana.nix
   ];
 
   system.stateVersion = "25.11";

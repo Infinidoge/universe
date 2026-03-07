@@ -52,7 +52,6 @@
     ./forgejo.nix
     ./freshrss.nix
     ./garage.nix
-    ./grafana.nix
     ./hedgedoc.nix
     ./homebox.nix
     ./hydra.nix
