@@ -2,13 +2,13 @@
 .env
 
 # Nix
-result*
 .direnv/
+result
 
 # Python
 .ruff_cache
 .ropeproject
-__pycache__/
 
 # Runtime
-*.sqlite3*
+rename.sqlite3
+rename.sqlite3-journal

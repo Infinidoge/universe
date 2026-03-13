@@ -9,11 +9,10 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-echo "Setting up project"
-
 nameBase=$1
 files=(
   "flake.nix"
+  ".gitignore"
   "pyproject.toml"
   "rename/main.py"
 )
@@ -25,11 +24,3 @@ for file in ${files[@]}; do
 done
 
 mv rename $nameBase
-
-echo "RUNNING: nix flake lock"
-nix flake lock
-
-echo "RUNNING: uv lock"
-nix run nixpkgs#uv -- lock
-
-echo "DONE"

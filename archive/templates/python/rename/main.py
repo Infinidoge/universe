@@ -21,8 +21,8 @@ if load_dotenv(find_dotenv(usecwd=True)):
 else:
     log.debug("Didn't find .env")
 
-VARIABLE = os.getenv("VARIABLE")
+TOKEN = os.getenv("TOKEN")
 
 
-def main():
+def run():
     pass
