@@ -40,6 +40,20 @@
         "python"
         "xonsh"
       ];
+      init_options.settings.configuration = {
+        line-length = 120;
+        select = [
+          # pycodestyle
+          "E"
+          "W"
+
+          # pyflakes
+          "F"
+
+          # isort
+          "I"
+        ];
+      };
     };
   };
 }
