@@ -227,19 +227,7 @@ in
       ts-context-commentstring.enable = true;
 
       # individual language servers enabled in home/programming/
-      lsp = {
-        enable = true;
-        servers = {
-          marksman.enable = true;
-          nil_ls = {
-            enable = true;
-            package = pkgs.nil;
-            extraOptions = {
-              settings.nil.formatting.command = [ "nixfmt" ];
-            };
-          };
-        };
-      };
+      lspconfig.enable = true;
     };
 
     extraConfigLua = ''

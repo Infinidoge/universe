@@ -14,9 +14,8 @@
     ))
   ];
 
-  programs.nixvim.plugins.lsp.servers.rust_analyzer = {
+  programs.nixvim.lsp.servers.rust_analyzer = {
     enable = true;
-    installRustc = false;
-    installCargo = false;
+    package = null; # get rust_analyzer from PATH
   };
 }

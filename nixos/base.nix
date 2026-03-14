@@ -320,6 +320,7 @@ in
     gpg
     htop
     neovim
+    programming.nix
     nix-index
     ssh
     starship

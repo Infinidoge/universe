@@ -8,5 +8,5 @@
     valgrind
   ];
 
-  programs.nixvim.plugins.lsp.servers.clangd.enable = true;
+  programs.nixvim.lsp.servers.clangd.enable = true;
 }

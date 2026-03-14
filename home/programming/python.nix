@@ -18,27 +18,28 @@
     ))
   ];
 
-  programs.nixvim.plugins.lsp.servers.pylsp = {
+  programs.nixvim.lsp.servers.pylsp = {
     enable = true;
-    filetypes = [
-      "python"
-      "xonsh"
-    ];
-    settings = {
-      plugins = {
+    config = {
+      filetypes = [
+        "python"
+        "xonsh"
+      ];
+      settings.pylsp.plugins = {
         autopep8.enable = false;
-        ruff = {
-          formatEnabled = true;
-          enable = true;
-          format = [ "I" ];
-          extendSelect = [ "I" ];
-
-          lineLength = 120;
-          select = [ "F" ];
-        };
         rope.enable = true;
         rope_completion.enable = true;
       };
+    };
+  };
+
+  programs.nixvim.lsp.servers.ruff = {
+    enable = true;
+    config = {
+      filetypes = [
+        "python"
+        "xonsh"
+      ];
     };
   };
 }

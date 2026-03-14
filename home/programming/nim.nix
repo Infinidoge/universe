@@ -4,5 +4,5 @@
     nim
   ];
 
-  programs.nixvim.plugins.lsp.servers.nimls.enable = true;
+  programs.nixvim.lsp.servers.nimls.enable = true;
 }
