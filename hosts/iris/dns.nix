@@ -47,6 +47,7 @@ in
       "foxy.software" = mkPrimaryZone "/srv/dns/foxy.software";
       "swedish.fish" = mkPrimaryZone "/srv/dns/swedish.fish";
       "unreliable.email" = mkPrimaryZone "/srv/dns/unreliable.email";
+      "funmafia.industries" = mkPrimaryZone "/srv/dns/funmafia.industries";
 
       "vulcan.moe" = {
         master = true;
