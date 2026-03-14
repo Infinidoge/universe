@@ -196,6 +196,17 @@ in
       };
       blink-cmp-spell.enable = true;
       comment.enable = true;
+      conform-nvim = {
+        enable = true;
+        autoLoad = true;
+        settings = {
+          notify_on_error = true;
+          format_on_save = {
+            timeout_ms = 500;
+            lsp_format = "fallback";
+          };
+        };
+      };
       cursorline.enable = true;
       direnv.enable = true;
       fidget.enable = true;
