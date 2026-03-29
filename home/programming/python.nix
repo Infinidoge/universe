@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    pipenv
+    uv
     ruff
 
     (python314.withPackages (
