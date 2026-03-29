@@ -112,7 +112,7 @@
     nil.inputs.nixpkgs.follows = "nixpkgs";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
     nix-minecraft.inputs.flake-compat.follows = "blank";
-    nix-minecraft.inputs.flake-utils.follows = "flake-utils";
+    nix-minecraft.inputs.systems.follows = "systems";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.flake-parts.follows = "flake-parts";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
