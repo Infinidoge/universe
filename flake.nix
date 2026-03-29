@@ -198,8 +198,8 @@
                     (final: prev: {
                       lib = prev.lib.extend libOverlay;
 
-                      inherit (inputs.home-manager.packages.${prev.system}) home-manager;
-                      inherit (inputs.qtile.packages.${prev.system}) qtile;
+                      inherit (inputs.home-manager.packages.${prev.stdenv.hostPlatform.system}) home-manager;
+                      inherit (inputs.qtile.packages.${prev.stdenv.hostPlatform.system}) qtile;
                     })
                     self.overlays.packages
                     self.overlays.patches
