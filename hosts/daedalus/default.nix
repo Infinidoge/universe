@@ -64,6 +64,7 @@
     ./postgresql.nix
     ./privoxy.nix
     ./radicale.nix
+    ./rss-bridge.nix
     ./searx.nix
     ./ssh.nix
     ./thelounge.nix
