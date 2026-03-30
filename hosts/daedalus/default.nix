@@ -73,6 +73,9 @@
     ./web.nix
     ./weblate.nix
     ./wireguard.nix
+
+    # NOTE: Temporary
+    ./archipelago.nix
   ];
 
   system.stateVersion = "23.11";
