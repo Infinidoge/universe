@@ -238,7 +238,6 @@
                 inputs.lix-module.nixosModules.default
                 inputs.hydra.nixosModules.hydra
                 inputs.nix-minecraft.nixosModules.minecraft-servers
-                inputs.drasl.nixosModules.drasl
                 inputs.copyparty.nixosModules.default
 
                 # --- Vendored Modules ---

@@ -5,6 +5,7 @@
 {
   common,
   config,
+  inputs,
   ...
 }:
 let
@@ -19,6 +20,9 @@ let
 in
 
 {
+  disabledModules = [ "services/web-apps/drasl.nix" ];
+  imports = [ inputs.drasl.nixosModules.drasl ];
+
   persist.directories = [ "/var/lib/private/drasl" ];
 
   services.drasl = {
