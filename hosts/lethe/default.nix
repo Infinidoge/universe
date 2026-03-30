@@ -172,4 +172,11 @@
   networking.firewall.enable = false;
   networking.useNetworkd = true;
   systemd.network.enable = true;
+
+  # TODO: Remove secrets from hardware.wifi
+  networking.wireless = {
+    enable = true;
+    userControlled = true;
+    fallbackToWPA2 = true;
+  };
 }
