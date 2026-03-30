@@ -1,6 +1,7 @@
 { lib, secrets, ... }:
 let
   he-dns = "216.218.133.2"; # slave.dns.he.net
+  chardns = "45.8.201.114"; # ns1.charbroil.me
 
   mkZone =
     file: config:
@@ -20,6 +21,11 @@ let
       he-dns
       "128.210.6.103" # daedalus
     ];
+  };
+
+  mkSecondaryZone = file: masters: {
+    inherit file masters;
+    master = false;
   };
 in
 {
@@ -59,6 +65,11 @@ in
           };
         '';
       };
+
+      "charbroil.me" = mkSecondaryZone "/srv/saved/charbroil.me" [ chardns ];
+      "puppy.observer" = mkSecondaryZone "/srv/saved/puppy.observer" [ chardns ];
+      "bdsm.equipment" = mkSecondaryZone "/srv/saved/bdsm.equipment" [ chardns ];
+      "ilovehewlettpackard.com" = mkSecondaryZone "/srv/saved/ilovehewlettpackard.com" [ chardns ];
     };
   };
 }
