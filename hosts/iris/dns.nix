@@ -41,6 +41,7 @@ in
   services.bind = {
     enable = true;
     ipv4Only = true;
+    checkConfig = false; # include files prevent checking config
     extraConfig = ''
       include "${secrets.dns-universe}";
       include "/etc/secrets/dns/vulcan";
