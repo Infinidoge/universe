@@ -1,9 +1,6 @@
 # TODO
 
 - [ ] Import modules with haumea
-- [ ] Reorganize modules to separate ones defining options and ones providing config
-  - Move config into global, move global into root?
-  - Can do the same for home manager. Put NixOS ones under `nixos`, home manager under `home`?
 - [ ] Add Nix-on-Droid config
 - [ ] Declare Hydrus Companion extension in Firefox config
 - [ ] Move `$EDITOR` script to a home-manager session variable
@@ -48,6 +45,18 @@
 - [ ] Fix Nix indenting
 - [ ] Borrow from [Ersei's config](https://git.sr.ht/~fd/nix-configs/tree/main/item/home/common/nvim)
 - [ ] Replace NixVim with LazyVim?
+
+# Dendritic libraries
+
+Look into
+
+- https://github.com/vic/flake-file
+- https://github.com/vic/import-tree/
+- https://github.com/vic/den
+- https://dendrix.oeiuwq.com/Dendritic-Ecosystem.html
+
+Reimplement from scratch?
+Possibly Foxy Software project?
 
 # Issues pending fixes
 
