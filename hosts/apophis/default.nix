@@ -21,6 +21,7 @@
     man
     networking
     nix
+    node
     options
     persist
     qtile

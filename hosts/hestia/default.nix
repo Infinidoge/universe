@@ -15,6 +15,7 @@
     networking
     nginx
     nix
+    node
     options
     persist
     rsyncnet
