@@ -29,6 +29,7 @@
     ./dns.nix
     ./grafana.nix
     ./prometheus.nix
+    ./loki.nix
   ];
 
   system.stateVersion = "25.11";
