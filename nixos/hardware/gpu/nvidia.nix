@@ -26,7 +26,11 @@
     modesetting.enable = true;
     powerManagement.enable = true;
   };
-  hardware.nvidia-container-toolkit.enable = true;
+
+  # BUG: Service fails to start if driver updated and machine hasn't rebooted
+  # Disabled because we don't feel like bothering
+  # https://github.com/NixOS/nixpkgs/issues/504939
+  hardware.nvidia-container-toolkit.enable = false;
 
   programs.steam.package = options.programs.steam.package.default.override {
     extraProfile = ''
