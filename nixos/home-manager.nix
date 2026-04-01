@@ -36,6 +36,7 @@
           userDirs = {
             enable = true;
             createDirectories = true;
+            setSessionVariables = true; # FIXME: Consider changing to false
           };
         };
         news.display = "silent";
