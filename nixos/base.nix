@@ -309,7 +309,7 @@ in
 
   # Disable man cache
   # I don't use it, and it takes ages on rebuild
-  documentation.man.generateCaches = lib.mkForce false;
+  documentation.man.cache.enable = lib.mkForce false;
   home-manager.sharedModules = with home; [
     { programs.man.generateCaches = lib.mkForce false; }
 
