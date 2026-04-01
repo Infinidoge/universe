@@ -103,7 +103,7 @@
     disko
   ];
 
-  services.kmscon.autologinUser = "infinidoge";
+  services.getty.autologinUser = "infinidoge";
 
   boot.initrd.systemd.emergencyAccess = true;
 
