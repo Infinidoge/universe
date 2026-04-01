@@ -16,6 +16,8 @@ let
     # "infini-router" # TODO: Setup
     # "vulcan" # TODO: Setup
   ];
+
+  suffix = ".tailnet.inx.moe";
 in
 {
   persist.directories = [
@@ -38,13 +40,22 @@ in
             targets = [
               "127.0.0.1:${toString nodePort}"
             ];
+            labels.host = "iris";
           }
         ];
         dns_sd_configs = [
           {
             type = "A";
             port = nodePort;
-            names = map (n: n + ".tailnet.inx.moe") nodes;
+            names = map (n: n + suffix) nodes;
+          }
+        ];
+        relabel_configs = [
+          {
+            source_labels = [ "__meta_dns_name" ];
+            regex = "(.+)${suffix}";
+            replacement = "$1";
+            target_label = "host";
           }
         ];
       }
