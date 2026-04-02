@@ -2,6 +2,7 @@
 let
   he-dns = "216.218.133.2"; # slave.dns.he.net
   chardns = "45.8.201.114"; # denise.charbroil.me
+  konsol = "132.145.164.26";
 
   mkZone =
     file: config:
@@ -20,6 +21,7 @@ let
     slaves = [
       he-dns
       chardns
+      konsol
       "128.210.6.103" # daedalus
     ];
   };
@@ -60,7 +62,11 @@ in
       "vulcan.moe" = {
         master = true;
         file = "/srv/dns/vulcan.moe";
-        slaves = [ he-dns ];
+        slaves = [
+          he-dns
+          chardns
+          konsol
+        ];
         extraConfig = ''
           update-policy {
             grant _1.vulcan. zonesub ANY;
