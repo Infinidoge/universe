@@ -78,6 +78,10 @@ in
       "puppy.observer" = mkSecondaryZone "/srv/saved/puppy.observer" [ chardns ];
       "bdsm.equipment" = mkSecondaryZone "/srv/saved/bdsm.equipment" [ chardns ];
       "ilovehewlettpackard.com" = mkSecondaryZone "/srv/saved/ilovehewlettpackard.com" [ chardns ];
+
+      "shad.moe" = mkSecondaryZone "/srv/saved/shad.moe" [ konsol ];
+      "konpeki.solutions" = mkSecondaryZone "/srv/saved/konpeki.solutions" [ konsol ];
+      "konpekisolutions.com" = mkSecondaryZone "/srv/saved/konpekisolutions.com" [ konsol ];
     };
   };
 }
