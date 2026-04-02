@@ -19,6 +19,7 @@ let
   mkPrimaryZone = lib.flip mkZone {
     slaves = [
       he-dns
+      chardns
       "128.210.6.103" # daedalus
     ];
   };
