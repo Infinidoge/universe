@@ -58,8 +58,8 @@
   environment.systemPackages = with pkgs; [
     common.wm.locker
 
-    xorg.xwininfo
-    xorg.xprop
+    xwininfo
+    xprop
     xclip
     xdotool
     pavucontrol

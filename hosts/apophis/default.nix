@@ -95,7 +95,7 @@
   networking.firewall.allowedUDPPorts = [ 51820 ];
 
   services.openssh.extraConfig = lib.mkBefore ''
-    XAuthLocation ${pkgs.xorg.xauth}/bin/xauth
+    XAuthLocation ${pkgs.xauth}/bin/xauth
 
     Match user infinidoge
       X11Forwarding yes
