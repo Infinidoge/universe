@@ -32,13 +32,18 @@ in
   ];
 
   services.borgbackup.jobs.persist = rec {
+    inherit (common.borg) repo group readWritePaths;
     paths = "/persist";
-    repo = common.borg.BORG_REPO;
     startAt = if backupTimes ? ${hostName} then "*-*-* ${backupTimes.${hostName}}" else [ ];
     exclude = map (append paths) (excludes' ++ cfg.extraExcludes);
 
     environment = {
-      inherit (common.borg) BORG_RSH BORG_REMOTE_PATH;
+      inherit (common.borg)
+        BORG_CACHE_DIR
+        BORG_CONFIG_DIR
+        BORG_RSH
+        BORG_REMOTE_PATH
+        ;
     };
     extraCreateArgs = "--verbose --stats --checkpoint-interval 300";
     compression = "auto,zstd,3";
