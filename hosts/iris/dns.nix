@@ -1,7 +1,7 @@
 { lib, secrets, ... }:
 let
   he-dns = "216.218.133.2"; # slave.dns.he.net
-  chardns = "45.8.201.114"; # ns1.charbroil.me
+  chardns = "45.8.201.114"; # denise.charbroil.me
 
   mkZone =
     file: config:
