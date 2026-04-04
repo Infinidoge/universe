@@ -29,6 +29,7 @@
     hardware.audio
     hardware.gpu.intel
     hardware.receipt-printer
+    hardware.wifi
     locations.purdue
     shells.xonsh
     shells.zsh
