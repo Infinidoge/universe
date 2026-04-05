@@ -17,7 +17,6 @@
 
     # steam
     protonup-ng
-    wineWowPackages.stable
   ];
 
   home.home.sessionVariables.UNISON = "$HOME/.local/state/unison";
