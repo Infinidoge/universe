@@ -1,8 +1,8 @@
 {
-  programs.nixvim.lsp.servers.nil_ls = {
+  programs.nixvim.lsp.servers.nixd = {
     enable = true;
     config = {
-      settings.nil.formatting.command = [ "nixfmt" ];
+      settings.nixd.formatting.command = [ "nixfmt" ];
     };
   };
 }
