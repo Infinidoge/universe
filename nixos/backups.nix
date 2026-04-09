@@ -62,6 +62,8 @@ in
     };
   };
 
+  systemd.services."borgbackup-job-persist".serviceConfig.UMask = "0007";
+
   systemd.timers."borgbackup-job-persist".requires = [ "network-online.target" ];
 
   backups.persist.excludes = {
