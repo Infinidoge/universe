@@ -6,7 +6,7 @@
 let
   domain = common.subdomain "matrix";
   cfg = config.services.matrix-continuwuity;
-  host = "http://localhost:${toString cfg.settings.global.port}";
+  host = "http://127.0.0.1:${toString cfg.settings.global.port}";
 in
 {
   persist.directories = [ "/var/lib/private/continuwuity" ];

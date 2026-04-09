@@ -112,7 +112,7 @@ in
       proxy_buffer_size 256k;
     '';
     locations."/" = {
-      proxyPass = "http://localhost:3923";
+      proxyPass = "http://127.0.0.1:3923";
       proxyWebsockets = true;
       extraConfig = ''
         client_max_body_size 0;

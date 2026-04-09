@@ -85,7 +85,7 @@ in
 
   services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
     locations."/" = {
-      proxyPass = "http://localhost:${toString cfg.settings.PDS_PORT}";
+      proxyPass = "http://127.0.0.1:${toString cfg.settings.PDS_PORT}";
       proxyWebsockets = true;
     };
   };

@@ -28,6 +28,6 @@ in
   };
 
   services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
-    locations."/".proxyPass = "http://localhost:5232";
+    locations."/".proxyPass = "http://127.0.0.1:5232";
   };
 }

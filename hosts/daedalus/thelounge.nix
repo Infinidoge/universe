@@ -8,7 +8,7 @@
 {
   services.nginx.virtualHosts."thelounge.inx.moe" = common.nginx.ssl-inx // {
     locations."/" = {
-      proxyPass = "http://localhost:${toString config.services.thelounge.port}";
+      proxyPass = "http://127.0.0.1:${toString config.services.thelounge.port}";
     };
   };
 

@@ -118,7 +118,7 @@ in
   services.nginx.virtualHosts."jupyter.internal.inx.moe" = common.nginx.ssl-inx // {
     listenAddresses = [ "100.101.102.124" ];
     locations."/" = {
-      proxyPass = "http://localhost:${toString cfg.port}";
+      proxyPass = "http://127.0.0.1:${toString cfg.port}";
       proxyWebsockets = true;
     };
   };
