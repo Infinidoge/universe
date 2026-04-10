@@ -3,6 +3,7 @@ let
   he-dns = "216.218.133.2"; # slave.dns.he.net
   chardns = "45.8.201.114"; # denise.charbroil.me
   konsol = "132.145.164.26"; # ns1.shad.moe
+  grace = "152.44.40.91"; # ns1.grace.pink
 
   mkZone =
     file: config:
@@ -22,6 +23,7 @@ let
       he-dns
       chardns
       konsol
+      grace
       "128.210.6.103" # daedalus
     ];
   };
@@ -66,6 +68,7 @@ in
           he-dns
           chardns
           konsol
+          grace
         ];
         extraConfig = ''
           update-policy {
@@ -82,6 +85,8 @@ in
       "shad.moe" = mkSecondaryZone "/srv/saved/shad.moe" [ konsol ];
       "konpeki.solutions" = mkSecondaryZone "/srv/saved/konpeki.solutions" [ konsol ];
       "konpekisolutions.com" = mkSecondaryZone "/srv/saved/konpekisolutions.com" [ konsol ];
+
+      "gae.moe" = mkSecondaryZone "/srv/saved/gae.moe" [ grace ];
     };
   };
 }
