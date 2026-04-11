@@ -65,7 +65,7 @@ thoth
 ### used
 hermes   | portable install
 hestia   | storage server
-vulcan   | Purdue Hackers server
+vulcan   | community server
 athena   | fairphone
 minerva  | s10
 artemis  | framework laptop
@@ -73,8 +73,8 @@ apophis  | desktop
 pluto    | home server
 daedalus | primary server
 dionysus | optiplex
-lethe   | installer image/kexec binary
-iris    | cloud server
+lethe    | installer image/kexec binary
+iris     | cloud server
 
 ### pending
 enodia  | router
