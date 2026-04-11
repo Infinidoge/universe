@@ -75,6 +75,7 @@ daedalus | primary server
 dionysus | optiplex
 lethe    | installer image/kexec binary
 iris     | cloud server
+janus    | vulcan proxy server
 
 ### pending
 enodia  | router
