@@ -4,6 +4,8 @@ ares
 argus
 ariadne
 boreas
+cerberus
+charon
 circe
 deimos
 demeter
@@ -35,13 +37,17 @@ zephyros
 bacchus
 ceres
 diana
+forculus
 juno
 jupiter
+lima
+limentinus
 luna
 mars
 mercury
 neptune
 nox
+portunus
 venus
 vesta
 
