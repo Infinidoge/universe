@@ -84,4 +84,5 @@ iris     | cloud server
 janus    | vulcan proxy server
 
 ### pending
-enodia  | router
+enodia   | router
+terminus | router
