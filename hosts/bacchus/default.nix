@@ -26,6 +26,7 @@
     filesystems.btrfs
     filesystems.encrypted
     hardware.audio
+    hardware.wifi
     hardware.gpu.intel
     shells.xonsh
     shells.zsh
