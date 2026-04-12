@@ -8,6 +8,7 @@ let
 
     "apophis"
     "artemis"
+    "bacchus"
     "daedalus"
     "dionysus"
     "hestia"
