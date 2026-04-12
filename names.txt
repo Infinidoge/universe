@@ -34,7 +34,6 @@ thanatos
 tyche
 zephyros
 
-bacchus
 ceres
 diana
 forculus
@@ -78,10 +77,11 @@ artemis  | framework laptop
 apophis  | desktop
 pluto    | home server
 daedalus | primary server
-dionysus | optiplex
+dionysus | optiplex 5050
 lethe    | installer image/kexec binary
 iris     | cloud server
 janus    | vulcan proxy server
+bacchus  | optiplex 5040
 
 ### pending
 enodia   | router
