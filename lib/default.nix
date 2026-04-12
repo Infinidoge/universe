@@ -3,6 +3,8 @@ lib.makeExtensible (
   self:
   with lib;
   rec {
+    placeholder = abort "Please fill in placeholder";
+
     flattenListSet = imports: (flatten (concatLists (attrValues imports)));
     flattenSetList = attrSet: (mapAttrs (name: value: flatten value) attrSet);
 
