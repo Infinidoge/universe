@@ -27,10 +27,6 @@
     filesystems.zfs
     shells.xonsh
     shells.zsh
-
-    (modulesPath + "/installer/scan/detected.nix")
-    (modulesPath + "/installer/scan/not-detected.nix")
-
   ];
 
   fileSystems."/" = lib.mkImageMediaOverride {
