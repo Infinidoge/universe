@@ -17,6 +17,7 @@
     node
     options
     persist
+    qtile
     rsyncnet
     secrets
     ssh
