@@ -82,7 +82,7 @@ lethe    | installer image/kexec binary
 iris     | cloud server
 janus    | vulcan proxy server
 bacchus  | optiplex 5040
+enodia   | router
 
 ### pending
-enodia   | router
 terminus | router
