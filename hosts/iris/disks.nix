@@ -1,11 +1,5 @@
 { lib, ... }:
 with lib.our.disko;
-let
-  mountOptions = defaultMountOptions ++ [
-    "autodefrag"
-    "compress=zstd:3"
-  ];
-in
 {
   disko.devices = {
     nodev."/" = mkTmpfs "1G";
@@ -14,7 +8,7 @@ in
         partitions = {
           boot = mkESP "64M" "/boot/efi";
           main = mkBtrfsPart "100%" "/media/main" {
-            subvolumes = mkBtrfsSubvols' mountOptions {
+            subvolumes = mkBtrfsSubvols {
               "/boot" = { };
               "/etc/ssh" = { };
               "/persist" = { };

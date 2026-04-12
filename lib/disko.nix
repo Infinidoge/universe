@@ -11,6 +11,11 @@ rec {
     "noatime"
   ];
 
+  defaultBtrfsOptions = defaultMountOptions ++ [
+    "autodefrag"
+    "compress=zstd:3"
+  ];
+
   # Common
 
   mkDisk = id: content: {
@@ -76,7 +81,7 @@ rec {
       }
       // (removeAttrs v [ "mountOptions" ])
     );
-  mkBtrfsSubvols = mkBtrfsSubvols' defaultMountOptions;
+  mkBtrfsSubvols = mkBtrfsSubvols' defaultBtrfsOptions;
 
   # ZFS
 
