@@ -36,6 +36,10 @@ let
     ];
 in
 {
+  home.packages = with pkgs; [
+    nvimpager
+  ];
+
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
