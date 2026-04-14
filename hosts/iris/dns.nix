@@ -86,6 +86,7 @@ in
       "konpeki.solutions" = mkSecondaryZone "/srv/saved/konpeki.solutions" [ konsol ];
       "konpekisolutions.com" = mkSecondaryZone "/srv/saved/konpekisolutions.com" [ konsol ];
 
+      "grace.pink" = mkSecondaryZone "/srv/saved/grace.pink" [ grace ];
       "gae.moe" = mkSecondaryZone "/srv/saved/gae.moe" [ grace ];
     };
   };
