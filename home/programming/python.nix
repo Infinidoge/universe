@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     uv
     ruff
+    ty
 
     (python314.withPackages (
       p: with p; [
@@ -55,6 +56,10 @@
         ];
       };
     };
+  };
+
+  programs.nixvim.lsp.servers.ty = {
+    enable = true;
   };
 
   programs.nixvim.plugins.conform-nvim.settings.formatters_by_ft = {
