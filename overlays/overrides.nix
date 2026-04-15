@@ -26,6 +26,7 @@ in
   inherit latest fork stable;
 
   inherit (latest)
+    bind
     discord
     discord-canary
     bitwarden-desktop
