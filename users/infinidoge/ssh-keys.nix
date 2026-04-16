@@ -1,4 +1,5 @@
 [
+  ''cert-authority,principals="infinidoge" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBlsNWV0I8SR+ITNGmYLRnuNGwX6OBzpBw6kZue5+cRg inx.moe SSH CA''
   "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPVs2Acpv3mHdBZElauxgoqr9Sd9D/q/EazCGg1uSgdPAAAAHnNzaDppbmZpbmlkb2dlLXJvYW1pbmctcHJpbWFyeQ== ssh:infinidoge-roaming-primary"
   "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPXdbTlUzbTz8JOghcwHvnGvrvVkwVhXw6fNMIpYm3wkAAAAHXNzaDppbmZpbmlkb2dlLXJvYW1pbmctYmFja3Vw ssh:infinidoge-roaming-backup"
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAn6zCdIucse6eGvT3hFm7Unw9Qg6E37mAUE7HHL2d58 infinidoge@apophis"
