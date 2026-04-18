@@ -207,6 +207,7 @@ in
 
   nix.settings = {
     substituters = [
+      "auto?trusted=1" # always trust local store
       "https://cache.nixos.org"
       "https://hydra.inx.moe?priority=10"
       "https://nix-community.cachix.org"
