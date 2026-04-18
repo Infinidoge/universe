@@ -48,6 +48,8 @@ in
     hydra-queue-runner.extraGroups = [ "smtp" ];
   };
 
+  nix.settings.trusted-users = [ "@hydra" ]; # BUG: Trustless should be possible, but evidently isn't
+
   nix.settings.allowed-uris = [
     "github:"
     "git+https://github.com/"
