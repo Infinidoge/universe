@@ -138,6 +138,7 @@ in
     ;
 
   leaves = dir: builtins.attrValues (flattenLeaves dir);
+  leavesOf = tree: builtins.attrValues (flattenTree tree);
 
   mkHomeConfigurations =
     systemConfigurations:
