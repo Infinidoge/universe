@@ -18,6 +18,8 @@
     enableNotifications = true;
   };
 
+  services.systembus-notify.enable = true;
+
   # FIXME: detangle
   home.services.gpg-agent.pinentry.package = pkgs.pinentry-rofi;
 
