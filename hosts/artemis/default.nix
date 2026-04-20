@@ -34,7 +34,7 @@
     filesystems.btrfs
     filesystems.encrypted
     filesystems.windows
-    filesystems.zfs
+    # filesystems.zfs # prevents hibernation, see boot.zfs.allowHibernation
     hardware.audio
     hardware.bluetooth
     hardware.fingerprint
