@@ -1,3 +1,2 @@
-flake.lock merge=ignore
 *.age binary
 secrets/rekeyed/ linguist-generated
