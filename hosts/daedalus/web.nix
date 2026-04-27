@@ -17,7 +17,6 @@ let
     ];
     frame-ancestors = [
       "'self'"
-      "ring.purduehackers.com"
     ];
     script-src = default-src ++ [
       "storage.ko-fi.com"
@@ -25,6 +24,7 @@ let
     style-src = default-src ++ [
       "fonts.googleapis.com"
       "maxcdn.bootstrapcdn.com"
+      "use.fontawesome.com"
     ];
     img-src = default-src ++ [
       "storage.ko-fi.com"
@@ -32,6 +32,7 @@ let
     font-src = default-src ++ [
       "'self'"
       "fonts.gstatic.com"
+      "use.fontawesome.com"
     ];
     frame-src = [
       "'self'"
