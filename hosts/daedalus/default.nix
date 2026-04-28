@@ -13,6 +13,7 @@
     common
     email
     extra
+    fail2ban
     grub
     home-manager
     kmscon
@@ -145,17 +146,6 @@
   };
 
   hardware.infiniband.enable = true;
-
-  services.fail2ban.enable = true;
-  services.fail2ban = {
-    bantime = "1h";
-    bantime-increment = {
-      enable = true;
-      multipliers = "1 2 4 8 16 32 64";
-      maxtime = "168h"; # Do not ban for more than 1 week
-      overalljails = true; # Calculate the bantime based on all the violations
-    };
-  };
 
   backups.persist.excludes = {
     # Very large fungible files
