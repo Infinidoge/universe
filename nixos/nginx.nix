@@ -82,4 +82,20 @@
 
   # Ensure named group exists
   users.groups.named = { };
+
+  services.fail2ban.jails.nginx-url-probe = {
+    enabled = true;
+    filter = {
+      Definition = {
+        failregex = ''^<HOST>.*GET.*(\.php|admin|wp\-).* HTTP/\d.\d\" 404.*$'';
+      };
+    };
+    settings = {
+      logpath = "/var/log/nginx/access.log";
+      port = "80,443";
+      backend = "auto";
+      maxretry = 5;
+      findtime = 600;
+    };
+  };
 }
