@@ -6,6 +6,7 @@
     borg
     common
     email
+    fail2ban
     grub
     home-manager
     locale
