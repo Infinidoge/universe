@@ -154,6 +154,12 @@
     };
   };
 
+  networking.dhcpcd.denyInterfaces = [
+    "wlp170s0-ap0"
+    "wlp170s0-adhoc0"
+    "wlp170s0-p2p0"
+  ];
+
   services.btrfs.autoScrub = {
     enable = true;
     fileSystems = [ "/media/main" ];
