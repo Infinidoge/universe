@@ -43,8 +43,8 @@ in
       };
       locations."/".return = "302 https://${common.domain}/";
       extraConfig = ''
-        listen 8448 ssl http2 default_server;
-        listen [::]:8448 ssl http2 default_server;
+        listen 8448 ssl default_server;
+        listen [::]:8448 ssl default_server;
       '';
     };
     ${cfg.settings.global.server_name} = {
