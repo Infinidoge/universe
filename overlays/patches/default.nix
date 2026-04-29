@@ -43,4 +43,10 @@ in
       hash = "sha256-UbS4RpKbjo7cdO0sY0ggpadqD0Hln1jNK0WG0k8M0Ao=";
     })
   ];
+
+  forgejo = addPatches prev.forgejo [
+    # SSH CA auth: https://codeberg.org/forgejo/forgejo/pulls/11746
+    # Rebased on top of forgejo branch
+    ./sshca.patch
+  ];
 }

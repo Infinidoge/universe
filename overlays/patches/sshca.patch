@@ -1,0 +1,3015 @@
+From c90cc3f97d411b4ae1d657fc25eca1aedafaa80b Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Thu, 19 Mar 2026 10:02:47 +0100
+Subject: [PATCH 01/15] Implement `SSH_ENABLE_CERT_AUTH` feature for
+ user-supplied SSH CA keys.
+
+A new `app.ini` variable, `SSH_ENABLE_CERT_AUTH`, allows Forgejo to accept authorized_keys
+lines including options `cert-authority` and/or `principals="..."` in its SSH key management
+facility. SSH connections presenting valid certificates signed by such keys ("CA keys") are
+then accepted. Each CA key effectively has its own arbitrary namespace of principal names: the
+user has freedom to choose any naming system that makes sense. If `principals="..."` is present
+for a CA key, then presented certificates must include one of the given names; if it is
+omitted, presented certificates default to requiring a principal name equal to the Forgejo
+username owning the CA key.
+---
+ custom/conf/app.example.ini                   |   7 +
+ models/asymkey/error.go                       |  26 +++
+ models/asymkey/ssh_key.go                     |  33 ++-
+ models/asymkey/ssh_key_authorized_keys.go     |  37 +++-
+ .../asymkey/ssh_key_authorized_keys_test.go   |   2 +-
+ .../asymkey/ssh_key_authorized_principals.go  |   2 +-
+ models/asymkey/ssh_key_parse.go               | 168 ++++++++-------
+ models/asymkey/ssh_key_test.go                |   4 +-
+ .../v15c_add-ssh-ca-fields.go                 |  24 +++
+ modules/setting/ssh.go                        |   1 +
+ modules/ssh/ssh.go                            | 204 +++++++++++++-----
+ modules/ssh/ssh_test.go                       |  70 ++++++
+ modules/structs/user_key.go                   |   9 +
+ options/locale/locale_en-US.ini               |   3 +
+ routers/api/v1/repo/key.go                    |  12 +-
+ routers/api/v1/user/key.go                    |  10 +-
+ routers/private/key.go                        |   3 +-
+ routers/web/repo/setting/deploy_key.go        |   3 +-
+ routers/web/user/setting/keys.go              |  19 +-
+ services/convert/convert.go                   |   2 +-
+ templates/user/settings/keys_ssh.tmpl         |  10 +-
+ .../api_helper_for_declarative_test.go        |   9 +-
+ tests/integration/api_private_serv_test.go    |   2 +-
+ .../git_helper_for_declarative_test.go        |  47 +++-
+ tests/integration/git_test.go                 |   2 +-
+ tests/integration/ssh_ca_key_test.go          | 123 +++++++++++
+ tests/integration/ssh_key_test.go             |   8 +-
+ 27 files changed, 664 insertions(+), 176 deletions(-)
+ create mode 100644 models/forgejo_migrations/v15c_add-ssh-ca-fields.go
+ create mode 100644 modules/ssh/ssh_test.go
+ create mode 100644 tests/integration/ssh_ca_key_test.go
+
+diff --git a/custom/conf/app.example.ini b/custom/conf/app.example.ini
+index 40dd7d56db..f6bf1bb293 100644
+--- a/custom/conf/app.example.ini
++++ b/custom/conf/app.example.ini
+@@ -232,6 +232,13 @@ RUN_USER = ; git
+ ;; Command template for authorized keys entries
+ ;SSH_AUTHORIZED_KEYS_COMMAND_TEMPLATE = {{.AppPath}} --config={{.CustomConf}} serv key-{{.Key.ID}}
+ ;;
++;; Enable ability for users to configure `cert-authority` SSH public keys, which then allows
++;; use of SSH certificates signed by such keys for accessing account resources via SSH.
++;; Certificates can be short-lived, and underlying keys can be ephemeral and do not need to be
++;; registered. Note this is distinct from SSH_TRUSTED_USER_CA_KEYS, which are instance wide:
++;; this settings allows users to manage their own, user-specific CAs.
++;SSH_ENABLE_CERT_AUTH = false
++;;
+ ;; Timeout for any write to ssh connections. (Set to -1 to disable all timeouts.)
+ ;; Will default to the PER_WRITE_TIMEOUT.
+ ;SSH_PER_WRITE_TIMEOUT = 30s
+diff --git a/models/asymkey/error.go b/models/asymkey/error.go
+index fc0dd88232..c0add77bf0 100644
+--- a/models/asymkey/error.go
++++ b/models/asymkey/error.go
+@@ -294,3 +294,29 @@ func (err ErrSSHInvalidTokenSignature) Error() string {
+ func (err ErrSSHInvalidTokenSignature) Unwrap() error {
+ 	return util.ErrInvalidArgument
+ }
++
++// ErrSSHCADisabled signalled when per-user SSH CA functionality is used, but not enabled in app.ini
++type ErrSSHCADisabled struct{}
++
++func IsErrSSHCADisabled(err error) bool {
++	_, ok := err.(ErrSSHCADisabled)
++	return ok
++}
++
++func (err ErrSSHCADisabled) Error() string {
++	return "Per-user SSH CA functionality is disabled"
++}
++
++// ErrInvalidSSHCAPrincipals signalled when an invalid `principals="..."` key option is detected.
++type ErrInvalidSSHCAPrincipals struct {
++	InvalidPrincipals string
++}
++
++func IsErrInvalidSSHCAPrincipals(err error) bool {
++	_, ok := err.(ErrInvalidSSHCAPrincipals)
++	return ok
++}
++
++func (err ErrInvalidSSHCAPrincipals) Error() string {
++	return "Invalid SSH CA principals string"
++}
+diff --git a/models/asymkey/ssh_key.go b/models/asymkey/ssh_key.go
+index ea05195b5d..54ce9a1c48 100644
+--- a/models/asymkey/ssh_key.go
++++ b/models/asymkey/ssh_key.go
+@@ -6,6 +6,7 @@ package asymkey
+ 
+ import (
+ 	"context"
++	"database/sql"
+ 	"fmt"
+ 	"strings"
+ 	"time"
+@@ -44,6 +45,8 @@ type PublicKey struct {
+ 	Mode          perm.AccessMode `xorm:"NOT NULL DEFAULT 2"`
+ 	Type          KeyType         `xorm:"NOT NULL DEFAULT 1"`
+ 	LoginSourceID int64           `xorm:"NOT NULL DEFAULT 0"`
++	IsCA          bool            `xorm:"NOT NULL DEFAULT false"`
++	Principals    string          `xorm:"NOT NULL DEFAULT ''"`
+ 
+ 	CreatedUnix       timeutil.TimeStamp `xorm:"created"`
+ 	UpdatedUnix       timeutil.TimeStamp `xorm:"updated"`
+@@ -70,8 +73,8 @@ func (key *PublicKey) OmitEmail() string {
+ // AuthorizedString returns formatted public key string for authorized_keys file.
+ //
+ // TODO: Consider dropping this function
+-func (key *PublicKey) AuthorizedString() string {
+-	return AuthorizedStringForKey(key)
++func (key *PublicKey) AuthorizedString(ctx context.Context) string {
++	return AuthorizedStringForKey(ctx, key)
+ }
+ 
+ func addKey(ctx context.Context, key *PublicKey) (err error) {
+@@ -91,7 +94,7 @@ func addKey(ctx context.Context, key *PublicKey) (err error) {
+ }
+ 
+ // AddPublicKey adds new public key to database and authorized_keys file.
+-func AddPublicKey(ctx context.Context, ownerID int64, name, content string, authSourceID int64) (*PublicKey, error) {
++func AddPublicKey(ctx context.Context, ownerID int64, name, content string, authSourceID int64, isCA bool, principals string) (*PublicKey, error) {
+ 	log.Trace(content)
+ 
+ 	fingerprint, err := CalcFingerprint(content)
+@@ -127,6 +130,8 @@ func AddPublicKey(ctx context.Context, ownerID int64, name, content string, auth
+ 		Mode:          perm.AccessModeWrite,
+ 		Type:          KeyTypeUser,
+ 		LoginSourceID: authSourceID,
++		IsCA:          isCA,
++		Principals:    principals,
+ 	}
+ 	if err = addKey(ctx, key); err != nil {
+ 		return nil, fmt.Errorf("addKey: %w", err)
+@@ -186,6 +191,7 @@ type FindPublicKeyOptions struct {
+ 	KeyTypes      []KeyType
+ 	NotKeytype    KeyType
+ 	LoginSourceID int64
++	IsCA          sql.NullBool
+ }
+ 
+ func (opts FindPublicKeyOptions) ToConds() builder.Cond {
+@@ -205,6 +211,9 @@ func (opts FindPublicKeyOptions) ToConds() builder.Cond {
+ 	if opts.LoginSourceID > 0 {
+ 		cond = cond.And(builder.Eq{"login_source_id": opts.LoginSourceID})
+ 	}
++	if opts.IsCA.Valid {
++		cond = cond.And(builder.Eq{"is_ca": opts.IsCA.Bool})
++	}
+ 	return cond
+ }
+ 
+@@ -327,8 +336,10 @@ func AddPublicKeysBySource(ctx context.Context, usr *user_model.User, s *auth.So
+ 	loop:
+ 		for len(keys) > 0 && err == nil {
+ 			var out ssh.PublicKey
+-			// We ignore options as they are not relevant to Gitea
+-			out, _, _, keys, err = ssh.ParseAuthorizedKey(keys)
++			var keyOptions []string
++			// TODO: Could/should we switch to CheckPublicKeyString here?
++			// We would get a couple of additional checks e.g. minimum key size
++			out, _, keyOptions, keys, err = ssh.ParseAuthorizedKey(keys)
+ 			if err != nil {
+ 				break loop
+ 			}
+@@ -337,7 +348,17 @@ func AddPublicKeysBySource(ctx context.Context, usr *user_model.User, s *auth.So
+ 			marshalled = marshalled[:len(marshalled)-1]
+ 			sshKeyName := fmt.Sprintf("%s-%s", s.Name, ssh.FingerprintSHA256(out))
+ 
+-			if _, err := AddPublicKey(ctx, usr.ID, sshKeyName, marshalled, s.ID); err != nil {
++			isCA, principals, err := ParseCAOptions(keyOptions)
++			if err != nil {
++				if IsErrSSHCADisabled(err) || IsErrInvalidSSHCAPrincipals(err) {
++					log.Warn("AddPublicKeysBySource[%s]: %v", sshKeyName, err)
++				} else {
++					log.Warn("AddPublicKeysBySource[%s]: Error in per-user SSH CA options: %v", sshKeyName, err)
++				}
++				break loop
++			}
++
++			if _, err := AddPublicKey(ctx, usr.ID, sshKeyName, marshalled, s.ID, isCA, principals); err != nil {
+ 				if IsErrKeyAlreadyExist(err) {
+ 					log.Trace("AddPublicKeysBySource[%s]: Public SSH Key %s already exists for user", sshKeyName, usr.Name)
+ 				} else {
+diff --git a/models/asymkey/ssh_key_authorized_keys.go b/models/asymkey/ssh_key_authorized_keys.go
+index 11905071af..f0f3c8e033 100644
+--- a/models/asymkey/ssh_key_authorized_keys.go
++++ b/models/asymkey/ssh_key_authorized_keys.go
+@@ -16,6 +16,7 @@ import (
+ 	"time"
+ 
+ 	"forgejo.org/models/db"
++	user_model "forgejo.org/models/user"
+ 	"forgejo.org/modules/container"
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/setting"
+@@ -41,13 +42,12 @@ import (
+ 
+ const (
+ 	tplCommentPrefix = `# gitea public key`
+-	tplPublicKey     = tplCommentPrefix + "\n" + `command=%s,no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,no-user-rc,restrict %s` + "\n"
+ )
+ 
+ var sshOpLocker sync.Mutex
+ 
+ // AuthorizedStringForKey creates the authorized keys string appropriate for the provided key
+-func AuthorizedStringForKey(key *PublicKey) string {
++func AuthorizedStringForKey(ctx context.Context, key *PublicKey) string {
+ 	sb := &strings.Builder{}
+ 	_ = setting.SSH.AuthorizedKeysCommandTemplateTemplate.Execute(sb, map[string]any{
+ 		"AppPath":     util.ShellEscape(setting.AppPath),
+@@ -57,7 +57,32 @@ func AuthorizedStringForKey(key *PublicKey) string {
+ 		"Key":         key,
+ 	})
+ 
+-	return fmt.Sprintf(tplPublicKey, util.ShellEscape(sb.String()), key.Content)
++	const (
++		tplPublicCAKeyOptions     = `cert-authority,principals="%s"`
++		tplPublicKeyCommonOptions = `command=%s,no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,no-user-rc,restrict %s` + "\n"
++	)
++
++	if key.IsCA {
++		principals := key.Principals
++		if principals == "" {
++			owner, err := user_model.GetUserByID(ctx, key.OwnerID)
++			if err == nil {
++				// forgejo usernames are a subset of what we permit for principals, so this is OK
++				principals = owner.Name
++			}
++		}
++		// This pasting of principals without any escaping is safe because we reject anything
++		// with doublequotes or backslashes in the UI/API layers; and if it came from owner.Name above,
++		// it's also been checked for doublequotes or backslashes.
++		return fmt.Sprintf(tplCommentPrefix+"\n"+tplPublicCAKeyOptions+","+tplPublicKeyCommonOptions,
++			principals,
++			util.ShellEscape(sb.String()),
++			key.Content)
++	}
++
++	return fmt.Sprintf(tplCommentPrefix+"\n"+tplPublicKeyCommonOptions,
++		util.ShellEscape(sb.String()),
++		key.Content)
+ }
+ 
+ // appendAuthorizedKeysToFile appends new SSH keys' content to authorized_keys file.
+@@ -106,7 +131,7 @@ func appendAuthorizedKeysToFile(keys ...*PublicKey) error {
+ 		if key.Type == KeyTypePrincipal {
+ 			continue
+ 		}
+-		if _, err = f.WriteString(key.AuthorizedString()); err != nil {
++		if _, err = f.WriteString(key.AuthorizedString(db.DefaultContext)); err != nil {
+ 			return err
+ 		}
+ 	}
+@@ -146,7 +171,7 @@ func InspectPublicKeys(ctx context.Context) ([]InspectionFinding, error) {
+ 	// Create a set of all the expected output in the `authorized_keys` file.
+ 	expectedKeys := make(container.Set[string])
+ 	if err := db.GetEngine(ctx).Where("type != ?", KeyTypePrincipal).Iterate(new(PublicKey), func(idx int, bean any) (err error) {
+-		keyWithComment := (bean.(*PublicKey)).AuthorizedString()
++		keyWithComment := (bean.(*PublicKey)).AuthorizedString(ctx)
+ 		if !strings.HasPrefix(keyWithComment, tplCommentPrefix) {
+ 			return fmt.Errorf("unexpected AuthorizedString")
+ 		}
+@@ -267,7 +292,7 @@ func RewriteAllPublicKeys(ctx context.Context) error {
+ // regeneratePublicKeys regenerates the authorized_keys file
+ func regeneratePublicKeys(ctx context.Context, t io.StringWriter) error {
+ 	if err := db.GetEngine(ctx).Where("type != ?", KeyTypePrincipal).Iterate(new(PublicKey), func(idx int, bean any) (err error) {
+-		_, err = t.WriteString((bean.(*PublicKey)).AuthorizedString())
++		_, err = t.WriteString((bean.(*PublicKey)).AuthorizedString(ctx))
+ 		return err
+ 	}); err != nil {
+ 		return err
+diff --git a/models/asymkey/ssh_key_authorized_keys_test.go b/models/asymkey/ssh_key_authorized_keys_test.go
+index 732419dfa5..85746cff0a 100644
+--- a/models/asymkey/ssh_key_authorized_keys_test.go
++++ b/models/asymkey/ssh_key_authorized_keys_test.go
+@@ -65,7 +65,7 @@ func TestInspectPublicKeys(t *testing.T) {
+ 				// Skip one key
+ 				return nil
+ 			}
+-			_, err = file.WriteString((bean.(*PublicKey)).AuthorizedString())
++			_, err = file.WriteString((bean.(*PublicKey)).AuthorizedString(db.DefaultContext))
+ 			return err
+ 		})
+ 		require.NoError(t, err)
+diff --git a/models/asymkey/ssh_key_authorized_principals.go b/models/asymkey/ssh_key_authorized_principals.go
+index 0b4fe13ba7..38c6ca9992 100644
+--- a/models/asymkey/ssh_key_authorized_principals.go
++++ b/models/asymkey/ssh_key_authorized_principals.go
+@@ -103,7 +103,7 @@ func RewriteAllPrincipalKeys(ctx context.Context) error {
+ 
+ func regeneratePrincipalKeys(ctx context.Context, t io.StringWriter) error {
+ 	if err := db.GetEngine(ctx).Where("type = ?", KeyTypePrincipal).Iterate(new(PublicKey), func(idx int, bean any) (err error) {
+-		_, err = t.WriteString((bean.(*PublicKey)).AuthorizedString())
++		_, err = t.WriteString((bean.(*PublicKey)).AuthorizedString(ctx))
+ 		return err
+ 	}); err != nil {
+ 		return err
+diff --git a/models/asymkey/ssh_key_parse.go b/models/asymkey/ssh_key_parse.go
+index 8177db6439..e62c7e7148 100644
+--- a/models/asymkey/ssh_key_parse.go
++++ b/models/asymkey/ssh_key_parse.go
+@@ -54,14 +54,14 @@ func extractTypeFromBase64Key(key string) (string, error) {
+ }
+ 
+ // parseKeyString parses any key string in OpenSSH or SSH2 format to clean OpenSSH string (RFC4253).
+-func parseKeyString(content string) (string, error) {
++// Also returns key options (e.g. from OpenSSH authorized_keys lines) if they are present.
++func parseKeyString(content string) (string, []string, error) {
+ 	// remove whitespace at start and end
+ 	content = strings.TrimSpace(content)
+ 
+-	var keyType, keyContent, keyComment string
+-
+-	if strings.HasPrefix(content, ssh2keyStart) {
+-		// Parse SSH2 file format.
++	switch {
++	case strings.HasPrefix(content, ssh2keyStart):
++		// Convert SSH2 file format to OpenSSH format
+ 
+ 		// Transform all legal line endings to a single "\n".
+ 		content = strings.NewReplacer("\r\n", "\n", "\r", "\n").Replace(content)
+@@ -69,6 +69,7 @@ func parseKeyString(content string) (string, error) {
+ 		lines := strings.Split(content, "\n")
+ 		continuationLine := false
+ 
++		var keyContent string
+ 		for _, line := range lines {
+ 			// Skip lines that:
+ 			// 1) are a continuation of the previous line,
+@@ -81,98 +82,81 @@ func parseKeyString(content string) (string, error) {
+ 			}
+ 		}
+ 
+-		t, err := extractTypeFromBase64Key(keyContent)
++		keyType, err := extractTypeFromBase64Key(keyContent)
+ 		if err != nil {
+-			return "", fmt.Errorf("extractTypeFromBase64Key: %w", err)
++			return "", nil, fmt.Errorf("extractTypeFromBase64Key: %w", err)
+ 		}
+-		keyType = t
+-	} else {
+-		if strings.Contains(content, "-----BEGIN") {
+-			// Convert PEM Keys to OpenSSH format
+-			// Transform all legal line endings to a single "\n".
+-			content = strings.NewReplacer("\r\n", "\n", "\r", "\n").Replace(content)
+-
+-			block, _ := pem.Decode([]byte(content))
+-			if block == nil {
+-				return "", errors.New("failed to parse PEM block containing the public key")
+-			}
+-			if strings.Contains(block.Type, "PRIVATE") {
+-				return "", ErrKeyIsPrivate
+-			}
+ 
+-			pub, err := x509.ParsePKIXPublicKey(block.Bytes)
+-			if err != nil {
+-				var pk rsa.PublicKey
+-				_, err2 := asn1.Unmarshal(block.Bytes, &pk)
+-				if err2 != nil {
+-					return "", fmt.Errorf("failed to parse DER encoded public key as either PKIX or PEM RSA Key: %v %w", err, err2)
+-				}
+-				pub = &pk
+-			}
++		content = keyType + " " + keyContent
++	case strings.Contains(content, "-----BEGIN"):
++		// Convert PEM Keys to OpenSSH format
+ 
+-			sshKey, err := ssh.NewPublicKey(pub)
+-			if err != nil {
+-				return "", fmt.Errorf("unable to convert to ssh public key: %w", err)
+-			}
+-			content = string(ssh.MarshalAuthorizedKey(sshKey))
++		// Transform all legal line endings to a single "\n".
++		content = strings.NewReplacer("\r\n", "\n", "\r", "\n").Replace(content)
++
++		block, _ := pem.Decode([]byte(content))
++		if block == nil {
++			return "", nil, errors.New("failed to parse PEM block containing the public key")
+ 		}
+-		// Parse OpenSSH format.
+-
+-		// Remove all newlines
+-		content = strings.NewReplacer("\r\n", "", "\n", "").Replace(content)
+-
+-		parts := strings.SplitN(content, " ", 3)
+-		switch len(parts) {
+-		case 0:
+-			return "", util.NewInvalidArgumentErrorf("empty key")
+-		case 1:
+-			keyContent = parts[0]
+-		case 2:
+-			keyType = parts[0]
+-			keyContent = parts[1]
+-		default:
+-			keyType = parts[0]
+-			keyContent = parts[1]
+-			keyComment = parts[2]
++		if strings.Contains(block.Type, "PRIVATE") {
++			return "", nil, ErrKeyIsPrivate
+ 		}
+ 
+-		// If keyType is not given, extract it from content. If given, validate it.
+-		t, err := extractTypeFromBase64Key(keyContent)
++		pub, err := x509.ParsePKIXPublicKey(block.Bytes)
+ 		if err != nil {
+-			return "", fmt.Errorf("extractTypeFromBase64Key: %w", err)
++			var pk rsa.PublicKey
++			_, err2 := asn1.Unmarshal(block.Bytes, &pk)
++			if err2 != nil {
++				return "", nil, fmt.Errorf("failed to parse DER encoded public key as either PKIX or PEM RSA Key: %v %w", err, err2)
++			}
++			pub = &pk
+ 		}
+-		if len(keyType) == 0 {
+-			keyType = t
+-		} else if keyType != t {
+-			return "", fmt.Errorf("key type and content does not match: %s - %s", keyType, t)
++
++		sshKey, err := ssh.NewPublicKey(pub)
++		if err != nil {
++			return "", nil, fmt.Errorf("unable to convert to ssh public key: %w", err)
+ 		}
++		content = string(ssh.MarshalAuthorizedKey(sshKey))
++	default:
++		// Just try OpenSSH format.
+ 	}
+-	// Finally we need to check whether we can actually read the proposed key:
+-	_, _, _, _, err := ssh.ParseAuthorizedKey([]byte(keyType + " " + keyContent + " " + keyComment))
++
++	// Parse OpenSSH format.
++
++	// Remove all newlines
++	content = strings.NewReplacer("\r\n", "", "\n", "").Replace(content)
++
++	sshKey, comment, options, _, err := ssh.ParseAuthorizedKey([]byte(content))
+ 	if err != nil {
+-		return "", fmt.Errorf("invalid ssh public key: %w", err)
++		return "", nil, fmt.Errorf("invalid ssh public key: %w", err)
++	}
++
++	validated := strings.TrimSpace(string(ssh.MarshalAuthorizedKey(sshKey)))
++	if comment != "" {
++		validated = validated + " " + comment
+ 	}
+-	return keyType + " " + keyContent + " " + keyComment, nil
++
++	return validated, options, nil
+ }
+ 
+ // CheckPublicKeyString checks if the given public key string is recognized by SSH.
+-// It returns the actual public key line on success.
+-func CheckPublicKeyString(content string) (_ string, err error) {
+-	content, err = parseKeyString(content)
++// It returns the actual public key line on success, along with any key options that were present.
++func CheckPublicKeyString(content string) (_ string, options []string, err error) {
++	content, options, err = parseKeyString(content)
+ 	if err != nil {
+-		return "", err
++		return "", nil, err
+ 	}
+ 
+ 	content = strings.TrimRight(content, "\n\r")
+ 	if strings.ContainsAny(content, "\n\r") {
+-		return "", util.NewInvalidArgumentErrorf("only a single line with a single key please")
++		return "", nil, util.NewInvalidArgumentErrorf("only a single line with a single key please")
+ 	}
+ 
+ 	// remove any unnecessary whitespace now
+ 	content = strings.TrimSpace(content)
+ 
+ 	if !setting.SSH.MinimumKeySizeCheck {
+-		return content, nil
++		return content, nil, nil
+ 	}
+ 
+ 	var (
+@@ -188,16 +172,52 @@ func CheckPublicKeyString(content string) (_ string, err error) {
+ 		keyType, length, err = SSHKeyGenParsePublicKey(content)
+ 	}
+ 	if err != nil {
+-		return "", fmt.Errorf("%s: %w", fnName, err)
++		return "", nil, fmt.Errorf("%s: %w", fnName, err)
+ 	}
+ 	log.Trace("Key info [native: %v]: %s-%d", setting.SSH.StartBuiltinServer, keyType, length)
+ 
+ 	if minLen, found := setting.SSH.MinimumKeySizes[keyType]; found && length >= minLen {
+-		return content, nil
++		return content, options, nil
+ 	} else if found && length < minLen {
+-		return "", fmt.Errorf("key length is not enough: got %d, needs %d", length, minLen)
++		return "", nil, fmt.Errorf("key length is not enough: got %d, needs %d", length, minLen)
++	}
++	return "", nil, fmt.Errorf("key type is not allowed: %s", keyType)
++}
++
++// Extracts `cert-authority` and `principals` options from authorized_keys key options.
++// Yields isCA true if `cert-authority` present, and principals the string value directly
++// from the options field.
++func ParseCAOptions(options []string) (isCA bool, principals string, err error) {
++	principalsPresent := false
++	for _, opt := range options {
++		optLC := strings.ToLower(opt)
++		switch {
++		case optLC == "cert-authority":
++			isCA = true
++		case strings.HasPrefix(opt, `principals="`):
++			principalsPresent = true
++			principals = opt[len(`principals="`) : len(opt)-1] // drop trailing quote too
++		}
+ 	}
+-	return "", fmt.Errorf("key type is not allowed: %s", keyType)
++
++	if isCA {
++		if !setting.SSH.EnableCertAuth {
++			return false, "", ErrSSHCADisabled{}
++		}
++		if principalsPresent {
++			// We reject: empty string; anything with a control character; spaces, backslash, doublequote
++			// This is because OpenSSH's parser is simple and well defined but WEIRD.
++			// If we want to allow exotic principal strings we can do so later.
++			principalsOk := principals != "" && !strings.ContainsFunc(principals, func(r rune) bool {
++				return r <= 0x20 || r == '\\' || r == '"'
++			})
++			if !principalsOk {
++				return false, "", ErrInvalidSSHCAPrincipals{InvalidPrincipals: principals}
++			}
++		}
++	}
++
++	return isCA, principals, nil
+ }
+ 
+ // SSHNativeParsePublicKey extracts the key type and length using the golang SSH library.
+diff --git a/models/asymkey/ssh_key_test.go b/models/asymkey/ssh_key_test.go
+index bc8cd7d36b..96bb19de91 100644
+--- a/models/asymkey/ssh_key_test.go
++++ b/models/asymkey/ssh_key_test.go
+@@ -147,7 +147,7 @@ AAAAC3NzaC1lZDI1NTE5AAAAICV0MGX/W9IvLA4FXpIuUcdDcbj5KX4syHgsTy7soVgf
+ ---- END SSH2 PUBLIC KEY ----
+ `},
+ 	} {
+-		_, err := CheckPublicKeyString(test.content)
++		_, _, err := CheckPublicKeyString(test.content)
+ 		require.NoError(t, err)
+ 	}
+ 	setting.SSH.MinimumKeySizeCheck = oldValue
+@@ -160,7 +160,7 @@ AAAAC3NzaC1lZDI1NTE5AAAAICV0MGX/W9IvLA4FXpIuUcdDcbj5KX4syHgsTy7soVgf
+ 		{"\t\t:)\t\r\n"},
+ 		{"\r\ntest \r\ngitea\r\n\r\n"},
+ 	} {
+-		_, err := CheckPublicKeyString(invalidKeys.content)
++		_, _, err := CheckPublicKeyString(invalidKeys.content)
+ 		require.Error(t, err)
+ 	}
+ }
+diff --git a/models/forgejo_migrations/v15c_add-ssh-ca-fields.go b/models/forgejo_migrations/v15c_add-ssh-ca-fields.go
+new file mode 100644
+index 0000000000..e242eabdd7
+--- /dev/null
++++ b/models/forgejo_migrations/v15c_add-ssh-ca-fields.go
+@@ -0,0 +1,24 @@
++// Copyright 2026 The Forgejo Authors. All rights reserved.
++// SPDX-License-Identifier: GPL-3.0-or-later
++
++package forgejo_migrations
++
++import (
++	"xorm.io/xorm"
++)
++
++func init() {
++	registerMigration(&Migration{
++		Description: "Add new columns (is_ca, principals) to public_key for user-defined SSH CAs",
++		Upgrade:     addSSHCAFieldsToPublicKey,
++	})
++}
++
++func addSSHCAFieldsToPublicKey(x *xorm.Engine) error {
++	type PublicKey struct {
++		IsCA       bool   `xorm:"NOT NULL DEFAULT false"`
++		Principals string `xorm:"NOT NULL DEFAULT ''"`
++	}
++	_, err := x.SyncWithOptions(xorm.SyncOptions{IgnoreDropIndices: true}, new(PublicKey))
++	return err
++}
+diff --git a/modules/setting/ssh.go b/modules/setting/ssh.go
+index a1dd1d968e..02447f2b47 100644
+--- a/modules/setting/ssh.go
++++ b/modules/setting/ssh.go
+@@ -51,6 +51,7 @@ var SSH = struct {
+ 	TrustedUserCAKeysParsed               []gossh.PublicKey  `ini:"-"`
+ 	PerWriteTimeout                       time.Duration      `ini:"SSH_PER_WRITE_TIMEOUT"`
+ 	PerWritePerKbTimeout                  time.Duration      `ini:"SSH_PER_WRITE_PER_KB_TIMEOUT"`
++	EnableCertAuth                        bool               `ini:"SSH_ENABLE_CERT_AUTH"`
+ }{
+ 	Disabled:                      false,
+ 	StartBuiltinServer:            false,
+diff --git a/modules/ssh/ssh.go b/modules/ssh/ssh.go
+index 502fcd070f..a24121a30f 100644
+--- a/modules/ssh/ssh.go
++++ b/modules/ssh/ssh.go
+@@ -9,6 +9,7 @@ import (
+ 	"crypto/rand"
+ 	"crypto/rsa"
+ 	"crypto/x509"
++	"database/sql"
+ 	"encoding/pem"
+ 	"errors"
+ 	"io"
+@@ -16,12 +17,15 @@ import (
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
++	"slices"
+ 	"strconv"
+ 	"strings"
+ 	"sync"
+ 	"syscall"
+ 
+ 	asymkey_model "forgejo.org/models/asymkey"
++	"forgejo.org/models/db"
++	"forgejo.org/models/user"
+ 	"forgejo.org/modules/graceful"
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/process"
+@@ -163,89 +167,170 @@ func publicKeyHandler(ctx ssh.Context, key ssh.PublicKey) bool {
+ 		logger.Debug("Handle Public Key: Fingerprint: %s from %s", gossh.FingerprintSHA256(key), ctx.RemoteAddr())
+ 	}
+ 
++	var loginOk bool
+ 	if ctx.User() != setting.SSH.BuiltinServerUser {
+ 		logger.Warn("Invalid SSH username %s - must use %s for all git operations via ssh", ctx.User(), setting.SSH.BuiltinServerUser)
++		loginOk = false
++	} else if cert, ok := key.(*gossh.Certificate); ok {
++		loginOk = authenticationWithCert(ctx, cert)
++	} else {
++		loginOk = authenticationWithPlainKey(ctx, key)
++	}
++
++	if !loginOk {
+ 		logger.Warn("Failed authentication attempt from %s", ctx.RemoteAddr())
++	}
++	return loginOk
++}
++
++func authenticationWithCert(ctx ssh.Context, cert *gossh.Certificate) bool {
++	if logger.LevelEnabled(log.DEBUG) { // <- FingerprintSHA256 is kinda expensive so only calculate it if necessary
++		logger.Debug("Handle Certificate: %s Fingerprint: %s is a certificate", ctx.RemoteAddr(), gossh.FingerprintSHA256(cert))
++	}
++
++	if cert.CertType != gossh.UserCert {
++		logger.Warn("Certificate Rejected: Not a user certificate")
+ 		return false
+ 	}
+ 
+-	// check if we have a certificate
+-	if cert, ok := key.(*gossh.Certificate); ok {
+-		if logger.LevelEnabled(log.DEBUG) { // <- FingerprintSHA256 is kinda expensive so only calculate it if necessary
+-			logger.Debug("Handle Certificate: %s Fingerprint: %s is a certificate", ctx.RemoteAddr(), gossh.FingerprintSHA256(key))
++	var userCAs []*asymkey_model.PublicKey
++	var err error
++	if setting.SSH.EnableCertAuth {
++		signerFingerprint := gossh.FingerprintSHA256(cert.SignatureKey)
++		userCAs, err = db.Find[asymkey_model.PublicKey](ctx, asymkey_model.FindPublicKeyOptions{
++			Fingerprint: signerFingerprint,
++			KeyTypes:    []asymkey_model.KeyType{asymkey_model.KeyTypeUser},
++			IsCA:        sql.NullBool{Bool: true, Valid: true},
++		})
++		if err != nil {
++			logger.Error("Failed retrieving user CAs for fingerprint %s: %v", signerFingerprint, err.Error())
++			return false
+ 		}
++	}
+ 
+-		if len(setting.SSH.TrustedUserCAKeys) == 0 {
+-			logger.Warn("Certificate Rejected: No trusted certificate authorities for this server")
+-			logger.Warn("Failed authentication attempt from %s", ctx.RemoteAddr())
+-			return false
++	var activeKeyID int64
++	var authenticated bool
++	if len(userCAs) == 1 {
++		activeKeyID, authenticated = authenticationWithUserSuppliedCA(ctx, cert, userCAs[0])
++	} else {
++		activeKeyID, authenticated = authenticationWithTrustedCA(ctx, cert)
++	}
++
++	if authenticated {
++		if ctx.Permissions().Extensions == nil {
++			ctx.Permissions().Extensions = map[string]string{}
+ 		}
++		ctx.Permissions().Extensions["forgejo-key-id"] = strconv.FormatInt(activeKeyID, 10)
++	}
++	return authenticated
++}
+ 
+-		if cert.CertType != gossh.UserCert {
+-			logger.Warn("Certificate Rejected: Not a user certificate")
+-			logger.Warn("Failed authentication attempt from %s", ctx.RemoteAddr())
+-			return false
++func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate, userCA *asymkey_model.PublicKey) (keyID int64, ok bool) {
++	allowedPrincipals := splitPrincipals(userCA.Principals)
++	if len(allowedPrincipals) == 0 {
++		owner, err := user.GetUserByID(ctx, userCA.OwnerID)
++		if err != nil {
++			logger.Error("Failed to retrieve owner for user SSH CA key ID %d: %v", userCA.ID, err)
++			return 0, false
+ 		}
++		allowedPrincipals = []string{owner.Name}
++	}
+ 
+-		// look for the exact principal
+-	principalLoop:
+-		for _, principal := range cert.ValidPrincipals {
+-			pkey, err := asymkey_model.SearchPublicKeyByContentExact(ctx, principal)
+-			if err != nil {
+-				if asymkey_model.IsErrKeyNotExist(err) {
+-					logger.Debug("Principal Rejected: %s Unknown Principal: %s", ctx.RemoteAddr(), principal)
+-					continue principalLoop
+-				}
+-				logger.Error("SearchPublicKeyByContentExact: %v", err)
+-				return false
+-			}
++	principal, matchedPrincipal := findMatchingPrincipal(cert.ValidPrincipals, allowedPrincipals)
++	if !matchedPrincipal {
++		logger.Error("No principal listed in certificate is also listed in CA key's allowed principals list")
++		return 0, false
++	}
+ 
+-			c := &gossh.CertChecker{
+-				IsUserAuthority: func(auth gossh.PublicKey) bool {
+-					marshaled := auth.Marshal()
+-					for _, k := range setting.SSH.TrustedUserCAKeysParsed {
+-						if bytes.Equal(marshaled, k.Marshal()) {
+-							return true
+-						}
+-					}
++	c := &gossh.CertChecker{}
++	err := c.CheckCert(principal, cert)
++	if err != nil {
++		logger.Error("Certificate rejected: %v", err)
++		return 0, false
++	}
+ 
+-					return false
+-				},
+-			}
++	if logger.LevelEnabled(log.DEBUG) { // <- FingerprintSHA256 is kinda expensive so only calculate it if necessary
++		logger.Debug("Successfully authenticated: %s Certificate Fingerprint: %s Principal: %s", ctx.RemoteAddr(), gossh.FingerprintSHA256(cert), principal)
++	}
+ 
+-			// check the CA of the cert
+-			if !c.IsUserAuthority(cert.SignatureKey) {
+-				if logger.LevelEnabled(log.DEBUG) {
+-					logger.Debug("Principal Rejected: %s Untrusted Authority Signature Fingerprint %s for Principal: %s", ctx.RemoteAddr(), gossh.FingerprintSHA256(cert.SignatureKey), principal)
+-				}
++	return userCA.ID, true
++}
++
++func splitPrincipals(principals string) []string {
++	if principals == "" {
++		return nil
++	}
++	return strings.Split(principals, ",")
++}
++
++func findMatchingPrincipal(suppliedPrincipals, allowedPrincipals []string) (string, bool) {
++	for _, suppliedPrincipal := range suppliedPrincipals {
++		if slices.Contains(allowedPrincipals, suppliedPrincipal) {
++			return suppliedPrincipal, true
++		}
++	}
++	return "", false
++}
++
++func authenticationWithTrustedCA(ctx ssh.Context, cert *gossh.Certificate) (keyID int64, ok bool) {
++	if len(setting.SSH.TrustedUserCAKeys) == 0 {
++		logger.Warn("Certificate Rejected: No trusted certificate authorities for this server")
++		return 0, false
++	}
++
++	// look for the exact principal
++principalLoop:
++	for _, principal := range cert.ValidPrincipals {
++		pkey, err := asymkey_model.SearchPublicKeyByContentExact(ctx, principal)
++		if err != nil {
++			if asymkey_model.IsErrKeyNotExist(err) {
++				logger.Debug("Principal Rejected: %s Unknown Principal: %s", ctx.RemoteAddr(), principal)
+ 				continue principalLoop
+ 			}
++			logger.Error("SearchPublicKeyByContentExact: %v", err)
++			return 0, false
++		}
+ 
+-			// validate the cert for this principal
+-			if err := c.CheckCert(principal, cert); err != nil {
+-				// User is presenting an invalid certificate - STOP any further processing
+-				logger.Error("Invalid Certificate KeyID %s with Signature Fingerprint %s presented for Principal: %s from %s", cert.KeyId, gossh.FingerprintSHA256(cert.SignatureKey), principal, ctx.RemoteAddr())
+-				logger.Warn("Failed authentication attempt from %s", ctx.RemoteAddr())
++		c := &gossh.CertChecker{
++			IsUserAuthority: func(auth gossh.PublicKey) bool {
++				marshaled := auth.Marshal()
++				for _, k := range setting.SSH.TrustedUserCAKeysParsed {
++					if bytes.Equal(marshaled, k.Marshal()) {
++						return true
++					}
++				}
+ 
+ 				return false
+-			}
++			},
++		}
+ 
+-			if logger.LevelEnabled(log.DEBUG) { // <- FingerprintSHA256 is kinda expensive so only calculate it if necessary
+-				logger.Debug("Successfully authenticated: %s Certificate Fingerprint: %s Principal: %s", ctx.RemoteAddr(), gossh.FingerprintSHA256(key), principal)
+-			}
+-			if ctx.Permissions().Extensions == nil {
+-				ctx.Permissions().Extensions = map[string]string{}
++		// check the CA of the cert
++		if !c.IsUserAuthority(cert.SignatureKey) {
++			if logger.LevelEnabled(log.DEBUG) {
++				logger.Debug("Principal Rejected: %s Untrusted Authority Signature Fingerprint %s for Principal: %s", ctx.RemoteAddr(), gossh.FingerprintSHA256(cert.SignatureKey), principal)
+ 			}
+-			ctx.Permissions().Extensions["forgejo-key-id"] = strconv.FormatInt(pkey.ID, 10)
++			continue principalLoop
++		}
+ 
+-			return true
++		// validate the cert for this principal
++		if err := c.CheckCert(principal, cert); err != nil {
++			// User is presenting an invalid certificate - STOP any further processing
++			logger.Error("Invalid Certificate KeyID %s with Signature Fingerprint %s presented for Principal: %s from %s", cert.KeyId, gossh.FingerprintSHA256(cert.SignatureKey), principal, ctx.RemoteAddr())
++			return 0, false
+ 		}
+ 
+-		logger.Warn("From %s Fingerprint: %s is a certificate, but no valid principals found", ctx.RemoteAddr(), gossh.FingerprintSHA256(key))
+-		logger.Warn("Failed authentication attempt from %s", ctx.RemoteAddr())
+-		return false
++		if logger.LevelEnabled(log.DEBUG) { // <- FingerprintSHA256 is kinda expensive so only calculate it if necessary
++			logger.Debug("Successfully authenticated: %s Certificate Fingerprint: %s Principal: %s", ctx.RemoteAddr(), gossh.FingerprintSHA256(cert), principal)
++		}
++
++		return pkey.ID, true
+ 	}
+ 
++	logger.Warn("From %s Fingerprint: %s is a certificate, but no valid principals found", ctx.RemoteAddr(), gossh.FingerprintSHA256(cert))
++	return 0, false
++}
++
++func authenticationWithPlainKey(ctx ssh.Context, key ssh.PublicKey) bool {
+ 	if logger.LevelEnabled(log.DEBUG) { // <- FingerprintSHA256 is kinda expensive so only calculate it if necessary
+ 		logger.Debug("Handle Public Key: %s Fingerprint: %s is not a certificate", ctx.RemoteAddr(), gossh.FingerprintSHA256(key))
+ 	}
+@@ -254,13 +339,18 @@ func publicKeyHandler(ctx ssh.Context, key ssh.PublicKey) bool {
+ 	if err != nil {
+ 		if asymkey_model.IsErrKeyNotExist(err) {
+ 			logger.Warn("Unknown public key: %s from %s", gossh.FingerprintSHA256(key), ctx.RemoteAddr())
+-			logger.Warn("Failed authentication attempt from %s", ctx.RemoteAddr())
+ 			return false
+ 		}
+ 		logger.Error("SearchPublicKeyByContent: %v", err)
+ 		return false
+ 	}
+ 
++	// We deny use of CA keys as plain authentication keys directly. They're only allowed to sign certificates.
++	if pkey.IsCA {
++		logger.Warn("Rejecting direct use of CA key: %s from %s", gossh.FingerprintSHA256(key), ctx.RemoteAddr())
++		return false
++	}
++
+ 	if logger.LevelEnabled(log.DEBUG) { // <- FingerprintSHA256 is kinda expensive so only calculate it if necessary
+ 		logger.Debug("Successfully authenticated: %s Public Key Fingerprint: %s", ctx.RemoteAddr(), gossh.FingerprintSHA256(key))
+ 	}
+diff --git a/modules/ssh/ssh_test.go b/modules/ssh/ssh_test.go
+new file mode 100644
+index 0000000000..cc2daf4e49
+--- /dev/null
++++ b/modules/ssh/ssh_test.go
+@@ -0,0 +1,70 @@
++// Copyright 2026 The Forgejo Authors. All rights reserved.
++// SPDX-License-Identifier: GPL-3.0-or-later
++
++package ssh
++
++import (
++	"testing"
++
++	"github.com/stretchr/testify/assert"
++)
++
++func TestCertificatePrincipalMatching(t *testing.T) {
++	cases := []struct {
++		Allowed  string
++		Supplied string
++		Matched  bool
++	}{
++		{"", "", false},
++		{"", "username", true},
++		{"", "garbage", false},
++		{"", "username,garbage", true},
++		{"", "foo,bar", false},
++
++		{"username", "", false},
++		{"username", "username", true},
++		{"username", "garbage", false},
++		{"username", "username,garbage", true},
++		{"username", "foo,bar", false},
++
++		{"garbage", "", false},
++		{"garbage", "username", false},
++		{"garbage", "garbage", true},
++		{"garbage", "username,garbage", true},
++		{"garbage", "foo,bar", false},
++
++		{"username,garbage", "", false},
++		{"username,garbage", "username", true},
++		{"username,garbage", "garbage", true},
++		{"username,garbage", "username,garbage", true},
++		{"username,garbage", "foo,bar", false},
++
++		{"username", "USERNAME", false},
++
++		{"username,garbage", "erna", false},
++		{"username,garbage", "user", false},
++		{"username,garbage", "name", false},
++		{"username,garbage", "bage", false},
++
++		{"username,username", "username", true},
++		{"username", "username,username", true},
++		{"a,b,c", "c", true},
++		{"a,c,b", "c", true},
++		{"c,a,b", "c", true},
++		{"a,d", "a,b,c", true},
++		{"d,b", "a,b,c", true},
++		{"v,w", "x,y,z", false},
++	}
++
++	const defaultUsername = "username"
++
++	for _, c := range cases {
++		allowed := splitPrincipals(c.Allowed)
++		supplied := splitPrincipals(c.Supplied)
++		if len(allowed) == 0 {
++			allowed = []string{defaultUsername}
++		}
++		_, found := findMatchingPrincipal(supplied, allowed)
++		assert.Equal(t, c.Matched, found, "Expected that for allowed %q and supplied %q, found should be %v", c.Allowed, c.Supplied, c.Matched)
++	}
++}
+diff --git a/modules/structs/user_key.go b/modules/structs/user_key.go
+index b92552b200..16316bd55d 100644
+--- a/modules/structs/user_key.go
++++ b/modules/structs/user_key.go
+@@ -19,4 +19,13 @@ type PublicKey struct {
+ 	Owner    *User     `json:"user,omitempty"`
+ 	ReadOnly bool      `json:"read_only,omitempty"`
+ 	KeyType  string    `json:"key_type,omitempty"`
++	// TODO: I'm not sure how best to handle user-supplied SSH CA keys here.
++	// In the asymkey model there are fields IsCA, Principals. We could add
++	// optional fields for those here, too (in variously ugly ways), or we
++	// could add `cert-authority,principals="..."` options to the Key field.
++	// Which is nicer/least bad? The latter avoids confusion for a plain key
++	// in code not aware of the IsCA field, but the former allows consumers to
++	// avoid parsing the weird authorized_keys format. Maybe both then???
++	// Raises the possibility of inconsistency! So I'm still not sure.
++	// See services/convert/convert.go
+ }
+diff --git a/options/locale/locale_en-US.ini b/options/locale/locale_en-US.ini
+index a74cf843e9..81889a9708 100644
+--- a/options/locale/locale_en-US.ini
++++ b/options/locale/locale_en-US.ini
+@@ -641,6 +641,7 @@ invalid_ssh_principal = Invalid principal: %s
+ must_use_public_key = The key you provided is a private key. Please do not upload your private key anywhere. Use your public key instead.
+ unable_verify_ssh_key = Cannot verify the SSH key, double-check it for mistakes.
+ auth_failed = Authentication failed: %v
++invalid_ssh_ca_principals = Invalid principals: must be non-empty (if supplied) and must not contain spaces, quotes, backslashes, or control characters
+ 
+ still_own_repo = Your account owns one or more repositories, delete or transfer them first.
+ still_has_org = Your account is a member of one or more organizations, leave them first.
+@@ -833,6 +834,7 @@ gpg_desc = These public GPG keys are associated with your account and used to ve
+ ssh_helper = <strong>Need help?</strong> Have a look at the guide to <a href="%s">create your own SSH keys</a> or solve <a href="%s">common problems</a> you may encounter using SSH.
+ gpg_helper = <strong>Need help?</strong> Have a look at the guide <a href="%s">about GPG</a>.
+ key_content_ssh_placeholder = Begins with "ssh-ed25519", "ssh-rsa", "ecdsa-sha2-nistp256", "ecdsa-sha2-nistp384", "ecdsa-sha2-nistp521", "sk-ecdsa-sha2-nistp256@openssh.com", or "sk-ssh-ed25519@openssh.com"
++key_content_ssh_placeholder_cert_auth = Begins with 'ssh-ed25519', 'ssh-rsa', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'sk-ecdsa-sha2-nistp256@openssh.com', or 'sk-ssh-ed25519@openssh.com'; or a cert-authority line, e.g. 'cert-authority,principals="username" ssh-ed25519 AAAA...'
+ key_content_gpg_placeholder = Begins with "-----BEGIN PGP PUBLIC KEY BLOCK-----"
+ add_new_principal = Add principal
+ ssh_key_been_used = This SSH key has already been added to the server.
+@@ -894,6 +896,7 @@ principal_state_desc = This principal has been used in the last 7 days
+ show_openid = Show on profile
+ hide_openid = Hide from profile
+ ssh_disabled = SSH is disabled
++ssh_ca_disabled = SSH certificate authentication is not enabled on this server
+ ssh_signonly = SSH is currently disabled so these keys are only used for commit signature verification.
+ ssh_externally_managed = This SSH key is externally managed for this user
+ 
+diff --git a/routers/api/v1/repo/key.go b/routers/api/v1/repo/key.go
+index 36fe2080d4..34f2ed226b 100644
+--- a/routers/api/v1/repo/key.go
++++ b/routers/api/v1/repo/key.go
+@@ -183,6 +183,15 @@ func HandleCheckKeyStringError(ctx *context.APIContext, err error) {
+ 	}
+ }
+ 
++// HandleParseCAOptionsError handle error from asymkey_model.ParseCAOptions
++func HandleParseCAOptionsError(ctx *context.APIContext, err error) {
++	if asymkey_model.IsErrSSHCADisabled(err) || asymkey_model.IsErrInvalidSSHCAPrincipals(err) {
++		ctx.Error(http.StatusUnprocessableEntity, "", err.Error())
++	} else {
++		ctx.Error(http.StatusUnprocessableEntity, "", fmt.Errorf("Invalid SSH CA key options: %w", err))
++	}
++}
++
+ // HandleAddKeyError handle add key error
+ func HandleAddKeyError(ctx *context.APIContext, err error) {
+ 	switch {
+@@ -232,7 +241,8 @@ func CreateDeployKey(ctx *context.APIContext) {
+ 	//     "$ref": "#/responses/validationError"
+ 
+ 	form := web.GetForm(ctx).(*api.CreateKeyOption)
+-	content, err := asymkey_model.CheckPublicKeyString(form.Key)
++	// TODO: we ignore options here, but we could in future consider allowing SSH CA keys
++	content, _, err := asymkey_model.CheckPublicKeyString(form.Key)
+ 	if err != nil {
+ 		HandleCheckKeyStringError(ctx, err)
+ 		return
+diff --git a/routers/api/v1/user/key.go b/routers/api/v1/user/key.go
+index 94af893a0e..9f437975df 100644
+--- a/routers/api/v1/user/key.go
++++ b/routers/api/v1/user/key.go
+@@ -213,13 +213,19 @@ func CreateUserPublicKey(ctx *context.APIContext, form api.CreateKeyOption, uid
+ 		return
+ 	}
+ 
+-	content, err := asymkey_model.CheckPublicKeyString(form.Key)
++	content, options, err := asymkey_model.CheckPublicKeyString(form.Key)
+ 	if err != nil {
+ 		repo.HandleCheckKeyStringError(ctx, err)
+ 		return
+ 	}
+ 
+-	key, err := asymkey_model.AddPublicKey(ctx, uid, form.Title, content, 0)
++	isCA, principals, err := asymkey_model.ParseCAOptions(options)
++	if err != nil {
++		repo.HandleParseCAOptionsError(ctx, err)
++		return
++	}
++
++	key, err := asymkey_model.AddPublicKey(ctx, uid, form.Title, content, 0, isCA, principals)
+ 	if err != nil {
+ 		repo.HandleAddKeyError(ctx, err)
+ 		return
+diff --git a/routers/private/key.go b/routers/private/key.go
+index 2d77c9c5be..a1b9fc02ed 100644
+--- a/routers/private/key.go
++++ b/routers/private/key.go
+@@ -57,5 +57,6 @@ func AuthorizedPublicKeyByContent(ctx *context.PrivateContext) {
+ 		})
+ 		return
+ 	}
+-	ctx.PlainText(http.StatusOK, publicKey.AuthorizedString())
++	// TODO: is `ctx` the correct context for AuthorizedString here?
++	ctx.PlainText(http.StatusOK, publicKey.AuthorizedString(ctx))
+ }
+diff --git a/routers/web/repo/setting/deploy_key.go b/routers/web/repo/setting/deploy_key.go
+index c59f0e90c2..c21a87fd31 100644
+--- a/routers/web/repo/setting/deploy_key.go
++++ b/routers/web/repo/setting/deploy_key.go
+@@ -51,7 +51,8 @@ func DeployKeysPost(ctx *context.Context) {
+ 		return
+ 	}
+ 
+-	content, err := asymkey_model.CheckPublicKeyString(form.Content)
++	// TODO: consider using asymkey_model.ParseCAOptions etc. to allow SSH CAs as deploy keys
++	content, _, err := asymkey_model.CheckPublicKeyString(form.Content)
+ 	if err != nil {
+ 		if db.IsErrSSHDisabled(err) {
+ 			ctx.Flash.Info(ctx.Tr("settings.ssh_disabled"))
+diff --git a/routers/web/user/setting/keys.go b/routers/web/user/setting/keys.go
+index 935efd7ba7..fc1e26fde4 100644
+--- a/routers/web/user/setting/keys.go
++++ b/routers/web/user/setting/keys.go
+@@ -30,6 +30,7 @@ func Keys(ctx *context.Context) {
+ 	ctx.Data["DisableSSH"] = setting.SSH.Disabled
+ 	ctx.Data["BuiltinSSH"] = setting.SSH.StartBuiltinServer
+ 	ctx.Data["AllowPrincipals"] = setting.SSH.AuthorizedPrincipalsEnabled
++	ctx.Data["EnableCertAuth"] = setting.SSH.EnableCertAuth
+ 
+ 	loadKeysData(ctx)
+ 
+@@ -44,6 +45,7 @@ func KeysPost(ctx *context.Context) {
+ 	ctx.Data["DisableSSH"] = setting.SSH.Disabled
+ 	ctx.Data["BuiltinSSH"] = setting.SSH.StartBuiltinServer
+ 	ctx.Data["AllowPrincipals"] = setting.SSH.AuthorizedPrincipalsEnabled
++	ctx.Data["EnableCertAuth"] = setting.SSH.EnableCertAuth
+ 
+ 	if ctx.HasError() {
+ 		loadKeysData(ctx)
+@@ -165,7 +167,7 @@ func KeysPost(ctx *context.Context) {
+ 			return
+ 		}
+ 
+-		content, err := asymkey_model.CheckPublicKeyString(form.Content)
++		content, options, err := asymkey_model.CheckPublicKeyString(form.Content)
+ 		if err != nil {
+ 			if db.IsErrSSHDisabled(err) {
+ 				ctx.Flash.Info(ctx.Tr("settings.ssh_disabled"))
+@@ -180,7 +182,20 @@ func KeysPost(ctx *context.Context) {
+ 			return
+ 		}
+ 
+-		if _, err = asymkey_model.AddPublicKey(ctx, ctx.Doer.ID, form.Title, content, 0); err != nil {
++		isCA, principals, err := asymkey_model.ParseCAOptions(options)
++		if err != nil {
++			if asymkey_model.IsErrSSHCADisabled(err) {
++				ctx.Flash.Info(ctx.Tr("settings.ssh_ca_disabled"))
++			} else if asymkey_model.IsErrInvalidSSHCAPrincipals(err) {
++				ctx.Flash.Info(ctx.Tr("form.invalid_ssh_ca_principals"))
++			} else {
++				ctx.Flash.Error(ctx.Tr("form.invalid_ssh_key", err.Error()))
++			}
++			ctx.Redirect(setting.AppSubURL + "/user/settings/keys")
++			return
++		}
++
++		if _, err = asymkey_model.AddPublicKey(ctx, ctx.Doer.ID, form.Title, content, 0, isCA, principals); err != nil {
+ 			ctx.Data["HasSSHError"] = true
+ 			switch {
+ 			case asymkey_model.IsErrKeyAlreadyExist(err):
+diff --git a/services/convert/convert.go b/services/convert/convert.go
+index 65fa701ffe..2846a7ac20 100644
+--- a/services/convert/convert.go
++++ b/services/convert/convert.go
+@@ -254,7 +254,7 @@ func ToVerification(ctx context.Context, c *git.Commit) *api.PayloadCommitVerifi
+ func ToPublicKey(apiLink string, key *asymkey_model.PublicKey) *api.PublicKey {
+ 	return &api.PublicKey{
+ 		ID:          key.ID,
+-		Key:         key.Content,
++		Key:         key.Content, // TODO: IsCA, Principals?? See notes against api.PublicKey
+ 		URL:         fmt.Sprintf("%s%d", apiLink, key.ID),
+ 		Title:       key.Name,
+ 		Fingerprint: key.Fingerprint,
+diff --git a/templates/user/settings/keys_ssh.tmpl b/templates/user/settings/keys_ssh.tmpl
+index 57f4ef4010..0998581013 100644
+--- a/templates/user/settings/keys_ssh.tmpl
++++ b/templates/user/settings/keys_ssh.tmpl
+@@ -15,7 +15,7 @@
+ 			</div>
+ 			<div class="field {{if .Err_Content}}error{{end}}">
+ 				<label for="ssh-key-content">{{ctx.Locale.Tr "settings.key_content"}}</label>
+-				<textarea id="ssh-key-content" name="content" class="js-quick-submit" placeholder="{{ctx.Locale.Tr "settings.key_content_ssh_placeholder"}}" required>{{.content}}</textarea>
++				<textarea id="ssh-key-content" name="content" class="js-quick-submit" placeholder="{{if .EnableCertAuth}}{{ctx.Locale.Tr "settings.key_content_ssh_placeholder_cert_auth"}}{{else}}{{ctx.Locale.Tr "settings.key_content_ssh_placeholder"}}{{end}}" required>{{.content}}</textarea>
+ 			</div>
+ 			<input name="type" type="hidden" value="ssh">
+ 			<button class="ui primary button">
+@@ -41,12 +41,15 @@
+ 		{{range $index, $key := .Keys}}
+ 			<div class="flex-item">
+ 				<div class="flex-item-leading">
+-					<span class="text {{if .HasRecentActivity}}green{{end}}" {{if .HasRecentActivity}}data-tooltip-content="{{ctx.Locale.Tr "settings.key_state_desc"}}"{{end}}>{{svg "octicon-key" 32}}</span>
++					<span class="text {{if .HasRecentActivity}}green{{end}}" {{if .HasRecentActivity}}data-tooltip-content="{{ctx.Locale.Tr "settings.key_state_desc"}}"{{end}}>{{if .IsCA}}{{svg "octicon-log" 32}}{{else}}{{svg "octicon-key" 32}}{{end}}</span>
+ 				</div>
+ 				<div class="flex-item-main">
+ 						{{if .Verified}}
+ 							<div class="flex-item-title flex-text-block" data-tooltip-content="{{ctx.Locale.Tr "settings.ssh_key_verified_long"}}">{{svg "octicon-verified"}}{{ctx.Locale.Tr "settings.ssh_key_verified"}}</div>
+ 						{{end}}
++						{{if .IsCA}}
++						<div class="flex-item-body">SSH Certificate Authority</div>
++						{{end}}
+ 						<div class="flex-item-title">{{.Name}}</div>
+ 						<div class="flex-item-body">
+ 								{{.Fingerprint}}
+@@ -54,6 +57,9 @@
+ 						<div class="flex-item-body">
+ 								<p>{{ctx.Locale.Tr "settings.added_on" (DateUtils.AbsoluteShort .CreatedUnix)}} —	{{svg "octicon-info"}} {{if .HasUsed}}{{ctx.Locale.Tr "settings.last_used"}} <span {{if .HasRecentActivity}}class="text green"{{end}}>{{DateUtils.AbsoluteShort .UpdatedUnix}}</span>{{else}}{{ctx.Locale.Tr "settings.no_activity"}}{{end}}</p>
+ 						</div>
++						{{if .Principals}}
++						<div class="flex-item-body">Accepted principals: {{.Principals}}</div>
++						{{end}}
+ 				</div>
+ 				<div class="flex-item-trailing">
+ 					<button class="ui red tiny button delete-button{{if index $.ExternalKeys $index}} disabled{{end}}" data-modal-id="delete-ssh" data-url="{{$.Link}}/delete?type=ssh" data-id="{{.ID}}"{{if index $.ExternalKeys $index}} title="{{ctx.Locale.Tr "settings.ssh_externally_managed"}}"{{end}}>
+diff --git a/tests/integration/api_helper_for_declarative_test.go b/tests/integration/api_helper_for_declarative_test.go
+index 6f33322253..55a9508d83 100644
+--- a/tests/integration/api_helper_for_declarative_test.go
++++ b/tests/integration/api_helper_for_declarative_test.go
+@@ -9,6 +9,7 @@ import (
+ 	"net/http/httptest"
+ 	"net/url"
+ 	"os"
++	"strings"
+ 	"testing"
+ 	"time"
+ 
+@@ -167,13 +168,17 @@ func doAPIDeleteRepository(ctx APITestContext) func(*testing.T) {
+ 	}
+ }
+ 
+-func doAPICreateUserKey(ctx APITestContext, keyname, keyFile string, callback ...func(*testing.T, api.PublicKey)) func(*testing.T) {
++func doAPICreateUserKey(ctx APITestContext, keyname, keyFile string, keyOptions []string, callback ...func(*testing.T, api.PublicKey)) func(*testing.T) {
+ 	return func(t *testing.T) {
+ 		dataPubKey, err := os.ReadFile(keyFile + ".pub")
+ 		require.NoError(t, err)
++		keyStr := string(dataPubKey)
++		if len(keyOptions) > 0 {
++			keyStr = strings.Join(keyOptions, ",") + " " + keyStr
++		}
+ 		req := NewRequestWithJSON(t, "POST", "/api/v1/user/keys", &api.CreateKeyOption{
+ 			Title: keyname,
+-			Key:   string(dataPubKey),
++			Key:   keyStr,
+ 		}).AddTokenAuth(ctx.Token)
+ 		if ctx.ExpectedCode != 0 {
+ 			ctx.Session.MakeRequest(t, req, ctx.ExpectedCode)
+diff --git a/tests/integration/api_private_serv_test.go b/tests/integration/api_private_serv_test.go
+index dd45f54c36..d991a62856 100644
+--- a/tests/integration/api_private_serv_test.go
++++ b/tests/integration/api_private_serv_test.go
+@@ -170,7 +170,7 @@ func TestAPIPrivateServAndNoServWithRequiredTwoFactor(t *testing.T) {
+ 			repo, _, reset := tests.CreateDeclarativeRepoWithOptions(t, user, tests.DeclarativeRepoOptions{})
+ 			defer reset()
+ 
+-			pubKey, err := asymkey_model.AddPublicKey(ctx, user.ID, "tmp-key-"+user.Name, "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBGXEEzWmm1dxb+57RoK5KVCL0w2eNv9cqJX2AGGVlkFsVDhOXHzsadS3LTK4VlEbbrDMJdoti9yM8vclA8IeRacAAAAEc3NoOg== nocomment", 0)
++			pubKey, err := asymkey_model.AddPublicKey(ctx, user.ID, "tmp-key-"+user.Name, "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBGXEEzWmm1dxb+57RoK5KVCL0w2eNv9cqJX2AGGVlkFsVDhOXHzsadS3LTK4VlEbbrDMJdoti9yM8vclA8IeRacAAAAEc3NoOg== nocomment", 0, false, "")
+ 			require.NoError(t, err)
+ 			defer unittest.AssertSuccessfulDelete(t, &asymkey_model.PublicKey{ID: pubKey.ID})
+ 
+diff --git a/tests/integration/git_helper_for_declarative_test.go b/tests/integration/git_helper_for_declarative_test.go
+index e1f08509df..0da5d78235 100644
+--- a/tests/integration/git_helper_for_declarative_test.go
++++ b/tests/integration/git_helper_for_declarative_test.go
+@@ -26,6 +26,41 @@ import (
+ 	"github.com/stretchr/testify/require"
+ )
+ 
++// For use with defer. Compare t.Setenv, which runs cleanup hooks at test end time.
++func tempSetenv(t *testing.T, key, value string) (cleanup func()) {
++	oldValue, hasValue := os.LookupEnv(key)
++	t.Setenv(key, value)
++	return func() {
++		if hasValue {
++			// Explanation for the nolint here: we can't use t.Setenv because we're already
++			// in a *restoring previous values* phase, so the lint's naive evaluation doesn't
++			// apply
++			os.Setenv(key, oldValue) //nolint:usetesting
++		} else {
++			os.Unsetenv(key)
++		}
++	}
++}
++
++func withActiveKey(t *testing.T, keyFile string, callback func()) {
++	tmpDir := t.TempDir()
++
++	err := os.Chmod(tmpDir, 0o700)
++	require.NoError(t, err)
++
++	err = os.WriteFile(path.Join(tmpDir, "ssh"), []byte("#!/bin/bash\n"+
++		"ssh -o \"UserKnownHostsFile=/dev/null\" -o \"StrictHostKeyChecking=no\" -o \"IdentitiesOnly=yes\" -i \""+keyFile+"\" \"$@\""), 0o700)
++	require.NoError(t, err)
++
++	// Setup ssh wrapper
++	defer tempSetenv(t, "GIT_SSH", path.Join(tmpDir, "ssh"))()
++	defer tempSetenv(t, "GIT_SSH_COMMAND",
++		"ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i \""+keyFile+"\"")()
++	defer tempSetenv(t, "GIT_SSH_VARIANT", "ssh")()
++
++	callback()
++}
++
+ func withKeyFile(t *testing.T, keyname string, callback func(string)) {
+ 	tmpDir := t.TempDir()
+ 
+@@ -38,17 +73,7 @@ func withKeyFile(t *testing.T, keyname string, callback func(string)) {
+ 	require.NoError(t, os.WriteFile(keyFile, privkey, 0o600))
+ 	require.NoError(t, os.WriteFile(keyFile+".pub", pubkey, 0o600))
+ 
+-	err = os.WriteFile(path.Join(tmpDir, "ssh"), []byte("#!/bin/bash\n"+
+-		"ssh -o \"UserKnownHostsFile=/dev/null\" -o \"StrictHostKeyChecking=no\" -o \"IdentitiesOnly=yes\" -i \""+keyFile+"\" \"$@\""), 0o700)
+-	require.NoError(t, err)
+-
+-	// Setup ssh wrapper
+-	t.Setenv("GIT_SSH", path.Join(tmpDir, "ssh"))
+-	t.Setenv("GIT_SSH_COMMAND",
+-		"ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i \""+keyFile+"\"")
+-	t.Setenv("GIT_SSH_VARIANT", "ssh")
+-
+-	callback(keyFile)
++	withActiveKey(t, keyFile, func() { callback(keyFile) })
+ }
+ 
+ func createSSHUrl(gitPath string, u *url.URL) *url.URL {
+diff --git a/tests/integration/git_test.go b/tests/integration/git_test.go
+index dc86f4a4c2..4d31d2409a 100644
+--- a/tests/integration/git_test.go
++++ b/tests/integration/git_test.go
+@@ -148,7 +148,7 @@ func testGit(t *testing.T, u *url.URL) {
+ 			// Setup key the user ssh key
+ 			withKeyFile(t, keyname, func(keyFile string) {
+ 				var publicKeyID int64
+-				t.Run("CreateUserKey", doAPICreateUserKey(sshContext, "test-key-"+objectFormat.Name(), keyFile, func(t *testing.T, pk api.PublicKey) {
++				t.Run("CreateUserKey", doAPICreateUserKey(sshContext, "test-key-"+objectFormat.Name(), keyFile, nil, func(t *testing.T, pk api.PublicKey) {
+ 					publicKeyID = pk.ID
+ 				}))
+ 
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+new file mode 100644
+index 0000000000..193314c582
+--- /dev/null
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -0,0 +1,123 @@
++// Copyright 2026 The Forgejo Authors. All rights reserved.
++// SPDX-License-Identifier: GPL-3.0-or-later
++
++package integration
++
++import (
++	"crypto/rand"
++	"fmt"
++	"net/url"
++	"os"
++	"testing"
++	"time"
++
++	auth_model "forgejo.org/models/auth"
++	"forgejo.org/modules/git"
++	"forgejo.org/modules/setting"
++	api "forgejo.org/modules/structs"
++	"forgejo.org/modules/test"
++
++	"github.com/stretchr/testify/require"
++	"golang.org/x/crypto/ssh"
++)
++
++func TestUserSuppliedSSHCAKeys(t *testing.T) {
++	onApplicationRun(t, testUserSuppliedSSHCAKeys)
++}
++
++func endorseKey(t *testing.T, identityKeyFile, signingKeyFile string, certType uint32, principals []string, validitySeconds int) {
++	dataIdentityKey, err := os.ReadFile(identityKeyFile + ".pub")
++	require.NoError(t, err)
++	identityKey, _, _, _, err := ssh.ParseAuthorizedKey(dataIdentityKey)
++	require.NoError(t, err)
++	dataPrivKey, err := os.ReadFile(signingKeyFile)
++	require.NoError(t, err)
++	ca, err := ssh.ParsePrivateKey(dataPrivKey)
++	require.NoError(t, err)
++	cert := &ssh.Certificate{
++		Key:             identityKey, // SPKI "object" - key to which authority is delegated
++		Serial:          uint64(1),
++		CertType:        certType,
++		ValidPrincipals: principals,
++		ValidAfter:      0,
++		ValidBefore:     uint64(time.Now().Add(time.Duration(validitySeconds) * time.Second).Unix()),
++		// Permissions: a reasonable, standardesque collection
++		Permissions: ssh.Permissions{
++			Extensions: map[string]string{
++				"permit-pty":              "",
++				"permit-port-forwarding":  "",
++				"permit-agent-forwarding": "",
++				"permit-X11-forwarding":   "",
++				"permit-user-rc":          "",
++			},
++		},
++	}
++	require.NoError(t, cert.SignCert(rand.Reader, ca))
++	require.NoError(t, os.WriteFile(identityKeyFile+"-cert.pub", ssh.MarshalAuthorizedKey(cert), 0o700))
++}
++
++func testUserSuppliedSSHCAKeys(t *testing.T, u *url.URL) {
++	defer test.MockVariableValue(&setting.SSH.EnableCertAuth, true)()
++
++	reponame := "ssh-ca-test-repo"
++	username := "user2"
++	u.Path = fmt.Sprintf("%s/%s.git", username, reponame)
++
++	// User configures this one as a normal key for pulling & pushing
++	plainkey := fmt.Sprintf("%s-plainkey", username)
++
++	// User configures this one as a CA key for signing other keys to allow them to pull & push
++	cakey := fmt.Sprintf("%s-cakey", username)
++
++	ctx := NewAPITestContext(t, username, reponame, auth_model.AccessTokenScopeWriteRepository, auth_model.AccessTokenScopeWriteUser)
++
++	t.Run("CreateRepository", doAPICreateRepository(ctx, nil, git.Sha1ObjectFormat))
++
++	var cakeyID, plainkeyID int64
++	withKeyFile(t, cakey, func(cakeyFile string) {
++		withKeyFile(t, plainkey, func(plainkeyFile string) {
++			// Start off with plainkey being the active key
++
++			sshURL := createSSHUrl(ctx.GitPath(), u)
++
++			// Shouldn't be able to clone initially as the keys aren't associated with the account yet
++			t.Run("FailToClone", doGitCloneFail(sshURL))
++
++			t.Run("CreatePlainKey", doAPICreateUserKey(ctx, plainkey, plainkeyFile, nil, func(t *testing.T, pk api.PublicKey) {
++				plainkeyID = pk.ID
++			}))
++
++			t.Run("CloneWithPlainKey", doGitClone(t.TempDir(), sshURL))
++
++			cakeyOptions := []string{
++				`cert-authority`,
++			}
++			t.Run("CreateCAKey", doAPICreateUserKey(ctx, cakey, cakeyFile, cakeyOptions, func(t *testing.T, pk api.PublicKey) {
++				cakeyID = pk.ID
++			}))
++
++			withActiveKey(t, cakeyFile, func() {
++				// Not allowed to use a CA key directly to push/pull
++				t.Run("FailToCloneWithCAKey", doGitCloneFail(sshURL))
++			})
++
++			withKeyFile(t, fmt.Sprintf("%s-ephemeralkey", username), func(ephemeralkeyFile string) {
++				t.Run("FailToCloneWithEphemeralKey", doGitCloneFail(sshURL))
++				endorseKey(t, ephemeralkeyFile, cakeyFile, ssh.HostCert, []string{username}, 60)
++				t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(sshURL))
++				endorseKey(t, ephemeralkeyFile, cakeyFile, ssh.UserCert, []string{username}, 60)
++				t.Run("CloneWithEphemeralKeyAndUserCert", doGitClone(t.TempDir(), sshURL))
++				endorseKey(t, ephemeralkeyFile, plainkeyFile, ssh.UserCert, []string{username}, 60)
++				t.Run("FailToCloneWithEphemeralKeySignedByPlainNonCAKey", doGitCloneFail(sshURL))
++				endorseKey(t, ephemeralkeyFile, cakeyFile, ssh.UserCert, []string{username}, -60)
++				t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(sshURL))
++				defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
++				endorseKey(t, ephemeralkeyFile, cakeyFile, ssh.UserCert, []string{username}, 60)
++				t.Run("FailToCloneWithEphemeralKeyAfterDisablingCertAuth", doGitCloneFail(sshURL))
++			})
++
++			t.Run("DeletePlainKey", doAPIDeleteUserKey(ctx, plainkeyID))
++			t.Run("DeleteCAKey", doAPIDeleteUserKey(ctx, cakeyID))
++		})
++	})
++}
+diff --git a/tests/integration/ssh_key_test.go b/tests/integration/ssh_key_test.go
+index 747b6c4eb0..d435d84e8d 100644
+--- a/tests/integration/ssh_key_test.go
++++ b/tests/integration/ssh_key_test.go
+@@ -123,7 +123,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
+ 
+ 			t.Run("FailToClone", doGitCloneFail(sshURL))
+ 
+-			t.Run("CreateUserKey", doAPICreateUserKey(ctx, keyname, keyFile, func(t *testing.T, publicKey api.PublicKey) {
++			t.Run("CreateUserKey", doAPICreateUserKey(ctx, keyname, keyFile, nil, func(t *testing.T, publicKey api.PublicKey) {
+ 				userKeyPublicKeyID = publicKey.ID
+ 			}))
+ 
+@@ -167,7 +167,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
+ 
+ 			t.Run("PushToOther", doGitPushTestRepository(dstOtherPath, "origin", "master"))
+ 
+-			t.Run("FailToCreateUserKey", doAPICreateUserKey(failCtx, keyname, keyFile))
++			t.Run("FailToCreateUserKey", doAPICreateUserKey(failCtx, keyname, keyFile, nil))
+ 		})
+ 
+ 		t.Run("DeleteRepositoryShouldReleaseKey", func(t *testing.T) {
+@@ -176,7 +176,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
+ 
+ 			t.Run("DeleteRepository", doAPIDeleteRepository(ctxWithDeleteRepo))
+ 
+-			t.Run("FailToCreateUserKeyAsStillDeploy", doAPICreateUserKey(failCtx, keyname, keyFile))
++			t.Run("FailToCreateUserKeyAsStillDeploy", doAPICreateUserKey(failCtx, keyname, keyFile, nil))
+ 
+ 			t.Run("MakeSureCloneOtherStillWorks", doGitClone(dstOtherPath, otherSSHURL))
+ 
+@@ -188,7 +188,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
+ 
+ 			t.Run("RecreateRepository", doAPICreateRepository(ctxWithDeleteRepo, nil, git.Sha1ObjectFormat)) // FIXME: use forEachObjectFormat
+ 
+-			t.Run("CreateUserKey", doAPICreateUserKey(ctx, keyname, keyFile, func(t *testing.T, publicKey api.PublicKey) {
++			t.Run("CreateUserKey", doAPICreateUserKey(ctx, keyname, keyFile, nil, func(t *testing.T, publicKey api.PublicKey) {
+ 				userKeyPublicKeyID = publicKey.ID
+ 			}))
+ 
+-- 
+2.53.0
+
+
+From 3e44d41dc92fe1a055e9c98847a6f73f1f1ae181 Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Fri, 20 Mar 2026 21:16:05 +0100
+Subject: [PATCH 02/15] TestParseCAOptions
+
+---
+ models/asymkey/ssh_key_parse_test.go | 61 ++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
+ create mode 100644 models/asymkey/ssh_key_parse_test.go
+
+diff --git a/models/asymkey/ssh_key_parse_test.go b/models/asymkey/ssh_key_parse_test.go
+new file mode 100644
+index 0000000000..aa97f57a2c
+--- /dev/null
++++ b/models/asymkey/ssh_key_parse_test.go
+@@ -0,0 +1,61 @@
++// Copyright 2026 The Forgejo Authors. All rights reserved.
++// SPDX-License-Identifier: GPL-3.0-or-later
++
++package asymkey
++
++import (
++	"testing"
++
++	"forgejo.org/modules/setting"
++	"forgejo.org/modules/test"
++
++	"github.com/stretchr/testify/assert"
++	"github.com/stretchr/testify/require"
++)
++
++func TestParseCAOptions(t *testing.T) {
++	defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
++
++	{
++		_, _, err := ParseCAOptions([]string{`cert-authority`})
++		assert.True(t, IsErrSSHCADisabled(err))
++	}
++
++	defer test.MockVariableValue(&setting.SSH.EnableCertAuth, true)()
++
++	cases := []struct {
++		desc       string
++		options    []string
++		ok, isCA   bool
++		principals string
++	}{
++		{"no options", nil, true, false, ""},
++		{"cert-authority only", []string{`cert-authority`}, true, true, ""},
++		{"cert-authority with single explicit principal", []string{`cert-authority`, `principals="x"`}, true, true, "x"},
++		{"cert-authority with multiple explicit principals", []string{`cert-authority`, `principals="x,y,z"`}, true, true, "x,y,z"},
++		{"cert-authority with empty explicit principals string", []string{`cert-authority`, `principals=""`}, false, false, ""},
++
++		// See ParseCAOptions implementation and comment for the things we reject.
++		// We reject MORE than OpenSSH rejects, in order to not have to implement OpenSSH's parsing logic, weirdness for weirdness.
++		// If we want to allow exotic principal strings we can do so later.
++		{"principals with backslash", []string{`cert-authority`, `principals="m\n"`}, false, false, ""},
++		{"principals with backslash-doublequote", []string{`cert-authority`, `principals="a\"b"`}, false, false, ""},
++		{"principals with spaces", []string{`cert-authority`, `principals="a, b, c"`}, false, false, ""},
++		{"principals with control codes other than space (newline)", []string{`cert-authority`, "principals=\"\n\""}, false, false, ""},
++		{"principals with control codes other than space (nul)", []string{`cert-authority`, "principals=\"\000\""}, false, false, ""},
++		{"principals with control codes other than space (bel)", []string{`cert-authority`, "principals=\"\a\""}, false, false, ""},
++	}
++
++	for _, c := range cases {
++		t.Run(c.desc, func(t *testing.T) {
++			isCA, principals, err := ParseCAOptions(c.options)
++			if c.ok {
++				require.NoError(t, err)
++				assert.Equal(t, c.isCA, isCA)
++				assert.Equal(t, c.principals, principals)
++			} else {
++				assert.NotNil(t, err)
++			}
++		})
++	}
++}
+-- 
+2.53.0
+
+
+From 2cb18988f8db9c3356fa6f7bc4de872e95cf73b6 Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Fri, 20 Mar 2026 21:56:44 +0100
+Subject: [PATCH 03/15] TestAuthorizedStringForKey
+
+---
+ .../asymkey/ssh_key_authorized_keys_test.go   | 40 +++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+diff --git a/models/asymkey/ssh_key_authorized_keys_test.go b/models/asymkey/ssh_key_authorized_keys_test.go
+index 85746cff0a..a428a974d1 100644
+--- a/models/asymkey/ssh_key_authorized_keys_test.go
++++ b/models/asymkey/ssh_key_authorized_keys_test.go
+@@ -11,6 +11,8 @@ import (
+ 	"testing"
+ 
+ 	"forgejo.org/models/db"
++	"forgejo.org/models/perm"
++	"forgejo.org/models/unittest"
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/test"
+ 
+@@ -128,3 +130,41 @@ func TestRewriteAllPublicKeys(t *testing.T) {
+ 		})
+ 	}
+ }
++
++func TestAuthorizedStringForKey(t *testing.T) {
++	require.NoError(t, unittest.PrepareTestDatabase())
++
++	cases := []struct {
++		desc                           string
++		isCA                           bool
++		principals, expectedPrincipals string
++		ownerID                        int64
++	}{
++		{"CA key with a single explicit principal", true, "xyzzy", "xyzzy", 2},
++		{"CA key with multiple explicit principals", true, "a,b,c", "a,b,c", 2},
++		{"plain key, should have no cert-authority or principals options", false, "", "", 2},
++		{"CA key with no explicit principal, i.e. default to username", true, "", "user2", 2},
++		{"CA key with no explicit principal but where the owner somehow isn't in the database", true, "", "", 23456},
++	}
++
++	for _, c := range cases {
++		t.Run(c.desc, func(t *testing.T) {
++			authorizedKeyLine := AuthorizedStringForKey(t.Context(), &PublicKey{
++				ID:          12345,
++				OwnerID:     c.ownerID,
++				Name:        c.desc,
++				Fingerprint: "SHA256:yR3hbHOk3T4rlHHqPaSZfWTkcmV7coiLmTHhNN638wI",
++				Content:     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY0a0IrWYTsjdlgMFe61U3scKLy3hqgWHSUoorlNkhc plainkey",
++				Mode:        perm.AccessModeWrite,
++				Type:        KeyTypeUser,
++				IsCA:        c.isCA,
++				Principals:  c.principals,
++			})
++			assert.Equal(t, c.isCA, strings.Contains(authorizedKeyLine, `cert-authority`))
++			if c.isCA {
++				assert.True(t, strings.Contains(authorizedKeyLine, `principals="`+c.expectedPrincipals+`"`),
++					"Expected to see principals %q in: %s", c.expectedPrincipals, authorizedKeyLine)
++			}
++		})
++	}
++}
+-- 
+2.53.0
+
+
+From 948de17db437bf49e8fb61185cf7b6e7cd718595 Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 09:44:02 +0100
+Subject: [PATCH 04/15] Refactor testing utilities for user-supplied SSH CA
+ keys; add tests for forbidden double-registrations CA/non-CA
+
+---
+ modules/ssh/ssh_test.go              |  87 ++++++++-------
+ tests/integration/ssh_ca_key_test.go | 158 ++++++++++++++++++---------
+ 2 files changed, 157 insertions(+), 88 deletions(-)
+
+diff --git a/modules/ssh/ssh_test.go b/modules/ssh/ssh_test.go
+index cc2daf4e49..a807c7e8f5 100644
+--- a/modules/ssh/ssh_test.go
++++ b/modules/ssh/ssh_test.go
+@@ -4,65 +4,76 @@
+ package ssh
+ 
+ import (
++	"strings"
+ 	"testing"
+ 
+ 	"github.com/stretchr/testify/assert"
+ )
+ 
+-func TestCertificatePrincipalMatching(t *testing.T) {
+-	cases := []struct {
+-		Allowed  string
+-		Supplied string
+-		Matched  bool
+-	}{
++type PrincipalMatchingTestCase = struct {
++	Allowed  string
++	Supplied string
++	Matched  bool
++}
++
++// Exposed for use in E2E tests, where we need the same kind of list
++func VariousPrincipalMatchingTestCases(userName string, otherUser string) []PrincipalMatchingTestCase {
++	userAndOther := userName + "," + otherUser
++	unrelated := userName + "_," + otherUser + "_"
++	repeated := userName + "," + userName
++
++	return []PrincipalMatchingTestCase{
+ 		{"", "", false},
+-		{"", "username", true},
+-		{"", "garbage", false},
+-		{"", "username,garbage", true},
+-		{"", "foo,bar", false},
++		{"", userName, true},
++		{"", otherUser, false},
++		{"", userAndOther, true},
++		{"", unrelated, false},
++
++		{userName, "", false},
++		{userName, userName, true},
++		{userName, otherUser, false},
++		{userName, userAndOther, true},
++		{userName, unrelated, false},
++
++		{otherUser, "", false},
++		{otherUser, userName, false},
++		{otherUser, otherUser, true},
++		{otherUser, userAndOther, true},
++		{otherUser, unrelated, false},
+ 
+-		{"username", "", false},
+-		{"username", "username", true},
+-		{"username", "garbage", false},
+-		{"username", "username,garbage", true},
+-		{"username", "foo,bar", false},
++		{userAndOther, "", false},
++		{userAndOther, userName, true},
++		{userAndOther, otherUser, true},
++		{userAndOther, userAndOther, true},
++		{userAndOther, unrelated, false},
+ 
+-		{"garbage", "", false},
+-		{"garbage", "username", false},
+-		{"garbage", "garbage", true},
+-		{"garbage", "username,garbage", true},
+-		{"garbage", "foo,bar", false},
++		{userName, strings.ToUpper(userName), false},
+ 
+-		{"username,garbage", "", false},
+-		{"username,garbage", "username", true},
+-		{"username,garbage", "garbage", true},
+-		{"username,garbage", "username,garbage", true},
+-		{"username,garbage", "foo,bar", false},
++		{userAndOther, userName[1 : len(userName)-1], false},
++		{userAndOther, userName[:len(userName)/2], false},
++		{userAndOther, userName[len(userName)/2:], false},
++		{userAndOther, otherUser[len(otherUser)/2:], false},
+ 
+-		{"username", "USERNAME", false},
++		{repeated, userName, true},
++		{userName, repeated, true},
++	}
++}
+ 
+-		{"username,garbage", "erna", false},
+-		{"username,garbage", "user", false},
+-		{"username,garbage", "name", false},
+-		{"username,garbage", "bage", false},
++func TestCertificatePrincipalMatching(t *testing.T) {
++	userName := "username"
+ 
+-		{"username,username", "username", true},
+-		{"username", "username,username", true},
++	for _, c := range append(VariousPrincipalMatchingTestCases(userName, "garbage"), []PrincipalMatchingTestCase{
+ 		{"a,b,c", "c", true},
+ 		{"a,c,b", "c", true},
+ 		{"c,a,b", "c", true},
+ 		{"a,d", "a,b,c", true},
+ 		{"d,b", "a,b,c", true},
+ 		{"v,w", "x,y,z", false},
+-	}
+-
+-	const defaultUsername = "username"
+-
+-	for _, c := range cases {
++	}...) {
+ 		allowed := splitPrincipals(c.Allowed)
+ 		supplied := splitPrincipals(c.Supplied)
+ 		if len(allowed) == 0 {
+-			allowed = []string{defaultUsername}
++			allowed = []string{userName}
+ 		}
+ 		_, found := findMatchingPrincipal(supplied, allowed)
+ 		assert.Equal(t, c.Matched, found, "Expected that for allowed %q and supplied %q, found should be %v", c.Allowed, c.Supplied, c.Matched)
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index 193314c582..71ebca0a95 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -22,7 +22,11 @@ import (
+ )
+ 
+ func TestUserSuppliedSSHCAKeys(t *testing.T) {
+-	onApplicationRun(t, testUserSuppliedSSHCAKeys)
++	onApplicationRun(t, func(t *testing.T, u *url.URL) {
++		testUserSuppliedSSHCAKeyBasics(t, u)
++		testCannotRegisterSameCAKeyTwice(t, u)
++		// testPrincipalMatchingE2E(t, u)
++	})
+ }
+ 
+ func endorseKey(t *testing.T, identityKeyFile, signingKeyFile string, certType uint32, principals []string, validitySeconds int) {
+@@ -56,68 +60,122 @@ func endorseKey(t *testing.T, identityKeyFile, signingKeyFile string, certType u
+ 	require.NoError(t, os.WriteFile(identityKeyFile+"-cert.pub", ssh.MarshalAuthorizedKey(cert), 0o700))
+ }
+ 
+-func testUserSuppliedSSHCAKeys(t *testing.T, u *url.URL) {
++type sshKeyFixture = struct {
++	name     string
++	fileName string
++}
++
++type sshCAFixture = struct {
++	ctx                   APITestContext
++	relativeUrl, cloneUrl *url.URL
++	plainkey, cakey       sshKeyFixture
++}
++
++// When callback is called, the plain key is the active key.
++func sshCASetup(t *testing.T, u *url.URL, callback func(t *testing.T, f *sshCAFixture)) {
+ 	defer test.MockVariableValue(&setting.SSH.EnableCertAuth, true)()
+ 
+-	reponame := "ssh-ca-test-repo"
+-	username := "user2"
+-	u.Path = fmt.Sprintf("%s/%s.git", username, reponame)
++	repoName := "ssh-ca-test-repo"
++	userName := "user2"
++
++	relativeUrl := &url.URL{}
++	*relativeUrl = *u
++	relativeUrl.Path = fmt.Sprintf("%s/%s.git", userName, repoName)
+ 
+ 	// User configures this one as a normal key for pulling & pushing
+-	plainkey := fmt.Sprintf("%s-plainkey", username)
++	plainkeyName := fmt.Sprintf("%s-plainkey", userName)
+ 
+ 	// User configures this one as a CA key for signing other keys to allow them to pull & push
+-	cakey := fmt.Sprintf("%s-cakey", username)
++	cakeyName := fmt.Sprintf("%s-cakey", userName)
+ 
+-	ctx := NewAPITestContext(t, username, reponame, auth_model.AccessTokenScopeWriteRepository, auth_model.AccessTokenScopeWriteUser)
++	ctx := NewAPITestContext(t, userName, repoName, auth_model.AccessTokenScopeWriteRepository, auth_model.AccessTokenScopeWriteUser)
+ 
+ 	t.Run("CreateRepository", doAPICreateRepository(ctx, nil, git.Sha1ObjectFormat))
+-
+-	var cakeyID, plainkeyID int64
+-	withKeyFile(t, cakey, func(cakeyFile string) {
+-		withKeyFile(t, plainkey, func(plainkeyFile string) {
+-			// Start off with plainkey being the active key
+-
+-			sshURL := createSSHUrl(ctx.GitPath(), u)
+-
+-			// Shouldn't be able to clone initially as the keys aren't associated with the account yet
+-			t.Run("FailToClone", doGitCloneFail(sshURL))
+-
+-			t.Run("CreatePlainKey", doAPICreateUserKey(ctx, plainkey, plainkeyFile, nil, func(t *testing.T, pk api.PublicKey) {
+-				plainkeyID = pk.ID
+-			}))
+-
+-			t.Run("CloneWithPlainKey", doGitClone(t.TempDir(), sshURL))
+-
+-			cakeyOptions := []string{
+-				`cert-authority`,
+-			}
+-			t.Run("CreateCAKey", doAPICreateUserKey(ctx, cakey, cakeyFile, cakeyOptions, func(t *testing.T, pk api.PublicKey) {
+-				cakeyID = pk.ID
+-			}))
+-
+-			withActiveKey(t, cakeyFile, func() {
+-				// Not allowed to use a CA key directly to push/pull
+-				t.Run("FailToCloneWithCAKey", doGitCloneFail(sshURL))
++	defer doAPIDeleteRepository(ctx)(t)
++	cloneUrl := createSSHUrl(ctx.GitPath(), u)
++
++	withKeyFile(t, cakeyName, func(cakeyFile string) {
++		withKeyFile(t, plainkeyName, func(plainkeyFile string) {
++			callback(t, &sshCAFixture{
++				ctx:         ctx,
++				relativeUrl: relativeUrl,
++				cloneUrl:    cloneUrl,
++				plainkey: sshKeyFixture{
++					name:     plainkeyName,
++					fileName: plainkeyFile,
++				},
++				cakey: sshKeyFixture{
++					name:     cakeyName,
++					fileName: cakeyFile,
++				},
+ 			})
++		})
++	})
++}
+ 
+-			withKeyFile(t, fmt.Sprintf("%s-ephemeralkey", username), func(ephemeralkeyFile string) {
+-				t.Run("FailToCloneWithEphemeralKey", doGitCloneFail(sshURL))
+-				endorseKey(t, ephemeralkeyFile, cakeyFile, ssh.HostCert, []string{username}, 60)
+-				t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(sshURL))
+-				endorseKey(t, ephemeralkeyFile, cakeyFile, ssh.UserCert, []string{username}, 60)
+-				t.Run("CloneWithEphemeralKeyAndUserCert", doGitClone(t.TempDir(), sshURL))
+-				endorseKey(t, ephemeralkeyFile, plainkeyFile, ssh.UserCert, []string{username}, 60)
+-				t.Run("FailToCloneWithEphemeralKeySignedByPlainNonCAKey", doGitCloneFail(sshURL))
+-				endorseKey(t, ephemeralkeyFile, cakeyFile, ssh.UserCert, []string{username}, -60)
+-				t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(sshURL))
+-				defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
+-				endorseKey(t, ephemeralkeyFile, cakeyFile, ssh.UserCert, []string{username}, 60)
+-				t.Run("FailToCloneWithEphemeralKeyAfterDisablingCertAuth", doGitCloneFail(sshURL))
++func withRegisteredKey(t *testing.T, ctx APITestContext, k sshKeyFixture, keyOptions []string, callback func(t *testing.T, pk api.PublicKey)) {
++	t.Run("CreateKey "+k.name, doAPICreateUserKey(ctx, k.name, k.fileName, keyOptions, func(t *testing.T, pk api.PublicKey) {
++		defer t.Run("DeleteKey "+k.name, doAPIDeleteUserKey(ctx, pk.ID))
++		callback(t, pk)
++	}))
++}
++
++func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
++	sshCASetup(t, u, func(t *testing.T, f *sshCAFixture) {
++		// Shouldn't be able to clone initially as the keys aren't associated with the account yet
++		t.Run("FailToClone", doGitCloneFail(f.cloneUrl))
++
++		withRegisteredKey(t, f.ctx, f.plainkey, nil, func(t *testing.T, plainKey api.PublicKey) {
++			// Can clone using the plain key
++			t.Run("CloneWithPlainKey", doGitClone(t.TempDir(), f.cloneUrl))
++			withRegisteredKey(t, f.ctx, f.cakey, []string{`cert-authority`}, func(t *testing.T, caKey api.PublicKey) {
++				withActiveKey(t, f.cakey.fileName, func() {
++					// Not allowed to use a CA key directly to push/pull
++					t.Run("FailToCloneWithCAKey", doGitCloneFail(f.cloneUrl))
++				})
++
++				userName := f.ctx.Username
++				withKeyFile(t, fmt.Sprintf("%s-ephemeralkey", userName), func(ephemeralkeyFile string) {
++					t.Run("FailToCloneWithEphemeralKey", doGitCloneFail(f.cloneUrl))
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.HostCert, []string{userName}, 60)
++					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneUrl))
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
++					t.Run("CloneWithEphemeralKeyAndUserCert", doGitClone(t.TempDir(), f.cloneUrl))
++					endorseKey(t, ephemeralkeyFile, f.plainkey.fileName, ssh.UserCert, []string{userName}, 60)
++					t.Run("FailToCloneWithEphemeralKeySignedByPlainNonCAKey", doGitCloneFail(f.cloneUrl))
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, -60)
++					t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(f.cloneUrl))
++					defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
++					t.Run("FailToCloneWithEphemeralKeyAfterDisablingCertAuth", doGitCloneFail(f.cloneUrl))
++				})
+ 			})
++		})
++	})
++}
+ 
+-			t.Run("DeletePlainKey", doAPIDeleteUserKey(ctx, plainkeyID))
+-			t.Run("DeleteCAKey", doAPIDeleteUserKey(ctx, cakeyID))
++func testCannotRegisterSameCAKeyTwice(t *testing.T, u *url.URL) {
++	sshCASetup(t, u, func(t *testing.T, f *sshCAFixture) {
++		// Register & delete
++		withRegisteredKey(t, f.ctx, f.cakey, []string{
++			`cert-authority`,
++			`principals="firstRegistration"`,
++		}, func(t *testing.T, caKey api.PublicKey) {})
++
++		// Then register...
++		withRegisteredKey(t, f.ctx, f.cakey, []string{
++			`cert-authority`,
++			`principals="firstRegistration"`,
++		}, func(t *testing.T, caKey api.PublicKey) {
++			// ... and try registering the same key again with a different name/options...
++			f.ctx.ExpectedCode = 422 // Unprocessable entity (because duplicate key content)
++			secondOptions := []string{`cert-authority`, `principals="secondRegistration"`}
++			t.Run("FailToCreateSecondCAInstanceOfCAKey", doAPICreateUserKey(f.ctx, f.cakey.name+"2", f.cakey.fileName, secondOptions))
++			// ... OK but let's also try registering it as a plain key...
++			t.Run("FailToCreateSecondPlainInstanceOfCAKey", doAPICreateUserKey(f.ctx, f.cakey.name+"3", f.cakey.fileName, nil))
+ 		})
+ 	})
+ }
++
++// func testPrincipalMatchingE2E(t *testing.T, u *url.URL) {
++// }
+-- 
+2.53.0
+
+
+From 3d77fc159d49cbc1afd33652599c1e1334aef015 Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 10:08:37 +0100
+Subject: [PATCH 05/15] Cover more key provisioning cases
+
+---
+ tests/integration/ssh_ca_key_test.go | 74 +++++++++++++++++++++++-----
+ 1 file changed, 62 insertions(+), 12 deletions(-)
+
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index 71ebca0a95..282ed0358c 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -8,6 +8,7 @@ import (
+ 	"fmt"
+ 	"net/url"
+ 	"os"
++	"strings"
+ 	"testing"
+ 	"time"
+ 
+@@ -24,7 +25,7 @@ import (
+ func TestUserSuppliedSSHCAKeys(t *testing.T) {
+ 	onApplicationRun(t, func(t *testing.T, u *url.URL) {
+ 		testUserSuppliedSSHCAKeyBasics(t, u)
+-		testCannotRegisterSameCAKeyTwice(t, u)
++		testCAKeyProvisioning(t, u)
+ 		// testPrincipalMatchingE2E(t, u)
+ 	})
+ }
+@@ -120,6 +121,14 @@ func withRegisteredKey(t *testing.T, ctx APITestContext, k sshKeyFixture, keyOpt
+ 	}))
+ }
+ 
++func caOptions(principals string, emptyPrincipalsAllowed ...bool) []string {
++	options := []string{`cert-authority`}
++	if principals != "" || (len(emptyPrincipalsAllowed) > 0 && emptyPrincipalsAllowed[0]) {
++		options = append(options, fmt.Sprintf(`principals="%s"`, principals))
++	}
++	return options
++}
++
+ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 	sshCASetup(t, u, func(t *testing.T, f *sshCAFixture) {
+ 		// Shouldn't be able to clone initially as the keys aren't associated with the account yet
+@@ -128,7 +137,7 @@ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 		withRegisteredKey(t, f.ctx, f.plainkey, nil, func(t *testing.T, plainKey api.PublicKey) {
+ 			// Can clone using the plain key
+ 			t.Run("CloneWithPlainKey", doGitClone(t.TempDir(), f.cloneUrl))
+-			withRegisteredKey(t, f.ctx, f.cakey, []string{`cert-authority`}, func(t *testing.T, caKey api.PublicKey) {
++			withRegisteredKey(t, f.ctx, f.cakey, caOptions(""), func(t *testing.T, caKey api.PublicKey) {
+ 				withActiveKey(t, f.cakey.fileName, func() {
+ 					// Not allowed to use a CA key directly to push/pull
+ 					t.Run("FailToCloneWithCAKey", doGitCloneFail(f.cloneUrl))
+@@ -154,28 +163,69 @@ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 	})
+ }
+ 
+-func testCannotRegisterSameCAKeyTwice(t *testing.T, u *url.URL) {
++func testCAKeyProvisioning(t *testing.T, u *url.URL) {
+ 	sshCASetup(t, u, func(t *testing.T, f *sshCAFixture) {
+ 		// Register & delete
+-		withRegisteredKey(t, f.ctx, f.cakey, []string{
+-			`cert-authority`,
+-			`principals="firstRegistration"`,
+-		}, func(t *testing.T, caKey api.PublicKey) {})
++		withRegisteredKey(t, f.ctx, f.cakey, caOptions("firstRegistration"), func(t *testing.T, caKey api.PublicKey) {})
+ 
+ 		// Then register...
+-		withRegisteredKey(t, f.ctx, f.cakey, []string{
+-			`cert-authority`,
+-			`principals="firstRegistration"`,
+-		}, func(t *testing.T, caKey api.PublicKey) {
++		withRegisteredKey(t, f.ctx, f.cakey, caOptions("firstRegistration"), func(t *testing.T, caKey api.PublicKey) {
+ 			// ... and try registering the same key again with a different name/options...
+ 			f.ctx.ExpectedCode = 422 // Unprocessable entity (because duplicate key content)
+-			secondOptions := []string{`cert-authority`, `principals="secondRegistration"`}
++			secondOptions := caOptions("secondRegistration")
+ 			t.Run("FailToCreateSecondCAInstanceOfCAKey", doAPICreateUserKey(f.ctx, f.cakey.name+"2", f.cakey.fileName, secondOptions))
+ 			// ... OK but let's also try registering it as a plain key...
+ 			t.Run("FailToCreateSecondPlainInstanceOfCAKey", doAPICreateUserKey(f.ctx, f.cakey.name+"3", f.cakey.fileName, nil))
+ 		})
++
++		// plain key provisioned with SSH_ENABLE_CERT_AUTH true
++		// plain key provisioned with SSH_ENABLE_CERT_AUTH false
++		expectKeyRegistration(t, f.ctx, f.plainkey, nil, 0, 0)
++
++		// CA key provisioned with principals absent SSH_ENABLE_CERT_AUTH true
++		// CA key provisioned with principals absent SSH_ENABLE_CERT_AUTH false - rejected
++		expectKeyRegistration(t, f.ctx, f.cakey, caOptions(""), 0, 422)
++
++		// CA key provisioned with valid principals and SSH_ENABLE_CERT_AUTH true
++		// CA key provisioned with valid principals and SSH_ENABLE_CERT_AUTH false - rejected
++		expectKeyRegistration(t, f.ctx, f.cakey, caOptions("a,b,c"), 0, 422)
++		expectKeyRegistration(t, f.ctx, f.cakey, caOptions(f.ctx.Username), 0, 422)
++
++		// CA key provisioned with present but empty principals and SSH_ENABLE_CERT_AUTH true - rejected
++		// CA key provisioned with present but empty principals and SSH_ENABLE_CERT_AUTH false - rejected
++		expectKeyRegistration(t, f.ctx, f.cakey, caOptions("", true), 422, 422)
++
++		// CA key provisioned with present but invalid principals and SSH_ENABLE_CERT_AUTH true - rejected
++		// CA key provisioned with present but invalid principals and SSH_ENABLE_CERT_AUTH false - rejected
++		expectKeyRegistration(t, f.ctx, f.cakey, caOptions(`with, spaces, forbidden`), 422, 422)
++		expectKeyRegistration(t, f.ctx, f.cakey, caOptions(`with,\backslash,forbidden`), 422, 422)
++		expectKeyRegistration(t, f.ctx, f.cakey, caOptions("with,nul\000,forbidden"), 422, 422)
+ 	})
+ }
+ 
++func expectKeyRegistration(t *testing.T, ctx APITestContext, k sshKeyFixture, keyOptions []string, expectedWithCAEnabled, expectedWithCADisabled int) {
++	// Assumption: SSH_ENABLE_CERT_AUTH true on entry
++	expectKeyRegistration1(t, ctx, k, keyOptions, expectedWithCAEnabled, true)
++	defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
++	expectKeyRegistration1(t, ctx, k, keyOptions, expectedWithCADisabled, false)
++}
++
++func expectKeyRegistration1(t *testing.T, ctx APITestContext, k sshKeyFixture, keyOptions []string, expectedCode int, isEnabled bool) {
++	t.Run(
++		fmt.Sprintf("SSH_ENABLED_CERT_AUTH=%v options=%s expectedCode=%d",
++			isEnabled,
++			strings.Join(keyOptions, ","),
++			expectedCode),
++		func(t *testing.T) {
++			ctx.ExpectedCode = expectedCode
++			if expectedCode == 0 {
++				withRegisteredKey(t, ctx, k, keyOptions, func(t *testing.T, pk api.PublicKey) {})
++			} else {
++				doAPICreateUserKey(ctx, k.name, k.fileName, keyOptions)(t)
++			}
++		},
++	)
++}
++
+ // func testPrincipalMatchingE2E(t *testing.T, u *url.URL) {
+ // }
+-- 
+2.53.0
+
+
+From a4e78ef2bd087efd4f50330d423c2fcdb6df758f Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 10:38:55 +0100
+Subject: [PATCH 06/15] SSH CA keys LDAP source tests
+
+---
+ services/asymkey/ssh_key_test.go | 78 ++++++++++++++++++++++++++++++++
+ 1 file changed, 78 insertions(+)
+
+diff --git a/services/asymkey/ssh_key_test.go b/services/asymkey/ssh_key_test.go
+index d646e3260a..838bf3d958 100644
+--- a/services/asymkey/ssh_key_test.go
++++ b/services/asymkey/ssh_key_test.go
+@@ -4,6 +4,8 @@
+ package asymkey
+ 
+ import (
++	"fmt"
++	"strings"
+ 	"testing"
+ 
+ 	asymkey_model "forgejo.org/models/asymkey"
+@@ -89,3 +91,79 @@ ssh-dss AAAAB3NzaC1kc3MAAACBAOChCC7lf6Uo9n7BmZ6M8St19PZf4Tn59NriyboW2x/DZuYAz3ib
+ 		}
+ 	}
+ }
++
++// Duplicated in ssh_ca_key_test.go -- TODO: is there a clean way to factor out common test infrastructure?
++func caOptions(principals string, emptyPrincipalsAllowed ...bool) []string {
++	options := []string{`cert-authority`}
++	if principals != "" || (len(emptyPrincipalsAllowed) > 0 && emptyPrincipalsAllowed[0]) {
++		options = append(options, fmt.Sprintf(`principals="%s"`, principals))
++	}
++	return options
++}
++
++func TestAddLdapSSHCAKeys(t *testing.T) {
++	require.NoError(t, unittest.PrepareTestDatabase())
++	defer test.MockVariableValue(&setting.SSH.RootPath, t.TempDir())()
++	defer test.MockVariableValue(&setting.SSH.EnableCertAuth, true)()
++
++	user := unittest.AssertExistsAndLoadBean(t, &user_model.User{ID: 2})
++	s := &auth.Source{ID: 1}
++
++	testCases := []struct {
++		keyOptions                                []string
++		acceptedWhenEnabled, acceptedWhenDisabled bool
++	}{
++		// CA key provisioned with principals absent SSH_ENABLE_CERT_AUTH true
++		// CA key provisioned with principals absent SSH_ENABLE_CERT_AUTH false - rejected
++		{caOptions(""), true, false},
++
++		// CA key provisioned with valid principals and SSH_ENABLE_CERT_AUTH true
++		// CA key provisioned with valid principals and SSH_ENABLE_CERT_AUTH false - rejected
++		{caOptions("a,b,c"), true, false},
++		{caOptions(user.LoginName), true, false},
++
++		// CA key provisioned with present but empty principals and SSH_ENABLE_CERT_AUTH true - rejected
++		// CA key provisioned with present but empty principals and SSH_ENABLE_CERT_AUTH false - rejected
++		{caOptions("", true), false, false},
++
++		// CA key provisioned with present but invalid principals and SSH_ENABLE_CERT_AUTH true - rejected
++		// CA key provisioned with present but invalid principals and SSH_ENABLE_CERT_AUTH false - rejected
++		{caOptions(`with, spaces, forbidden`), false, false},
++		{caOptions(`with,\backslash,forbidden`), false, false},
++		{caOptions("with,nul\000,forbidden"), false, false},
++	}
++
++	for i, kase := range testCases {
++		s.ID = (int64(i) * 2) + 30
++		key1 := insertAndRetrieveKey(t, user, s, kase.keyOptions)
++		s.ID = s.ID + 1
++		setting.SSH.EnableCertAuth = false
++		key2 := insertAndRetrieveKey(t, user, s, kase.keyOptions)
++		setting.SSH.EnableCertAuth = true
++
++		assert.Equal(t, kase.acceptedWhenEnabled, key1 != nil, "Expected key with options %v acceptedWhenEnabled=%v, was %v", kase.keyOptions, kase.acceptedWhenEnabled, key1)
++		assert.Equal(t, kase.acceptedWhenDisabled, key2 != nil, "Expected key with options %v acceptedWhenDisabled=%v, was %v", kase.keyOptions, kase.acceptedWhenDisabled, key2)
++
++		if key1 != nil {
++			DeletePublicKey(db.DefaultContext, user, key1.ID)
++		}
++		if key2 != nil {
++			DeletePublicKey(db.DefaultContext, user, key2.ID)
++		}
++	}
++}
++
++func insertAndRetrieveKey(t *testing.T, user *user_model.User, s *auth.Source, keyOptions []string) *asymkey_model.PublicKey {
++	keyContent := strings.Join(keyOptions, ",") + " ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY0a0IrWYTsjdlgMFe61U3scKLy3hqgWHSUoorlNkhc ldapkey"
++	asymkey_model.AddPublicKeysBySource(db.DefaultContext, user, s, []string{keyContent})
++	keys, err := db.Find[asymkey_model.PublicKey](db.DefaultContext, asymkey_model.FindPublicKeyOptions{
++		OwnerID:       user.ID,
++		LoginSourceID: s.ID,
++	})
++	require.NoError(t, err)
++	if len(keys) > 0 {
++		assert.Contains(t, keyContent, keys[0].Content)
++		return keys[0]
++	}
++	return nil
++}
+-- 
+2.53.0
+
+
+From f6a6387efada0c3c51b0bba064306866c6948804 Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 11:30:22 +0100
+Subject: [PATCH 07/15] Test: can't clone with ephemeral key validly signed by
+ an unregistered CA key
+
+---
+ tests/integration/ssh_ca_key_test.go | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index 282ed0358c..019f852721 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -145,6 +145,12 @@ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 
+ 				userName := f.ctx.Username
+ 				withKeyFile(t, fmt.Sprintf("%s-ephemeralkey", userName), func(ephemeralkeyFile string) {
++					withKeyFile(t, fmt.Sprintf("%s-unregCA", userName), func(unregFile string) {
++						withActiveKey(t, ephemeralkeyFile, func() {
++							endorseKey(t, ephemeralkeyFile, unregFile, ssh.UserCert, []string{userName}, 60)
++							t.Run("FailToCloneWithUnregisteredCAKey", doGitCloneFail(f.cloneUrl))
++						})
++					})
+ 					t.Run("FailToCloneWithEphemeralKey", doGitCloneFail(f.cloneUrl))
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.HostCert, []string{userName}, 60)
+ 					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneUrl))
+-- 
+2.53.0
+
+
+From bbada55f2657c7b7a2e6ea080a1863dd4edb888f Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 11:37:14 +0100
+Subject: [PATCH 08/15] Test cert not yet valid
+
+---
+ tests/integration/ssh_ca_key_test.go | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index 019f852721..a6a4918d06 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -31,6 +31,10 @@ func TestUserSuppliedSSHCAKeys(t *testing.T) {
+ }
+ 
+ func endorseKey(t *testing.T, identityKeyFile, signingKeyFile string, certType uint32, principals []string, validitySeconds int) {
++	endorseKeyWithValidityOffset(t, identityKeyFile, signingKeyFile, certType, principals, validitySeconds, 0)
++}
++
++func endorseKeyWithValidityOffset(t *testing.T, identityKeyFile, signingKeyFile string, certType uint32, principals []string, validitySeconds int, validityWindowOffset int) {
+ 	dataIdentityKey, err := os.ReadFile(identityKeyFile + ".pub")
+ 	require.NoError(t, err)
+ 	identityKey, _, _, _, err := ssh.ParseAuthorizedKey(dataIdentityKey)
+@@ -39,13 +43,14 @@ func endorseKey(t *testing.T, identityKeyFile, signingKeyFile string, certType u
+ 	require.NoError(t, err)
+ 	ca, err := ssh.ParsePrivateKey(dataPrivKey)
+ 	require.NoError(t, err)
++	validAfter := uint64(time.Now().Add(time.Duration(validityWindowOffset) * time.Second).Unix())
+ 	cert := &ssh.Certificate{
+ 		Key:             identityKey, // SPKI "object" - key to which authority is delegated
+ 		Serial:          uint64(1),
+ 		CertType:        certType,
+ 		ValidPrincipals: principals,
+-		ValidAfter:      0,
+-		ValidBefore:     uint64(time.Now().Add(time.Duration(validitySeconds) * time.Second).Unix()),
++		ValidAfter:      validAfter,
++		ValidBefore:     uint64(int64(validAfter) + int64(validitySeconds)),
+ 		// Permissions: a reasonable, standardesque collection
+ 		Permissions: ssh.Permissions{
+ 			Extensions: map[string]string{
+@@ -160,6 +165,10 @@ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 					t.Run("FailToCloneWithEphemeralKeySignedByPlainNonCAKey", doGitCloneFail(f.cloneUrl))
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, -60)
+ 					t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(f.cloneUrl))
++
++					endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60, 60)
++					t.Run("FailToCloneWithFutureValidityCert", doGitCloneFail(f.cloneUrl))
++
+ 					defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
+ 					t.Run("FailToCloneWithEphemeralKeyAfterDisablingCertAuth", doGitCloneFail(f.cloneUrl))
+-- 
+2.53.0
+
+
+From fb1d76e685c9e41c8329ca197eb81cbf8db3d72e Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 11:38:14 +0100
+Subject: [PATCH 09/15] Move initial clone-failure test to correct
+ pre-endorseKey location
+
+---
+ tests/integration/ssh_ca_key_test.go | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index a6a4918d06..0baa2cc2a0 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -150,13 +150,16 @@ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 
+ 				userName := f.ctx.Username
+ 				withKeyFile(t, fmt.Sprintf("%s-ephemeralkey", userName), func(ephemeralkeyFile string) {
++					// This test must appear first, before ephemeralkeyFile is ever endorsed
++					t.Run("FailToCloneWithUnsignedEphemeralKey", doGitCloneFail(f.cloneUrl))
++
+ 					withKeyFile(t, fmt.Sprintf("%s-unregCA", userName), func(unregFile string) {
+ 						withActiveKey(t, ephemeralkeyFile, func() {
+ 							endorseKey(t, ephemeralkeyFile, unregFile, ssh.UserCert, []string{userName}, 60)
+ 							t.Run("FailToCloneWithUnregisteredCAKey", doGitCloneFail(f.cloneUrl))
+ 						})
+ 					})
+-					t.Run("FailToCloneWithEphemeralKey", doGitCloneFail(f.cloneUrl))
++
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.HostCert, []string{userName}, 60)
+ 					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneUrl))
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
+-- 
+2.53.0
+
+
+From 00032bbb53bc8a43d8d511b7dc4ad9d9347c3000 Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 11:38:21 +0100
+Subject: [PATCH 10/15] Cosmetic
+
+---
+ tests/integration/ssh_ca_key_test.go | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index 0baa2cc2a0..93f1f3fb9e 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -162,10 +162,13 @@ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.HostCert, []string{userName}, 60)
+ 					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneUrl))
++
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
+ 					t.Run("CloneWithEphemeralKeyAndUserCert", doGitClone(t.TempDir(), f.cloneUrl))
++
+ 					endorseKey(t, ephemeralkeyFile, f.plainkey.fileName, ssh.UserCert, []string{userName}, 60)
+ 					t.Run("FailToCloneWithEphemeralKeySignedByPlainNonCAKey", doGitCloneFail(f.cloneUrl))
++
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, -60)
+ 					t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(f.cloneUrl))
+ 
+-- 
+2.53.0
+
+
+From 20ba993a5a47a00739cb4206f5631f63d1713adf Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 12:01:17 +0100
+Subject: [PATCH 11/15] Prepare for integration-level principal-matching tests
+ by moving unit tests up to the integration layer (!)
+
+---
+ modules/ssh/ssh.go                   | 10 +--
+ modules/ssh/ssh_test.go              | 81 -----------------------
+ tests/integration/ssh_ca_key_test.go | 99 ++++++++++++++++++++++++----
+ 3 files changed, 92 insertions(+), 98 deletions(-)
+ delete mode 100644 modules/ssh/ssh_test.go
+
+diff --git a/modules/ssh/ssh.go b/modules/ssh/ssh.go
+index a24121a30f..a426277414 100644
+--- a/modules/ssh/ssh.go
++++ b/modules/ssh/ssh.go
+@@ -226,7 +226,7 @@ func authenticationWithCert(ctx ssh.Context, cert *gossh.Certificate) bool {
+ }
+ 
+ func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate, userCA *asymkey_model.PublicKey) (keyID int64, ok bool) {
+-	allowedPrincipals := splitPrincipals(userCA.Principals)
++	allowedPrincipals := SplitPrincipals(userCA.Principals)
+ 	if len(allowedPrincipals) == 0 {
+ 		owner, err := user.GetUserByID(ctx, userCA.OwnerID)
+ 		if err != nil {
+@@ -236,7 +236,7 @@ func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate,
+ 		allowedPrincipals = []string{owner.Name}
+ 	}
+ 
+-	principal, matchedPrincipal := findMatchingPrincipal(cert.ValidPrincipals, allowedPrincipals)
++	principal, matchedPrincipal := FindMatchingPrincipal(cert.ValidPrincipals, allowedPrincipals)
+ 	if !matchedPrincipal {
+ 		logger.Error("No principal listed in certificate is also listed in CA key's allowed principals list")
+ 		return 0, false
+@@ -256,14 +256,16 @@ func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate,
+ 	return userCA.ID, true
+ }
+ 
+-func splitPrincipals(principals string) []string {
++// Exposed for testing
++func SplitPrincipals(principals string) []string {
+ 	if principals == "" {
+ 		return nil
+ 	}
+ 	return strings.Split(principals, ",")
+ }
+ 
+-func findMatchingPrincipal(suppliedPrincipals, allowedPrincipals []string) (string, bool) {
++// Exposed for testing
++func FindMatchingPrincipal(suppliedPrincipals, allowedPrincipals []string) (string, bool) {
+ 	for _, suppliedPrincipal := range suppliedPrincipals {
+ 		if slices.Contains(allowedPrincipals, suppliedPrincipal) {
+ 			return suppliedPrincipal, true
+diff --git a/modules/ssh/ssh_test.go b/modules/ssh/ssh_test.go
+deleted file mode 100644
+index a807c7e8f5..0000000000
+--- a/modules/ssh/ssh_test.go
++++ /dev/null
+@@ -1,81 +0,0 @@
+-// Copyright 2026 The Forgejo Authors. All rights reserved.
+-// SPDX-License-Identifier: GPL-3.0-or-later
+-
+-package ssh
+-
+-import (
+-	"strings"
+-	"testing"
+-
+-	"github.com/stretchr/testify/assert"
+-)
+-
+-type PrincipalMatchingTestCase = struct {
+-	Allowed  string
+-	Supplied string
+-	Matched  bool
+-}
+-
+-// Exposed for use in E2E tests, where we need the same kind of list
+-func VariousPrincipalMatchingTestCases(userName string, otherUser string) []PrincipalMatchingTestCase {
+-	userAndOther := userName + "," + otherUser
+-	unrelated := userName + "_," + otherUser + "_"
+-	repeated := userName + "," + userName
+-
+-	return []PrincipalMatchingTestCase{
+-		{"", "", false},
+-		{"", userName, true},
+-		{"", otherUser, false},
+-		{"", userAndOther, true},
+-		{"", unrelated, false},
+-
+-		{userName, "", false},
+-		{userName, userName, true},
+-		{userName, otherUser, false},
+-		{userName, userAndOther, true},
+-		{userName, unrelated, false},
+-
+-		{otherUser, "", false},
+-		{otherUser, userName, false},
+-		{otherUser, otherUser, true},
+-		{otherUser, userAndOther, true},
+-		{otherUser, unrelated, false},
+-
+-		{userAndOther, "", false},
+-		{userAndOther, userName, true},
+-		{userAndOther, otherUser, true},
+-		{userAndOther, userAndOther, true},
+-		{userAndOther, unrelated, false},
+-
+-		{userName, strings.ToUpper(userName), false},
+-
+-		{userAndOther, userName[1 : len(userName)-1], false},
+-		{userAndOther, userName[:len(userName)/2], false},
+-		{userAndOther, userName[len(userName)/2:], false},
+-		{userAndOther, otherUser[len(otherUser)/2:], false},
+-
+-		{repeated, userName, true},
+-		{userName, repeated, true},
+-	}
+-}
+-
+-func TestCertificatePrincipalMatching(t *testing.T) {
+-	userName := "username"
+-
+-	for _, c := range append(VariousPrincipalMatchingTestCases(userName, "garbage"), []PrincipalMatchingTestCase{
+-		{"a,b,c", "c", true},
+-		{"a,c,b", "c", true},
+-		{"c,a,b", "c", true},
+-		{"a,d", "a,b,c", true},
+-		{"d,b", "a,b,c", true},
+-		{"v,w", "x,y,z", false},
+-	}...) {
+-		allowed := splitPrincipals(c.Allowed)
+-		supplied := splitPrincipals(c.Supplied)
+-		if len(allowed) == 0 {
+-			allowed = []string{userName}
+-		}
+-		_, found := findMatchingPrincipal(supplied, allowed)
+-		assert.Equal(t, c.Matched, found, "Expected that for allowed %q and supplied %q, found should be %v", c.Allowed, c.Supplied, c.Matched)
+-	}
+-}
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index 93f1f3fb9e..2bbc1ce328 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -15,13 +15,86 @@ import (
+ 	auth_model "forgejo.org/models/auth"
+ 	"forgejo.org/modules/git"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/modules/ssh"
+ 	api "forgejo.org/modules/structs"
+ 	"forgejo.org/modules/test"
+ 
++	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+-	"golang.org/x/crypto/ssh"
++	gossh "golang.org/x/crypto/ssh"
+ )
+ 
++type principalMatchingTestCase = struct {
++	Allowed  string
++	Supplied string
++	Matched  bool
++}
++
++func variousPrincipalMatchingTestCases(userName string, otherUser string) []principalMatchingTestCase {
++	userAndOther := userName + "," + otherUser
++	unrelated := userName + "_," + otherUser + "_"
++	repeated := userName + "," + userName
++
++	return []principalMatchingTestCase{
++		{"", "", false},
++		{"", userName, true},
++		{"", otherUser, false},
++		{"", userAndOther, true},
++		{"", unrelated, false},
++
++		{userName, "", false},
++		{userName, userName, true},
++		{userName, otherUser, false},
++		{userName, userAndOther, true},
++		{userName, unrelated, false},
++
++		{otherUser, "", false},
++		{otherUser, userName, false},
++		{otherUser, otherUser, true},
++		{otherUser, userAndOther, true},
++		{otherUser, unrelated, false},
++
++		{userAndOther, "", false},
++		{userAndOther, userName, true},
++		{userAndOther, otherUser, true},
++		{userAndOther, userAndOther, true},
++		{userAndOther, unrelated, false},
++
++		{userName, strings.ToUpper(userName), false},
++
++		{userAndOther, userName[1 : len(userName)-1], false},
++		{userAndOther, userName[:len(userName)/2], false},
++		{userAndOther, userName[len(userName)/2:], false},
++		{userAndOther, otherUser[len(otherUser)/2:], false},
++
++		{repeated, userName, true},
++		{userName, repeated, true},
++	}
++}
++
++// This is, strictly, a unit test and should be in modules/ssh/ssh_test.go, but it's here so we can
++// share variousPrincipalMatchingTestCases with the E2E tests elsewhere in this file
++func TestCertificatePrincipalMatching(t *testing.T) {
++	userName := "username"
++
++	for _, c := range append(variousPrincipalMatchingTestCases(userName, "garbage"), []principalMatchingTestCase{
++		{"a,b,c", "c", true},
++		{"a,c,b", "c", true},
++		{"c,a,b", "c", true},
++		{"a,d", "a,b,c", true},
++		{"d,b", "a,b,c", true},
++		{"v,w", "x,y,z", false},
++	}...) {
++		allowed := ssh.SplitPrincipals(c.Allowed)
++		supplied := ssh.SplitPrincipals(c.Supplied)
++		if len(allowed) == 0 {
++			allowed = []string{userName}
++		}
++		_, found := ssh.FindMatchingPrincipal(supplied, allowed)
++		assert.Equal(t, c.Matched, found, "Expected that for allowed %q and supplied %q, found should be %v", c.Allowed, c.Supplied, c.Matched)
++	}
++}
++
+ func TestUserSuppliedSSHCAKeys(t *testing.T) {
+ 	onApplicationRun(t, func(t *testing.T, u *url.URL) {
+ 		testUserSuppliedSSHCAKeyBasics(t, u)
+@@ -37,14 +110,14 @@ func endorseKey(t *testing.T, identityKeyFile, signingKeyFile string, certType u
+ func endorseKeyWithValidityOffset(t *testing.T, identityKeyFile, signingKeyFile string, certType uint32, principals []string, validitySeconds int, validityWindowOffset int) {
+ 	dataIdentityKey, err := os.ReadFile(identityKeyFile + ".pub")
+ 	require.NoError(t, err)
+-	identityKey, _, _, _, err := ssh.ParseAuthorizedKey(dataIdentityKey)
++	identityKey, _, _, _, err := gossh.ParseAuthorizedKey(dataIdentityKey)
+ 	require.NoError(t, err)
+ 	dataPrivKey, err := os.ReadFile(signingKeyFile)
+ 	require.NoError(t, err)
+-	ca, err := ssh.ParsePrivateKey(dataPrivKey)
++	ca, err := gossh.ParsePrivateKey(dataPrivKey)
+ 	require.NoError(t, err)
+ 	validAfter := uint64(time.Now().Add(time.Duration(validityWindowOffset) * time.Second).Unix())
+-	cert := &ssh.Certificate{
++	cert := &gossh.Certificate{
+ 		Key:             identityKey, // SPKI "object" - key to which authority is delegated
+ 		Serial:          uint64(1),
+ 		CertType:        certType,
+@@ -52,7 +125,7 @@ func endorseKeyWithValidityOffset(t *testing.T, identityKeyFile, signingKeyFile
+ 		ValidAfter:      validAfter,
+ 		ValidBefore:     uint64(int64(validAfter) + int64(validitySeconds)),
+ 		// Permissions: a reasonable, standardesque collection
+-		Permissions: ssh.Permissions{
++		Permissions: gossh.Permissions{
+ 			Extensions: map[string]string{
+ 				"permit-pty":              "",
+ 				"permit-port-forwarding":  "",
+@@ -63,7 +136,7 @@ func endorseKeyWithValidityOffset(t *testing.T, identityKeyFile, signingKeyFile
+ 		},
+ 	}
+ 	require.NoError(t, cert.SignCert(rand.Reader, ca))
+-	require.NoError(t, os.WriteFile(identityKeyFile+"-cert.pub", ssh.MarshalAuthorizedKey(cert), 0o700))
++	require.NoError(t, os.WriteFile(identityKeyFile+"-cert.pub", gossh.MarshalAuthorizedKey(cert), 0o700))
+ }
+ 
+ type sshKeyFixture = struct {
+@@ -155,28 +228,28 @@ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 
+ 					withKeyFile(t, fmt.Sprintf("%s-unregCA", userName), func(unregFile string) {
+ 						withActiveKey(t, ephemeralkeyFile, func() {
+-							endorseKey(t, ephemeralkeyFile, unregFile, ssh.UserCert, []string{userName}, 60)
++							endorseKey(t, ephemeralkeyFile, unregFile, gossh.UserCert, []string{userName}, 60)
+ 							t.Run("FailToCloneWithUnregisteredCAKey", doGitCloneFail(f.cloneUrl))
+ 						})
+ 					})
+ 
+-					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.HostCert, []string{userName}, 60)
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.HostCert, []string{userName}, 60)
+ 					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneUrl))
+ 
+-					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, 60)
+ 					t.Run("CloneWithEphemeralKeyAndUserCert", doGitClone(t.TempDir(), f.cloneUrl))
+ 
+-					endorseKey(t, ephemeralkeyFile, f.plainkey.fileName, ssh.UserCert, []string{userName}, 60)
++					endorseKey(t, ephemeralkeyFile, f.plainkey.fileName, gossh.UserCert, []string{userName}, 60)
+ 					t.Run("FailToCloneWithEphemeralKeySignedByPlainNonCAKey", doGitCloneFail(f.cloneUrl))
+ 
+-					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, -60)
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, -60)
+ 					t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(f.cloneUrl))
+ 
+-					endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60, 60)
++					endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, 60, 60)
+ 					t.Run("FailToCloneWithFutureValidityCert", doGitCloneFail(f.cloneUrl))
+ 
+ 					defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
+-					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, 60)
+ 					t.Run("FailToCloneWithEphemeralKeyAfterDisablingCertAuth", doGitCloneFail(f.cloneUrl))
+ 				})
+ 			})
+-- 
+2.53.0
+
+
+From ca98b0c47d4c08465e248ba5ba0c97c6838b30a3 Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 12:12:01 +0100
+Subject: [PATCH 12/15] API-level testing of CA principal matching
+
+---
+ tests/integration/ssh_ca_key_test.go | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index 2bbc1ce328..f093fcb0f9 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -99,7 +99,7 @@ func TestUserSuppliedSSHCAKeys(t *testing.T) {
+ 	onApplicationRun(t, func(t *testing.T, u *url.URL) {
+ 		testUserSuppliedSSHCAKeyBasics(t, u)
+ 		testCAKeyProvisioning(t, u)
+-		// testPrincipalMatchingE2E(t, u)
++		testPrincipalMatchingE2E(t, u)
+ 	})
+ }
+ 
+@@ -321,5 +321,20 @@ func expectKeyRegistration1(t *testing.T, ctx APITestContext, k sshKeyFixture, k
+ 	)
+ }
+ 
+-// func testPrincipalMatchingE2E(t *testing.T, u *url.URL) {
+-// }
++func testPrincipalMatchingE2E(t *testing.T, u *url.URL) {
++	sshCASetup(t, u, func(t *testing.T, f *sshCAFixture) {
++		for _, c := range variousPrincipalMatchingTestCases(f.ctx.Username, "not-"+f.ctx.Username+"-not") {
++			withRegisteredKey(t, f.ctx, f.cakey, caOptions(c.Allowed), func(t *testing.T, caKey api.PublicKey) {
++				withKeyFile(t, fmt.Sprintf("%s-ephemeralkey", f.ctx.Username), func(ephemeralkeyFile string) {
++					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, ssh.SplitPrincipals(c.Supplied), 60)
++					desc := fmt.Sprintf("allowed=%s supplied=%s ok=%v", c.Allowed, c.Supplied, c.Matched)
++					if c.Matched {
++						t.Run(desc, doGitClone(t.TempDir(), f.cloneUrl))
++					} else {
++						t.Run(desc, doGitCloneFail(f.cloneUrl))
++					}
++				})
++			})
++		}
++	})
++}
+-- 
+2.53.0
+
+
+From 4d941c19098776ca72751f8d565ac571cdd6b41b Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 15:50:18 +0100
+Subject: [PATCH 13/15] Tests tampering with certs in various ways
+
+---
+ tests/integration/ssh_ca_key_test.go | 43 ++++++++++++++++++++++++++--
+ 1 file changed, 40 insertions(+), 3 deletions(-)
+
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index f093fcb0f9..ea8ef57a94 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -100,14 +100,23 @@ func TestUserSuppliedSSHCAKeys(t *testing.T) {
+ 		testUserSuppliedSSHCAKeyBasics(t, u)
+ 		testCAKeyProvisioning(t, u)
+ 		testPrincipalMatchingE2E(t, u)
++		testTamperedCertificates(t, u)
+ 	})
+ }
+ 
+ func endorseKey(t *testing.T, identityKeyFile, signingKeyFile string, certType uint32, principals []string, validitySeconds int) {
+-	endorseKeyWithValidityOffset(t, identityKeyFile, signingKeyFile, certType, principals, validitySeconds, 0)
++	endorseKeyWithValidityOffset(t, identityKeyFile, signingKeyFile, certType, principals, validitySeconds, 0, nil)
+ }
+ 
+-func endorseKeyWithValidityOffset(t *testing.T, identityKeyFile, signingKeyFile string, certType uint32, principals []string, validitySeconds int, validityWindowOffset int) {
++func endorseKeyWithValidityOffset(
++	t *testing.T,
++	identityKeyFile, signingKeyFile string,
++	certType uint32,
++	principals []string,
++	validitySeconds int,
++	validityWindowOffset int,
++	tamperFn func(cert *gossh.Certificate),
++) {
+ 	dataIdentityKey, err := os.ReadFile(identityKeyFile + ".pub")
+ 	require.NoError(t, err)
+ 	identityKey, _, _, _, err := gossh.ParseAuthorizedKey(dataIdentityKey)
+@@ -136,6 +145,9 @@ func endorseKeyWithValidityOffset(t *testing.T, identityKeyFile, signingKeyFile
+ 		},
+ 	}
+ 	require.NoError(t, cert.SignCert(rand.Reader, ca))
++	if tamperFn != nil {
++		tamperFn(cert)
++	}
+ 	require.NoError(t, os.WriteFile(identityKeyFile+"-cert.pub", gossh.MarshalAuthorizedKey(cert), 0o700))
+ }
+ 
+@@ -245,7 +257,7 @@ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, -60)
+ 					t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(f.cloneUrl))
+ 
+-					endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, 60, 60)
++					endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, 60, 60, nil)
+ 					t.Run("FailToCloneWithFutureValidityCert", doGitCloneFail(f.cloneUrl))
+ 
+ 					defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
+@@ -338,3 +350,28 @@ func testPrincipalMatchingE2E(t *testing.T, u *url.URL) {
+ 		}
+ 	})
+ }
++
++func testTamperedCertificates(t *testing.T, u *url.URL) {
++	sshCASetup(t, u, func(t *testing.T, f *sshCAFixture) {
++		withRegisteredKey(t, f.ctx, f.cakey, caOptions(""), func(t *testing.T, caKey api.PublicKey) {
++			withKeyFile(t, fmt.Sprintf("%s-ephemeralkey", f.ctx.Username), func(ephemeralkeyFile string) {
++				// Make sure an unmodified certificate is accepted first
++				endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{f.ctx.Username}, 60, 0, nil)
++				for _, c := range []struct {
++					desc     string
++					tamperFn func(cert *gossh.Certificate)
++				}{
++					{"nonce", func(cert *gossh.Certificate) { cert.Nonce[len(cert.Nonce)-1]++ }},
++					{"principals", func(cert *gossh.Certificate) { cert.ValidPrincipals = []string{"invalid"} }},
++					{"signature", func(cert *gossh.Certificate) { cert.Signature.Blob[len(cert.Signature.Blob)/2]++ }},
++					{"validity1", func(cert *gossh.Certificate) { cert.ValidAfter += 60; cert.ValidBefore += 60 }},
++					{"validity2", func(cert *gossh.Certificate) { cert.ValidAfter -= 600; cert.ValidBefore -= 600 }},
++					{"signingkey", func(cert *gossh.Certificate) { cert.SignatureKey = cert.Key }},
++				} {
++					endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{f.ctx.Username}, 60, 0, c.tamperFn)
++					t.Run("Tamper with "+c.desc, doGitCloneFail(f.cloneUrl))
++				}
++			})
++		})
++	})
++}
+-- 
+2.53.0
+
+
+From ca657fcac9beec78dbda1b76e288d932a50e472e Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 16:16:40 +0100
+Subject: [PATCH 14/15] Fixes from make pr-go
+
+---
+ models/asymkey/ssh_key_authorized_keys_test.go | 2 +-
+ models/asymkey/ssh_key_parse_test.go           | 2 +-
+ services/asymkey/ssh_key_test.go               | 2 +-
+ tests/integration/ssh_ca_key_test.go           | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/models/asymkey/ssh_key_authorized_keys_test.go b/models/asymkey/ssh_key_authorized_keys_test.go
+index a428a974d1..76a212e363 100644
+--- a/models/asymkey/ssh_key_authorized_keys_test.go
++++ b/models/asymkey/ssh_key_authorized_keys_test.go
+@@ -162,7 +162,7 @@ func TestAuthorizedStringForKey(t *testing.T) {
+ 			})
+ 			assert.Equal(t, c.isCA, strings.Contains(authorizedKeyLine, `cert-authority`))
+ 			if c.isCA {
+-				assert.True(t, strings.Contains(authorizedKeyLine, `principals="`+c.expectedPrincipals+`"`),
++				assert.Contains(t, authorizedKeyLine, `principals="`+c.expectedPrincipals+`"`,
+ 					"Expected to see principals %q in: %s", c.expectedPrincipals, authorizedKeyLine)
+ 			}
+ 		})
+diff --git a/models/asymkey/ssh_key_parse_test.go b/models/asymkey/ssh_key_parse_test.go
+index aa97f57a2c..25b1f52e32 100644
+--- a/models/asymkey/ssh_key_parse_test.go
++++ b/models/asymkey/ssh_key_parse_test.go
+@@ -54,7 +54,7 @@ func TestParseCAOptions(t *testing.T) {
+ 				assert.Equal(t, c.isCA, isCA)
+ 				assert.Equal(t, c.principals, principals)
+ 			} else {
+-				assert.NotNil(t, err)
++				assert.Error(t, err)
+ 			}
+ 		})
+ 	}
+diff --git a/services/asymkey/ssh_key_test.go b/services/asymkey/ssh_key_test.go
+index 838bf3d958..de7104272e 100644
+--- a/services/asymkey/ssh_key_test.go
++++ b/services/asymkey/ssh_key_test.go
+@@ -136,7 +136,7 @@ func TestAddLdapSSHCAKeys(t *testing.T) {
+ 	for i, kase := range testCases {
+ 		s.ID = (int64(i) * 2) + 30
+ 		key1 := insertAndRetrieveKey(t, user, s, kase.keyOptions)
+-		s.ID = s.ID + 1
++		s.ID++
+ 		setting.SSH.EnableCertAuth = false
+ 		key2 := insertAndRetrieveKey(t, user, s, kase.keyOptions)
+ 		setting.SSH.EnableCertAuth = true
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index ea8ef57a94..b30d43d1fd 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -30,7 +30,7 @@ type principalMatchingTestCase = struct {
+ 	Matched  bool
+ }
+ 
+-func variousPrincipalMatchingTestCases(userName string, otherUser string) []principalMatchingTestCase {
++func variousPrincipalMatchingTestCases(userName, otherUser string) []principalMatchingTestCase {
+ 	userAndOther := userName + "," + otherUser
+ 	unrelated := userName + "_," + otherUser + "_"
+ 	repeated := userName + "," + userName
+-- 
+2.53.0
+
+
+From e4cc5131c986e44ac7e568e90b8ddeff70124309 Mon Sep 17 00:00:00 2001
+From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
+Date: Sat, 21 Mar 2026 16:17:16 +0100
+Subject: [PATCH 15/15] Fixes from make pr-go
+
+---
+ tests/integration/ssh_ca_key_test.go | 42 ++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
+
+diff --git a/tests/integration/ssh_ca_key_test.go b/tests/integration/ssh_ca_key_test.go
+index b30d43d1fd..118a09330b 100644
+--- a/tests/integration/ssh_ca_key_test.go
++++ b/tests/integration/ssh_ca_key_test.go
+@@ -158,7 +158,7 @@ type sshKeyFixture = struct {
+ 
+ type sshCAFixture = struct {
+ 	ctx                   APITestContext
+-	relativeUrl, cloneUrl *url.URL
++	relativeURL, cloneURL *url.URL
+ 	plainkey, cakey       sshKeyFixture
+ }
+ 
+@@ -169,9 +169,9 @@ func sshCASetup(t *testing.T, u *url.URL, callback func(t *testing.T, f *sshCAFi
+ 	repoName := "ssh-ca-test-repo"
+ 	userName := "user2"
+ 
+-	relativeUrl := &url.URL{}
+-	*relativeUrl = *u
+-	relativeUrl.Path = fmt.Sprintf("%s/%s.git", userName, repoName)
++	relativeURL := &url.URL{}
++	*relativeURL = *u
++	relativeURL.Path = fmt.Sprintf("%s/%s.git", userName, repoName)
+ 
+ 	// User configures this one as a normal key for pulling & pushing
+ 	plainkeyName := fmt.Sprintf("%s-plainkey", userName)
+@@ -183,14 +183,14 @@ func sshCASetup(t *testing.T, u *url.URL, callback func(t *testing.T, f *sshCAFi
+ 
+ 	t.Run("CreateRepository", doAPICreateRepository(ctx, nil, git.Sha1ObjectFormat))
+ 	defer doAPIDeleteRepository(ctx)(t)
+-	cloneUrl := createSSHUrl(ctx.GitPath(), u)
++	cloneURL := createSSHUrl(ctx.GitPath(), u)
+ 
+ 	withKeyFile(t, cakeyName, func(cakeyFile string) {
+ 		withKeyFile(t, plainkeyName, func(plainkeyFile string) {
+ 			callback(t, &sshCAFixture{
+ 				ctx:         ctx,
+-				relativeUrl: relativeUrl,
+-				cloneUrl:    cloneUrl,
++				relativeURL: relativeURL,
++				cloneURL:    cloneURL,
+ 				plainkey: sshKeyFixture{
+ 					name:     plainkeyName,
+ 					fileName: plainkeyFile,
+@@ -222,47 +222,47 @@ func caOptions(principals string, emptyPrincipalsAllowed ...bool) []string {
+ func testUserSuppliedSSHCAKeyBasics(t *testing.T, u *url.URL) {
+ 	sshCASetup(t, u, func(t *testing.T, f *sshCAFixture) {
+ 		// Shouldn't be able to clone initially as the keys aren't associated with the account yet
+-		t.Run("FailToClone", doGitCloneFail(f.cloneUrl))
++		t.Run("FailToClone", doGitCloneFail(f.cloneURL))
+ 
+ 		withRegisteredKey(t, f.ctx, f.plainkey, nil, func(t *testing.T, plainKey api.PublicKey) {
+ 			// Can clone using the plain key
+-			t.Run("CloneWithPlainKey", doGitClone(t.TempDir(), f.cloneUrl))
++			t.Run("CloneWithPlainKey", doGitClone(t.TempDir(), f.cloneURL))
+ 			withRegisteredKey(t, f.ctx, f.cakey, caOptions(""), func(t *testing.T, caKey api.PublicKey) {
+ 				withActiveKey(t, f.cakey.fileName, func() {
+ 					// Not allowed to use a CA key directly to push/pull
+-					t.Run("FailToCloneWithCAKey", doGitCloneFail(f.cloneUrl))
++					t.Run("FailToCloneWithCAKey", doGitCloneFail(f.cloneURL))
+ 				})
+ 
+ 				userName := f.ctx.Username
+ 				withKeyFile(t, fmt.Sprintf("%s-ephemeralkey", userName), func(ephemeralkeyFile string) {
+ 					// This test must appear first, before ephemeralkeyFile is ever endorsed
+-					t.Run("FailToCloneWithUnsignedEphemeralKey", doGitCloneFail(f.cloneUrl))
++					t.Run("FailToCloneWithUnsignedEphemeralKey", doGitCloneFail(f.cloneURL))
+ 
+ 					withKeyFile(t, fmt.Sprintf("%s-unregCA", userName), func(unregFile string) {
+ 						withActiveKey(t, ephemeralkeyFile, func() {
+ 							endorseKey(t, ephemeralkeyFile, unregFile, gossh.UserCert, []string{userName}, 60)
+-							t.Run("FailToCloneWithUnregisteredCAKey", doGitCloneFail(f.cloneUrl))
++							t.Run("FailToCloneWithUnregisteredCAKey", doGitCloneFail(f.cloneURL))
+ 						})
+ 					})
+ 
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.HostCert, []string{userName}, 60)
+-					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneUrl))
++					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneURL))
+ 
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, 60)
+-					t.Run("CloneWithEphemeralKeyAndUserCert", doGitClone(t.TempDir(), f.cloneUrl))
++					t.Run("CloneWithEphemeralKeyAndUserCert", doGitClone(t.TempDir(), f.cloneURL))
+ 
+ 					endorseKey(t, ephemeralkeyFile, f.plainkey.fileName, gossh.UserCert, []string{userName}, 60)
+-					t.Run("FailToCloneWithEphemeralKeySignedByPlainNonCAKey", doGitCloneFail(f.cloneUrl))
++					t.Run("FailToCloneWithEphemeralKeySignedByPlainNonCAKey", doGitCloneFail(f.cloneURL))
+ 
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, -60)
+-					t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(f.cloneUrl))
++					t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(f.cloneURL))
+ 
+ 					endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, 60, 60, nil)
+-					t.Run("FailToCloneWithFutureValidityCert", doGitCloneFail(f.cloneUrl))
++					t.Run("FailToCloneWithFutureValidityCert", doGitCloneFail(f.cloneURL))
+ 
+ 					defer test.MockVariableValue(&setting.SSH.EnableCertAuth, false)()
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{userName}, 60)
+-					t.Run("FailToCloneWithEphemeralKeyAfterDisablingCertAuth", doGitCloneFail(f.cloneUrl))
++					t.Run("FailToCloneWithEphemeralKeyAfterDisablingCertAuth", doGitCloneFail(f.cloneURL))
+ 				})
+ 			})
+ 		})
+@@ -341,9 +341,9 @@ func testPrincipalMatchingE2E(t *testing.T, u *url.URL) {
+ 					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, ssh.SplitPrincipals(c.Supplied), 60)
+ 					desc := fmt.Sprintf("allowed=%s supplied=%s ok=%v", c.Allowed, c.Supplied, c.Matched)
+ 					if c.Matched {
+-						t.Run(desc, doGitClone(t.TempDir(), f.cloneUrl))
++						t.Run(desc, doGitClone(t.TempDir(), f.cloneURL))
+ 					} else {
+-						t.Run(desc, doGitCloneFail(f.cloneUrl))
++						t.Run(desc, doGitCloneFail(f.cloneURL))
+ 					}
+ 				})
+ 			})
+@@ -369,7 +369,7 @@ func testTamperedCertificates(t *testing.T, u *url.URL) {
+ 					{"signingkey", func(cert *gossh.Certificate) { cert.SignatureKey = cert.Key }},
+ 				} {
+ 					endorseKeyWithValidityOffset(t, ephemeralkeyFile, f.cakey.fileName, gossh.UserCert, []string{f.ctx.Username}, 60, 0, c.tamperFn)
+-					t.Run("Tamper with "+c.desc, doGitCloneFail(f.cloneUrl))
++					t.Run("Tamper with "+c.desc, doGitCloneFail(f.cloneURL))
+ 				}
+ 			})
+ 		})
+-- 
+2.53.0
+
