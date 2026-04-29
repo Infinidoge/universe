@@ -68,6 +68,7 @@
       "systemd-journal"
       "video"
       "wheel"
+      "wpa_supplicant"
       "wwwrun"
     ];
     shell = pkgs.zsh;
