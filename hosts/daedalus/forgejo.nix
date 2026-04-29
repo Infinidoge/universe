@@ -36,6 +36,7 @@ in
         ROOT_URL = "https://${domain}/";
         SSH_DOMAIN = common.domain;
         LANDING_PAGE = "explore";
+        SSH_ENABLE_CERT_AUTH = true;
       };
       mailer = with common.email; {
         ENABLED = true;
