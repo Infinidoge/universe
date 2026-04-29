@@ -81,8 +81,6 @@ in
       inherit (final)
         jupyterlab-vim
         jupyterlab-myst
-        jupyterlab-vpython
-        vpython-jupyter
         jupyter-server-proxy
         ;
 

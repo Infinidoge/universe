@@ -50,7 +50,6 @@ in
       jupyterlab-myst
       jupyterlab-pygments
       jupyterlab-vim
-      jupyterlab-vpython
       jupyter-server-proxy
 
       # export
@@ -77,20 +76,6 @@ in
           p: with p; [
             ipykernel
 
-            matplotlib
-            numpy
-            pandas
-            scipy
-          ]
-        )
-      );
-      vpython = mkPythonKernel "VPython" (
-        pkgs.python3.withPackages (
-          p: with p; [
-            ipykernel
-            jupyterlab-vpython
-
-            vpython-jupyter
             matplotlib
             numpy
             pandas

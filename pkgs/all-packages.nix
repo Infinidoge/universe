@@ -18,10 +18,6 @@ rec {
   unbted = pkgs.callPackage ./unbted.nix { };
   unmap = pkgs.callPackage ./unmap { };
   unsup = pkgs.callPackage ./unsup.nix { };
-  vpython-jupyter = pkgs.python3Packages.callPackage ./vpython-jupyter.nix {
-    inherit jupyterlab-vpython;
-  };
-  jupyterlab-vpython = pkgs.python3Packages.callPackage ./jupyterlab-vpython { };
   jupyter-server-proxy = pkgs.python3Packages.callPackage ./jupyter-server-proxy {
     inherit simpervisor;
   };
