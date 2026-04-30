@@ -90,6 +90,7 @@ in
     };
     "nitter.inx.moe" = mkRedirect "twitter.com";
     "blahaj.inx.moe" = mkRedirect "swedish.fish";
+    "tools.inx.moe" = mkRedirect "it-tools.tech";
     "foxy.software" = mkTmpRedirect "https://inx.moe";
     "j.inx.moe" = ssl-inx-optional // {
       locations."/".return = "302 $jump_link";
@@ -119,12 +120,6 @@ in
         root = "/srv/web/inx.moe/out";
         inherit tryFiles;
         extraConfig = websiteConfig;
-      };
-    };
-    "tools.inx.moe" = ssl-inx // {
-      locations."/" = {
-        root = "${pkgs.it-tools}/share";
-        tryFiles = "$uri $uri/ $uri.html /index.html";
       };
     };
   };
