@@ -2,6 +2,6 @@
 {
   home.packages = with pkgs; [
     html-tidy
-    nodePackages.prettier
+    prettier
   ];
 }
