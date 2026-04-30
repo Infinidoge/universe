@@ -50,7 +50,7 @@ in
       jupyterlab-myst
       jupyterlab-pygments
       jupyterlab-vim
-      jupyter-server-proxy
+      # jupyter-server-proxy # test error
 
       # export
       nbconvert
