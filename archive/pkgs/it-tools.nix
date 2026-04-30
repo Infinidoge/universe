@@ -43,6 +43,7 @@ stdenvNoCC.mkDerivation rec {
   pnpmDeps = fetchPnpmDeps {
     inherit pname version src;
     fetcherVersion = 3;
-    hash = "sha256-qMZ22uJ8Ibi7Cft56gwauBYDXQTJuWsXY8yAwbJ052Y=";
+    # BUG: Does not properly download all dependencies, need to recreate lock file
+    hash = "";
   };
 }
