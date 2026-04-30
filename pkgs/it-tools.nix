@@ -3,6 +3,8 @@
   fetchFromGitHub,
   nodejs,
   pnpm_9,
+  pnpmConfigHook,
+  fetchPnpmDeps,
 }:
 let
   pnpm = pnpm_9;
@@ -21,7 +23,8 @@ stdenvNoCC.mkDerivation rec {
 
   nativeBuildInputs = [
     nodejs
-    pnpm.configHook
+    pnpm
+    pnpmConfigHook
   ];
 
   buildPhase = ''
@@ -37,9 +40,9 @@ stdenvNoCC.mkDerivation rec {
     runHook postInstall
   '';
 
-  pnpmDeps = pnpm.fetchDeps {
+  pnpmDeps = fetchPnpmDeps {
     inherit pname version src;
-    fetcherVersion = 1;
-    hash = "sha256-cYx9nafA/GbCGIC5Ofqu6T8F2d1UDcK+0jzZR81dS/0=";
+    fetcherVersion = 3;
+    hash = "sha256-qMZ22uJ8Ibi7Cft56gwauBYDXQTJuWsXY8yAwbJ052Y=";
   };
 }
