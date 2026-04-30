@@ -64,6 +64,10 @@
     "zswap.shrinker_enabled=1"
   ];
 
+  services.journald.extraConfig = ''
+    SystemMaxUse=5%
+  '';
+
   swapDevices = [
     {
       device = "/swap/swapfile";
