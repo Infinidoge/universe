@@ -76,6 +76,11 @@ in
 
   schildichat-desktop = old-stable.schildichat-desktop.override { electron = final.electron; };
 
+  qtile = prev.qtile.overridePythonAttrs {
+    # BUG: https://github.com/qtile/qtile/issues/5766
+    doCheck = false;
+  };
+
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pythonFinal: pythonPrev: {
       inherit (final)
