@@ -44,7 +44,7 @@ in
     rhash
     ripgrep
     skim
-    xxHash
+    xxhash
 
     # networking tools
     dnsutils
