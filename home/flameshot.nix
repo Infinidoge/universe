@@ -15,6 +15,8 @@
         showHelp = true;
         showStartupLaunchMessage = false;
         startupLaunch = false;
+        captureActiveMonitor = true;
+        useX11LegacyScreenshot = true;
 
         undoLimit = 100;
         uploadHistoryMax = 25;
