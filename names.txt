@@ -82,6 +82,7 @@ iris     | cloud server
 janus    | vulcan proxy server
 bacchus  | optiplex 5040
 enodia   | router
+fortuna  | steam deck
 nemesis  | windows install
 
 ### pending
