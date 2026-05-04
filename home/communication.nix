@@ -4,14 +4,12 @@
     (discord-canary.override {
       inherit (pkgs) vencord;
       withVencord = true;
-      withOpenASAR = true;
       withTTS = false;
     })
     thunderbird
 
     (discord.override {
       withVencord = true;
-      withOpenASAR = true;
       withTTS = false;
     })
     mumble
