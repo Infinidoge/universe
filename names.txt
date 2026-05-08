@@ -20,7 +20,6 @@ hephaestus
 hera
 khione
 morpheus
-nemesis
 nike
 nyx
 pan
@@ -83,6 +82,7 @@ iris     | cloud server
 janus    | vulcan proxy server
 bacchus  | optiplex 5040
 enodia   | router
+nemesis  | windows install
 
 ### pending
 terminus | router
