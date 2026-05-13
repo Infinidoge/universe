@@ -76,6 +76,15 @@ in
           };
         '';
       };
+      "challenge.vulcan.moe" = {
+        master = true;
+        file = "/srv/dns/challenge.vulcan.moe";
+        extraConfig = ''
+          update-policy {
+            grant _1.vulcan. zonesub ANY;
+          };
+        '';
+      };
 
       "charbroil.me" = mkSecondaryZone "/srv/saved/charbroil.me" [ chardns ];
       "puppy.observer" = mkSecondaryZone "/srv/saved/puppy.observer" [ chardns ];
