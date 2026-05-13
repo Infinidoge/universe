@@ -35,6 +35,7 @@ in
     flameshot
     immich
     weblate
+    xonsh
     ;
 
   inherit (fork)
