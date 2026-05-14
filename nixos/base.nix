@@ -204,17 +204,17 @@ in
   home.home.shellAliases = config.environment.shellAliases;
 
   environment.interactiveShellInit = ''
-      if [[ "$(basename "$(readlink "/proc/$PPID/exe")")" == ".kitty-wrapped" ]]; then
-        PATH=$(echo "$PATH" | sed 's/\/nix\/store\/[a-zA-Z._0-9+-]\+\/bin:\?//g' | sed 's/:$//')
-      fi
+    if [[ "$(basename "$(readlink "/proc/$PPID/exe")")" == ".kitty-wrapped" ]]; then
+      PATH=$(echo "$PATH" | sed 's/\/nix\/store\/[a-zA-Z._0-9+-]\+\/bin:\?//g' | sed 's/:$//')
+    fi
 
-      j() {
-        if [[ $# -eq 0 ]] then
-          \builtin cd -- "$(fd -H -t d | fzf --filepath-word)"
-        else
-          \builtin cd -- "$(fd -H -t d | fzf --filepath-word -1 -q "$*")"
-        fi
-      }
+    j() {
+      if [[ $# -eq 0 ]] then
+        \builtin cd -- "$(fd -H -t d | fzf --filepath-word)"
+      else
+        \builtin cd -- "$(fd -H -t d | fzf --filepath-word -1 -q "$*")"
+      fi
+    }
 
     mktmp() {
       if [ "$1" != "" ]; then
