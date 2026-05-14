@@ -221,6 +221,8 @@
                     sharedModules = [
                       inputs.nix-index-database.homeModules.nix-index
                       inputs.nixvim.homeModules.nixvim
+
+                      self.vendored.home.xonsh
                     ];
                   };
                 }
