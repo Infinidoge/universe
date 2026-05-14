@@ -22,8 +22,6 @@
     state-version
     tailscale
     filesystems.btrfs
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./disks.nix

@@ -48,8 +48,6 @@
     programs.games
     programs.media
     programs.obs
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./filesystems.nix

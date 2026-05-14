@@ -25,8 +25,6 @@
     filesystems.encrypted
     filesystems.windows
     filesystems.zfs
-    shells.xonsh
-    shells.zsh
   ];
 
   fileSystems."/" = lib.mkImageMediaOverride {

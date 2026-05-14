@@ -34,8 +34,6 @@
     hardware.gpu.amd
     hardware.gpu.nvidia
     programs.android
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./disks.nix

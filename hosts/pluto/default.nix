@@ -26,8 +26,6 @@
     filesystems.btrfs
     filesystems.encrypted
     hardware.gpu.intel
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./filesystems.nix

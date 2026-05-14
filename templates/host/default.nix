@@ -32,8 +32,6 @@
     # hardware.gpu.intel
     # hardware.gpu.nvidia
     # hardware.gpu.amd
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./disks.nix

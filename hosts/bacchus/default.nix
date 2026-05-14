@@ -28,8 +28,6 @@
     hardware.audio
     hardware.wifi
     hardware.gpu.intel
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./disks.nix

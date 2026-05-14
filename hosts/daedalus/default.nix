@@ -37,8 +37,6 @@
     hardware.gpu.intel
     locations.purdue
     programs.media
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./disks.nix

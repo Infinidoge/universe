@@ -28,8 +28,6 @@
     filesystems.encrypted
     filesystems.zfs
     locations.purdue
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./disks.nix

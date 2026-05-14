@@ -307,6 +307,9 @@ in
     builtins.hashString "sha256" config.networking.hostName
   );
 
+  programs.zsh.enable = true;
+  programs.xonsh.enable = true;
+
   # Disable man cache
   # I don't use it, and it takes ages on rebuild
   documentation.man.cache.enable = lib.mkForce false;

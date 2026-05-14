@@ -31,8 +31,6 @@
     hardware.receipt-printer
     hardware.wifi
     locations.purdue
-    shells.xonsh
-    shells.zsh
 
     ./hardware-configuration.nix
     ./filesystems.nix
