@@ -65,6 +65,7 @@
 
     # Misc
     copyparty.url = "github:9001/copyparty";
+    xonsh.url = "github:xonsh/xonsh";
 
     ### Cleanup ###
     ## Common
@@ -124,6 +125,8 @@
     universe-cli.inputs.flake-parts.follows = "flake-parts";
     universe-cli.inputs.nixpkgs.follows = "nixpkgs";
     universe-cli.inputs.rust-overlay.follows = "rust-overlay";
+    xonsh.inputs.nixpkgs.follows = "nixpkgs";
+    xonsh.inputs.systems.follows = "systems";
   };
 
   outputs =
@@ -200,6 +203,7 @@
 
                       inherit (inputs.home-manager.packages.${prev.stdenv.hostPlatform.system}) home-manager;
                       inherit (inputs.qtile.packages.${prev.stdenv.hostPlatform.system}) qtile;
+                      inherit (inputs.xonsh.packages.${prev.stdenv.hostPlatform.system}) xonsh;
                     })
                     self.overlays.packages
                     self.overlays.patches

@@ -884,7 +884,8 @@
         "systems": "systems",
         "treefmt-nix": "treefmt-nix",
         "universe-cli": "universe-cli",
-        "vencord": "vencord"
+        "vencord": "vencord",
+        "xonsh": "xonsh"
       }
     },
     "rust-overlay": {
@@ -1026,6 +1027,29 @@
       "original": {
         "owner": "Vendicated",
         "repo": "Vencord",
+        "type": "github"
+      }
+    },
+    "xonsh": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778691233,
+        "narHash": "sha256-P3FX/FL44s5bt8uO+sIdW6g6jyB1ZhTIeS1dcno71as=",
+        "owner": "xonsh",
+        "repo": "xonsh",
+        "rev": "afb2eda1ef4f4c59784a8c36db5bc3b18223cb74",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xonsh",
+        "repo": "xonsh",
         "type": "github"
       }
     }
