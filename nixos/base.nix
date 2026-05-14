@@ -315,6 +315,7 @@ in
 
     shells.bash
     shells.zsh
+    shells.xonsh
     direnv
     git
     gpg
