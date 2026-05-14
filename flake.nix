@@ -219,9 +219,11 @@
                       inherit (self) home;
                     };
                     sharedModules = [
+                      # --- Library Modules ---
                       inputs.nix-index-database.homeModules.nix-index
                       inputs.nixvim.homeModules.nixvim
 
+                      # --- Vendored Modules ---
                       self.vendored.home.xonsh
                     ];
                   };
