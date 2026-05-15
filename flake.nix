@@ -164,6 +164,12 @@
 
         flake = {
           lib = import ./lib { inherit (nixpkgs) lib; };
+          libOverlay = (
+            lfinal: lprev: {
+              our = self.lib;
+              hm = inputs.home-manager.lib.hm;
+            }
+          );
 
           users = self.lib.rakeLeaves ./users;
           nixos = self.lib.rakeLeaves ./nixos;
@@ -173,100 +179,91 @@
           overlays = {
             overrides = import ./overlays/overrides.nix inputs;
             patches = import ./overlays/patches;
-          };
-
-          nixosConfigurations =
-            let
-              libOverlay = (
-                lfinal: lprev: {
-                  our = self.lib;
-                  hm = inputs.home-manager.lib.hm;
-                }
-              );
-            in
-            lib.mapAttrs (self.lib.mkHost {
-              specialArgs = {
-                lib = nixpkgs.lib.extend libOverlay;
-                inherit private self inputs;
-                inherit (self) nixos home;
-              };
-
-              modules = [
-                self.users.root
-                self.users.infinidoge
-                {
-                  nixpkgs.hostPlatform = "x86_64-linux";
-                  system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-                  nixpkgs.overlays = [
-                    (final: prev: {
-                      lib = prev.lib.extend libOverlay;
-
-                      inherit (inputs.home-manager.packages.${prev.stdenv.hostPlatform.system}) home-manager;
-                      inherit (inputs.qtile.packages.${prev.stdenv.hostPlatform.system}) qtile;
-                      xonsh = inputs.xonsh.packages.${prev.stdenv.hostPlatform.system}.xonsh.overrideAttrs (old: {
-                        passthru = old.passthru // {
-                          xontribs = import "${inputs.latest}/pkgs/by-name/xo/xonsh/xontribs" {
-                            inherit (final.python3Packages) callPackage;
-                          };
-                        };
-                      });
-                    })
-                    self.overlays.packages
-                    self.overlays.patches
-                    self.overlays.overrides
-
-                    # --- Domain-Specific Overlays
-                    inputs.agenix.overlays.default
-                    inputs.copyparty.overlays.default
-                    inputs.hydra.overlays.default
-                    inputs.nil.overlays.default
-                    inputs.nix-minecraft.overlay
-                    inputs.rust-overlay.overlays.default
-                    inputs.universe-cli.overlays.default
-                  ];
-                  home-manager = {
-                    extraSpecialArgs = {
-                      inherit (self) home;
+            inputs = (
+              final: prev: {
+                inherit (inputs.home-manager.packages.${prev.stdenv.hostPlatform.system}) home-manager;
+                inherit (inputs.qtile.packages.${prev.stdenv.hostPlatform.system}) qtile;
+                xonsh = inputs.xonsh.packages.${prev.stdenv.hostPlatform.system}.xonsh.overrideAttrs (old: {
+                  passthru = old.passthru // {
+                    xontribs = import "${inputs.latest}/pkgs/by-name/xo/xonsh/xontribs" {
+                      inherit (final.python3Packages) callPackage;
                     };
-                    sharedModules = [
-                      # --- Library Modules ---
-                      inputs.nix-index-database.homeModules.nix-index
-                      inputs.nixvim.homeModules.nixvim
-
-                      # --- Vendored Modules ---
-                      self.vendored.home.xonsh
-                    ];
                   };
-                }
-
-                # --- Universe Modules ---
-
-                # --- Library Modules ---
-                inputs.disko.nixosModules.disko
-                inputs.home-manager.nixosModules.home-manager
-                inputs.impermanence.nixosModules.impermanence
-                inputs.nix-index-database.nixosModules.nix-index
-
-                # --- Domain-Specific Modules ---
-                inputs.authentik-nix.nixosModules.default
-                inputs.lix-module.nixosModules.default
-                inputs.hydra.nixosModules.hydra
-                inputs.nix-minecraft.nixosModules.minecraft-servers
-                inputs.copyparty.nixosModules.default
-
-                # --- Vendored Modules ---
-                self.vendored.nixos.factorio
-                self.vendored.nixos.thelounge
-                self.vendored.nixos.vaultwarden
-              ];
-            }) (self.lib.flattenLeaves ./hosts);
-
-          homeConfigurations = self.lib.mkHomeConfigurations {
-            inherit (self.nixosConfigurations)
-              "data.cs.purdue.edu"
-              vulcan
-              ;
+                });
+              }
+            );
+            lib = (
+              final: prev: {
+                lib = prev.lib.extend self.libOverlay;
+              }
+            );
           };
+
+          nixosConfigurations = lib.mapAttrs (self.lib.mkHost {
+            specialArgs = {
+              lib = nixpkgs.lib.extend self.libOverlay;
+              inherit private self inputs;
+              inherit (self) nixos home;
+            };
+
+            modules = [
+              self.users.root
+              self.users.infinidoge
+              {
+                nixpkgs.hostPlatform = "x86_64-linux";
+                system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+                nixpkgs.overlays = [
+                  self.overlays.packages
+                  self.overlays.patches
+                  self.overlays.overrides
+                  self.overlays.inputs
+                  self.overlays.lib
+
+                  # --- Domain-Specific Overlays
+                  inputs.agenix.overlays.default
+                  inputs.copyparty.overlays.default
+                  inputs.hydra.overlays.default
+                  inputs.nil.overlays.default
+                  inputs.nix-minecraft.overlay
+                  inputs.rust-overlay.overlays.default
+                  inputs.universe-cli.overlays.default
+                ];
+                home-manager = {
+                  extraSpecialArgs = {
+                    inherit (self) home;
+                  };
+                  sharedModules = [
+                    # --- Library Modules ---
+                    inputs.nix-index-database.homeModules.nix-index
+                    inputs.nixvim.homeModules.nixvim
+
+                    # --- Vendored Modules ---
+                    self.vendored.home.xonsh
+                  ];
+                };
+              }
+
+              # --- Universe Modules ---
+
+              # --- Library Modules ---
+              inputs.disko.nixosModules.disko
+              inputs.home-manager.nixosModules.home-manager
+              inputs.impermanence.nixosModules.impermanence
+              inputs.nix-index-database.nixosModules.nix-index
+
+              # --- Domain-Specific Modules ---
+              inputs.authentik-nix.nixosModules.default
+              inputs.lix-module.nixosModules.default
+              inputs.hydra.nixosModules.hydra
+              inputs.nix-minecraft.nixosModules.minecraft-servers
+              inputs.copyparty.nixosModules.default
+
+              # --- Vendored Modules ---
+              self.vendored.nixos.factorio
+              self.vendored.nixos.thelounge
+              self.vendored.nixos.vaultwarden
+            ];
+          }) (self.lib.flattenLeaves ./hosts);
 
           hydraJobs = {
             packages = lib.mapAttrs (
