@@ -1040,11 +1040,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778691233,
-        "narHash": "sha256-P3FX/FL44s5bt8uO+sIdW6g6jyB1ZhTIeS1dcno71as=",
+        "lastModified": 1778818112,
+        "narHash": "sha256-vwrnLIon0hRNW43LDPfVzHYBq8eyao2rSVIZqGWgl1w=",
         "owner": "xonsh",
         "repo": "xonsh",
-        "rev": "afb2eda1ef4f4c59784a8c36db5bc3b18223cb74",
+        "rev": "f7f2d2734df90bad335b0f9b1e2f0e17cb6656e2",
         "type": "github"
       },
       "original": {
