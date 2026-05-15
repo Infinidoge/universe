@@ -265,6 +265,76 @@
             ];
           }) (self.lib.flattenLeaves ./hosts);
 
+          homeConfigurations.infinidoge = inputs.home-manager.lib.homeManagerConfiguration {
+            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+            extraSpecialArgs = {
+              lib = nixpkgs.lib.extend self.libOverlay;
+              inherit private self inputs;
+              inherit (self) nixos home;
+            };
+            modules = with self.home; [
+              {
+                # HACK: Should be set per host
+                home.stateVersion = "26.05";
+                home.username = "infinidoge";
+                home.homeDirectory = "/home/infinidoge";
+                info.model = "Some Computer";
+                info.env.wm = "";
+
+                nixpkgs.config.allowUnfree = true;
+
+                nixpkgs.overlays = [
+                  self.overlays.packages
+                  self.overlays.patches
+                  self.overlays.overrides
+                  self.overlays.inputs
+                  self.overlays.lib
+
+                  # --- Domain-Specific Overlays
+                  inputs.agenix.overlays.default
+                  inputs.rust-overlay.overlays.default
+                  inputs.universe-cli.overlays.default
+                  inputs.nil.overlays.default
+                ];
+              }
+              {
+                # HACK: Should be defined elsewhere
+                options.info = self.lib.mkOpt lib.types.attrs { };
+                options.common = self.lib.mkOpt lib.types.attrs { };
+              }
+
+              # --- Library Modules ---
+              inputs.nix-index-database.homeModules.nix-index
+              inputs.nixvim.homeModules.nixvim
+
+              # --- Vendored Modules ---
+              self.vendored.home.xonsh
+
+              # --- Universe Modules ---
+              base
+              direnv
+              dotfiles.neofetch
+              git
+              gpg
+              htop
+              neovim
+              nix-index
+              programming.base
+              programming.nix
+              programming.python
+              shells.bash
+              shells.xonsh
+              shells.zsh
+              ssh
+              starship
+              tealdeer
+              vim
+              zoxide
+
+              ./users/infinidoge/home.nix
+            ];
+          };
+
           hydraJobs = {
             packages = lib.mapAttrs (
               _: lib.filterAttrs (n: v: v ? meta -> v.meta ? broken -> !v.meta.broken)

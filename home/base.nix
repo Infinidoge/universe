@@ -87,10 +87,6 @@ let
 in
 {
   home.packages = with pkgs; [
-    # the bare minimum
-    git
-    vim
-
     # preferred terminal tools
     bat
     curl
