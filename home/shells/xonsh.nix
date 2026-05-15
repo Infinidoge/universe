@@ -21,5 +21,9 @@ in
 
       if $TERM != "dumb": execx($(starship init xonsh))
     '';
+    shellAliases = {
+      ucd = ''cd @($(@error_ignore universe-cli cd) or ".")'';
+      gcd = ''cd @($(@error_ignore git root) or ".")'';
+    };
   };
 }
