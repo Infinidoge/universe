@@ -60,6 +60,7 @@
     ./jellyfin.nix
     ./jupyter.nix
     ./minecraft.nix
+    ./mongodb.nix
     ./murmur.nix
     ./pds.nix
     ./postgresql.nix
