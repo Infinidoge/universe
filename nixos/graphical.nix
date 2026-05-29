@@ -2,12 +2,12 @@
 {
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
+    gramma
     presenterm
     qbittorrent
     speedcrunch
     sqlitebrowser
     toot
-    gramma
   ];
 
   # Enable dconf for programs that need it
