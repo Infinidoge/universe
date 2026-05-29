@@ -183,13 +183,6 @@
               final: prev: {
                 inherit (inputs.home-manager.packages.${prev.stdenv.hostPlatform.system}) home-manager;
                 inherit (inputs.qtile.packages.${prev.stdenv.hostPlatform.system}) qtile;
-                xonsh = inputs.xonsh.packages.${prev.stdenv.hostPlatform.system}.xonsh.overrideAttrs (old: {
-                  passthru = old.passthru // {
-                    xontribs = import "${inputs.latest}/pkgs/by-name/xo/xonsh/xontribs" {
-                      inherit (final.python3Packages) callPackage;
-                    };
-                  };
-                });
               }
             );
             lib = (
