@@ -11,6 +11,7 @@
         parallel-ssh
         pip
         pytest
+        xonsh
       ]
     ))
   ];
