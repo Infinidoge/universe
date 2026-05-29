@@ -4,6 +4,7 @@
     bitwarden-desktop
     gramma
     presenterm
+    pyspread
     qbittorrent
     speedcrunch
     sqlitebrowser
