@@ -84,6 +84,4 @@ bacchus  | optiplex 5040
 enodia   | router
 fortuna  | steam deck
 nemesis  | windows install
-
-### pending
 terminus | router
