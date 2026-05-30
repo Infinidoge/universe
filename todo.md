@@ -19,6 +19,7 @@
 - [ ] Setup GNOME Keyring and Nheko
 - [ ] Implement a copyparty auto-file hook to sort uploads into (Ref: https://github.com/9001/copyparty/blob/hovudstraum/bin/hooks/reloc-by-ext.py)
 - [ ] Prepare commit message hook, based on location of main edited file
+- [ ] Use [modetc](https://maxwell.eurofusion.eu/git/rnhmjoj/modetc) to force dotfile locations
 
 # Move to Wayland
 - [ ] https://sr.ht/~emersion/kanshi/
