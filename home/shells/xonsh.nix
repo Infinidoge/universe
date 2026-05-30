@@ -18,6 +18,7 @@ in
       p: with p; [
         xontribs.xonsh-direnv
 
+        dnspython
         parallel-ssh
         requests
       ];
