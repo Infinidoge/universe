@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   cfg = config.programs.xonsh;
@@ -8,6 +13,7 @@ in
   # BUG: https://github.com/prompt-toolkit/python-prompt-toolkit/issues/1933
   programs.xonsh = {
     enable = true;
+    package = lib.hiPrio (pkgs.xonsh.override { python3 = pkgs.python314; });
     extraPackages =
       p: with p; [
         xontribs.xonsh-direnv
