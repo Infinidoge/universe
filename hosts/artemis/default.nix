@@ -164,7 +164,7 @@
   };
   services.beesd.filesystems.main = {
     spec = "/media/main";
-    hashTableSizeMB = 4096;
+    hashTableSizeMB = 256;
     extraOptions = [
       "--throttle-factor"
       "1.0"
