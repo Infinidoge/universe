@@ -21,6 +21,7 @@ in
         dnspython
         parallel-ssh
         requests
+        tqdm
       ];
     xonshrc = ''
       xontrib load direnv
