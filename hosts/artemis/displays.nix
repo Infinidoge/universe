@@ -63,6 +63,15 @@ in
             position = "0x0";
           };
         };
+        portable-second-horizontal = {
+          eDP-1 = framework // {
+            position = "1920x0";
+          };
+          DP-3 = portable-second // {
+            position = "0x0";
+            rotate = "normal";
+          };
+        };
         docked = {
           eDP-1 = framework // {
             position = "0x0";
