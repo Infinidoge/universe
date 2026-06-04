@@ -881,6 +881,7 @@
         "qtile": "qtile",
         "rust-overlay": "rust-overlay",
         "stable": "stable",
+        "swedish-fish": "swedish-fish",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix",
         "universe-cli": "universe-cli",
@@ -922,6 +923,21 @@
         "ref": "nixos-24.11",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "swedish-fish": {
+      "locked": {
+        "lastModified": 1780544102,
+        "narHash": "sha256-bJbBghXoU8KrAEhvZ/a7DRuugYp2CAwSBAVER+Z4mG8=",
+        "ref": "refs/heads/master",
+        "rev": "fd0217a3632f5f8d060c0692013523603f6a261f",
+        "revCount": 3,
+        "type": "git",
+        "url": "ssh://git@inx.moe/swedish.fish/infrastructure"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@inx.moe/swedish.fish/infrastructure"
       }
     },
     "systems": {

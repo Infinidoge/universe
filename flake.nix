@@ -21,6 +21,7 @@
     ### Configuration Components ###
     private.url = "git+ssh://git@inx.moe/Infinidoge/universe-private";
     universe-cli.url = "git+ssh://git@inx.moe/Infinidoge/universe-cli";
+    swedish-fish.url = "git+ssh://git@inx.moe/swedish.fish/infrastructure";
 
     ### Nix Libraries
     agenix.url = "github:ryantm/agenix";
