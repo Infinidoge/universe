@@ -927,11 +927,11 @@
     },
     "swedish-fish": {
       "locked": {
-        "lastModified": 1780551596,
-        "narHash": "sha256-112+LgVEHH92pdQpb3V77gF+Kwbz2WDYPeEgwBEjgjs=",
+        "lastModified": 1780560874,
+        "narHash": "sha256-/5+cy5HgaMGAPr+UBGjDYPGhEpzc4RMg7kF+ke5fWWY=",
         "ref": "refs/heads/master",
-        "rev": "545bf5c1286d3cdfb2646cb2931e0b4d5c2123ca",
-        "revCount": 10,
+        "rev": "7304ccd9fa7f277d9049b5daa43783f2e83a5c83",
+        "revCount": 13,
         "type": "git",
         "url": "ssh://git@inx.moe/swedish.fish/infrastructure"
       },
