@@ -53,6 +53,7 @@
   };
 
   system.stateVersion = config.system.nixos.release;
+  system.configurationRevision = lib.mkForce null;
 
   boot.initrd.systemd = {
     enable = true;
