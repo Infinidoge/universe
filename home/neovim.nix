@@ -223,7 +223,17 @@ in
       mkdnflow = {
         enable = true;
       };
-      nix.enable = true;
+      nix = {
+        enable = true;
+        package = pkgs.vimPlugins.vim-nix.overrideAttrs (old: {
+          packages = (old.patches or [ ]) ++ [
+            (pkgs.fetchpatch {
+              url = "https://patch-diff.githubusercontent.com/raw/LnL7/vim-nix/pull/62.patch";
+              hash = "sha256-6sgF6ORblWPJCwQB8j2XMS++rYVb1F0QBFPc3QlZq+Y=";
+            })
+          ];
+        });
+      };
       nvim-autopairs.enable = true;
       oil.enable = true;
       otter.enable = true;
