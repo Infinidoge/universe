@@ -3,6 +3,7 @@
   pkgs,
   private,
   nixos,
+  inputs,
   ...
 }:
 {
@@ -44,6 +45,7 @@
 
     private.nixosModules.minecraft-servers
     private.nixosModules.wireguard
+    inputs.swedish-fish.modules.website
     ./authentik.nix
     ./boot.nix
     ./continuwuity.nix
