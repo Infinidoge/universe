@@ -46,6 +46,7 @@
     private.nixosModules.minecraft-servers
     private.nixosModules.wireguard
     inputs.swedish-fish.modules.website
+    inputs.swedish-fish.modules.mastodon
     ./authentik.nix
     ./boot.nix
     ./continuwuity.nix
