@@ -105,6 +105,7 @@
   nix.gc.automatic = false;
 
   networking = {
+    enableIPv6 = false;
     firewall = {
       allowedTCPPorts = [
         25565
@@ -144,7 +145,8 @@
 
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
-    "net.ipv6.conf.all.forwarding" = true;
+    "net.ipv6.conf.all.forwarding" = false;
+    "net.ipv6.conf.all.disable_ipv6" = true;
   };
 
   hardware.infiniband.enable = true;

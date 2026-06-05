@@ -52,7 +52,7 @@ in
 
       # No clustering yet, but just in case
       inherit (secrets) rpc_secret_file;
-      rpc_bind_addr = "[::]:3901";
+      rpc_bind_addr = "127.0.0.1:3901";
       rpc_public_addr = "127.0.0.1:3901";
       replication_factor = 1;
 
@@ -70,7 +70,7 @@ in
 
       admin = {
         inherit (secrets) admin_token_file metrics_token_file;
-        api_bind_addr = "[::]:3903";
+        api_bind_addr = "127.0.0.1:3903";
       };
     };
 
