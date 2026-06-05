@@ -1,18 +1,30 @@
+{ config, lib, ... }:
 {
+  imports = [
+    {
+      networking.nameservers = lib.mkIf config.networking.enableIPv6 [
+        # Google Public DNS
+        "2001:4860:4860::8888"
+        "2001:4860:4860::8844"
+
+        # Cloudflare Public DNS
+        "2696:4700:4700::1111"
+        "2696:4700:4700::1111"
+
+      ];
+    }
+  ];
+
   networking = {
     useDHCP = true;
     nameservers = [
       # Google Public DNS
       "8.8.8.8"
       "8.8.4.4"
-      "2001:4860:4860::8888"
-      "2001:4860:4860::8844"
 
       # Cloudflare Public DNS
       "1.1.1.1"
       "1.0.0.1"
-      "2696:4700:4700::1111"
-      "2696:4700:4700::1111"
     ];
 
     firewall.trustedInterfaces = [
