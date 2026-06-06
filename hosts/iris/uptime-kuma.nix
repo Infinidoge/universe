@@ -15,6 +15,16 @@ in
     locations."= /".return = "301 /status";
   };
 
+  services.nginx.virtualHosts."status.swedish.fish" = {
+    forceSSL = true;
+    enableACME = true;
+    acmeRoot = null;
+    locations."/" = {
+      proxyPass = "http://${cfg.HOST}:${cfg.PORT}";
+      proxyWebsockets = true;
+    };
+  };
+
   persist.directories = [
     "/var/lib/private/uptime-kuma"
   ];
