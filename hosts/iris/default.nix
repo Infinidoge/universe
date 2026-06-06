@@ -30,6 +30,7 @@
     ./grafana.nix
     ./loki.nix
     ./prometheus.nix
+    ./uptime-kuma.nix
   ];
 
   system.stateVersion = "25.11";
