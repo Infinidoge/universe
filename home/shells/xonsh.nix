@@ -37,4 +37,6 @@ in
       gcd = ''cd @($(@error_ignore git root) or ".")'';
     };
   };
+
+  # TODO: symlink ./xonshrc to ~/.config/xonsh/rc.d
 }
