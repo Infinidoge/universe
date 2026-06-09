@@ -18,9 +18,11 @@ in
       p: with p; [
         xontribs.xonsh-direnv
 
+        beautifulsoup4
         dnspython
         parallel-ssh
         requests
+        soupsieve
         tqdm
       ];
     xonshrc = ''
