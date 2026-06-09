@@ -21,6 +21,7 @@ in
         beautifulsoup4
         dnspython
         parallel-ssh
+        python-dateutil
         requests
         soupsieve
         tqdm
