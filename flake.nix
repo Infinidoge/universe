@@ -117,7 +117,6 @@
     nix-minecraft.inputs.systems.follows = "systems";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.flake-parts.follows = "flake-parts";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.systems.follows = "systems";
     qtile.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
