@@ -98,7 +98,9 @@
     fi
   '';
 
-  services.timesyncd.extraConfig = "FallbackNTP=162.159.200.1 2606:4700:f1::1"; # time.cloudflare.com
+  services.timesyncd.settings.Time = {
+    FallbackNTP = "162.159.200.1 2606:4700:f1::1"; # time.cloudflare.com
+  };
 
   security.polkit.enable = true;
 
