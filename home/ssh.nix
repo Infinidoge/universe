@@ -5,7 +5,7 @@
     extraConfig = ''
       EnableEscapeCommandline yes
     '';
-    matchBlocks."*" = {
+    settings."*" = {
       addKeysToAgent = "yes";
     };
   };
