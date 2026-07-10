@@ -10,9 +10,9 @@ in
     openFirewall = true;
     password = "shmoopy";
     stateDir = "/srv/murmur";
-    sslCert = "${certs}/cert.pem";
-    sslKey = "${certs}/key.pem";
-    sslCa = "${certs}/chain.pem";
+    tls.certPath = "${certs}/cert.pem";
+    tls.keyPath = "${certs}/key.pem";
+    tls.caPath = "${certs}/chain.pem";
   };
 
   security.acme.certs."voice.inx.moe" = {
