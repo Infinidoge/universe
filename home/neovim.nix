@@ -44,6 +44,8 @@ in
     enable = true;
     defaultEditor = true;
 
+    nixpkgs.config.allowUnfree = true;
+
     opts = {
       termguicolors = true;
       number = true;
