@@ -126,4 +126,9 @@ in
       hash = "sha256-LsTqUrAlTZuJ0sXOh/vNyOxM3troHALYqK54hI3bw0g=";
     };
   });
+
+  lix = prev.lix.overrideAttrs (o: {
+    # BUG: https://git.lix.systems/lix-project/lix/issues/1250
+    doCheck = false;
+  });
 }
