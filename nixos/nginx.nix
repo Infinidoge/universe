@@ -98,4 +98,36 @@
       findtime = 600;
     };
   };
+
+  services.fail2ban.jails.nginx-limited-connections = {
+    enabled = true;
+    filter = {
+      Definition = {
+        failregex = ''^.*limiting connections by zone "addr", client: <HOST>.*$'';
+      };
+    };
+    settings = {
+      port = "80,443";
+      backend = "systemd";
+      journalmatch = "_SYSTEMD_UNIT=nginx.service";
+      maxretry = 5;
+      findtime = 60;
+    };
+  };
+
+  services.fail2ban.jails.nginx-access-forbidden = {
+    enabled = true;
+    filter = {
+      Definition = {
+        failregex = "^.*access forbidden by rule, client: <HOST>.*$";
+      };
+    };
+    settings = {
+      port = "80,443";
+      backend = "systemd";
+      journalmatch = "_SYSTEMD_UNIT=nginx.service";
+      maxretry = 5;
+      findtime = 60;
+    };
+  };
 }
