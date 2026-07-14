@@ -118,6 +118,14 @@ in
             position = "2885x716";
           };
         };
+        dorm-docked = {
+          eDP-1 = framework // {
+            position = "0x0";
+          };
+          DP-4-1 = dorm // {
+            position = "1805x0";
+          };
+        };
       }
     );
 }
