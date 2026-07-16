@@ -311,12 +311,15 @@
                 (name: { toplevel = self.nixosConfigurations.${name}.config.system.build.toplevel; })
                 [
                   "apophis"
-                  "daedalus"
                   "artemis"
+                  "bacchus"
+                  "daedalus"
                   "dionysus"
+                  #"hermes"
+                  #"hestia"
+                  "iris"
+                  "lethe"
                   "pluto"
-                  "hermes"
-                  "hestia"
                 ];
           };
         };
