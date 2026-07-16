@@ -1,8 +1,7 @@
 {
-  pkgs,
+  inputs,
   common,
   secrets,
-  inputs,
   ...
 }:
 let
@@ -17,6 +16,10 @@ let
   #);
 in
 {
+  imports = [
+    inputs.authentik-nix.nixosModules.default
+  ];
+
   services.authentik = {
     enable = true;
     #inherit (authentikScope) authentikComponents;

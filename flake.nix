@@ -223,38 +223,19 @@
                 ];
                 home-manager = {
                   extraSpecialArgs = {
+                    inherit private self inputs;
                     inherit (self) home;
                   };
-                  sharedModules = [
-                    # --- Library Modules ---
-                    inputs.nix-index-database.homeModules.nix-index
-                    inputs.nixvim.homeModules.nixvim
-
-                    # --- Vendored Modules ---
-                    self.vendored.home.xonsh
-                  ];
                 };
               }
 
-              # --- Universe Modules ---
-
               # --- Library Modules ---
               inputs.disko.nixosModules.disko
-              inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
-              inputs.nix-index-database.nixosModules.nix-index
 
               # --- Domain-Specific Modules ---
-              inputs.authentik-nix.nixosModules.default
-              inputs.lix-module.nixosModules.default
-              inputs.hydra.nixosModules.hydra
               inputs.nix-minecraft.nixosModules.minecraft-servers
               inputs.copyparty.nixosModules.default
-
-              # --- Vendored Modules ---
-              self.vendored.nixos.factorio
-              self.vendored.nixos.thelounge
-              self.vendored.nixos.vaultwarden
             ];
           }) (self.lib.flattenLeaves ./hosts);
 
@@ -295,13 +276,6 @@
                 options.info = self.lib.mkOpt lib.types.attrs { };
                 options.common = self.lib.mkOpt lib.types.attrs { };
               }
-
-              # --- Library Modules ---
-              inputs.nix-index-database.homeModules.nix-index
-              inputs.nixvim.homeModules.nixvim
-
-              # --- Vendored Modules ---
-              self.vendored.home.xonsh
 
               # --- Universe Modules ---
               base

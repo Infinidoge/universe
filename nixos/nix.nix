@@ -19,6 +19,10 @@ let
     users: lib.concatStringsSep " " (map (u: "/etc/ssh/authorized_keys.d/${u}") users);
 in
 {
+  imports = [
+    inputs.nix-index-database.nixosModules.nix-index
+    inputs.lix-module.nixosModules.default
+  ];
 
   nixpkgs.flake = {
     setNixPath = false;

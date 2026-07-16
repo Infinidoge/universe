@@ -1,4 +1,5 @@
 {
+  self,
   config,
   pkgs,
   lib,
@@ -10,6 +11,10 @@ let
   inherit (cfg.package) xontribs;
 in
 {
+  imports = [
+    self.vendored.home.xonsh
+  ];
+
   # BUG: https://github.com/prompt-toolkit/python-prompt-toolkit/issues/1933
   programs.xonsh = {
     enable = true;

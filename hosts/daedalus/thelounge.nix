@@ -1,4 +1,5 @@
 {
+  self,
   config,
   common,
   pkgs,
@@ -6,6 +7,10 @@
 }:
 
 {
+  imports = [
+    self.vendored.nixos.thelounge
+  ];
+
   services.nginx.virtualHosts."thelounge.inx.moe" = common.nginx.ssl-inx // {
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.thelounge.port}";

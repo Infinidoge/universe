@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   lib,
   ...
@@ -36,6 +37,10 @@ let
     ];
 in
 {
+  imports = [
+    inputs.nixvim.homeModules.nixvim
+  ];
+
   home.packages = with pkgs; [
     nvimpager
   ];

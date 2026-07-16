@@ -1,6 +1,14 @@
-{ private, ... }:
+{
+  self,
+  private,
+  ...
+}:
 
 {
+  imports = [
+    self.vendored.nixos.factorio
+  ];
+
   services.factorio = {
     enable = true;
     openFirewall = true;

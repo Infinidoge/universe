@@ -1,9 +1,9 @@
 {
+  inputs,
   config,
   common,
   secrets,
   pkgs,
-  lib,
   ...
 }:
 let
@@ -11,6 +11,10 @@ let
   domain = common.subdomain "hydra";
 in
 {
+  imports = [
+    inputs.hydra.nixosModules.hydra
+  ];
+
   persist.directories = [ "/var/lib/hydra" ];
 
   services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {

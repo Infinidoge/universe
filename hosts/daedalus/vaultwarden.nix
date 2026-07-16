@@ -1,15 +1,18 @@
 {
+  self,
   config,
   common,
   secrets,
-  lib,
-  pkgs,
   ...
 }:
 let
   domain = common.subdomain "bitwarden";
 in
 {
+  imports = [
+    self.vendored.nixos.vaultwarden
+  ];
+
   persist.directories = [ config.services.vaultwarden.dataDir ];
 
   services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
