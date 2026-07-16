@@ -20,6 +20,8 @@
 - [ ] Implement a copyparty auto-file hook to sort uploads into (Ref: https://github.com/9001/copyparty/blob/hovudstraum/bin/hooks/reloc-by-ext.py)
 - [ ] Prepare commit message hook, based on location of main edited file
 - [ ] Use [modetc](https://maxwell.eurofusion.eu/git/rnhmjoj/modetc) to force dotfile locations
+- [ ] [repl-overlays](https://docs.lix.systems/manual/lix/stable/command-ref/conf-file.html#conf-repl-overlays)
+- [ ] Bind statistics [Grafana docs](https://grafana.com/grafana/dashboards/1666-bind-dns/), [Exporter options](https://search.nixos.org/options?channel=unstable&query=services.prometheus.exporters.bind&type=options)
 
 # Move to Wayland
 - [ ] https://sr.ht/~emersion/kanshi/
