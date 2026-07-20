@@ -35,7 +35,7 @@ in
       xontrib load direnv
       execx($(zoxide init xonsh --cmd cd --hook pwd), 'exec', __xonsh__.ctx, filename='zoxide')
 
-      @.imp.os.sys.path.append(".") # add current directory to import path
+      @.imp.sys.path.append(".") # add current directory to import path
 
       if $TERM != "dumb": execx($(starship init xonsh))
     '';
