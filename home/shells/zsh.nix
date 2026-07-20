@@ -42,12 +42,7 @@
 
     history.path = "${dotDir}/.zsh_history";
 
-    shellAliases = builtins.removeAttrs (
-      config.home.shellAliases
-      // {
-        lsdiskw = "while true; do clear; lsdisk; sleep 1; done";
-      }
-    ) [ "mktmp" ];
+    shellAliases = builtins.removeAttrs (config.home.shellAliases) [ "mktmp" ];
 
     oh-my-zsh = {
       enable = true;
