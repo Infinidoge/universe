@@ -37,13 +37,6 @@ in
     })
   ];
 
-  discordchatexporter-cli = addPatches prev.discordchatexporter-cli [
-    (final.fetchpatch {
-      url = "https://github.com/Tyrrrz/DiscordChatExporter/commit/7be46d6de5fe3d2cd9f957c53c50d7e619bec18a.patch";
-      hash = "sha256-UbS4RpKbjo7cdO0sY0ggpadqD0Hln1jNK0WG0k8M0Ao=";
-    })
-  ];
-
   forgejo = addPatches prev.forgejo [
     # SSH CA auth: https://codeberg.org/forgejo/forgejo/pulls/11746
     # Rebased on top of forgejo branch
