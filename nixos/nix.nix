@@ -150,14 +150,12 @@ in
     '')
   ];
 
-  environment = {
-    shellAliases = {
-      # nix
-      n = "nix";
-      ns = "n search --no-update-lock-file";
-      nf = "n flake";
-      srch = "ns nixpkgs";
-    };
+  home.shellAliases = {
+    # nix
+    n = "nix";
+    ns = "n search --no-update-lock-file";
+    nf = "n flake";
+    srch = "ns nixpkgs";
   };
 
   users.users.remotebuild = {

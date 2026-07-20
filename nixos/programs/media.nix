@@ -10,7 +10,7 @@
     yt-dlp
   ];
 
-  environment.shellAliases = {
+  home.shellAliases = {
     acat = "mpv --no-audio-display";
     vcat = "mpv";
 
