@@ -208,6 +208,9 @@ in
     e = "edit";
     ei = "editi";
 
+    md = "mkdir -p";
+    rd = "rmdir";
+
     watch = "watch -n 0.5 ";
 
     lpath = "echo \"$PATH\" | tr \":\" \"\n\"";
