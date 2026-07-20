@@ -38,10 +38,6 @@ in
     bluesky-pds
     ;
 
-  inherit (fork)
-    discordchatexporter-cli
-    ;
-
   inherit (stable)
     nix-melt
     bitwarden-cli
