@@ -150,7 +150,7 @@ in
     '')
   ];
 
-  home.shellAliases = {
+  home.home.shellAliases = {
     # nix
     n = "nix";
     ns = "n search --no-update-lock-file";
