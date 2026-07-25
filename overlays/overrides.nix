@@ -52,12 +52,12 @@ in
   });
 
   vencord = latest.vencord.overrideAttrs (old: rec {
-    src = inputs.vencord;
-    version = versionFromInput inputs.vencord;
-    env = old.env // {
-      VENCORD_REMOTE = "Vendicated/Vencord";
-      VENCORD_HASH = builtins.substring 0 9 inputs.vencord.rev;
-    };
+    #src = inputs.vencord;
+    #version = versionFromInput inputs.vencord;
+    #env = old.env // {
+    #  VENCORD_REMOTE = "Vendicated/Vencord";
+    #  VENCORD_HASH = builtins.substring 0 9 inputs.vencord.rev;
+    #};
     postPatch = old.postPatch + ''
       sed -i '/export const CspPolicies/a "inx.moe": ImageScriptsAndCssSrc,' src/main/csp/index.ts
     '';
@@ -65,7 +65,7 @@ in
     #  (latest.pnpm_10.fetchDeps {
     #    inherit (old) pname;
     #    inherit version src;
-    #    fetcherVersion = 2;
+    #    fetcherVersion = 4;
     #    hash = "";
     #  }).overrideAttrs
     #    { inherit (old) patches postPatch; };
