@@ -1,7 +1,7 @@
 { pkgs, home, ... }:
 {
   environment.systemPackages = with pkgs; [
-    bitwarden-desktop
+    # bitwarden-desktop # BUG: https://github.com/NixOS/nixpkgs/issues/526914
     gramma
     presenterm
     pyspread
