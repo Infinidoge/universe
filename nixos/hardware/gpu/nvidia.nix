@@ -18,8 +18,8 @@
 
   hardware.nvidia.open = true;
 
-  # BUG: https://github.com/NixOS/nixpkgs/issues/467814
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  # BUG: https://github.com/NixOS/nixpkgs/issues/532695
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
