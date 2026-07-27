@@ -29,21 +29,21 @@ LAPTOP = bool(os.getenv("LAPTOP", False))
 
 colors = [
     # panel background
-    ["#282c34", "#282c34"],  # 0
+    ["#282c34ff", "#282c34ff"],  # 0
     # background for current screen tab
-    ["#3d3f4b", "#434758"],  # 1
+    ["#3d3f4bff", "#434758ff"],  # 1
     # font color for group names
-    ["#ffffff", "#ffffff"],  # 2
+    ["#ffffffff", "#ffffffff"],  # 2
     # border line color for current tab
-    ["#ff5555", "#ff5555"],  # 3
+    ["#ff5555ff", "#ff5555ff"],  # 3
     # border line color for 'other tabs' and color for 'odd widgets'
-    ["#74438f", "#74438f"],  # 4
+    ["#74438fff", "#74438fff"],  # 4
     # color for the 'even widgets'
-    ["#4f76c7", "#4f76c7"],  # 5
+    ["#4f76c7ff", "#4f76c7ff"],  # 5
     # window name
-    ["#e1acff", "#e1acff"],  # 6
+    ["#e1acffff", "#e1acffff"],  # 6
     # background for inactive screens
-    ["#ecbbfb", "#ecbbfb"],  # 7
+    ["#ecbbfbff", "#ecbbfbff"],  # 7
 ]
 
 
