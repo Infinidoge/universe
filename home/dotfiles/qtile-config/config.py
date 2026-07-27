@@ -6,9 +6,9 @@ Sets up
 - Widgets
 - Screens
 """
-import os
 
-from typing import List, Any  # noqa: F401
+import os
+from typing import Any, List  # noqa: F401
 
 from libqtile import bar, layout, widget
 from libqtile.config import (
@@ -24,7 +24,6 @@ from libqtile.config import (
 )
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
-
 
 LAPTOP = bool(os.getenv("LAPTOP", False))
 
@@ -613,13 +612,11 @@ def init_widget_list(main=True, laptop=False):
     Returns a list of widgets suitable for a qtile bar
     """
 
-    interfaces = run_command(
-        "ip -j link | jq -r '.[] | select(.operstate == \"UP\") | .ifname'"
-    ).splitlines()
+    interfaces = run_command("ip -j link | jq -r '.[] | select(.operstate == \"UP\") | .ifname'").splitlines()
 
     wireless_interfaces = list(filter(lambda x: x.startswith("w"), interfaces))
 
-    network_widgets =  [
+    network_widgets = [
         widget.Net(
             interface=interface,
             format="{interface}: {down:.1f}{down_suffix} ↓↑ {up:.1f}{up_suffix}",
@@ -630,14 +627,26 @@ def init_widget_list(main=True, laptop=False):
 
     main_widgets = [
         *(
-            [[widget.Wlan(format=" {essid} {percent:2.0%}", interface=wireless_interfaces[0], padding=1)]]
+            [
+                [
+                    widget.Wlan(
+                        format=" {essid} {percent:2.0%}",
+                        interface=wireless_interfaces[0],
+                        padding=1,
+                    )
+                ]
+            ]
             if len(wireless_interfaces)
             else []
         ),
         *[network_widgets],
         [
             widget.TextBox(text="󰍛", padding=1, fontsize=18),
-            widget.Memory(padding=5, measure_mem="G", format="{MemUsed:.1f}{mm}/{MemTotal:.1f}{mm}"),
+            widget.Memory(
+                padding=5,
+                measure_mem="G",
+                format="{MemUsed:.1f}{mm}/{MemTotal:.1f}{mm}",
+            ),
         ],
         [
             widget.TextBox(text=" Vol:", padding=0),
@@ -677,7 +686,7 @@ def init_widget_list(main=True, laptop=False):
         *optional_list(main, main_widgets + optional_list(laptop, laptop_widgets)),
         # Widgets found on the powerline of all screens
         [
-            widget.CurrentLayout(mode='both', icon_first=True, padding=2),
+            widget.CurrentLayout(mode="both", icon_first=True, padding=2),
             widget.Sep(linewidth=0, padding=2),
         ],
         [
