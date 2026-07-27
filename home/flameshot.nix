@@ -18,8 +18,8 @@
 
         # BUG: https://github.com/NixOS/nixpkgs/pull/518301
 
-        #captureActiveMonitor = true;
-        #useX11LegacyScreenshot = true;
+        captureActiveMonitor = true;
+        useX11LegacyScreenshot = true;
 
         undoLimit = 100;
         uploadHistoryMax = 25;
