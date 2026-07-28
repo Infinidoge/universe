@@ -78,6 +78,10 @@ in
     doCheck = false;
   };
 
+  # NOTE: Inheriting Python packages from different nixpkgs versions is unsupported
+  # Doing this leads to an error saying:
+  # "should use `buildPythonPackage` or `toPythonModule` if it is to be part of the Python packages set."
+
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pythonFinal: pythonPrev: {
       inherit (final)
