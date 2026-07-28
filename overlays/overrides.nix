@@ -36,6 +36,7 @@ in
     immich
     weblate
     bluesky-pds
+    firefox-devedition
     ;
 
   inherit (stable)
