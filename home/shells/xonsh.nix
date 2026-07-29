@@ -22,6 +22,11 @@ in
     extraPackages =
       p: with p; [
         xontribs.xonsh-direnv
+        #xontribs.xontrib-jedi
+        #xontribs.xontrib-fish-completer
+        # xontrib-uvox (https://codeberg.org/mgrobol/xontrib-uvox)
+        # xontrib-term-integrations (https://github.com/jnoortheen/xontrib-term-integrations)
+        # xontrib-mpl (https://github.com/xonsh/xontrib-mpl)
 
         beautifulsoup4
         dnspython
@@ -33,6 +38,9 @@ in
       ];
     xonshrc = ''
       xontrib load direnv
+      #xontrib load jedi
+      #xontrib load fish_completer
+
       execx($(zoxide init xonsh --cmd cd --hook pwd), 'exec', __xonsh__.ctx, filename='zoxide')
 
       @.imp.sys.path.append(".") # add current directory to import path
