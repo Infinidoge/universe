@@ -23,6 +23,7 @@
   ];
 
   home-manager.sharedModules = with home; [
+    kitty
     shells.fish
     shells.ion
     shells.nushell
