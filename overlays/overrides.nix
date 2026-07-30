@@ -37,6 +37,7 @@ in
     weblate
     bluesky-pds
     firefox-devedition
+    vaultwarden
     ;
 
   inherit (stable)
