@@ -14,5 +14,7 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   info.model = "Framework Laptop";
 }

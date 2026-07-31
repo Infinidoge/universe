@@ -203,7 +203,6 @@
               self.users.root
               self.users.infinidoge
               {
-                nixpkgs.hostPlatform = "x86_64-linux";
                 system.configurationRevision = lib.mkIf (self ? rev) self.rev;
                 nixpkgs.overlays = [
                   self.overlays.packages

@@ -14,5 +14,7 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   info.model = "OptiPlex 5050";
 }

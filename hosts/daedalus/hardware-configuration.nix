@@ -18,5 +18,7 @@
   ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   info.model = "HPE ProLiant DL360 Gen 9";
 }
