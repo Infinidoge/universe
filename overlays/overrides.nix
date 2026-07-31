@@ -38,6 +38,7 @@ in
     bluesky-pds
     firefox-devedition
     vaultwarden
+    borgbackup
     ;
 
   inherit (stable)
