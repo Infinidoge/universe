@@ -300,30 +300,10 @@
               ./users/infinidoge/home.nix
             ];
           };
-
-          hydraJobs = {
-            packages = lib.mapAttrs (
-              _: lib.filterAttrs (n: v: v ? meta -> v.meta ? broken -> !v.meta.broken)
-            ) self.packages;
-            nixosConfigurations.x86_64-linux =
-              lib.flip lib.genAttrs
-                (name: { toplevel = self.nixosConfigurations.${name}.config.system.build.toplevel; })
-                [
-                  "apophis"
-                  "artemis"
-                  "bacchus"
-                  "daedalus"
-                  "dionysus"
-                  #"hermes"
-                  #"hestia"
-                  "iris"
-                  "lethe"
-                  "pluto"
-                ];
-          };
         };
 
         imports = [
+          ./hydra.nix
           ./pkgs
           ./shell.nix
           ./templates
