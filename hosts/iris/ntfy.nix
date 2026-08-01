@@ -69,10 +69,6 @@ in
       smtp-sender-from = common.email.withSubaddress "ntfy";
       smtp-sender-verify = true;
 
-      smtp-server-listen = ":25";
-      smtp-server-domain = domain;
-      smtp-server-addr-prefix = ""; # Not worried about spam on separate domain
-
       web-push-file = "/var/lib/ntfy-sh/web-push.db";
       web-push-email-address = "admin@inx.moe";
 
