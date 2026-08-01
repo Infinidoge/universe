@@ -29,6 +29,7 @@
     ./dns.nix
     ./grafana.nix
     ./loki.nix
+    ./ntfy.nix
     ./prometheus.nix
     ./uptime-kuma.nix
   ];
