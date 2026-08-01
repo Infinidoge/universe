@@ -55,6 +55,9 @@
   system.stateVersion = config.system.nixos.release;
   system.configurationRevision = lib.mkForce null;
 
+  # TODO: make lethe support aarch64
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   boot.initrd.systemd = {
     enable = true;
   };
