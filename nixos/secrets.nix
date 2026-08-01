@@ -61,5 +61,29 @@ in
       '') deps;
 
     hex32 = { pkgs, ... }: "${pkgs.openssl}/bin/openssl rand -hex 32";
+
+    # dependencies.input = secrets.secret;
+    # settings.query = ".json_key"
+    json-query =
+      {
+        pkgs,
+        lib,
+        secret,
+        decrypt,
+        deps,
+        ...
+      }:
+      "${decrypt} ${lib.escapeShellArg deps.input.file} | ${lib.getExe pkgs.jq} --raw-output ${lib.escapeShellArg secret.settings.query}";
+
+    yaml-query =
+      {
+        pkgs,
+        lib,
+        secret,
+        decrypt,
+        deps,
+        ...
+      }:
+      "${decrypt} ${lib.escapeShellArg deps.input.file} | ${pkgs.yq}/bin/yq --raw-output ${lib.escapeShellArg secret.settings.query}";
   };
 }
