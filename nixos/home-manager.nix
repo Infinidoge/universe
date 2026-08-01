@@ -17,10 +17,7 @@
 
     sharedModules = [
       {
-        options.info = lib.our.mkOpt lib.types.attrs { };
         config.info = config.info;
-
-        options.common = lib.our.mkOpt lib.types.attrs { };
         config.common = config.common;
       }
       {
