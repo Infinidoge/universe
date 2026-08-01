@@ -243,7 +243,7 @@
             extraSpecialArgs = {
               lib = nixpkgs.lib.extend self.libOverlay;
               inherit private self inputs;
-              inherit (self) nixos home;
+              inherit (self) home;
             };
             modules = with self.home; [
               {
