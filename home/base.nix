@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  home,
+  ...
+}:
 let
   editi = (
     pkgs.writeScriptBin "editi" ''
@@ -86,6 +91,10 @@ let
   '';
 in
 {
+  imports = with home; [
+    options
+  ];
+
   home.packages = with pkgs; [
     # preferred terminal tools
     bat

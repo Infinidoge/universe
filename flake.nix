@@ -270,11 +270,6 @@
                   inputs.nil.overlays.default
                 ];
               }
-              {
-                # HACK: Should be defined elsewhere
-                options.info = self.lib.mkOpt lib.types.attrs { };
-                options.common = self.lib.mkOpt lib.types.attrs { };
-              }
 
               # --- Universe Modules ---
               base
