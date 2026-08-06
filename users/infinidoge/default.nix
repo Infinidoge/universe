@@ -20,7 +20,7 @@
   user = {
     name = "infinidoge";
     uid = 1000;
-    description = "Infinidoge, primary user of the system";
+    description = "Infinidoge";
     group = "users";
     isNormalUser = true;
     extraGroups = [
