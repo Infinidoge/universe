@@ -128,7 +128,7 @@ lib.makeExtensible (
 
     disko = import ./disko.nix { inherit lib; };
     filesystems = import ./filesystems.nix { inherit lib self; };
-    secrets = import ./secrets.nix;
+    secrets = import ./secrets.nix { inherit lib; };
   }
   // (import ./digga.nix { inherit lib; })
   // (import ./hosts.nix { inherit lib; })

@@ -1,3 +1,4 @@
+{ lib }:
 {
   withRoot = rekeyFile: { inherit rekeyFile; };
   withOwnerGroup = name: rekeyFile: {
@@ -11,4 +12,6 @@
     inherit group rekeyFile;
     mode = "440";
   };
+
+  sidecarOf = file: suffix: lib.escapeShellArg ((lib.removeSuffix ".age" file) + suffix);
 }
