@@ -89,7 +89,7 @@ in
   systemd.services.jupyter.path = jupyterPath;
 
   services.nginx.virtualHosts."jupyter.internal.inx.moe" = common.nginx.ssl-inx // {
-    listenAddresses = [ "100.101.102.124" ];
+    listenAddresses = [ config.networking.fqdn ];
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString cfg.port}";
       proxyWebsockets = true;
