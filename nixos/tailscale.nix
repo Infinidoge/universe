@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   persist.directories = [
     {
@@ -19,9 +24,9 @@
     "tailscale0"
   ];
 
-  networking.search = [
-    "tailnet.inx.moe"
-  ];
+  networking.domain = "tailnet.inx.moe";
+
+  networking.search = [ config.networking.domain ];
 
   systemd.services.tailscaled.serviceConfig.Environment = [
     "TS_DEBUG_FIREWALL_MODE=nftables"
