@@ -26,8 +26,8 @@
     filesystems.btrfs
     filesystems.encrypted
     hardware.audio
-    hardware.wifi
     hardware.gpu.intel
+    hardware.wifi
 
     ./hardware-configuration.nix
     ./disks.nix
