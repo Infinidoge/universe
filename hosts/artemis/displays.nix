@@ -120,10 +120,10 @@ in
         };
         dorm-docked = {
           eDP-1 = framework // {
-            position = "0x0";
+            position = "1920x0";
           };
           DP-4-1 = dorm // {
-            position = "1805x0";
+            position = "0x0";
           };
         };
       }
