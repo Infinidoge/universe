@@ -11,8 +11,13 @@
       model = "tm-m30-rastertotmt.ppd.gz";
     }
     {
-      name = "EPSON-TM-m30-remote";
+      name = "EPSON-TM-m30-dionysus";
       deviceUri = "ipp://100.101.102.18/printers/EPSON-TM-m30";
+      model = "raw";
+    }
+    {
+      name = "EPSON-TM-m30-bacchus";
+      deviceUri = "ipp://100.101.102.151/printers/EPSON-TM-m30";
       model = "raw";
     }
   ];
