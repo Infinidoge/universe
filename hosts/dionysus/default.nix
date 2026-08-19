@@ -47,7 +47,7 @@
     listenAddresses = [
       "localhost:631"
       "100.101.102.18:631"
-      "dionysus:631"
+      "dionysus.tailnet.inx.moe:631"
     ];
     allowFrom = [ "all" ];
     defaultShared = true;
