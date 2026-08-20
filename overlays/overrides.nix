@@ -27,24 +27,24 @@ in
 
   inherit (latest)
     bind
+    bitwarden-desktop
+    bluesky-pds
+    borgbackup
     discord
     discord-canary
-    bitwarden-desktop
     factorio-headless
-    presenterm
+    firefox-devedition
     flameshot
     immich
-    weblate
-    bluesky-pds
-    firefox-devedition
+    presenterm
     vaultwarden
-    borgbackup
+    weblate
     yt-dlp
     ;
 
   inherit (stable)
-    nix-melt
     bitwarden-cli
+    nix-melt
     ;
 
   gum = latest.gum.overrideAttrs (old: {
@@ -89,9 +89,9 @@ in
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pythonFinal: pythonPrev: {
       inherit (final)
-        jupyterlab-vim
-        jupyterlab-myst
         jupyter-server-proxy
+        jupyterlab-myst
+        jupyterlab-vim
         ;
 
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
