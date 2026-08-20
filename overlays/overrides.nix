@@ -39,6 +39,7 @@ in
     firefox-devedition
     vaultwarden
     borgbackup
+    yt-dlp
     ;
 
   inherit (stable)
