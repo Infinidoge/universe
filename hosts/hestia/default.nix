@@ -7,7 +7,6 @@
     common
     email
     extra
-    grub
     home-manager
     kmscon
     locale
@@ -22,8 +21,10 @@
     secrets
     ssh
     state-version
+    systemd-boot
     tailscale
     virtualisation
+    xen-dom0
     filesystems.btrfs
     filesystems.encrypted
     filesystems.zfs
