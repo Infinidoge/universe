@@ -1,38 +1,45 @@
 { pkgs, lib, ... }:
 with lib.our.disko;
 {
-  boot.zfs.extraPools = [ "tank" ];
+  boot.zfs.extraPools = [
+    "main"
+    "tank"
+  ];
 
   disko.devices = {
-    nodev."/" = mkTmpfs "2G";
+    nodev."/" = mkTmpfs "64G";
     disk = {
-      main = mkDisk "usb-_USB_DISK_62859665-0:0" {
+      store = mkDisk "usb-HP_iLO_LUN_00_Media_0_000002660A01-0:0" {
         partitions = {
           boot = mkESP "64M" "/boot/efi";
           store = mkBtrfsPart "100%" "/media/store" {
             subvolumes = mkBtrfsSubvols {
               "/boot" = { };
               "/etc/ssh" = { };
-              "/persist" = { };
-              "/nix" = { };
+              "/etc/secrets" = { };
             };
           };
         };
       };
-      hdd1 = mkZDisk "wwn-0x5000cca215d2481a" "tank";
-      hdd2 = mkZDisk "wwn-0x5000cca215d24629" "tank";
+
+      hddL = mkZDisk "wwn-0x5000c50067267658" "main"; # 6 TB
+      hddS1 = mkZDisk "wwn-0x5000cca22ced889d" "tank"; # 3 TB
+      hddS2 = mkZDisk "wwn-0x5000cca22ceda094" "tank"; # 3 TB
+      hddS3 = mkZDisk "wwn-0x5000cca22cedeb01" "tank"; # 3 TB
     };
 
     zpool = mkZPools {
+      main = {
+        mode = ""; # No second disk
+        datasets = {
+          nix = mkZfs "/nix" { };
+          persist = mkZfs "/persist" { };
+        };
+      };
       tank = {
         datasets = {
           storage = mkZfs "/storage" { };
           backups = mkZfs "/backups" { };
-          swap = mkZvol "16G" {
-            type = "swap";
-            resumeDevice = false;
-            discardPolicy = "both";
-          };
         };
       };
     };
@@ -42,5 +49,6 @@ with lib.our.disko;
     "/persist"
     "/storage"
     "/etc/ssh"
+    "/etc/secrets"
   ];
 }
