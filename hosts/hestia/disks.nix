@@ -11,10 +11,9 @@ with lib.our.disko;
     disk = {
       store = mkDisk "usb-HP_iLO_LUN_00_Media_0_000002660A01-0:0" {
         partitions = {
-          boot = mkESP "64M" "/boot/efi";
+          boot = mkESP "512M" "/boot";
           store = mkBtrfsPart "100%" "/media/store" {
             subvolumes = mkBtrfsSubvols {
-              "/boot" = { };
               "/etc/ssh" = { };
               "/etc/secrets" = { };
             };
