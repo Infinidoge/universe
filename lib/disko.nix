@@ -45,7 +45,7 @@ rec {
       inherit mountpoint mountOptions;
     };
   };
-  mkESP = mkESP' defaultMountOptions;
+  mkESP = mkESP' (defaultMountOptions ++ [ "umask=0077" ]);
 
   mkTmpfs' = mountOptions: size: mode: {
     fsType = "tmpfs";
