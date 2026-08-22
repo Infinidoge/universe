@@ -15,7 +15,7 @@ in
       "daedalus"
       "dionysus"
       #"hermes"
-      #"hestia"
+      "hestia"
       "iris"
       "lethe"
       "pluto"
