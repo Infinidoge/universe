@@ -8,6 +8,10 @@
 {
   # Use the latest Linux kernel
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+
+  # Enable zswap by default when swap devices are configured
+  boot.zswap.enable = lib.mkDefault (config.swapDevices != [ ]);
+
   # Remove all default packages
   environment.defaultPackages = lib.mkForce [ ];
 

@@ -57,12 +57,7 @@
     interface = "enp3s0";
   };
 
-  boot.kernelParams = [
-    "zswap.enabled=1"
-    "zswap.compressor=zstd"
-    "zswap.max_pool_percent=50"
-    "zswap.shrinker_enabled=1"
-  ];
+  boot.zswap.maxPoolPercent = 50;
 
   services.journald.extraConfig = ''
     SystemMaxUse=5%
