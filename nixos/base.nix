@@ -2,10 +2,15 @@
   lib,
   config,
   pkgs,
+  nixos,
   home,
   ...
 }:
 {
+  imports = with nixos; [
+    common
+  ];
+
   # Use the latest Linux kernel
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 

@@ -11,7 +11,6 @@
 {
   imports = with nixos; [
     base
-    common
     home-manager
     kmscon
     locale

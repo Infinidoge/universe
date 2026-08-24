@@ -9,7 +9,6 @@
     base
     backups
     borg
-    common
     email
     extra
     graphical

@@ -11,7 +11,6 @@
     base
     backups
     borg
-    common
     email
     extra
     fail2ban

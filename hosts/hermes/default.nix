@@ -3,7 +3,6 @@
   imports = with nixos; [
     base
     borg
-    common
     email
     extra
     graphical

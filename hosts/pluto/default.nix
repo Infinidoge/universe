@@ -4,7 +4,6 @@
     base
     backups
     borg
-    common
     email
     extra
     grub

@@ -36,6 +36,7 @@ in
     flameshot
     immich
     presenterm
+    searxng
     vaultwarden
     weblate
     yt-dlp
