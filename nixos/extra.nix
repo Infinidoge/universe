@@ -33,8 +33,8 @@
     programming.c
     programming.html
     programming.java
-    programming.lua
     programming.latex
+    programming.lua
     programming.nim
     programming.python
     programming.racket
