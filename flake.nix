@@ -16,7 +16,6 @@
     latest.url = "github:NixOS/nixpkgs";
     fork.url = "github:Infinidoge/nixpkgs/combined/all";
     stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-    old-stable.url = "github:NixOS/nixpkgs/nixos-23.05"; # HACK: For schildichat
 
     ### Configuration Components ###
     private.url = "git+ssh://git@inx.moe/Infinidoge/universe-private";

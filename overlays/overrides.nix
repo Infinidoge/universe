@@ -13,7 +13,6 @@ let
   latest = mkPkgsUnfree inputs.latest;
   fork = mkPkgsUnfree inputs.fork;
   stable = mkPkgs inputs.stable;
-  old-stable = mkPkgs inputs.old-stable;
 
   versionFromInput =
     input:
@@ -74,8 +73,6 @@ in
     #  }).overrideAttrs
     #    { inherit (old) patches postPatch; };
   });
-
-  schildichat-desktop = old-stable.schildichat-desktop.override { electron = final.electron; };
 
   qtile = prev.qtile.overridePythonAttrs {
     # BUG: https://github.com/qtile/qtile/issues/5766
