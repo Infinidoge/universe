@@ -36,6 +36,7 @@
     programming.latex
     programming.lua
     programming.nim
+    programming.ocaml
     programming.python
     programming.racket
     programming.rust
