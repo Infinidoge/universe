@@ -42,8 +42,6 @@ in
     ;
 
   inherit (stable)
-    bitwarden-cli
-    nix-melt
     ;
 
   gum = latest.gum.overrideAttrs (old: {
