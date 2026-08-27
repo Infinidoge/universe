@@ -18,11 +18,11 @@
         perSystem =
           { pkgs, ... }:
           {
-            devshells.default = pkgs.mkShell {
+            devShells.default = pkgs.mkShell {
               name = "template";
               packages = with pkgs; [ ];
               buildInputs = with pkgs; [ ];
-              shellHook = '''';
+              shellHook = "";
             };
           };
       }
