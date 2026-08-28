@@ -67,7 +67,6 @@ sobek
 thoth
 
 ### used
-hermes   | portable install
 hestia   | storage server
 vulcan   | community server
 athena   | fairphone
@@ -79,9 +78,12 @@ daedalus | primary server
 dionysus | optiplex 5050
 lethe    | installer image/kexec binary
 iris     | cloud server
-janus    | vulcan proxy server
 bacchus  | optiplex 5040
 enodia   | router
 fortuna  | steam deck
 nemesis  | windows install
 terminus | router
+
+### pending
+hermes   | portable install
+janus    | vulcan proxy server
