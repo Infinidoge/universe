@@ -104,9 +104,6 @@ in
     };
 
     distributedBuilds = mkDefault true;
-    extraOptions = ''
-      builders-use-substitutes = true
-    '';
 
     sshServe = {
       enable = mkDefault true;
