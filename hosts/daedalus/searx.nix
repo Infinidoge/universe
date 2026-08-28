@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   common,
   secrets,
@@ -11,13 +12,13 @@ in
 {
   services.searx = {
     enable = true;
+    inherit domain;
     configureUwsgi = true;
+    configureNginx = true;
     redisCreateLocally = true;
     environmentFile = secrets."searx";
     uwsgiConfig = {
       disable-logging = true;
-      socket = "/run/searx/searx.sock";
-      chmod-socket = "660";
     };
     settings = {
       general = {
@@ -25,7 +26,6 @@ in
       };
       server = {
         secret_key = "@SECRET_KEY@";
-        base_url = "https://${domain}";
         default_locale = "en";
         default_theme = "oscar";
       };
@@ -43,12 +43,5 @@ in
 
   users.users.nginx.extraGroups = [ "searx" ];
 
-  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
-    locations."/" = {
-      extraConfig = ''
-        include ${config.services.nginx.package}/conf/uwsgi_params;
-        uwsgi_pass unix://${cfg.uwsgiConfig.socket};
-      '';
-    };
-  };
+  services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx;
 }
