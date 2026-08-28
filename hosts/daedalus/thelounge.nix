@@ -20,11 +20,16 @@
   services.thelounge = {
     enable = true;
     dataDir = "/srv/thelounge";
-    plugins = with pkgs.stable.theLoungePlugins; [
-      themes.zenburn-monospace
-      themes.dracula
-      themes.discordapp
-    ];
+
+    # BUG: Removed from Nixpkgs
+    # https://github.com/NixOS/nixpkgs/pull/389425
+    # https://github.com/NixOS/nixpkgs/pull/446123
+    # plugins = with pkgs.stable.theLoungePlugins; [
+    #   themes.zenburn-monospace
+    #   themes.dracula
+    #   themes.discordapp
+    # ];
+
     port = 9786;
     extraConfig = {
       reverseProxy = true;
