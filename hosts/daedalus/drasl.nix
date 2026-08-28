@@ -3,6 +3,7 @@
 # But sometimes people don't want to use Mojang/Microsoft's servers
 # This is for that
 {
+  pkgs,
   common,
   config,
   inputs,
@@ -27,6 +28,8 @@ in
 
   services.drasl = {
     enable = true;
+    # BUG: https://github.com/unmojang/drasl/issues/312
+    package = inputs.drasl.defaultPackage.${pkgs.stdenv.hostPlatform.system};
     settings = {
       Domain = domain;
       BaseURL = "https://${domain}";
