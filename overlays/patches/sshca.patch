@@ -1,4 +1,4 @@
-From c90cc3f97d411b4ae1d657fc25eca1aedafaa80b Mon Sep 17 00:00:00 2001
+From cb6b83da8224be516bf3f9769caac1fcf08f5e21 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Thu, 19 Mar 2026 10:02:47 +0100
 Subject: [PATCH 01/15] Implement `SSH_ENABLE_CERT_AUTH` feature for
@@ -46,7 +46,7 @@ username owning the CA key.
  create mode 100644 tests/integration/ssh_ca_key_test.go
 
 diff --git a/custom/conf/app.example.ini b/custom/conf/app.example.ini
-index 40dd7d56db..f6bf1bb293 100644
+index a8d4a966e6..8f54c8b86c 100644
 --- a/custom/conf/app.example.ini
 +++ b/custom/conf/app.example.ini
 @@ -232,6 +232,13 @@ RUN_USER = ; git
@@ -60,7 +60,7 @@ index 40dd7d56db..f6bf1bb293 100644
 +;; this settings allows users to manage their own, user-specific CAs.
 +;SSH_ENABLE_CERT_AUTH = false
 +;;
- ;; Timeout for any write to ssh connections. (Set to -1 to disable all timeouts.)
+ ;; Timeout for any write to ssh connections. (Set to -1s to disable all timeouts.)
  ;; Will default to the PER_WRITE_TIMEOUT.
  ;SSH_PER_WRITE_TIMEOUT = 30s
 diff --git a/models/asymkey/error.go b/models/asymkey/error.go
@@ -198,7 +198,7 @@ index ea05195b5d..54ce9a1c48 100644
  					log.Trace("AddPublicKeysBySource[%s]: Public SSH Key %s already exists for user", sshKeyName, usr.Name)
  				} else {
 diff --git a/models/asymkey/ssh_key_authorized_keys.go b/models/asymkey/ssh_key_authorized_keys.go
-index 11905071af..f0f3c8e033 100644
+index 7ea42aaa95..f0f3c8e033 100644
 --- a/models/asymkey/ssh_key_authorized_keys.go
 +++ b/models/asymkey/ssh_key_authorized_keys.go
 @@ -16,6 +16,7 @@ import (
@@ -271,7 +271,7 @@ index 11905071af..f0f3c8e033 100644
  	// Create a set of all the expected output in the `authorized_keys` file.
  	expectedKeys := make(container.Set[string])
  	if err := db.GetEngine(ctx).Where("type != ?", KeyTypePrincipal).Iterate(new(PublicKey), func(idx int, bean any) (err error) {
--		keyWithComment := (bean.(*PublicKey)).AuthorizedString()
+-		keyWithComment := bean.(*PublicKey).AuthorizedString()
 +		keyWithComment := (bean.(*PublicKey)).AuthorizedString(ctx)
  		if !strings.HasPrefix(keyWithComment, tplCommentPrefix) {
  			return fmt.Errorf("unexpected AuthorizedString")
@@ -280,33 +280,33 @@ index 11905071af..f0f3c8e033 100644
  // regeneratePublicKeys regenerates the authorized_keys file
  func regeneratePublicKeys(ctx context.Context, t io.StringWriter) error {
  	if err := db.GetEngine(ctx).Where("type != ?", KeyTypePrincipal).Iterate(new(PublicKey), func(idx int, bean any) (err error) {
--		_, err = t.WriteString((bean.(*PublicKey)).AuthorizedString())
+-		_, err = t.WriteString(bean.(*PublicKey).AuthorizedString())
 +		_, err = t.WriteString((bean.(*PublicKey)).AuthorizedString(ctx))
  		return err
  	}); err != nil {
  		return err
 diff --git a/models/asymkey/ssh_key_authorized_keys_test.go b/models/asymkey/ssh_key_authorized_keys_test.go
-index 732419dfa5..85746cff0a 100644
+index 947c1d8a55..85746cff0a 100644
 --- a/models/asymkey/ssh_key_authorized_keys_test.go
 +++ b/models/asymkey/ssh_key_authorized_keys_test.go
 @@ -65,7 +65,7 @@ func TestInspectPublicKeys(t *testing.T) {
  				// Skip one key
  				return nil
  			}
--			_, err = file.WriteString((bean.(*PublicKey)).AuthorizedString())
+-			_, err = file.WriteString(bean.(*PublicKey).AuthorizedString())
 +			_, err = file.WriteString((bean.(*PublicKey)).AuthorizedString(db.DefaultContext))
  			return err
  		})
  		require.NoError(t, err)
 diff --git a/models/asymkey/ssh_key_authorized_principals.go b/models/asymkey/ssh_key_authorized_principals.go
-index 0b4fe13ba7..38c6ca9992 100644
+index 74c505bcaa..38c6ca9992 100644
 --- a/models/asymkey/ssh_key_authorized_principals.go
 +++ b/models/asymkey/ssh_key_authorized_principals.go
 @@ -103,7 +103,7 @@ func RewriteAllPrincipalKeys(ctx context.Context) error {
  
  func regeneratePrincipalKeys(ctx context.Context, t io.StringWriter) error {
  	if err := db.GetEngine(ctx).Where("type = ?", KeyTypePrincipal).Iterate(new(PublicKey), func(idx int, bean any) (err error) {
--		_, err = t.WriteString((bean.(*PublicKey)).AuthorizedString())
+-		_, err = t.WriteString(bean.(*PublicKey).AuthorizedString())
 +		_, err = t.WriteString((bean.(*PublicKey)).AuthorizedString(ctx))
  		return err
  	}); err != nil {
@@ -600,7 +600,7 @@ index 0000000000..e242eabdd7
 +	return err
 +}
 diff --git a/modules/setting/ssh.go b/modules/setting/ssh.go
-index a1dd1d968e..02447f2b47 100644
+index 6bd339396e..392811c072 100644
 --- a/modules/setting/ssh.go
 +++ b/modules/setting/ssh.go
 @@ -51,6 +51,7 @@ var SSH = struct {
@@ -612,7 +612,7 @@ index a1dd1d968e..02447f2b47 100644
  	Disabled:                      false,
  	StartBuiltinServer:            false,
 diff --git a/modules/ssh/ssh.go b/modules/ssh/ssh.go
-index 502fcd070f..a24121a30f 100644
+index 3a53913a81..a4355cd30b 100644
 --- a/modules/ssh/ssh.go
 +++ b/modules/ssh/ssh.go
 @@ -9,6 +9,7 @@ import (
@@ -639,7 +639,7 @@ index 502fcd070f..a24121a30f 100644
  	"forgejo.org/modules/graceful"
  	"forgejo.org/modules/log"
  	"forgejo.org/modules/process"
-@@ -163,89 +167,170 @@ func publicKeyHandler(ctx ssh.Context, key ssh.PublicKey) bool {
+@@ -176,89 +180,170 @@ func publicKeyHandler(ctx ssh.Context, key ssh.PublicKey) bool {
  		logger.Debug("Handle Public Key: Fingerprint: %s from %s", gossh.FingerprintSHA256(key), ctx.RemoteAddr())
  	}
  
@@ -866,7 +866,7 @@ index 502fcd070f..a24121a30f 100644
  	if logger.LevelEnabled(log.DEBUG) { // <- FingerprintSHA256 is kinda expensive so only calculate it if necessary
  		logger.Debug("Handle Public Key: %s Fingerprint: %s is not a certificate", ctx.RemoteAddr(), gossh.FingerprintSHA256(key))
  	}
-@@ -254,13 +339,18 @@ func publicKeyHandler(ctx ssh.Context, key ssh.PublicKey) bool {
+@@ -267,13 +352,18 @@ func publicKeyHandler(ctx ssh.Context, key ssh.PublicKey) bool {
  	if err != nil {
  		if asymkey_model.IsErrKeyNotExist(err) {
  			logger.Warn("Unknown public key: %s from %s", gossh.FingerprintSHA256(key), ctx.RemoteAddr())
@@ -963,13 +963,13 @@ index 0000000000..cc2daf4e49
 +	}
 +}
 diff --git a/modules/structs/user_key.go b/modules/structs/user_key.go
-index b92552b200..16316bd55d 100644
+index a984a813f3..7bff78a27f 100644
 --- a/modules/structs/user_key.go
 +++ b/modules/structs/user_key.go
-@@ -19,4 +19,13 @@ type PublicKey struct {
- 	Owner    *User     `json:"user,omitempty"`
- 	ReadOnly bool      `json:"read_only,omitempty"`
- 	KeyType  string    `json:"key_type,omitempty"`
+@@ -22,4 +22,13 @@ type PublicKey struct {
+ 	// swagger:strfmt date-time
+ 	Updated  time.Time `json:"updated_at,omitzero"`
+ 	Verified bool      `json:"verified"`
 +	// TODO: I'm not sure how best to handle user-supplied SSH CA keys here.
 +	// In the asymkey model there are fields IsCA, Principals. We could add
 +	// optional fields for those here, too (in variously ugly ways), or we
@@ -981,10 +981,10 @@ index b92552b200..16316bd55d 100644
 +	// See services/convert/convert.go
  }
 diff --git a/options/locale/locale_en-US.ini b/options/locale/locale_en-US.ini
-index a74cf843e9..81889a9708 100644
+index a86ec43880..775463574d 100644
 --- a/options/locale/locale_en-US.ini
 +++ b/options/locale/locale_en-US.ini
-@@ -641,6 +641,7 @@ invalid_ssh_principal = Invalid principal: %s
+@@ -624,6 +624,7 @@ invalid_ssh_principal = Invalid principal: %s
  must_use_public_key = The key you provided is a private key. Please do not upload your private key anywhere. Use your public key instead.
  unable_verify_ssh_key = Cannot verify the SSH key, double-check it for mistakes.
  auth_failed = Authentication failed: %v
@@ -992,7 +992,7 @@ index a74cf843e9..81889a9708 100644
  
  still_own_repo = Your account owns one or more repositories, delete or transfer them first.
  still_has_org = Your account is a member of one or more organizations, leave them first.
-@@ -833,6 +834,7 @@ gpg_desc = These public GPG keys are associated with your account and used to ve
+@@ -806,6 +807,7 @@ gpg_desc = These public GPG keys are associated with your account and used to ve
  ssh_helper = <strong>Need help?</strong> Have a look at the guide to <a href="%s">create your own SSH keys</a> or solve <a href="%s">common problems</a> you may encounter using SSH.
  gpg_helper = <strong>Need help?</strong> Have a look at the guide <a href="%s">about GPG</a>.
  key_content_ssh_placeholder = Begins with "ssh-ed25519", "ssh-rsa", "ecdsa-sha2-nistp256", "ecdsa-sha2-nistp384", "ecdsa-sha2-nistp521", "sk-ecdsa-sha2-nistp256@openssh.com", or "sk-ssh-ed25519@openssh.com"
@@ -1000,7 +1000,7 @@ index a74cf843e9..81889a9708 100644
  key_content_gpg_placeholder = Begins with "-----BEGIN PGP PUBLIC KEY BLOCK-----"
  add_new_principal = Add principal
  ssh_key_been_used = This SSH key has already been added to the server.
-@@ -894,6 +896,7 @@ principal_state_desc = This principal has been used in the last 7 days
+@@ -867,6 +869,7 @@ principal_state_desc = This principal has been used in the last 7 days
  show_openid = Show on profile
  hide_openid = Hide from profile
  ssh_disabled = SSH is disabled
@@ -1009,7 +1009,7 @@ index a74cf843e9..81889a9708 100644
  ssh_externally_managed = This SSH key is externally managed for this user
  
 diff --git a/routers/api/v1/repo/key.go b/routers/api/v1/repo/key.go
-index 36fe2080d4..34f2ed226b 100644
+index a21b1e1996..83c286d0d1 100644
 --- a/routers/api/v1/repo/key.go
 +++ b/routers/api/v1/repo/key.go
 @@ -183,6 +183,15 @@ func HandleCheckKeyStringError(ctx *context.APIContext, err error) {
@@ -1039,7 +1039,7 @@ index 36fe2080d4..34f2ed226b 100644
  		HandleCheckKeyStringError(ctx, err)
  		return
 diff --git a/routers/api/v1/user/key.go b/routers/api/v1/user/key.go
-index 94af893a0e..9f437975df 100644
+index bfcbdd8ce7..200d4ecf0a 100644
 --- a/routers/api/v1/user/key.go
 +++ b/routers/api/v1/user/key.go
 @@ -213,13 +213,19 @@ func CreateUserPublicKey(ctx *context.APIContext, form api.CreateKeyOption, uid
@@ -1065,19 +1065,19 @@ index 94af893a0e..9f437975df 100644
  		repo.HandleAddKeyError(ctx, err)
  		return
 diff --git a/routers/private/key.go b/routers/private/key.go
-index 2d77c9c5be..a1b9fc02ed 100644
+index e7455e3cec..d109d1cd09 100644
 --- a/routers/private/key.go
 +++ b/routers/private/key.go
-@@ -57,5 +57,6 @@ func AuthorizedPublicKeyByContent(ctx *context.PrivateContext) {
- 		})
+@@ -63,5 +63,6 @@ func AuthorizedPublicKeyByFingerprint(ctx *context.PrivateContext) {
  		return
  	}
+ 
 -	ctx.PlainText(http.StatusOK, publicKey.AuthorizedString())
 +	// TODO: is `ctx` the correct context for AuthorizedString here?
 +	ctx.PlainText(http.StatusOK, publicKey.AuthorizedString(ctx))
  }
 diff --git a/routers/web/repo/setting/deploy_key.go b/routers/web/repo/setting/deploy_key.go
-index c59f0e90c2..c21a87fd31 100644
+index 879a21aaa5..ea256459d3 100644
 --- a/routers/web/repo/setting/deploy_key.go
 +++ b/routers/web/repo/setting/deploy_key.go
 @@ -51,7 +51,8 @@ func DeployKeysPost(ctx *context.Context) {
@@ -1091,7 +1091,7 @@ index c59f0e90c2..c21a87fd31 100644
  		if db.IsErrSSHDisabled(err) {
  			ctx.Flash.Info(ctx.Tr("settings.ssh_disabled"))
 diff --git a/routers/web/user/setting/keys.go b/routers/web/user/setting/keys.go
-index 935efd7ba7..fc1e26fde4 100644
+index 054b6a35ee..8a7287d9a5 100644
 --- a/routers/web/user/setting/keys.go
 +++ b/routers/web/user/setting/keys.go
 @@ -30,6 +30,7 @@ func Keys(ctx *context.Context) {
@@ -1110,7 +1110,7 @@ index 935efd7ba7..fc1e26fde4 100644
  
  	if ctx.HasError() {
  		loadKeysData(ctx)
-@@ -165,7 +167,7 @@ func KeysPost(ctx *context.Context) {
+@@ -166,7 +168,7 @@ func KeysPost(ctx *context.Context) {
  			return
  		}
  
@@ -1119,7 +1119,7 @@ index 935efd7ba7..fc1e26fde4 100644
  		if err != nil {
  			if db.IsErrSSHDisabled(err) {
  				ctx.Flash.Info(ctx.Tr("settings.ssh_disabled"))
-@@ -180,7 +182,20 @@ func KeysPost(ctx *context.Context) {
+@@ -181,7 +183,20 @@ func KeysPost(ctx *context.Context) {
  			return
  		}
  
@@ -1142,7 +1142,7 @@ index 935efd7ba7..fc1e26fde4 100644
  			switch {
  			case asymkey_model.IsErrKeyAlreadyExist(err):
 diff --git a/services/convert/convert.go b/services/convert/convert.go
-index 65fa701ffe..2846a7ac20 100644
+index 78c45cfbf4..8f35292dfc 100644
 --- a/services/convert/convert.go
 +++ b/services/convert/convert.go
 @@ -254,7 +254,7 @@ func ToVerification(ctx context.Context, c *git.Commit) *api.PayloadCommitVerifi
@@ -1155,7 +1155,7 @@ index 65fa701ffe..2846a7ac20 100644
  		Title:       key.Name,
  		Fingerprint: key.Fingerprint,
 diff --git a/templates/user/settings/keys_ssh.tmpl b/templates/user/settings/keys_ssh.tmpl
-index 57f4ef4010..0998581013 100644
+index 5372a9b919..4461607790 100644
 --- a/templates/user/settings/keys_ssh.tmpl
 +++ b/templates/user/settings/keys_ssh.tmpl
 @@ -15,7 +15,7 @@
@@ -1195,7 +1195,7 @@ index 57f4ef4010..0998581013 100644
  				<div class="flex-item-trailing">
  					<button class="ui red tiny button delete-button{{if index $.ExternalKeys $index}} disabled{{end}}" data-modal-id="delete-ssh" data-url="{{$.Link}}/delete?type=ssh" data-id="{{.ID}}"{{if index $.ExternalKeys $index}} title="{{ctx.Locale.Tr "settings.ssh_externally_managed"}}"{{end}}>
 diff --git a/tests/integration/api_helper_for_declarative_test.go b/tests/integration/api_helper_for_declarative_test.go
-index 6f33322253..55a9508d83 100644
+index b9a672e9c2..d4f31e5523 100644
 --- a/tests/integration/api_helper_for_declarative_test.go
 +++ b/tests/integration/api_helper_for_declarative_test.go
 @@ -9,6 +9,7 @@ import (
@@ -1206,7 +1206,7 @@ index 6f33322253..55a9508d83 100644
  	"testing"
  	"time"
  
-@@ -167,13 +168,17 @@ func doAPIDeleteRepository(ctx APITestContext) func(*testing.T) {
+@@ -161,13 +162,17 @@ func doAPIDeleteRepository(ctx APITestContext) func(*testing.T) {
  	}
  }
  
@@ -1227,12 +1227,12 @@ index 6f33322253..55a9508d83 100644
  		if ctx.ExpectedCode != 0 {
  			ctx.Session.MakeRequest(t, req, ctx.ExpectedCode)
 diff --git a/tests/integration/api_private_serv_test.go b/tests/integration/api_private_serv_test.go
-index dd45f54c36..d991a62856 100644
+index 738925172c..4e16378eef 100644
 --- a/tests/integration/api_private_serv_test.go
 +++ b/tests/integration/api_private_serv_test.go
-@@ -170,7 +170,7 @@ func TestAPIPrivateServAndNoServWithRequiredTwoFactor(t *testing.T) {
- 			repo, _, reset := tests.CreateDeclarativeRepoWithOptions(t, user, tests.DeclarativeRepoOptions{})
- 			defer reset()
+@@ -169,7 +169,7 @@ func TestAPIPrivateServAndNoServWithRequiredTwoFactor(t *testing.T) {
+ 			t.Helper()
+ 			repo := forgery.CreateRepository(t, user, nil)
  
 -			pubKey, err := asymkey_model.AddPublicKey(ctx, user.ID, "tmp-key-"+user.Name, "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBGXEEzWmm1dxb+57RoK5KVCL0w2eNv9cqJX2AGGVlkFsVDhOXHzsadS3LTK4VlEbbrDMJdoti9yM8vclA8IeRacAAAAEc3NoOg== nocomment", 0)
 +			pubKey, err := asymkey_model.AddPublicKey(ctx, user.ID, "tmp-key-"+user.Name, "sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBGXEEzWmm1dxb+57RoK5KVCL0w2eNv9cqJX2AGGVlkFsVDhOXHzsadS3LTK4VlEbbrDMJdoti9yM8vclA8IeRacAAAAEc3NoOg== nocomment", 0, false, "")
@@ -1240,10 +1240,10 @@ index dd45f54c36..d991a62856 100644
  			defer unittest.AssertSuccessfulDelete(t, &asymkey_model.PublicKey{ID: pubKey.ID})
  
 diff --git a/tests/integration/git_helper_for_declarative_test.go b/tests/integration/git_helper_for_declarative_test.go
-index e1f08509df..0da5d78235 100644
+index 532cdf4fd7..d9c2979889 100644
 --- a/tests/integration/git_helper_for_declarative_test.go
 +++ b/tests/integration/git_helper_for_declarative_test.go
-@@ -26,6 +26,41 @@ import (
+@@ -27,6 +27,41 @@ import (
  	"github.com/stretchr/testify/require"
  )
  
@@ -1285,7 +1285,7 @@ index e1f08509df..0da5d78235 100644
  func withKeyFile(t *testing.T, keyname string, callback func(string)) {
  	tmpDir := t.TempDir()
  
-@@ -38,17 +73,7 @@ func withKeyFile(t *testing.T, keyname string, callback func(string)) {
+@@ -39,17 +74,7 @@ func withKeyFile(t *testing.T, keyname string, callback func(string)) {
  	require.NoError(t, os.WriteFile(keyFile, privkey, 0o600))
  	require.NoError(t, os.WriteFile(keyFile+".pub", pubkey, 0o600))
  
@@ -1305,10 +1305,10 @@ index e1f08509df..0da5d78235 100644
  
  func createSSHUrl(gitPath string, u *url.URL) *url.URL {
 diff --git a/tests/integration/git_test.go b/tests/integration/git_test.go
-index dc86f4a4c2..4d31d2409a 100644
+index 2fbc8812bf..34ab8aacb0 100644
 --- a/tests/integration/git_test.go
 +++ b/tests/integration/git_test.go
-@@ -148,7 +148,7 @@ func testGit(t *testing.T, u *url.URL) {
+@@ -151,7 +151,7 @@ func testGit(t *testing.T, u *url.URL) {
  			// Setup key the user ssh key
  			withKeyFile(t, keyname, func(keyFile string) {
  				var publicKeyID int64
@@ -1447,7 +1447,7 @@ index 0000000000..193314c582
 +	})
 +}
 diff --git a/tests/integration/ssh_key_test.go b/tests/integration/ssh_key_test.go
-index 747b6c4eb0..d435d84e8d 100644
+index 126d027b17..9a3c82abf2 100644
 --- a/tests/integration/ssh_key_test.go
 +++ b/tests/integration/ssh_key_test.go
 @@ -123,7 +123,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
@@ -1459,7 +1459,7 @@ index 747b6c4eb0..d435d84e8d 100644
  				userKeyPublicKeyID = publicKey.ID
  			}))
  
-@@ -167,7 +167,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
+@@ -169,7 +169,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
  
  			t.Run("PushToOther", doGitPushTestRepository(dstOtherPath, "origin", "master"))
  
@@ -1468,7 +1468,7 @@ index 747b6c4eb0..d435d84e8d 100644
  		})
  
  		t.Run("DeleteRepositoryShouldReleaseKey", func(t *testing.T) {
-@@ -176,7 +176,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
+@@ -178,7 +178,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
  
  			t.Run("DeleteRepository", doAPIDeleteRepository(ctxWithDeleteRepo))
  
@@ -1477,7 +1477,7 @@ index 747b6c4eb0..d435d84e8d 100644
  
  			t.Run("MakeSureCloneOtherStillWorks", doGitClone(dstOtherPath, otherSSHURL))
  
-@@ -188,7 +188,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
+@@ -190,7 +190,7 @@ func testKeyOnlyOneType(t *testing.T, u *url.URL) {
  
  			t.Run("RecreateRepository", doAPICreateRepository(ctxWithDeleteRepo, nil, git.Sha1ObjectFormat)) // FIXME: use forEachObjectFormat
  
@@ -1487,10 +1487,10 @@ index 747b6c4eb0..d435d84e8d 100644
  			}))
  
 -- 
-2.53.0
+2.54.0
 
 
-From 3e44d41dc92fe1a055e9c98847a6f73f1f1ae181 Mon Sep 17 00:00:00 2001
+From 28e97d1a58a44c96ba21a894f0ac574b77c03389 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Fri, 20 Mar 2026 21:16:05 +0100
 Subject: [PATCH 02/15] TestParseCAOptions
@@ -1568,10 +1568,10 @@ index 0000000000..aa97f57a2c
 +	}
 +}
 -- 
-2.53.0
+2.54.0
 
 
-From 2cb18988f8db9c3356fa6f7bc4de872e95cf73b6 Mon Sep 17 00:00:00 2001
+From 22348f0d11e8eb48116bf776f1a07fbde58ee61a Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Fri, 20 Mar 2026 21:56:44 +0100
 Subject: [PATCH 03/15] TestAuthorizedStringForKey
@@ -1636,10 +1636,10 @@ index 85746cff0a..a428a974d1 100644
 +	}
 +}
 -- 
-2.53.0
+2.54.0
 
 
-From 948de17db437bf49e8fb61185cf7b6e7cd718595 Mon Sep 17 00:00:00 2001
+From 18491bef4e5082b4ec8f7c9582e512772496ad03 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 09:44:02 +0100
 Subject: [PATCH 04/15] Refactor testing utilities for user-supplied SSH CA
@@ -1959,10 +1959,10 @@ index 193314c582..71ebca0a95 100644
 +// func testPrincipalMatchingE2E(t *testing.T, u *url.URL) {
 +// }
 -- 
-2.53.0
+2.54.0
 
 
-From 3d77fc159d49cbc1afd33652599c1e1334aef015 Mon Sep 17 00:00:00 2001
+From ceb6ea140d67f51db3af3e174c5b608682d2f69d Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 10:08:37 +0100
 Subject: [PATCH 05/15] Cover more key provisioning cases
@@ -2097,10 +2097,10 @@ index 71ebca0a95..282ed0358c 100644
  // func testPrincipalMatchingE2E(t *testing.T, u *url.URL) {
  // }
 -- 
-2.53.0
+2.54.0
 
 
-From a4e78ef2bd087efd4f50330d423c2fcdb6df758f Mon Sep 17 00:00:00 2001
+From 050b78e21d8540833e8bc59c95dfe41b912a9578 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 10:38:55 +0100
 Subject: [PATCH 06/15] SSH CA keys LDAP source tests
@@ -2203,10 +2203,10 @@ index d646e3260a..838bf3d958 100644
 +	return nil
 +}
 -- 
-2.53.0
+2.54.0
 
 
-From f6a6387efada0c3c51b0bba064306866c6948804 Mon Sep 17 00:00:00 2001
+From 6f825c90471ca9261b89cbac7c5207c27c68b68f Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 11:30:22 +0100
 Subject: [PATCH 07/15] Test: can't clone with ephemeral key validly signed by
@@ -2234,10 +2234,10 @@ index 282ed0358c..019f852721 100644
  					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.HostCert, []string{userName}, 60)
  					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneUrl))
 -- 
-2.53.0
+2.54.0
 
 
-From bbada55f2657c7b7a2e6ea080a1863dd4edb888f Mon Sep 17 00:00:00 2001
+From 8a9cbfee601fffa529926e0d9a06fa37dbe4bd8c Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 11:37:14 +0100
 Subject: [PATCH 08/15] Test cert not yet valid
@@ -2290,10 +2290,10 @@ index 019f852721..a6a4918d06 100644
  					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
  					t.Run("FailToCloneWithEphemeralKeyAfterDisablingCertAuth", doGitCloneFail(f.cloneUrl))
 -- 
-2.53.0
+2.54.0
 
 
-From fb1d76e685c9e41c8329ca197eb81cbf8db3d72e Mon Sep 17 00:00:00 2001
+From be1e373aa73f480a3c03c3e7aea2d430f50be4e8 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 11:38:14 +0100
 Subject: [PATCH 09/15] Move initial clone-failure test to correct
@@ -2326,10 +2326,10 @@ index a6a4918d06..0baa2cc2a0 100644
  					t.Run("FailToCloneWithEphemeralKeyAndHostCert", doGitCloneFail(f.cloneUrl))
  					endorseKey(t, ephemeralkeyFile, f.cakey.fileName, ssh.UserCert, []string{userName}, 60)
 -- 
-2.53.0
+2.54.0
 
 
-From 00032bbb53bc8a43d8d511b7dc4ad9d9347c3000 Mon Sep 17 00:00:00 2001
+From fa8617bb7b3a1d1fcbcbab9c94d539ad6ef1dae0 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 11:38:21 +0100
 Subject: [PATCH 10/15] Cosmetic
@@ -2357,10 +2357,10 @@ index 0baa2cc2a0..93f1f3fb9e 100644
  					t.Run("FailToCloneWithEphemeralKeyExpiredCert", doGitCloneFail(f.cloneUrl))
  
 -- 
-2.53.0
+2.54.0
 
 
-From 20ba993a5a47a00739cb4206f5631f63d1713adf Mon Sep 17 00:00:00 2001
+From 2bc02d6f70c3e37f7e0d802f8afab75bb2a07305 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 12:01:17 +0100
 Subject: [PATCH 11/15] Prepare for integration-level principal-matching tests
@@ -2374,10 +2374,10 @@ Subject: [PATCH 11/15] Prepare for integration-level principal-matching tests
  delete mode 100644 modules/ssh/ssh_test.go
 
 diff --git a/modules/ssh/ssh.go b/modules/ssh/ssh.go
-index a24121a30f..a426277414 100644
+index a4355cd30b..91bedfeaa0 100644
 --- a/modules/ssh/ssh.go
 +++ b/modules/ssh/ssh.go
-@@ -226,7 +226,7 @@ func authenticationWithCert(ctx ssh.Context, cert *gossh.Certificate) bool {
+@@ -239,7 +239,7 @@ func authenticationWithCert(ctx ssh.Context, cert *gossh.Certificate) bool {
  }
  
  func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate, userCA *asymkey_model.PublicKey) (keyID int64, ok bool) {
@@ -2386,7 +2386,7 @@ index a24121a30f..a426277414 100644
  	if len(allowedPrincipals) == 0 {
  		owner, err := user.GetUserByID(ctx, userCA.OwnerID)
  		if err != nil {
-@@ -236,7 +236,7 @@ func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate,
+@@ -249,7 +249,7 @@ func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate,
  		allowedPrincipals = []string{owner.Name}
  	}
  
@@ -2395,7 +2395,7 @@ index a24121a30f..a426277414 100644
  	if !matchedPrincipal {
  		logger.Error("No principal listed in certificate is also listed in CA key's allowed principals list")
  		return 0, false
-@@ -256,14 +256,16 @@ func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate,
+@@ -269,14 +269,16 @@ func authenticationWithUserSuppliedCA(ctx ssh.Context, cert *gossh.Certificate,
  	return userCA.ID, true
  }
  
@@ -2666,10 +2666,10 @@ index 93f1f3fb9e..2bbc1ce328 100644
  				})
  			})
 -- 
-2.53.0
+2.54.0
 
 
-From ca98b0c47d4c08465e248ba5ba0c97c6838b30a3 Mon Sep 17 00:00:00 2001
+From 6f9fe1b1a8ddb6272ffbc52e3fe82cc6ae5b0bc3 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 12:12:01 +0100
 Subject: [PATCH 12/15] API-level testing of CA principal matching
@@ -2715,10 +2715,10 @@ index 2bbc1ce328..f093fcb0f9 100644
 +	})
 +}
 -- 
-2.53.0
+2.54.0
 
 
-From 4d941c19098776ca72751f8d565ac571cdd6b41b Mon Sep 17 00:00:00 2001
+From cbc306e32ee514cd33b440a602438f06c6daefff Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 15:50:18 +0100
 Subject: [PATCH 13/15] Tests tampering with certs in various ways
@@ -2806,10 +2806,10 @@ index f093fcb0f9..ea8ef57a94 100644
 +	})
 +}
 -- 
-2.53.0
+2.54.0
 
 
-From ca657fcac9beec78dbda1b76e288d932a50e472e Mon Sep 17 00:00:00 2001
+From 707084e2710291bc8d0d1f9d4547131182af1d1b Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 16:16:40 +0100
 Subject: [PATCH 14/15] Fixes from make pr-go
@@ -2874,10 +2874,10 @@ index ea8ef57a94..b30d43d1fd 100644
  	unrelated := userName + "_," + otherUser + "_"
  	repeated := userName + "," + userName
 -- 
-2.53.0
+2.54.0
 
 
-From e4cc5131c986e44ac7e568e90b8ddeff70124309 Mon Sep 17 00:00:00 2001
+From 4fe0808055003cb64c0b510c5345d7b843b18112 Mon Sep 17 00:00:00 2001
 From: Tony Garnock-Jones <tonyg@leastfixedpoint.com>
 Date: Sat, 21 Mar 2026 16:17:16 +0100
 Subject: [PATCH 15/15] Fixes from make pr-go
@@ -3011,5 +3011,5 @@ index b30d43d1fd..118a09330b 100644
  			})
  		})
 -- 
-2.53.0
+2.54.0
 
