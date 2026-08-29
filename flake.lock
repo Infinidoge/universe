@@ -332,6 +332,22 @@
         "type": "github"
       }
     },
+    "forgejo": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788107326,
+        "narHash": "sha256-7RZ5OsK2D8mrv3CnUGHjXT6qO5y69GT9aEWJobuVphk=",
+        "ref": "refs/heads/forgejo",
+        "rev": "52c4cb1bf8888109bc107cb4f523825af97849ea",
+        "revCount": 25692,
+        "type": "git",
+        "url": "https://codeberg.org/forgejo/forgejo"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/forgejo/forgejo"
+      }
+    },
     "fork": {
       "locked": {
         "lastModified": 1750320572,
@@ -880,6 +896,7 @@
         "drasl": "drasl",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
+        "forgejo": "forgejo",
         "fork": "fork",
         "git-hooks": "git-hooks_2",
         "home-manager": "home-manager",

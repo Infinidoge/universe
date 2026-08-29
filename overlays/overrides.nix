@@ -130,4 +130,9 @@ in
     # BUG: https://git.lix.systems/lix-project/lix/issues/1250
     doCheck = false;
   });
+
+  forgejo = latest.forgejo.overrideAttrs {
+    src = inputs.forgejo;
+    version = versionFromInput inputs.forgejo;
+  };
 }

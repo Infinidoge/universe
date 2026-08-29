@@ -65,6 +65,8 @@
 
     # Misc
     copyparty.url = "github:9001/copyparty";
+    forgejo.flake = false; # forgejo has a flake but doesn't export a package
+    forgejo.url = "git+https://codeberg.org/forgejo/forgejo";
     xonsh.url = "github:xonsh/xonsh";
 
     ### Cleanup ###
