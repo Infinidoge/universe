@@ -38,8 +38,16 @@ in
   ];
 
   forgejo = addPatches prev.forgejo [
-    # SSH CA auth: https://codeberg.org/forgejo/forgejo/pulls/11746
+    # NOTE: SSH CA auth: https://codeberg.org/forgejo/forgejo/pulls/11746
     # Rebased on top of forgejo branch
     ./sshca.patch
+
+    # NOTE: Instructions:
+    # mktmpclone https://cogeberg.org/forgejo/forgejo
+    # git remote add sshca https://codeberg.org/leastfixedpoint/forgejo
+    # git checkout -b sshca sshca/sshca
+    # git rebase HEAD~15 --onto forgejo
+    # ### Resolve conflicts
+    # git format-patch -15 --stdout > /etc/nixos/overlays/patches/sshca.patch
   ];
 }
