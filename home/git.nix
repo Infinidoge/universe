@@ -87,9 +87,10 @@
         sw = "switch";
         st = "status -sb";
         rb = "rebase -i --autosquash";
+        rba = "rebase -i --autosquash --autostash";
         rbc = "rebase --continue";
         rbs = "rebase --skip";
-        rba = "rebase --abort";
+        rbab = "rebase --abort";
         rbe = "rebase --edit-todo";
         arb = "absorb --and-rebase";
 
