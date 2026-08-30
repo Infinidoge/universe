@@ -36,9 +36,9 @@
 
     ### Domain-Specific Flake Inputs ###
     ## Lix
-    lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-    hydra.url = "https://git.lix.systems/lix-project/hydra/archive/main.tar.gz";
+    lix.url = "git+https://git.lix.systems/lix-project/lix";
+    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module";
+    hydra.url = "git+https://git.lix.systems/lix-project/hydra";
     nil.url = "github:oxalica/nil";
 
     ## Minecraft
