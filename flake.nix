@@ -206,13 +206,7 @@
               {
                 system.configurationRevision = lib.mkIf (self ? rev) self.rev;
                 nixpkgs.overlays = [
-                  self.overlays.packages
-                  self.overlays.patches
-                  self.overlays.overrides
-                  self.overlays.inputs
-                  self.overlays.lib
-
-                  # --- Domain-Specific Overlays
+                  # --- Domain-Specific Overlays ---
                   inputs.agenix.overlays.default
                   inputs.copyparty.overlays.default
                   inputs.hydra.overlays.default
@@ -220,6 +214,13 @@
                   inputs.nix-minecraft.overlay
                   inputs.rust-overlay.overlays.default
                   inputs.universe-cli.overlays.default
+
+                  # --- Universe Overlays ---
+                  self.overlays.packages
+                  self.overlays.patches
+                  self.overlays.overrides
+                  self.overlays.inputs
+                  self.overlays.lib
                 ];
                 home-manager = {
                   extraSpecialArgs = {
