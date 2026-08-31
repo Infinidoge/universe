@@ -160,5 +160,6 @@ in
   forgejo = latest.forgejo.overrideAttrs {
     src = inputs.forgejo;
     version = versionFromInput inputs.forgejo;
+    vendorHash = "sha256-sEQNmcSjtn9oKmy1gWNyUVPB9Vb5t+SHBaex9ueYOC0=";
   };
 }
