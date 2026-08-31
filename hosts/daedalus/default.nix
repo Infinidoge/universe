@@ -195,18 +195,6 @@
       '';
     };
 
-  systemd.services.setup-infiniband = {
-    wantedBy = [ "network.target" ];
-    script = ''
-      echo "eth" > /sys/bus/pci/devices/0000:04:00.0/mlx4_port1
-      echo "eth" > /sys/bus/pci/devices/0000:04:00.0/mlx4_port2
-    '';
-    serviceConfig = {
-      User = "root";
-      Group = "root";
-    };
-  };
-
   services.printing.enable = true;
 
   boot.supportedFilesystems.nfs = true;
