@@ -148,10 +148,6 @@
     "net.ipv6.conf.all.disable_ipv6" = true;
   };
 
-  boot.kernelParams = [
-    "ipv6.disable=1"
-  ];
-
   networking.hosts = {
     "151.101.193.91" = [ "us.pool.jortage.com" ];
     "151.101.1.91" = [ "us.pool.jortage.com" ];
