@@ -157,9 +157,13 @@ in
     }
   );
 
-  forgejo = latest.forgejo.overrideAttrs {
+  forgejo = latest.forgejo.overrideAttrs (old: {
     src = inputs.forgejo;
     version = versionFromInput inputs.forgejo;
     vendorHash = "sha256-sEQNmcSjtn9oKmy1gWNyUVPB9Vb5t+SHBaex9ueYOC0=";
-  };
+    checkFlags = [
+      # Requires network
+      (builtins.head old.checkFlags + "|^TestActivityPubMatchesList$")
+    ];
+  });
 }
