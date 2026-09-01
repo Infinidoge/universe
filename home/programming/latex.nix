@@ -1,10 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    (texlive.combine {
-      inherit (texlive)
-        scheme-medium
-
+    (texliveMedium.withPackages (
+      ps: with ps; [
         apa7
         apacite
         biblatex
@@ -24,8 +22,8 @@
         upquote
         wrapfig
         xstring
-        ;
-    })
+      ]
+    ))
     biber
   ];
 }
