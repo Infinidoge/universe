@@ -39,5 +39,8 @@
 
   boot.loader.timeout = 1;
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.addEmulatedSystemsToNixSandbox = true;
+
   nix.distributedBuilds = false;
 }
