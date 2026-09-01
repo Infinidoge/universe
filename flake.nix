@@ -216,9 +216,10 @@
                   inputs.universe-cli.overlays.default
 
                   # --- Universe Overlays ---
+                  self.overlays.overrides # overrides must be applied first
+
                   self.overlays.packages
                   self.overlays.patches
-                  self.overlays.overrides
                   self.overlays.inputs
                   self.overlays.lib
                 ];
