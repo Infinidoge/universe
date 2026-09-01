@@ -192,6 +192,23 @@ in
       speedFactor = 16;
       sshUser = "remotebuild";
     }
+    {
+      hostName = "hestia";
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
+      protocol = "ssh-ng";
+      maxJobs = 40;
+      speedFactor = 16;
+      sshUser = "remotebuild";
+    }
   ];
 
   home-manager.sharedModules = [
