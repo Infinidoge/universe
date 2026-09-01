@@ -174,6 +174,8 @@ in
       }
   '';
 
+  # NOTE: daedalus is excluded to prevent using other machines for hydra
+  # TODO: allow using Hestia for hydra?
   nix.buildMachines = lib.mkIf (config.networking.hostName != "daedalus") [
     {
       hostName = "daedalus";
