@@ -25,10 +25,8 @@ let
   jupyterPath = with pkgs; [
     # export
     pandoc
-    (texlive.combine {
-      inherit (texlive)
-        scheme-medium
-
+    (texliveMedium.withPackages (
+      ps: with ps; [
         adjustbox
         enumitem
         environ
@@ -36,8 +34,8 @@ let
         tcolorbox
         titling
         upquote
-        ;
-    })
+      ]
+    ))
   ];
 in
 {
