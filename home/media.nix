@@ -15,7 +15,7 @@
     inkscape
     jellyfin-media-player
     krita
-    libreoffice-fresh
+    libreoffice
     picard
     playerctl
     simulide
