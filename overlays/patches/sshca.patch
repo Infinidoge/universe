@@ -581,7 +581,7 @@ index 0000000000..e242eabdd7
 +package forgejo_migrations
 +
 +import (
-+	"xorm.io/xorm"
++	"code.forgejo.org/xorm/xorm"
 +)
 +
 +func init() {
