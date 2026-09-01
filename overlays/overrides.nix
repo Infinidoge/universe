@@ -88,8 +88,8 @@ in
       # Override Xonsh's source deeper in the package tree
       # Makes it easier to use Xonsh in Python environments
       xonsh = pythonPrev.xonsh.overridePythonAttrs (old: {
-        version = versionFromInput inputs.xonsh;
         src = inputs.xonsh;
+        version = versionFromInput inputs.xonsh;
 
         disabledTests = old.disabledTests ++ [
           "test_bash_completion_paths_llm"
