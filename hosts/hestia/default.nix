@@ -38,4 +38,6 @@
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBQ4xLP0SoMHYp3gIiSU8BZDuMT+itxj8qjkYofniOv root@hestia";
 
   boot.loader.timeout = 1;
+
+  nix.distributedBuilds = false;
 }
