@@ -2,6 +2,8 @@
 {
   boot.initrd.availableKernelModules = [
     "xhci_pci"
+    "ehci_pci"
+    "uhci_hcd"
     "ahci"
     "usb_storage"
     "sd_mod"
