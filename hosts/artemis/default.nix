@@ -164,4 +164,10 @@
       "5.0"
     ];
   };
+
+  # NOTE: fixes HDMI audio
+  # https://bbs.archlinux.org/viewtopic.php?id=290824
+  boot.extraModprobeConfig = ''
+    options snd-intel-dspcfg dsp_driver=3
+  '';
 }
