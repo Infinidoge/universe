@@ -64,11 +64,6 @@ in
     #    { inherit (old) patches postPatch; };
   });
 
-  qtile = prev.qtile.overridePythonAttrs {
-    # BUG: https://github.com/qtile/qtile/issues/5766
-    doCheck = false;
-  };
-
   # NOTE: Inheriting Python packages from different nixpkgs versions is unsupported
   # Doing this leads to an error saying:
   # "should use `buildPythonPackage` or `toPythonModule` if it is to be part of the Python packages set."
@@ -80,6 +75,41 @@ in
         jupyterlab-myst
         jupyterlab-vim
         ;
+
+      qtile =
+        let
+          # BUG: overridePythonAttrs strips out the override function on the resulting derivation
+          # this is a hacky way to get it back by composing overrides underneath the overridePythonAttrs
+          # this means you can't overridePythonAttrs later down the line, but for our purposes it doesn't matter
+          doOverrideAttrs =
+            p:
+            p.overridePythonAttrs (old: {
+              src = inputs.qtile;
+              # BUG: Invalid version for a Python package
+              # version = versionFromInput inputs.qtile;
+              patches = [ ];
+
+              passthru = old.passthru // {
+                providedSessions = [ "qtile-generic" ];
+              };
+            });
+
+          doOverride =
+            p: f:
+            let
+              next = p.override f;
+              final = doOverrideAttrs next // {
+                override = doOverride next;
+              };
+            in
+            final;
+
+          package = pythonPrev.qtile;
+        in
+        doOverrideAttrs package
+        // {
+          override = doOverride package;
+        };
 
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
         doCheck = false;

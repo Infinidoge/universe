@@ -183,7 +183,6 @@
             inputs = (
               final: prev: {
                 inherit (inputs.home-manager.packages.${prev.stdenv.hostPlatform.system}) home-manager;
-                inherit (inputs.qtile.packages.${prev.stdenv.hostPlatform.system}) qtile;
               }
             );
             lib = (
