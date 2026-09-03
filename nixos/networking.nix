@@ -3,13 +3,9 @@
   networking = {
     useDHCP = true;
     nameservers = [
-      # Google Public DNS
-      "8.8.8.8"
-      "8.8.4.4"
+      "8.8.8.8" # Google Public DNS
 
-      # Cloudflare Public DNS
-      "1.1.1.1"
-      "1.0.0.1"
+      # TODO: use a local resolving server instead
     ];
 
     firewall.trustedInterfaces = [
