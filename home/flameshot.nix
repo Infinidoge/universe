@@ -24,11 +24,13 @@
         undoLimit = 100;
         uploadHistoryMax = 25;
 
-        savePath = "/home/infinidoge/Pictures";
+        savePath = "/home/infinidoge/screenshots";
         saveAsFileExtension = ".png";
         filenamePattern = "%F_%T";
-        saveAfterCopy = false;
+        saveAfterCopy = true;
         savePathFixed = true;
+
+        userColors = "picker, #800000, #ff0000, #ffff00, #00ff00, #008000, #00ffff, #0000ff, #ff00ff, #3498db, #8f247a, #202020, #5dbdbd";
       };
     };
   };
