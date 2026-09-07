@@ -22,7 +22,7 @@
   home.home.sessionVariables.UNISON = "$HOME/.local/state/unison";
 
   home.services.unison = {
-    enable = true;
+    enable = false; # BUG: Fails to properly sync due to sync conflicts. Replace with Syncthing
     pairs = {
       "PrismLauncher" = lib.mkIf (config.networking.hostName != "daedalus") {
         roots = [
