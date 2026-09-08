@@ -104,7 +104,6 @@
   nix.gc.automatic = false;
 
   networking = {
-    enableIPv6 = false;
     firewall = {
       allowedTCPPorts = [
         25565
