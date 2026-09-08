@@ -87,7 +87,7 @@
     enabled = true;
     filter = {
       Definition = {
-        failregex = ''^<HOST>.*GET.*(\.php|admin|wp\-).* HTTP/\d.\d\" 404.*$'';
+        failregex = ''^<HOST>.*GET.*(\.php|admin|wp\-|.env).* HTTP/\d.\d\" 404.*$'';
       };
     };
     settings = {
