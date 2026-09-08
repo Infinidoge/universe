@@ -15,6 +15,7 @@ in
     settings = {
       inherit domain;
       protocolUseSSL = true;
+      host = "127.0.0.1";
       port = 4003;
 
       db = {
