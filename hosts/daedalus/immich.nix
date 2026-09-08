@@ -26,5 +26,6 @@ in
   services.immich = {
     enable = true;
     mediaLocation = "/srv/immich";
+    host = "127.0.0.1";
   };
 }
