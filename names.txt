@@ -1,7 +1,6 @@
 aphrodite
 apollo
 ares
-argus
 ariadne
 boreas
 cerberus
@@ -87,3 +86,4 @@ terminus | router
 ### pending
 hermes   | portable install
 janus    | vulcan proxy server
+argus    | RCAC bastion vm
