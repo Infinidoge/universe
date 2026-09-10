@@ -35,6 +35,7 @@ in
     firefox-devedition
     flameshot
     immich
+    jellyfin
     presenterm
     vaultwarden
     weblate
