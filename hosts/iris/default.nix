@@ -9,6 +9,7 @@
     grub
     home-manager
     locale
+    man
     networking
     nginx
     nix
