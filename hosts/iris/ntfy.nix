@@ -9,6 +9,10 @@ let
   domain = common.subdomain "notify";
 in
 {
+  persist.directories = [
+    "/var/lib/private/ntfy-sh"
+  ];
+
   age.secrets = {
     ntfy-webpush-keys = {
       generator.script =
