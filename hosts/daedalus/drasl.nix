@@ -28,8 +28,6 @@ in
 
   services.drasl = {
     enable = true;
-    # BUG: https://github.com/unmojang/drasl/issues/312
-    package = inputs.drasl.defaultPackage.${pkgs.stdenv.hostPlatform.system};
     settings = {
       Domain = domain;
       BaseURL = "https://${domain}";
