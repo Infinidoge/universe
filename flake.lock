@@ -233,11 +233,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787784578,
-        "narHash": "sha256-x9MTiRYxx8a+bqDj5usoAgiQw/D/kQPWyJpNCEVU0lA=",
+        "lastModified": 1789429936,
+        "narHash": "sha256-p4AEft2aRXWnrgLLEgD4js6GTxK1At5/W9L9rFUsXmc=",
         "owner": "unmojang",
         "repo": "drasl",
-        "rev": "0fe488c087bbe792485e9c5dae751c6e5fbdc380",
+        "rev": "57dbfad2ad54ea6b88d26ef8890ca9f69fe79bf5",
         "type": "github"
       },
       "original": {
