@@ -32,6 +32,13 @@ in
       env = {
         wm = mkInfoOpt;
       };
+      ip = {
+        tailnet = mkOption {
+          type = str;
+        };
+        internal = mkOpt (nullOr str) null;
+        external = mkOpt (nullOr str) null;
+      };
     };
   };
 
