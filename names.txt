@@ -82,8 +82,8 @@ enodia   | router
 fortuna  | steam deck
 nemesis  | windows install
 terminus | router
+argus    | RCAC bastion vm
 
 ### pending
 hermes   | portable install
 janus    | vulcan proxy server
-argus    | RCAC bastion vm
