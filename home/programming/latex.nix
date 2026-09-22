@@ -19,6 +19,7 @@
         mleftright
         scalerel
         threeparttable
+        tipa
         upquote
         wrapfig
         xstring
