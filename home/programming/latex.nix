@@ -9,13 +9,13 @@
         biblatex-apa
         biblatex-chicago
         capt-of
-        minted
         catchfile
         endfloat
         framed
         fvextra
         hanging
         lipsum
+        minted
         mleftright
         scalerel
         threeparttable
