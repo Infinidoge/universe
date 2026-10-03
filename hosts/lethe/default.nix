@@ -74,6 +74,7 @@
     efivar
     parted
     ddrescue
+    ddrutility
     ccrypt
     cryptsetup
 
