@@ -3,7 +3,7 @@ let
   he-dns = "216.218.133.2"; # slave.dns.he.net
   chardns = "45.8.201.114"; # denise.charbroil.me
   konsol = "158.101.112.125"; # ns1.shad.moe
-  grace = "152.44.40.91"; # ns1.grace.pink
+  grace = "209.50.50.6"; # ns1.gae.moe
 
   mkZone =
     file: config:
