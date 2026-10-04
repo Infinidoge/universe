@@ -97,6 +97,7 @@ in
 
       "grace.pink" = mkSecondaryZone "/srv/saved/grace.pink" [ grace ];
       "gae.moe" = mkSecondaryZone "/srv/saved/gae.moe" [ grace ];
+      "words.gay" = mkSecondaryZone "/srv/saved/words.gay" [ grace ];
     };
   };
 }
