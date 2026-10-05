@@ -115,8 +115,6 @@
 
   #networking.proxy.default = "http://daedalus.tailnet.inx.moe:8118";
 
-  nix.gc.automatic = false; # Disable for NixCon
-
   services.xserver.wacom.enable = true;
   home.home.sessionVariables = {
     QT_XCB_TABLET_LEGACY_COORDINATES = "true";
