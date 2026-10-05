@@ -126,6 +126,8 @@ lib.makeExtensible (
       in
       join (head ++ [ tail ]);
 
+    joinACL = lib.concatStringsSep ",";
+
     disko = import ./disko.nix { inherit lib; };
     filesystems = import ./filesystems.nix { inherit lib self; };
     secrets = import ./secrets.nix { inherit lib; };
