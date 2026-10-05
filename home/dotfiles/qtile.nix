@@ -18,4 +18,12 @@
     firefox = config.programs.firefox.package.meta.mainProgram;
     locker = config.common.wm.locker.meta.mainProgram;
   };
+
+  # BUG: Discord (and maybe some other applications)
+  # scale the cursor when they shouldn't, making it very large
+  # This forces a cursor size which doesn't fix it, but does make it
+  # less noticable
+  home.sessionVariables = {
+    "XCURSOR_SIZE" = 12;
+  };
 }
