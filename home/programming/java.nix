@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     clang-tools
-    gradle
+    gradle_9
   ];
 
   programs.java.enable = true;
