@@ -14,9 +14,14 @@ in
     "/etc/ssh" = neededForBoot main [ "subvolid=628" ];
     "/nix" = neededForBoot main [ "subvol=nix" ];
     "/boot" = neededForBoot main [ "subvol=boot" ];
+    "/swap" = neededForBoot main [ "subvol=swap" ];
   };
 
   swapDevices = [
-    (mkSwap "28672ffb-9f1c-462b-b49d-8a14b3dd72b3")
+    {
+      device = "/swap/swapfile";
+      size = 40 * 1024;
+      priority = 2;
+    }
   ];
 }
