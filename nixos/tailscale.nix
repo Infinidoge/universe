@@ -5,6 +5,10 @@
   ...
 }:
 {
+  imports = [
+    { options.info.ip.tailnet = lib.mkOption { type = lib.types.str; }; }
+  ];
+
   persist.directories = [
     {
       directory = "/var/lib/tailscale";
