@@ -86,6 +86,10 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPjmvE76BcPwZSjeNGzlguDQC67Yxa3uyOf5ZmVDWNys root@daedalus";
 
+  info.ip.tailnet = "100.101.102.124";
+  info.ip.internal = "192.168.137.11";
+  info.ip.external = "128.210.6.103";
+
   # TODO: Force-import ZFS with hashed hostname hostId
   networking.hostId = lib.mkForce "8fa7a57c";
 

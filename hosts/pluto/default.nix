@@ -34,6 +34,9 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8ptHWTesaUzglq01O8OVqeAGxFhXutUZpkgPpBFqzY root@pluto";
 
+  info.ip.tailnet = "100.101.102.17";
+  info.ip.internal = "192.168.0.138";
+
   boot.loader.timeout = 1;
 
   persist.directories = [

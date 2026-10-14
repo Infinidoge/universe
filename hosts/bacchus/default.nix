@@ -38,6 +38,9 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKvGPh6rPAkfIcXOBGGWMiChCVfbsstJBKeRJuAIopY root@bacchus";
 
+  info.ip.tailnet = "100.101.102.151";
+  info.ip.internal = "192.168.237.30";
+
   info.model = "OptiPlex 5040";
 
   services.printing = {

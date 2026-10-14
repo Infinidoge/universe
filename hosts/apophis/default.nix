@@ -54,6 +54,9 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID7uX1myj9ghv7wMoL038oGDCdScdyLd7RvYdnoioSBh root@apophis";
 
+  info.ip.tailnet = "100.101.102.1";
+  info.ip.external = "192.168.0.154";
+
   persist.directories = [
     "/srv"
   ];

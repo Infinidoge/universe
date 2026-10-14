@@ -37,6 +37,9 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBQ4xLP0SoMHYp3gIiSU8BZDuMT+itxj8qjkYofniOv root@hestia";
 
+  info.ip.tailnet = "100.101.102.171";
+  info.ip.internal = "192.168.237.40";
+
   boot.loader.timeout = 1;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

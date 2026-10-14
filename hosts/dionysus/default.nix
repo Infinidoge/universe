@@ -39,6 +39,9 @@
 
   age.rekey.hostPubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG8fY684SPKeOUsJqaV6LJwwztWxztaU9nAHPBxBtyU root@dionysus";
 
+  info.ip.tailnet = "100.101.102.18";
+  info.ip.internal = "192.168.237.33";
+
   boot.loader.timeout = 1;
 
   services.printing = {
