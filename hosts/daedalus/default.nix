@@ -167,7 +167,6 @@
   };
 
   services.nginx.virtualHosts."*.inx.moe" = {
-    listenAddresses = [ "inx.moe" ];
     useACMEHost = "inx.moe";
     addSSL = true;
     default = true;
