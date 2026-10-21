@@ -37,7 +37,6 @@
     ### Domain-Specific Flake Inputs ###
     ## Lix
     lix.url = "git+https://git.lix.systems/lix-project/lix";
-    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module";
     hydra.url = "git+https://git.lix.systems/lix-project/hydra";
     nil.url = "github:oxalica/nil";
 
@@ -103,9 +102,6 @@
     hydra.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.inputs.home-manager.follows = "home-manager";
     impermanence.inputs.nixpkgs.follows = "nixpkgs";
-    lix-module.inputs.flake-utils.follows = "flake-utils";
-    lix-module.inputs.lix.follows = "lix";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix.inputs.flake-compat.follows = "blank";
     lix.inputs.nixpkgs.follows = "nixpkgs"; # TODO: pin to blank
     lix.inputs.pre-commit-hooks.follows = "git-hooks"; # TODO: pin to blank

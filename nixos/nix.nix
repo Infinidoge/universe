@@ -21,7 +21,7 @@ in
 {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
-    inputs.lix-module.nixosModules.default
+    inputs.lix.nixosModules.default
   ];
 
   nixpkgs.flake = {
