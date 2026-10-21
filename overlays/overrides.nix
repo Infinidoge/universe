@@ -202,7 +202,7 @@ in
     vendorHash = "sha256-eEkZ9I+hlP+QXaLgL5vrkAPiDVvfKEHiNNN6bqYETbM=";
     checkFlags = [
       # Requires network
-      (builtins.head old.checkFlags + "|^TestActivityPubMatchesList$")
+      (builtins.head old.checkFlags + "|^TestActivityPubMatchesList$|^Test_HashAvatar$")
     ];
   });
 
