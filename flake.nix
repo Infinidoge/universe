@@ -82,10 +82,7 @@
     agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
     agenix-rekey.inputs.pre-commit-hooks.follows = "git-hooks";
     agenix-rekey.inputs.treefmt-nix.follows = "treefmt-nix";
-    agenix.inputs.darwin.follows = "blank";
-    agenix.inputs.home-manager.follows = "home-manager";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
-    agenix.inputs.systems.follows = "systems";
     authentik-nix.inputs.flake-compat.follows = "blank";
     authentik-nix.inputs.flake-parts.follows = "flake-parts";
     authentik-nix.inputs.flake-utils.follows = "flake-utils";
