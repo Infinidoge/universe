@@ -199,7 +199,7 @@ in
   forgejo = latest.forgejo.overrideAttrs (old: {
     src = inputs.forgejo;
     version = versionFromInput inputs.forgejo;
-    vendorHash = "sha256-sEQNmcSjtn9oKmy1gWNyUVPB9Vb5t+SHBaex9ueYOC0=";
+    vendorHash = "sha256-eEkZ9I+hlP+QXaLgL5vrkAPiDVvfKEHiNNN6bqYETbM=";
     checkFlags = [
       # Requires network
       (builtins.head old.checkFlags + "|^TestActivityPubMatchesList$")
