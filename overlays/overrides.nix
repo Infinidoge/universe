@@ -40,6 +40,11 @@ in
     vaultwarden
     weblate
     yt-dlp
+
+    # https://github.com/NixOS/nixpkgs/pull/576853
+    php83
+    php84
+    php85
     ;
 
   inherit (stable)
