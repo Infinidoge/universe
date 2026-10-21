@@ -14,12 +14,48 @@ let
   fork = mkPkgsUnfree inputs.fork;
   stable = mkPkgs inputs.stable;
 
+  lib = prev.lib;
+
   versionFromInput =
     input:
     let
       slice = a: b: builtins.substring a b input.lastModifiedDate;
     in
     "0-unstable-${slice 0 5}-${slice 5 7}-${slice 7 9}";
+
+  underridePythonAttrs =
+    package: attrOverride:
+    let
+      # BUG: overridePythonAttrs strips out the override function on the resulting derivation
+      # this is a hacky way to get it back by composing overrides underneath the overridePythonAttrs
+      # overridePythonAttrs is reimplemented by composing the Python attr overrides together in a recursive merge
+      doInternalOverrideAttrs = p: p.overridePythonAttrs attrOverride;
+
+      mergeAttrs =
+        f: old:
+        let
+          next = attrOverride old;
+        in
+        lib.recursiveUpdate next (f next);
+
+      doOverridePythonAttrs = p: f: underridePythonAttrs p (mergeAttrs f);
+
+      doOverride =
+        p: f:
+        let
+          next = p.override f;
+          final = doInternalOverrideAttrs next // {
+            override = doOverride next;
+            overridePythonAttrs = doOverridePythonAttrs next;
+          };
+        in
+        final;
+    in
+    doInternalOverrideAttrs package
+    // {
+      override = doOverride package;
+      overridePythonAttrs = doOverridePythonAttrs package;
+    };
 in
 {
   inherit latest fork stable;
@@ -82,40 +118,16 @@ in
         jupyterlab-vim
         ;
 
-      qtile =
-        let
-          # BUG: overridePythonAttrs strips out the override function on the resulting derivation
-          # this is a hacky way to get it back by composing overrides underneath the overridePythonAttrs
-          # this means you can't overridePythonAttrs later down the line, but for our purposes it doesn't matter
-          doOverrideAttrs =
-            p:
-            p.overridePythonAttrs (old: {
-              src = inputs.qtile;
-              # BUG: Invalid version for a Python package
-              # version = versionFromInput inputs.qtile;
-              patches = [ ];
+      qtile = underridePythonAttrs pythonPrev.qtile (old: {
+        #src = inputs.qtile;
+        # BUG: Invalid version for a Python package
+        # version = versionFromInput inputs.qtile;
+        packages = [ ];
 
-              passthru = old.passthru // {
-                providedSessions = [ "qtile-generic" ];
-              };
-            });
-
-          doOverride =
-            p: f:
-            let
-              next = p.override f;
-              final = doOverrideAttrs next // {
-                override = doOverride next;
-              };
-            in
-            final;
-
-          package = pythonPrev.qtile;
-        in
-        doOverrideAttrs package
-        // {
-          override = doOverride package;
-        };
+        #passthru = old.passthru // {
+        #  providedSessions = [ "qtile-generic" ];
+        #};
+      });
 
       qtile-extras = pythonPrev.qtile-extras.overridePythonAttrs {
         doCheck = false;
