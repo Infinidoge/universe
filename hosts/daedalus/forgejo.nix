@@ -9,6 +9,7 @@
 let
   cfg = config.services.forgejo;
   domain = common.subdomain "git";
+  url = "https://${domain}";
 
   vars = private.variables.forgejo;
 in
@@ -71,17 +72,21 @@ in
     };
   };
 
-  services.gitea-actions-runner.package = pkgs.forgejo-runner;
-  services.gitea-actions-runner.instances = {
+  services.forgejo-runner.instances = {
     local_privileged = {
       enable = true;
-      name = "Local Privileged";
-      url = "https://${domain}";
-      token = vars.actions.user_token;
-      settings.runner.capacity = 16;
-      labels = [
-        "local:host"
-      ];
+      runtimes.host = true;
+      settings = {
+        runner.labels = [
+          "local:host"
+        ];
+        runner.capacity = 16;
+        server.connections.inx = {
+          inherit url;
+          uuid = "8d3e4b20-2ecb-4816-b3bb-1e0b279951e1";
+          token = vars.actions.user_token;
+        };
+      };
       hostPackages = with pkgs; [
         bash
         coreutils
@@ -93,16 +98,22 @@ in
         wget
       ];
     };
+
     local = {
       enable = true;
-      name = "Local";
-      url = "https://${domain}";
-      token = vars.actions.global_token;
-      settings.runner.capacity = 16;
-      labels = [
-        "docker:docker://gitea/runner-images:ubuntu-latest"
-        "ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"
-      ];
+      runtimes.docker = true;
+      settings = {
+        runner.labels = [
+          "docker:docker://gitea/runner-images:ubuntu-latest"
+          "ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"
+        ];
+        runner.capacity = 16;
+        server.connections.inx = {
+          inherit url;
+          uuid = "d87fcabf-a540-4a92-9d1f-fa3f0a200ec5";
+          token = vars.actions.global_token;
+        };
+      };
     };
   };
 
