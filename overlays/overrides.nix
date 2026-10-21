@@ -74,7 +74,6 @@ in
     jellyfin
     presenterm
     vaultwarden
-    weblate
     yt-dlp
 
     # https://github.com/NixOS/nixpkgs/pull/576853
@@ -205,5 +204,14 @@ in
       # Requires network
       (builtins.head old.checkFlags + "|^TestActivityPubMatchesList$")
     ];
+  });
+
+  weblate = underridePythonAttrs latest.weblate (old: {
+    dependencies =
+      old.dependencies
+      # TODO: PR as an optional-dependencies set
+      ++ (with latest.python3.pkgs; [
+        python3-saml
+      ]);
   });
 }
