@@ -64,7 +64,7 @@
   boot.binfmt.addEmulatedSystemsToNixSandbox = true;
 
   home.home.packages = with pkgs; [
-    sidequest
+    # sidequest # BUG: Marked insecure (Electron 29)
     moonlight-qt
   ];
 

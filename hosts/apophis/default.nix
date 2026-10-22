@@ -72,7 +72,7 @@
     hydrus
     razergenie # TODO: replace with polychromatic
 
-    sidequest
+    # sidequest # BUG: Marked insecure (Electron 29)
     unityhub
     vrc-get
     blender
