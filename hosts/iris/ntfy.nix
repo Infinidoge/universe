@@ -41,18 +41,14 @@ in
       intermediary = true;
     };
 
-    ntfy-env = {
-      owner = cfg.user;
-      group = cfg.group;
-      generator = {
-        script = "envfile";
-        dependencies = {
-          NTFY_SMTP_SENDER_PASS = config.age.secrets.smtp-noreply;
-          inherit (config.age.secrets)
-            NTFY_WEB_PUSH_PUBLIC_KEY
-            NTFY_WEB_PUSH_PRIVATE_KEY
-            ;
-        };
+    ntfy-env.generator = {
+      script = "envfile";
+      dependencies = {
+        NTFY_SMTP_SENDER_PASS = config.age.secrets.smtp-noreply;
+        inherit (config.age.secrets)
+          NTFY_WEB_PUSH_PUBLIC_KEY
+          NTFY_WEB_PUSH_PRIVATE_KEY
+          ;
       };
     };
   };
