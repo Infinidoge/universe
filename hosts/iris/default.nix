@@ -62,9 +62,7 @@
 
   boot.zswap.maxPoolPercent = 50;
 
-  services.journald.extraConfig = ''
-    SystemMaxUse=5%
-  '';
+  services.journald.settings.Journal.SystemMaxUse = "5%";
 
   swapDevices = [
     {
