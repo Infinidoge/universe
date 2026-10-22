@@ -71,4 +71,7 @@
       priority = 2;
     }
   ];
+
+  # DNS needs to be running before DNS-based certificates can be issued
+  systemd.services.acme-setup.after = [ "bind.service" ];
 }
