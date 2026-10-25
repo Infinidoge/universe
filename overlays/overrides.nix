@@ -73,6 +73,7 @@ in
     immich
     jellyfin
     presenterm
+    toot # https://github.com/NixOS/nixpkgs/pull/578333
     vaultwarden
     yt-dlp
 
