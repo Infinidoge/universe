@@ -61,6 +61,7 @@ in
   inherit latest fork stable;
 
   inherit (latest)
+    audacity # https://github.com/NixOS/nixpkgs/pull/577022
     bind
     bitwarden-desktop
     bluesky-pds
