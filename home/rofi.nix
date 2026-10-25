@@ -2,7 +2,7 @@
 {
   programs.rofi = {
     enable = true;
-    extraConfig = {
+    settings = {
       modi = builtins.concatStringsSep "," [
         "window"
         "run"
