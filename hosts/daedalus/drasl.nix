@@ -12,12 +12,6 @@
 let
   cfg = config.services.drasl;
   domain = common.subdomain "drasl";
-
-  Mojang = {
-    Nickname = "Mojang";
-    SessionURL = "https://sessionserver.mojang.com";
-    AccountURL = "https://api.mojang.com";
-  };
 in
 
 {
@@ -36,34 +30,45 @@ in
       InstanceName = "INX Drasl";
       ApplicationOwner = "INX";
 
-      AllowAddingDeletingPlayers = true;
       AllowChangingPlayerName = true;
+      SignPublicKeys = false;
       DefaultMaxPlayerCount = 3;
-      CreateNewPlayer.AllowChoosingUUID = true;
-      RegistrationNewPlayer = {
+
+      CreateNewPlayer = {
         Allow = true;
         RequireInvite = true;
       };
-      RegistrationExistingPlayer = {
-        Allow = true;
-        RequireInvite = true;
+
+      RegistrationUsernamePassword = {
+        CreateNewPlayer = {
+          Allow = true;
+          RequireInvite = true;
+          AllowChoosingUUID = true;
+        };
+        ImportExistingPlayer = [
+          {
+            RequireInvite = true;
+            FallbackAPIServerNickname = "Mojang";
+          }
+        ];
       };
 
       FallbackAPIServers = [
-        (
-          Mojang
-          // {
-            ServicesURL = "https://api.minecraftservices.com";
-            SkinDomains = [ "textures.minecraft.net" ];
-            CacheTTLSeconds = 60;
-          }
-        )
+        {
+          Nickname = "Mojang";
+          EnableAuthentication = true;
+          ForwardSkins = true;
+          DiscoveryMinecraftClientURL = "https://discovery.minecraftservices.com/minecraft/client";
+          SetSkinURL = "https://www.minecraft.net/msaprofile/mygames/editskin";
+          CacheTTLSeconds = 60;
+        }
       ];
 
-      ImportExistingPlayer = Mojang // {
-        Allow = true;
-        SetSkinURL = "https://www.minecraft.net/msaprofile/mygames/editskin";
-      };
+      ImportExistingPlayer = [
+        {
+          FallbackAPIServerNickname = "Mojang";
+        }
+      ];
     };
   };
 
