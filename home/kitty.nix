@@ -10,6 +10,9 @@
     settings = {
       confirm_os_window_close = 0;
       scrollback_lines = 100000;
+      momentum_scroll = 0;
+      touch_scroll_multiplier = 0.5;
+      pixel_scroll = "no";
     };
   };
 
