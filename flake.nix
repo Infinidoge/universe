@@ -41,7 +41,7 @@
     nil.url = "github:oxalica/nil";
 
     ## Minecraft
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft/develop";
     drasl.url = "github:unmojang/drasl";
 
     ## Rust
