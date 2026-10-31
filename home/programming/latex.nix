@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     (texliveMedium.withPackages (
       ps: with ps; [
+        acmart
         apa7
         apacite
         biblatex
@@ -11,6 +12,7 @@
         capt-of
         catchfile
         endfloat
+        environ
         framed
         fvextra
         hanging
@@ -20,9 +22,14 @@
         scalerel
         threeparttable
         tipa
+        totpages
         upquote
         wrapfig
         xstring
+        hyperxmp
+        ifmtarg
+        ncctools
+        comment
       ]
     ))
     biber
