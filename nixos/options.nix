@@ -18,9 +18,6 @@ in
 
     dotfiles = {
       dir = mkOpt str "/etc/nixos";
-      homeFile = mkAliasOpt;
-      configFile = mkAliasOpt;
-      dataFile = mkAliasOpt;
     };
 
     env = mkAliasOpt;
@@ -42,14 +39,6 @@ in
   config = {
     users.users.${config.user.name} = mkAliasDefinitions options.user;
     home-manager.users.${config.user.name} = mkAliasDefinitions options.home;
-
-    home = {
-      home.file = mkAliasDefinitions options.dotfiles.homeFile;
-      xdg = {
-        configFile = mkAliasDefinitions options.dotfiles.configFile;
-        dataFile = mkAliasDefinitions options.dotfiles.dataFile;
-      };
-    };
 
     environment.variables = mkAliasDefinitions options.env;
   };
