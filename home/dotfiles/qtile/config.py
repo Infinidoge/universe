@@ -7,6 +7,7 @@ Sets up
 - Screens
 """
 
+import json
 import os
 from typing import Any, List  # noqa: F401
 
@@ -26,6 +27,15 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 LAPTOP = bool(os.getenv("LAPTOP", False))
+
+with open("./nix.json") as f:
+    nix_config = json.load(f)
+
+WALLPAPER = nix_config["wallpaper"]
+WALLPAPER_MODE = nix_config["wallpaper_mode"]
+FIREFOX = nix_config["firefox"]
+LOCKER = nix_config["locker"]
+
 
 colors = [
     # panel background
@@ -78,11 +88,15 @@ class Apps:
         return lazy.spawn(cls.terminal_command(program, args=args, terminal=terminal))
 
     @classmethod
-    def shell_in_terminal(cls, command, sargs=tuple(), targs=tuple(), *, shell=None, terminal=None):
+    def shell_in_terminal(
+        cls, command, sargs=tuple(), targs=tuple(), *, shell=None, terminal=None
+    ):
         """
         Opens a program in the terminal using the shell, with the given shell and terminal arguments.
         """
-        return cls.open_in_terminal(cls.shell_command(command, sargs, shell=shell), targs, terminal=terminal)
+        return cls.open_in_terminal(
+            cls.shell_command(command, sargs, shell=shell), targs, terminal=terminal
+        )
 
     @classmethod
     def open_in_editor(cls, file_, args=tuple()):
@@ -282,7 +296,7 @@ keys = [
     # ),
     Key(
         [Keys.SUPER, Keys.CONTROL], "l",
-        lazy.spawn("@locker@"),
+        lazy.spawn(LOCKER),
         desc="Lock Screen",
     ),
 
@@ -415,22 +429,22 @@ keys = [
     ),
     Key(
         [Keys.SUPER, Keys.ALT], "f",
-        lazy.spawn("@firefox@ --new-window"),
+        lazy.spawn(f"{FIREFOX} --new-window"),
         desc="Start Firefox (New Window)",
     ),
     Key(
         [Keys.SUPER, Keys.ALT, Keys.CONTROL], "f",
-        lazy.spawn("@firefox@ --private-window"),
+        lazy.spawn(f"{FIREFOX} --private-window"),
         desc="Start Firefox (New Private Window)",
     ),
     Key(
         [Keys.SUPER, Keys.ALT, Keys.SHIFT], "f",
-        lazy.spawncmd(prompt="search", command="@firefox@ --search '%s'", complete=None, shell=False),
+        lazy.spawncmd(prompt="search", command=f"{FIREFOX} --search '%s'", complete=None, shell=False),
         desc="Search for a term in Firefox",
     ),
     Key(
         [Keys.SUPER, Keys.ALT, Keys.CONTROL, Keys.SHIFT], "f",
-        lazy.spawncmd(prompt="private search", command="@firefox@  --private-window 'https://google.com/search?q=%s'", complete=None, shell=False),
+        lazy.spawncmd(prompt="private search", command=f"{FIREFOX}  --private-window 'https://google.com/search?q=%s'", complete=None, shell=False),
         desc="Search for a term in Firefox",
     ),
     Key(
@@ -495,7 +509,9 @@ groups = [
         "9",
         layouts=[
             *layouts,
-            layout.Slice(name="left slice", width=1000, fallback=layouts[0], side="left"),
+            layout.Slice(
+                name="left slice", width=1000, fallback=layouts[0], side="left"
+            ),
             layout.Slice(name="top slice", width=800, fallback=layouts[0], side="top"),
         ],
     ),
@@ -532,7 +548,9 @@ groups.append(
         [
             DropDown("calculator", "speedcrunch", x=0.2, y=0.2, width=0.6, height=0.6),
             DropDown("arandr", "arandr", x=0.2, y=0.1, width=0.6, height=0.4),
-            DropDown("bluetooth", "blueman-manager", x=0.2, y=0.2, width=0.6, height=0.6),
+            DropDown(
+                "bluetooth", "blueman-manager", x=0.2, y=0.2, width=0.6, height=0.6
+            ),
             DropDown("wifi", "wpa_gui", x=0.3, y=0.3, width=0.4, height=0.4),
             DropDown("audio", "pavucontrol", x=0.2, y=0.2, width=0.6, height=0.6),
         ],
@@ -595,7 +613,9 @@ def create_powerline(
             widget.TextBox(
                 text=sep,
                 foreground=backgrounds[bg_index],
-                background=base if i == 0 else backgrounds[bg_index - (len(backgrounds) - 1)],
+                background=base
+                if i == 0
+                else backgrounds[bg_index - (len(backgrounds) - 1)],
                 fontsize=fontsize,
                 padding=padding,
             )
@@ -614,7 +634,9 @@ def init_widget_list(main=True, laptop=False):
     Returns a list of widgets suitable for a qtile bar
     """
 
-    interfaces = run_command("ip -j link | jq -r '.[] | select(.operstate == \"UP\") | .ifname'").splitlines()
+    interfaces = run_command(
+        "ip -j link | jq -r '.[] | select(.operstate == \"UP\") | .ifname'"
+    ).splitlines()
 
     wireless_interfaces = list(filter(lambda x: x.startswith("w"), interfaces))
 
@@ -768,8 +790,8 @@ screens = [
             size=20,
             opacity=1.0,
         ),
-        wallpaper="@wallpaper@",
-        wallpaper_mode="@wallpaper_mode@",
+        wallpaper=WALLPAPER,
+        wallpaper_mode=WALLPAPER_MODE,
     )
     for i in range(4)
 ]

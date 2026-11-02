@@ -4,10 +4,10 @@
   ...
 }:
 {
-  xdg.configFile."qtile".source = pkgs.substituteSubset {
-    src = ./qtile-config;
-    files = [ "config.py" ];
+  xdg.configFile."qtile/config.py".source =
+    config.lib.file.mkOutOfStoreSymlink "/etc/nixos/home/dotfiles/qtile/config.py";
 
+  xdg.configFile."qtile/nix.json".source = (pkgs.formats.json { }).generate "nix.json" {
     wallpaper = pkgs.fetchurl {
       name = "BotanWallpaper.jpg";
       # Source: https://www.pixiv.net/en/artworks/86093828
@@ -26,4 +26,5 @@
   home.sessionVariables = {
     "XCURSOR_SIZE" = 12;
   };
+
 }
