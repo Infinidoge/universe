@@ -15,6 +15,7 @@ in
     alias = {
       evil = headmate "Evil Lillith" "evil-lillith@inx.moe";
       dark = headmate "Dark Lillith" "dark-lillith@inx.moe";
+      whimsy = headmate "Whimsy" "whimsy@inx.moe";
     };
   };
 
