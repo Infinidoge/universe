@@ -53,5 +53,6 @@ in
     };
   };
 
-  # TODO: symlink ./xonshrc to ~/.config/xonsh/rc.d
+  home.file.".config/xonsh/rc.d".source =
+    config.lib.file.mkOutOfStoreSymlink "/etc/nixos/home/shells/xonsh";
 }
