@@ -4,6 +4,10 @@ let
   headmate = name: email: ''!git -c user.name="${name}" -c user.email="${email}"'';
 in
 {
+  imports = [
+    ./rcac.nix
+  ];
+
   programs.git.signing.format = "ssh";
   programs.git.settings = {
     user.email = "infinidoge@inx.moe";
