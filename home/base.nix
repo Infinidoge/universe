@@ -176,6 +176,7 @@ in
     # grep
     grep = "rg";
     gi = "grep -i";
+    hl = "rg --passthru";
 
     # TODO: Investigate psgrep
     psg = "ps x | head -n -2 | gi -e 'PID\\s+TTY\\s+STAT\\s+TIME\\s+COMMAND' -e ";
