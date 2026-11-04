@@ -28,7 +28,7 @@ from libqtile.utils import guess_terminal
 
 LAPTOP = bool(os.getenv("LAPTOP", False))
 
-with open("./nix.json") as f:
+with open("/home/infinidoge/.config/qtile/nix.json") as f:
     nix_config = json.load(f)
 
 WALLPAPER = nix_config["wallpaper"]
