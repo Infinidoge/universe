@@ -34,6 +34,14 @@ in
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pythonFinal: pythonPrev: {
       ldap3 = addPatches pythonPrev.ldap3 [ ./ldap3.patch ];
+
+      prompt-toolkit = addPatches pythonPrev.prompt-toolkit [
+        # https://github.com/prompt-toolkit/python-prompt-toolkit/pull/2103
+        (final.fetchpatch {
+          url = "https://github.com/prompt-toolkit/python-prompt-toolkit/commit/1f476efbbe96816728bc678df4e542bc3c3eab9c.patch";
+          sha256 = "sha256-+Xk7zEN9PTz6zeU8xh1188V+xf4oluoEqnXPt2QJxsQ=";
+        })
+      ];
     })
   ];
 
