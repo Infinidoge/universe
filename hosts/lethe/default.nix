@@ -57,10 +57,6 @@
   # TODO: make lethe support aarch64
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  boot.initrd.systemd = {
-    enable = true;
-  };
-
   nix.registry = lib.mkForce {
     nixpkgs.flake = inputs.nixpkgs;
   };

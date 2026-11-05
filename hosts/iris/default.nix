@@ -45,8 +45,6 @@
 
   boot.loader.timeout = 1;
 
-  boot.initrd.systemd.enable = true;
-
   environment.systemPackages = with pkgs; [ bind ];
 
   networking.interfaces.enp3s0.ipv4.addresses = [
