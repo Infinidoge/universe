@@ -50,6 +50,11 @@ in
     };
   };
 
+  systemd.services.homebox.after = [
+    "authentik.service"
+    "authentik-worker.service"
+  ];
+
   systemd.services.homebox.serviceConfig.EnvironmentFile = [ secrets.homebox-env ];
 
   services.nginx.virtualHosts.${domain} = common.nginx.ssl-inx // {
