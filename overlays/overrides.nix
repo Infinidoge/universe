@@ -143,15 +143,6 @@ in
     })
   ];
 
-  # BUG: https://github.com/NixOS/nixpkgs/issues/464244
-  hydrus = latest.hydrus.overrideAttrs (o: {
-    doCheck = false;
-    doInstallCheck = false;
-    propagatedBuildInputs = builtins.filter (
-      dep: dep != latest.python3Packages.psd-tools
-    ) o.propagatedBuildInputs;
-  });
-
   bespokesynth = prev.bespokesynth.overrideAttrs (o: {
     src = final.fetchFromGitHub {
       inherit (o.src) owner repo fetchSubmodules;
