@@ -61,7 +61,6 @@ in
   inherit latest fork stable;
 
   inherit (latest)
-    audacity # https://github.com/NixOS/nixpkgs/pull/577022
     bind
     bitwarden-desktop
     bluesky-pds
@@ -74,14 +73,8 @@ in
     immich
     jellyfin
     presenterm
-    toot # https://github.com/NixOS/nixpkgs/pull/578333
     vaultwarden
     yt-dlp
-
-    # https://github.com/NixOS/nixpkgs/pull/576853
-    php83
-    php84
-    php85
     ;
 
   inherit (stable)
