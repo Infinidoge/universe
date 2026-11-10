@@ -89,7 +89,7 @@ in
     #  VENCORD_REMOTE = "Vendicated/Vencord";
     #  VENCORD_HASH = builtins.substring 0 9 inputs.vencord.rev;
     #};
-    postPatch = old.postPatch + ''
+    postPatch = (old.postPatch or "") + ''
       sed -i '/export const CspPolicies/a "inx.moe": ImageScriptsAndCssSrc,' src/main/csp/index.ts
     '';
     #pnpmDeps =
