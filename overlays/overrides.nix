@@ -61,20 +61,22 @@ in
   inherit latest fork stable;
 
   inherit (latest)
+    # fast-updating packages
+    discord
+    discord-canary
+    firefox-devedition
+    factorio-headless
+    yt-dlp
+    # misc
     bind
     bitwarden-desktop
     bluesky-pds
     borgbackup
-    discord
-    discord-canary
-    factorio-headless
-    firefox-devedition
     flameshot
     immich
     jellyfin
     presenterm
     vaultwarden
-    yt-dlp
     ;
 
   inherit (stable)
