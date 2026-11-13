@@ -164,7 +164,7 @@ in
   forgejo = latest.forgejo.overrideAttrs (old: {
     src = inputs.forgejo;
     version = versionFromInput inputs.forgejo;
-    vendorHash = "sha256-eEkZ9I+hlP+QXaLgL5vrkAPiDVvfKEHiNNN6bqYETbM=";
+    vendorHash = "sha256-m7NXgD3xDcaBlZBuUOaJSOwB/GpyATRpUjzuzmlWwyA=";
     checkFlags = [
       # Requires network
       (
