@@ -172,6 +172,8 @@ in
         + "|^TestActivityPubMatchesList$|^Test_HashAvatar$|^TestParsePackage/Valid$"
       )
     ];
+    # patches already applied upstream
+    patches = removeBySuffix [ "static-root-path.patch" "go_1_27.patch" ] old.patches;
   });
 
   weblate = underridePythonAttrs latest.weblate (old: {
