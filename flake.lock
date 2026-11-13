@@ -343,11 +343,11 @@
     "forgejo": {
       "flake": false,
       "locked": {
-        "lastModified": 1792588062,
-        "narHash": "sha256-r6JeAwO1DRV1xB5xpqfs8oLsWhKFuaNg1sxQEq6IXeo=",
+        "lastModified": 1794570423,
+        "narHash": "sha256-qWNs0MTDFlK+j1I68L8udKSwWFNCUkZITXyWjMhzo6Y=",
         "ref": "refs/heads/forgejo",
-        "rev": "1004f488c2849555dd5bce7007b32979e36e6043",
-        "revCount": 26030,
+        "rev": "7aa74e4f83288716cbe38f58f06a12f77995d38c",
+        "revCount": 26130,
         "type": "git",
         "url": "https://codeberg.org/forgejo/forgejo"
       },
