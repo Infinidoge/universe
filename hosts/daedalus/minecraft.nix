@@ -21,6 +21,7 @@ in
 
   services.minecraft-servers.servers.hackcraft = {
     enable = true;
+    autoStart = false;
     allocatedRAM = "8G";
     jvmArgs = common ++ unsup;
     serverProperties = {
