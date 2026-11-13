@@ -56,6 +56,9 @@ let
       override = doOverride package;
       overridePythonAttrs = doOverridePythonAttrs package;
     };
+
+  removeBySuffix =
+    suffices: builtins.filter (item: !(builtins.any (suffix: lib.hasSuffix suffix item)) suffices);
 in
 {
   inherit latest fork stable;
