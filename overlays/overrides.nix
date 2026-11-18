@@ -80,6 +80,8 @@ in
     jellyfin
     presenterm
     vaultwarden
+    # bugs
+    nginx # BUG: https://github.com/NixOS/nixpkgs/pull/589961
     ;
 
   inherit (stable)
