@@ -38,6 +38,7 @@
       credentialFiles = {
         RFC2136_TSIG_FILE = secrets.dns-universe;
       };
+      extraLegoFlags = [ "--ipv4only" ];
     };
     certs."inx.moe" = {
       extraDomainNames = [
