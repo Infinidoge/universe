@@ -1,4 +1,9 @@
-{ pkgs, nixos, ... }:
+{
+  pkgs,
+  nixos,
+  lib,
+  ...
+}:
 {
   imports = with nixos; [
     base
@@ -44,6 +49,10 @@
   info.model = "Pyro Eco VPS";
 
   boot.loader.timeout = 1;
+
+  # Force IPv4 resolver
+  networking.resolvconf.useLocalResolver = false;
+  networking.nameservers = lib.mkForce [ "127.0.0.1" ];
 
   environment.systemPackages = with pkgs; [ bind ];
 
