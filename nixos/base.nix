@@ -69,6 +69,7 @@
     # misc
     htop
     hyfetch
+    lzip
     ntfy-sh
     unzip
     zip
