@@ -9,5 +9,7 @@
   common = rec {
     domain = "inx.moe";
     subdomain = subdomain: "${subdomain}.${domain}";
+    internal = subdomain: "${subdomain}.internal.${domain}";
+    staging = subdomain: "${subdomain}.staging.${domain}";
   };
 }
