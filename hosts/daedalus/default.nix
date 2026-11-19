@@ -166,6 +166,10 @@
     ];
   };
 
+  security.acme.certs."inx.moe".extraDomainNames = [
+    "*.staging.inx.moe"
+  ];
+
   services.nginx.virtualHosts."*.inx.moe" = {
     useACMEHost = "inx.moe";
     addSSL = true;
