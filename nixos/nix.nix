@@ -227,9 +227,10 @@ in
     substituters = [
       "auto?trusted=1" # always trust local store
       "https://cache.nixos.org"
-      "https://hydra.inx.moe?priority=10"
       "https://nix-community.cachix.org"
-    ];
+    ]
+    # Add Hydra if not hosting Hydra
+    ++ (lib.optional (!(config.services ? hydra-dev)) "https://hydra.inx.moe?priority=10");
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "infinidoge-1:uw2A6JHHdGJ9GPk0NEDnrdfVkPp0CUY3zIvwVgNlrSk="
