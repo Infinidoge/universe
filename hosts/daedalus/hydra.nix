@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  options,
   common,
   secrets,
   pkgs,
@@ -26,6 +27,9 @@ in
   services.hydra-dev = {
     enable = true;
     port = 3333;
+    package = options.services.hydra-dev.package.default.overrideAttrs (o: {
+      doCheck = false;
+    });
     hydraURL = "https://${domain}";
     notificationSender = common.email.withSubaddress "hydra";
     smtpHost = common.email.smtp.address;
