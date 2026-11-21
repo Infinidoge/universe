@@ -61,6 +61,11 @@
         # acm format
         acmart
 
+        # linguistics
+        gb4e
+        linguex
+        philex
+
         # unspecified
         capt-of
         catchfile
