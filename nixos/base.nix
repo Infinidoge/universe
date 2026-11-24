@@ -99,6 +99,8 @@
 
   users.mutableUsers = false;
 
+  # Allow user mounts
+  programs.fuse.enable = true;
   # Allow non-root users to allow other users to access mount point
   programs.fuse.userAllowOther = true;
 
