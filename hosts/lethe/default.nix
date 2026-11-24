@@ -74,8 +74,6 @@
     ccrypt
     cryptsetup
 
-    fuse
-    fuse3
     sshfs-fuse
     socat
     tcpdump
